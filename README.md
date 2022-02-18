@@ -17,12 +17,12 @@ Nestjs - graphQl - typescript
 eslint + prettier - git / github
 
 # Testing:
-## Front:
-## Back:
+### Front:
+### Back:
 
 # Optimization:
-## Front:
-## Back:
+### Front:
+### Back:
 
 ## Features:
 1. landing page

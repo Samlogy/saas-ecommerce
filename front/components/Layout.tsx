@@ -28,7 +28,7 @@ export default function Layout({ children, isHeaderVisible, isFooterVisible, ...
         <title> Ecommerce Web App </title>
       </Head>
 
-      <Container maxW='container.xl' px="0" {...rest}>
+      <Container maxW="8xl" px="0" {...rest}>
         { isHeaderVisible && <NavBar /> }
           <Box px="2rem" py="1rem">
             {children}

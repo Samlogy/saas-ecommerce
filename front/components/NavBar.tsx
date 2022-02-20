@@ -22,7 +22,7 @@ import {
 } from '@chakra-ui/react';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 
-const Links = ['Dashboard', 'Projects', 'Team'];
+const Links = ['Home', 'Products', 'Contact Us'];
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link px={2} py={1} rounded={'md'} _hover={{

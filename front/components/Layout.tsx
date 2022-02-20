@@ -13,10 +13,11 @@ import Footer from "../components/Footer"
 interface ILayout {
   children: React.ReactNode,
   isHeaderVisible?: boolean,
-  isFooterVisible?: boolean
+  isFooterVisible?: boolean,
+  rest?: any
 }
 
-export default function Layout({ children, isHeaderVisible, isFooterVisible }: ILayout) {
+export default function Layout({ children, isHeaderVisible, isFooterVisible, ...rest }: ILayout) {
   return (
     <>
       <Head>
@@ -27,7 +28,7 @@ export default function Layout({ children, isHeaderVisible, isFooterVisible }: I
         <title> Ecommerce Web App </title>
       </Head>
 
-      <Container maxW='container.xl' px="0">
+      <Container maxW='container.xl' px="0" {...rest}>
         { isHeaderVisible && <NavBar /> }
           <Box px="2rem" py="1rem">
             {children}

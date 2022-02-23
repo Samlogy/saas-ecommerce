@@ -30,11 +30,11 @@ const Links = [
     name: "Home"
   },
   {
-    link: "/products",
+    link: "products",
     name: "Products"
   },
   {
-    link: "/contact",
+    link: "contact",
     name: "Contact Us"
   },
 ];

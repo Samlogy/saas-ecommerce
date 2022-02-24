@@ -10,7 +10,6 @@ import {
   Flex,
   Avatar,
   HStack,
-  // Link,
   IconButton,
   Button,
   Menu,
@@ -23,6 +22,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { AiOutlineMenu, AiOutlineClose, AiOutlineShoppingCart } from 'react-icons/ai';
+import { Logout } from "../components"
 
 const Links = [
   {
@@ -77,9 +77,9 @@ export default function NavBar() {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem> My Account </MenuItem>
+                <MenuItem> <Link href="/profile"> My Account </Link> </MenuItem>
                 <MenuDivider />
-                <MenuItem> Logout </MenuItem>
+                <MenuItem> <Logout /> </MenuItem>
               </MenuList>
             </Menu>
           </Flex>

@@ -24,7 +24,7 @@ export default function Register() {
     const [showPassword, setShowPassword] = useState({ password: false, confirm_password: false });
 
   return (
-    <Flex h="100vh" flexDir="column" justifyContent={'center'} alignItems={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
+    <Flex minH="100vh" flexDir="column" justifyContent={'center'} alignItems={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
         <Stack align={'center'} >
             <Heading fontSize={'4xl'}> Create account </Heading>
             <Text fontSize={'lg'} color={'gray.600'}>

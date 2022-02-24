@@ -15,12 +15,23 @@ import {
   import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
   import { useState } from 'react';
 import Link from 'next/link'
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
-import { Layout, FormTemplate } from "../components"
+import { Layout, FormTemplate, ErrorMessage } from "../components"
+import { loginSchema } from "../lib/validation";
 
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
+
+    const { register, handleSubmit, getValues, formState: { errors } } = useForm({
+        resolver: yupResolver(loginSchema)
+    });
+
+    const onLogin = async (data: any) => {
+        console.log('login: ', data);
+    };
 
   return (
     <Flex minH="100vh" flexDir="column" justifyContent={'center'} alignItems={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -32,15 +43,22 @@ export default function Login() {
         </Stack>
 
         <FormTemplate>
-            <FormControl id="email">
+            <form onSubmit={handleSubmit(onLogin)}> 
+            <FormControl id="email" mb=".5rem">
                 <FormLabel> Email Address </FormLabel>
-                <Input type="email" placeholder="your-email@example.com" _placeholder={{ color: 'gray.500' }} />
+                <Input type="email" placeholder="your-email@example.com" _placeholder={{ color: 'gray.500' }}
+                        isInvalid={errors.email ? true : false}
+                        errorBorderColor="error" borderColor="gray.500" borderRadius="4px" 
+                        {...register("email")} />
             </FormControl>
 
-            <FormControl id="password" isRequired>
+            <FormControl id="password" mb=".5rem">
                 <FormLabel> Password </FormLabel>
                 <InputGroup>
-                    <Input type={showPassword ? 'text' : 'password'} placeholder="At least 8 characters long" />
+                    <Input type={showPassword ? 'text' : 'password'} placeholder="At least 8 characters long" 
+                            isInvalid={errors.password ? true : false}
+                            errorBorderColor="error" borderColor="gray.500" borderRadius="4px" 
+                            {...register("password")} />
                     <InputRightElement h={'full'}>
                         <Button variant={'ghost'} onClick={() => setShowPassword(showPassword => !showPassword)}>
                             {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
@@ -49,7 +67,7 @@ export default function Login() {
                 </InputGroup>
             </FormControl>
 
-            <Stack spacing={10}>
+            <Stack spacing={5}>
                 <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
                     <Checkbox> Remember me </Checkbox>
                     <Link href="/forgotPassword"> 
@@ -58,10 +76,11 @@ export default function Login() {
                     </Link>
                 </Stack>
                 
-                <Button bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
+                <Button type="submit" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
                     Sign in
                 </Button>
             </Stack>
+            </form>
         </FormTemplate>
     </Flex>
   );

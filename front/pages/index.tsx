@@ -1,20 +1,5 @@
 import Head from 'next/head'
 import Link from 'next/link'
-
-import Layout from "../components/Layout"
-import ProductCard from "../components/ProductCard"
-import CookieBox from "../components/CookieBox"
-
-const data = {
-    isNew: true,
-    imageURL:
-      'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
-    name: 'Wayfarer Classic',
-    price: 4.5,
-    rating: 4.2,
-    numReviews: 34,
-} 
-
 import {
   Box,
   Heading,
@@ -29,6 +14,7 @@ import {
   Image,
   Flex,
   StackDivider,
+  Select
 } from '@chakra-ui/react';
 
 import {
@@ -37,6 +23,8 @@ import {
   IoSearchSharp,
 } from 'react-icons/io5';
 import { ReactElement } from 'react';
+
+import { ShoppingCart, Layout } from "../components" 
 
 export default function Home() {
   return (
@@ -154,6 +142,7 @@ const Feature = ({ text, icon, iconBg }: FeatureProps) => {
 function HomeFeatures() {
   return (
     <Container maxW={'5xl'} py={12}>
+      <ShoppingCart />
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
         <Stack spacing={4}>
           <Text
@@ -212,3 +201,5 @@ function HomeFeatures() {
     </Container>
   );
 }
+
+

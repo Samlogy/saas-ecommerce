@@ -28,6 +28,10 @@ import {
   import Layout from "../components/Layout"
   
   export default function contact() {
+      const onContact = () => {
+          console.log('contact')
+      }
+
     return (
         <Layout isHeaderVisible isFooterVisible>
             <Box bg="#02054B" color="white" borderRadius="lg" m={{ sm: 4, md: 16, lg: 10 }} p={{ sm: 5, md: 5 }}>
@@ -134,7 +138,7 @@ import {
                                     </FormControl>
 
                                     <FormControl id="name" float="right">
-                                        <Button  variant="solid" bg="#0D74FF" color="white" _hover={{}}>
+                                        <Button  variant="solid" bg="#0D74FF" color="white" _hover={{}} onClick={() => onContact()}>
                                             Send Message
                                         </Button>
                                     </FormControl>

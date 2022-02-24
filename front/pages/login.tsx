@@ -44,42 +44,44 @@ export default function Login() {
 
         <FormTemplate>
             <form onSubmit={handleSubmit(onLogin)}> 
-            <FormControl id="email" mb=".5rem">
-                <FormLabel> Email Address </FormLabel>
-                <Input type="email" placeholder="your-email@example.com" _placeholder={{ color: 'gray.500' }}
-                        isInvalid={errors.email ? true : false}
-                        errorBorderColor="error" borderColor="gray.500" borderRadius="4px" 
-                        {...register("email")} />
-            </FormControl>
-
-            <FormControl id="password" mb=".5rem">
-                <FormLabel> Password </FormLabel>
-                <InputGroup>
-                    <Input type={showPassword ? 'text' : 'password'} placeholder="At least 8 characters long" 
-                            isInvalid={errors.password ? true : false}
+                <FormControl id="email" mb=".5rem">
+                    <FormLabel> Email Address </FormLabel>
+                    <Input type="email" placeholder="your-email@example.com" _placeholder={{ color: 'gray.500' }}
+                            isInvalid={errors.email ? true : false}
                             errorBorderColor="error" borderColor="gray.500" borderRadius="4px" 
-                            {...register("password")} />
-                    <InputRightElement h={'full'}>
-                        <Button variant={'ghost'} onClick={() => setShowPassword(showPassword => !showPassword)}>
-                            {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
-                        </Button>
-                    </InputRightElement>
-                </InputGroup>
-            </FormControl>
+                            {...register("email")} />
+                    {errors.email && <ErrorMessage error={errors.email.message} />}
+                </FormControl>
 
-            <Stack spacing={5}>
-                <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
-                    <Checkbox> Remember me </Checkbox>
-                    <Link href="/forgotPassword"> 
-                        Forgot password?
-                        {/* <Box as="span" color={'blue.400'}> Forgot password? </Box>  */}
-                    </Link>
+                <FormControl id="password" mb=".5rem">
+                    <FormLabel> Password </FormLabel>
+                    <InputGroup>
+                        <Input type={showPassword ? 'text' : 'password'} placeholder="" 
+                                isInvalid={errors.password ? true : false}
+                                errorBorderColor="error" borderColor="gray.500" borderRadius="4px" 
+                                {...register("password")} />
+                        <InputRightElement h={'full'}>
+                            <Button variant={'ghost'} onClick={() => setShowPassword(showPassword => !showPassword)}>
+                                {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+                            </Button>
+                        </InputRightElement>
+                    </InputGroup>
+                    {errors.password && <ErrorMessage error={errors.password.message} />}
+                </FormControl>
+
+                <Stack spacing={5}>
+                    <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
+                        <Checkbox> Remember me </Checkbox>
+                        <Link href="/forgotPassword"> 
+                            Forgot password?
+                            {/* <Box as="span" color={'blue.400'}> Forgot password? </Box>  */}
+                        </Link>
+                    </Stack>
+                    
+                    <Button type="submit" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
+                        Sign in
+                    </Button>
                 </Stack>
-                
-                <Button type="submit" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
-                    Sign in
-                </Button>
-            </Stack>
             </form>
         </FormTemplate>
     </Flex>

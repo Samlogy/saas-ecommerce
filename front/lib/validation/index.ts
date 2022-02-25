@@ -23,9 +23,17 @@ export const loginSchema = yup.object().shape({
 });
 
 export const contactSchema = yup.object().shape({
-    fullName: yup.string().required("Full Name required"),
+    name: yup.string().required("Full Name required"),
     email: yup.string().email("Enter a valid Email Address").required("Email Address required"),
-    message: yup.string().required("Message Address required"),
+    message: yup.string().required("Message required"),
+});
+
+export const addProductSchema = yup.object().shape({
+    img: yup.string().required("Full Name required"),
+    name: yup.string().required("Product Name required"),
+    description: yup.string().required("Product Description required"),
+    price: yup.number().required("Product Price required"),
+    coupon: yup.string()
 });
 
 // add - edit --> product

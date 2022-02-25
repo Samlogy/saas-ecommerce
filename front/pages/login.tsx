@@ -36,7 +36,7 @@ export default function Login() {
   return (
     <Flex minH="100vh" flexDir="column" justifyContent={'center'} alignItems={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
         <Stack align={'center'} >
-            <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+            <Heading fontSize={'4xl'}> Sign in to your account </Heading>
             <Text fontSize={'lg'} color={'gray.600'}>
                 to enjoy all of our cool <Box as="span" color={'blue.400'}> features </Box> ✌️
             </Text>

@@ -95,13 +95,13 @@ export default function Register() {
                     {errors.confirm_password && <ErrorMessage error={errors.confirm_password.message} />}
                 </FormControl>
                 
-                <Text fontSize="14px" mb=".5rem"> By creating an account, you agree to Amazon's 
+                <Text fontSize="14px" mb=".75rem"> By creating an account, you agree to Amazon's 
                     <Link href="/conditions"> Box Conditions of Use </Link>
                         and 
                     <Link href="/privacy"> Privacy Notice. </Link>
                 </Text>
 
-                <Button type="submit" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
+                <Button type="submit" w="full" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
                     Sign up
                 </Button>
             </form>

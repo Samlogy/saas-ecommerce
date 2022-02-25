@@ -24,11 +24,19 @@ import {
     MdOutlineEmail,
   } from 'react-icons/md';
   import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs';
-
-  import Layout from "../components/Layout"
+  import { yupResolver } from "@hookform/resolvers/yup";
+  import { useForm } from "react-hook-form";
+  
+  import { Layout, FormTemplate, ErrorMessage } from "../components"
+  import { contactSchema } from "../lib/validation";
   
   export default function contact() {
-      const onContact = () => {
+
+        const { register, handleSubmit, getValues, formState: { errors } } = useForm({
+            resolver: yupResolver(contactSchema)
+        });
+
+      const onContact = async (data: any) => {
           console.log('contact')
       }
 
@@ -115,34 +123,45 @@ import {
                         <WrapItem mb="1rem">
                             <Box bg="white" borderRadius="lg">
                                 <Box m={8} color="#0B0E3F">
-                                <VStack spacing={5}>
-                                    <FormControl id="name">
-                                        <FormLabel> Your Name </FormLabel>
-                                        <InputGroup borderColor="#E0E1E7">
-                                            <InputLeftElement pointerEvents="none" children={<BsPerson color="gray.800" />} />
-                                            <Input type="text" size="md" />
-                                        </InputGroup>
-                                    </FormControl>
+                                    <VStack spacing={5}>
+                                        <form onSubmit={handleSubmit(onContact)}> 
+                                            <FormControl id="name" mb=".5rem">
+                                                <FormLabel> Your Name </FormLabel>
+                                                <InputGroup borderColor="#E0E1E7">
+                                                    <InputLeftElement pointerEvents="none" children={<BsPerson color="gray.800" />} />
+                                                    <Input type="text" size="md" isInvalid={errors.name ? true : false}
+                                                            errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                                            {...register("name")} />
+                                                </InputGroup>
+                                                {errors.name && <ErrorMessage error={errors.name.message} />}
+                                            </FormControl>
 
-                                    <FormControl id="name">
-                                        <FormLabel> Mail </FormLabel>
-                                        <InputGroup borderColor="#E0E1E7">
-                                            <InputLeftElement pointerEvents="none" children={<MdOutlineEmail color="gray.800" />} />
-                                            <Input type="text" size="md" />
-                                        </InputGroup>
-                                    </FormControl>
+                                            <FormControl id="name" mb=".5rem">
+                                                <FormLabel> Email </FormLabel>
+                                                <InputGroup borderColor="#E0E1E7">
+                                                    <InputLeftElement pointerEvents="none" children={<MdOutlineEmail color="gray.800" />} />
+                                                    <Input type="email" size="md" isInvalid={errors.email ? true : false}
+                                                            errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                                            {...register("email")} />                                                    
+                                                </InputGroup>
+                                                {errors.email && <ErrorMessage error={errors.email.message} />}
+                                            </FormControl>
 
-                                    <FormControl id="name">
-                                        <FormLabel> Message </FormLabel>
-                                        <Textarea borderColor="gray.300"  _hover={{ borderRadius: 'gray.300', }} placeholder="message" />
-                                    </FormControl>
+                                            <FormControl id="name" mb=".5rem">
+                                                <FormLabel> Message </FormLabel>
+                                                <Textarea _hover={{ borderRadius: 'gray.300', }} placeholder="message" isInvalid={errors.email ? true : false}
+                                                            errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                                            {...register("message")} />
+                                                    {errors.message && <ErrorMessage error={errors.message.message} />}
+                                            </FormControl>
 
-                                    <FormControl id="name" float="right">
-                                        <Button  variant="solid" bg="#0D74FF" color="white" _hover={{}} onClick={() => onContact()}>
-                                            Send Message
-                                        </Button>
-                                    </FormControl>
-                                </VStack>
+                                            <FormControl id="name" float="right" mb=".5rem">
+                                                <Button type="submit" variant="solid" bg="#0D74FF" color="white" _hover={{}}>
+                                                    Send Message
+                                                </Button>
+                                            </FormControl>
+                                        </form>
+                                    </VStack>
                                 </Box>
                             </Box>
                         </WrapItem>

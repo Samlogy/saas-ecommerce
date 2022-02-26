@@ -1,23 +1,15 @@
 import {
-    Box,
     Flex,
-    Avatar,
-    HStack,
-    Link,
-    IconButton,
     Button,
     Image,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    MenuDivider,
     useDisclosure,
     useColorModeValue,
-    Stack,
-    Text, Divider, 
+    Text, Divider, IconButton, Box,
     Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, DrawerCloseButton
   } from '@chakra-ui/react';
+  import { FaTrash } from "react-icons/fa";
+  import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+  import React, { useState } from "react";
 
   import { View } from "../components";
 
@@ -46,20 +38,15 @@ import {
       quantity: 1,
       price: 90.00
     }
-  ]
+  ];
 
-const ShoppingCart = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+const ShoppingCart = ({ isOpen, onClose }: { isOpen: any, onClose: any }) => {
 
     const onRemoveItem = () => {
       console.log('remove item')
     }
   
     return(
-      <>
-        <Button colorScheme='teal' onClick={onOpen}>
-            Open
-        </Button>
         <Drawer isOpen={isOpen} placement='right' size="sm" onClose={onClose}>
           <DrawerOverlay />
           <DrawerContent>
@@ -69,6 +56,12 @@ const ShoppingCart = () => {
             <DrawerBody>
               <View cond={data.length > 0}>
                 { data.map((el: any) => <CartItem data={el} onRemoveItem={onRemoveItem} />) }
+                <Divider />
+
+                <Flex justifyContent={'space-between'} mt="1rem">
+                  <Text fontWeight="600"> Total </Text>
+                  <Text fontWeight="600"> $262.00 </Text>
+                </Flex>
               </View>
               <View cond={data.length === 0}>
                 <Text> There is not product in your shopping cart </Text>
@@ -85,13 +78,21 @@ const ShoppingCart = () => {
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
-      </>
     )
 }
 
 export default ShoppingCart;
 
 const CartItem = ({ data, onRemoveItem }: { data: any, onRemoveItem: any }) => {
+  const [quantity, setQuantity] = useState(data.quantity);
+
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
 
   return(
     <>
@@ -101,12 +102,16 @@ const CartItem = ({ data, onRemoveItem }: { data: any, onRemoveItem: any }) => {
         <Flex flexDir="column">
           <Text fontSize="1rem" fontWeight="600"> {data.name} </Text> 
           <Text> Salmon </Text>
-          <Text mt="1.7rem"> Qty {data.quantity} </Text> 
+          <Flex justifyContent={'space-evenly'} alignItems='center'>
+            <IconButton icon={<AiOutlinePlus />} aria-label='increment' onClick={() => handleQuantity('inc')} />
+            <Text my="auto"> {quantity} </Text>
+            <IconButton icon={<AiOutlineMinus />} aria-label='descrement' onClick={() => handleQuantity('dec')} />
+          </Flex>
         </Flex>
 
         <Flex flexDir="column" justifyContent="space-between">
-          <Text fontSize="1rem" fontWeight="600"> ${data.price} </Text> 
-          <Text textColor="blue.600" _hover={{ cursor: "pointer" }} onClick={() => onRemoveItem()}> Remove </Text>
+          <Text fontSize="1rem" fontWeight="600"> ${data.price} </Text>     
+          <Box as="span" _hover={{ cursor: "pointer" }}> <FaTrash size={16} color="#60666f" onClick={() => onRemoveItem()} /> </Box>
         </Flex>
       </Flex>
 

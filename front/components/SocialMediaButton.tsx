@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react';
 import { FaLinkedinIn, FaGithub, FaTwitter, FaFacebook } from "react-icons/fa"
 
-const SocialMediaButton = ({ type, ...rest }: { type: string, rest: any }) => {
+const SocialMediaButton = ({ type, ...rest }: { type: string, rest?: any }) => {
     const icon = (type: string) => {
       if (type === 'facebook') return <FaFacebook color="#787e86" />
       else if (type === 'twitter') return <FaTwitter color="#787e86" />

@@ -1,5 +1,8 @@
 import { Box, Heading, Text, Button, Flex, Container } from '@chakra-ui/react';
 import Link from 'next/link'
+import { AiOutlineUser, AiOutlineMail } from "react-icons/ai"
+import { HiOutlineLocationMarker } from "react-icons/hi"
+import { BsCalendarDate } from "react-icons/bs"
 
 import Layout from "../components/Layout"
 
@@ -14,7 +17,6 @@ export default function Profile() {
 
   return (
     <Layout isHeaderVisible isFooterVisible>
-       {/* <Container maxW="1024px" bg="#FFFC" minHeight='calc(100vh - 100px)' py="36px" px={["16px","","","50px", "100px"]} borderRadius="4px"> */}
         <Heading as="h1" fontSize="30px">
           Profile
         </Heading>
@@ -31,7 +33,6 @@ export default function Profile() {
         </Flex>
 
         <DisplayBillingData data={data} />
-      {/* </Container> */}
   </Layout>
   );
 }
@@ -42,22 +43,26 @@ const DisplayUserData = ({ data }: { data: any }) => {
     <Heading as="h2" fontSize="1.5rem"> My Personal Informations </Heading>
       <Flex flexDir="column" my="1.5rem">
         <Flex alignItems={"center"} mb=".5rem">
-          <Box as="span" fontSize="16px" fontWeight="600"> Full Name: </Box> 
+          <AiOutlineUser size={24} />
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Full Name: </Box> 
           <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem"> {data.fullName} </Box>
         </Flex>
 
         <Flex alignItems={"center"} mb=".5rem">
-          <Box as="span" fontSize="16px" fontWeight="600"> Email Address: </Box> 
+          <AiOutlineMail size={24} />
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Email Address: </Box> 
           <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem"> {data.email} </Box>
         </Flex>
 
         <Flex alignItems={"center"} mb=".5rem">
-          <Box as="span" fontSize="16px" fontWeight="600"> Address: </Box> 
+          <HiOutlineLocationMarker size={24} />
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Address: </Box> 
           <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem"> {data.address} </Box>
         </Flex>
 
         <Flex alignItems={"center"} mb=".5rem">
-          <Box as="span" fontSize="16px" fontWeight="600"> date creation: </Box> 
+          <BsCalendarDate size={24} />
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Date creation: </Box> 
           <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem"> {data.createdAt} </Box>
         </Flex>
       </Flex>
@@ -71,22 +76,26 @@ const DisplayBillingData = ({ data }: { data: any }) => {
       <Heading as="h2" fontSize="1.5rem"> My Billing Informations </Heading>
       <Flex flexDir="column" my="1.5rem">
         <Flex alignItems={"center"} mb=".5rem">
-          <Box as="span" fontSize="16px" fontWeight="600"> Full Name: </Box> 
+          <AiOutlineUser size={24} />
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Full Name: </Box> 
           <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem"> {data.fullName} </Box>
         </Flex>
 
         <Flex alignItems={"center"} mb=".5rem">
-          <Box as="span" fontSize="16px" fontWeight="600"> Email Address: </Box> 
+          <AiOutlineMail size={24} />
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Email Address: </Box> 
           <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem"> {data.email} </Box>
         </Flex>
 
         <Flex alignItems={"center"} mb=".5rem">
-          <Box as="span" fontSize="16px" fontWeight="600"> Address: </Box> 
+          <HiOutlineLocationMarker size={24} />
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Address: </Box> 
           <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem"> {data.address} </Box>
         </Flex>
 
         <Flex alignItems={"center"} mb=".5rem">
-          <Box as="span" fontSize="16px" fontWeight="600"> date creation: </Box> 
+          <BsCalendarDate size={24} />
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Date creation: </Box> 
           <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem"> {data.createdAt} </Box>
         </Flex>
       </Flex>

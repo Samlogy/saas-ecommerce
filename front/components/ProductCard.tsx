@@ -9,6 +9,7 @@ import Link from 'next/link'
     Image,
     Badge,
     useColorModeValue,
+    Button,
     Icon,
     chakra,
     Tooltip,
@@ -82,17 +83,6 @@ import Link from 'next/link'
                 isTruncated>
                 {data.name}
               </Box>
-              
-              <Tooltip
-                label="Add to cart"
-                bg="white"
-                placement={'top'}
-                color={'gray.800'}
-                fontSize={'1.2em'}>
-                <chakra.a href={'#'} display={'flex'}>
-                  <Icon as={FiShoppingCart} h={7} w={7} alignSelf={'center'} onClick={() => onAdd()} />
-                </chakra.a>
-              </Tooltip>
             </Flex>
   
             <Flex justifyContent="space-between" alignContent="center">
@@ -104,6 +94,10 @@ import Link from 'next/link'
                 {data.price.toFixed(2)}
               </Box>
             </Flex>
+
+            <Button colorScheme='blue' w="full" mt="1.5rem" onClick={() => onAdd()}>
+                Add to Cart
+            </Button>
           </Box>
         </Box>
       </Flex>

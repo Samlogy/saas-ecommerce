@@ -8,8 +8,7 @@ import {
     Stack,
     Text,
     Box,
-    Checkbox,
-    Divider,
+    IconButton,
     useColorModeValue,
     InputRightElement, InputGroup
   } from '@chakra-ui/react';
@@ -35,7 +34,9 @@ export default function Register() {
     };
 
   return (
-    <Flex minH="100vh" flexDir="column" justifyContent={'center'} alignItems={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
+      <Layout isFooterVisible isHeaderVisible>
+    <Flex flexDir="column" justifyContent={'center'} alignItems={'center'}>
+    {/* minH="100vh" flexDir="column" justifyContent={'center'} alignItems={'center'} bg={useColorModeValue('gray.50', 'gray.800')} */}
         <Stack align={'center'} >
             <Heading fontSize={'4xl'}> Create account </Heading>
             <Text fontSize={'lg'} color={'gray.600'}>
@@ -49,7 +50,7 @@ export default function Register() {
                     <FormLabel> Your Name </FormLabel>
                     <Input type="text" placeholder="" _placeholder={{ color: 'gray.500' }} 
                             isInvalid={errors.fullName ? true : false}
-                            errorBorderColor="error" borderColor="gray.500" borderRadius="4px" 
+                            errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
                             {...register("fullName")} />
                     {errors.fullName && <ErrorMessage error={errors.fullName.message} />}
                 </FormControl>
@@ -58,7 +59,7 @@ export default function Register() {
                     <FormLabel> Mobile number or email </FormLabel>
                     <Input type="text" placeholder="" _placeholder={{ color: 'gray.500' }} 
                             isInvalid={errors.email ? true : false}
-                            errorBorderColor="error" borderColor="gray.500" borderRadius="4px" 
+                            errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
                             {...register("email")} />
                     {errors.email && <ErrorMessage error={errors.email.message} />}
                 </FormControl>
@@ -68,12 +69,12 @@ export default function Register() {
                     <InputGroup>
                         <Input type={showPassword.password ? 'text' : 'password'} placeholder="At least 8 characters long" 
                                 isInvalid={errors.password ? true : false}
-                                errorBorderColor="error" borderColor="gray.500" borderRadius="4px" 
+                                errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
                                 {...register("password")} />
                         <InputRightElement h={'full'}>
-                            <Button variant={'ghost'} onClick={() => setShowPassword({...showPassword, password: !showPassword.password})}>
-                                {showPassword.password ? <AiFillEye /> : <AiFillEyeInvisible />}
-                            </Button>
+                            <IconButton variant='outline' aria-label='show-hide-password' _hover={{ bg:"transparent" }} borderColor="transparent"
+                                    onClick={() => setShowPassword({...showPassword, password: !showPassword.password})} 
+                                    icon={showPassword.password ? <AiFillEye /> : <AiFillEyeInvisible />} />
                         </InputRightElement>
                     </InputGroup>
                     {errors.password && <ErrorMessage error={errors.password.message} />}
@@ -84,21 +85,21 @@ export default function Register() {
                     <InputGroup>
                         <Input type={showPassword.confirm_password ? 'text' : 'password'} placeholder="" 
                                 isInvalid={errors.confirm_password ? true : false}
-                                errorBorderColor="error" borderColor="gray.500" borderRadius="4px" 
+                                errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
                                 {...register("confirm_password")} />
-                        <InputRightElement h={'full'}>
-                            <Button variant={'ghost'} onClick={() => setShowPassword({...showPassword, confirm_password: !showPassword.confirm_password})}>
-                                {showPassword.confirm_password ? <AiFillEye /> : <AiFillEyeInvisible />}
-                            </Button>
+                        <InputRightElement h={'full'} >
+                            <IconButton variant='outline' aria-label='show-hide-password' _hover={{ bg:"transparent" }} borderColor="transparent"
+                                        onClick={() => setShowPassword({...showPassword, confirm_password: !showPassword.confirm_password})} 
+                                        icon={showPassword.confirm_password ? <AiFillEye /> : <AiFillEyeInvisible />} />
                         </InputRightElement>
                     </InputGroup>
                     {errors.confirm_password && <ErrorMessage error={errors.confirm_password.message} />}
                 </FormControl>
                 
                 <Text fontSize="14px" mb=".75rem"> By creating an account, you agree to Amazon's 
-                    <Link href="/conditions"> Box Conditions of Use </Link>
+                    <Box as="span" color="blue.500"> <Link href="/conditions"> Conditions of Use </Link> </Box>
                         and 
-                    <Link href="/privacy"> Privacy Notice. </Link>
+                    <Box as="span" color="blue.500"> <Link href="/privacy"> Privacy Notice </Link> </Box>
                 </Text>
 
                 <Button type="submit" w="full" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
@@ -106,9 +107,9 @@ export default function Register() {
                 </Button>
             </form>
 
-            {/* <Divider my=".5rem" borderColor="gray.400" /> */}
-            <Text> Already have an account? <Link href="/login"> Sign-In </Link> </Text>
+            <Text> Already have an account? <Box as="span" color='blue.500'> <Link href="/login"> Sign-In </Link> </Box> </Text>
         </FormTemplate>
     </Flex>
+    </Layout>
   );
 }

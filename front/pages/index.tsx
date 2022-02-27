@@ -14,7 +14,22 @@ import {
   Image,
   Flex,
   StackDivider,
-  Select
+  Select,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  IconButton,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Divider,
 } from '@chakra-ui/react';
 
 import {
@@ -23,183 +38,87 @@ import {
   IoSearchSharp,
 } from 'react-icons/io5';
 import { ReactElement } from 'react';
+import { useRouter } from 'next/router';
+import { FaLinkedinIn, FaGithub, FaTwitter, FaFacebook } from "react-icons/fa"
 
-import { ShoppingCart, Layout } from "../components" 
+import { ShoppingCart, Layout, ModalPopUp, CustomerReviews, SocialMediaButton, Carousel } from "../components" 
+import { Item } from 'framer-motion/types/components/Reorder/Item';
 
 export default function Home() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo";
+
+  const images = [
+    'https://images.unsplash.com/photo-1516796181074-bf453fbfa3e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
+    'https://images.unsplash.com/photo-1438183972690-6d4658e3290e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2274&q=80',
+    'https://images.unsplash.com/photo-1507237998874-b4d52d1dd655?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
+  ];
+  const qna = [
+    {
+      question: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+      answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo"
+    },
+    {
+      question: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+      answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo"
+    },
+    {
+      question: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+      answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo"
+    },
+  ]
+
   return (
     <Layout isHeaderVisible isFooterVisible>
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
+        <Button onClick={onOpen}> Open Modal </Button>
+        {/* <ModalPopUp isOpen={isOpen} onClose={onClose} text={text} type="info" /> */}
 
-      <Container maxW={'3xl'}>
-        <Stack
-          as={Box}
-          textAlign={'center'}
-          spacing={{ base: 8, md: 14 }}
-          py={{ base: 20, md: 36 }}>
-          <Heading
-            fontWeight={600}
-            fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-            lineHeight={'110%'}>
-            Make money from <br />
-            <Text as={'span'} color={'green.400'}>
-              your audience
-            </Text>
-          </Heading>
-          <Text color={'gray.500'}>
-            Monetize your content by charging your most loyal readers and reward
-            them loyalty points. Give back to your loyal readers by granting
-            them access to your pre-releases and sneak-peaks.
-          </Text>
-          <Stack
-            direction={'column'}
-            spacing={3}
-            align={'center'}
-            alignSelf={'center'}
-            position={'relative'}>
-            <Button
-              colorScheme={'green'}
-              bg={'green.400'}
-              rounded={'full'}
-              px={6}
-              _hover={{
-                bg: 'green.500',
-              }}>
-              Get Started
-            </Button>
-            <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
-              Learn more
-            </Button>
-            <Box>
-              <Icon
-                as={Arrow}
-                color={useColorModeValue('gray.800', 'gray.300')}
-                w={71}
-                position={'absolute'}
-                right={-71}
-                top={'10px'}
-              />
-              <Text
-                fontSize={'lg'}
-                fontFamily={'Caveat'}
-                position={'absolute'}
-                right={'-125px'}
-                top={'-15px'}
-                transform={'rotate(10deg)'}>
-                Starting at $15/mo
-              </Text>
-            </Box>
-          </Stack>
-        </Stack>
+        {/* <CustomerReviews /> */}
 
-        <HomeFeatures />
-      </Container>
+        {/* <SocialMediaButton type="facebook" />
+        <SocialMediaButton type="twitter" />
+        <SocialMediaButton type="linkedin" />
+        <SocialMediaButton type="github" /> */}
+
+        {/* <ShoppingCart isOpen={isOpen} onClose={onClose} /> */}
+
+        {/* <Carousel data={images} /> */}
+
+        <QuestionsAnswers data={qna} />
     </Layout>
   );
 }
 
-const Arrow = createIcon({
-  displayName: 'Arrow',
-  viewBox: '0 0 72 24',
-  path: (
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M0.600904 7.08166C0.764293 6.8879 1.01492 6.79004 1.26654 6.82177C2.83216 7.01918 5.20326 7.24581 7.54543 7.23964C9.92491 7.23338 12.1351 6.98464 13.4704 6.32142C13.84 6.13785 14.2885 6.28805 14.4722 6.65692C14.6559 7.02578 14.5052 7.47362 14.1356 7.6572C12.4625 8.48822 9.94063 8.72541 7.54852 8.7317C5.67514 8.73663 3.79547 8.5985 2.29921 8.44247C2.80955 9.59638 3.50943 10.6396 4.24665 11.7384C4.39435 11.9585 4.54354 12.1809 4.69301 12.4068C5.79543 14.0733 6.88128 15.8995 7.1179 18.2636C7.15893 18.6735 6.85928 19.0393 6.4486 19.0805C6.03792 19.1217 5.67174 18.8227 5.6307 18.4128C5.43271 16.4346 4.52957 14.868 3.4457 13.2296C3.3058 13.0181 3.16221 12.8046 3.01684 12.5885C2.05899 11.1646 1.02372 9.62564 0.457909 7.78069C0.383671 7.53862 0.437515 7.27541 0.600904 7.08166ZM5.52039 10.2248C5.77662 9.90161 6.24663 9.84687 6.57018 10.1025C16.4834 17.9344 29.9158 22.4064 42.0781 21.4773C54.1988 20.5514 65.0339 14.2748 69.9746 0.584299C70.1145 0.196597 70.5427 -0.0046455 70.931 0.134813C71.3193 0.274276 71.5206 0.70162 71.3807 1.08932C66.2105 15.4159 54.8056 22.0014 42.1913 22.965C29.6185 23.9254 15.8207 19.3142 5.64226 11.2727C5.31871 11.0171 5.26415 10.5479 5.52039 10.2248Z"
-      fill="currentColor"
-    />
-  ),
-});
+const QuestionsAnswers = ({ data }: { data: any }) => {
+  return(
+    <Flex flexDir="column">
+      <Heading fontSize='24px' mb="1rem"> Questions and Answers </Heading>
+      <Divider w="10rem" borderColor='blue.500' borderWidth='1px' mb="1rem" />
 
-interface FeatureProps {
-  text: string;
-  iconBg: string;
-  icon?: ReactElement;
+      <Box p="2.5rem 1.5rem" border="1px" borderColor="blue.500" borderRadius="5px">
+        <Accordion defaultIndex={[0]} allowMultiple>
+          { data.map((item: any) => 
+            <AccordionItem>
+              <h2>
+                <AccordionButton _expanded={{ bg: 'blue.500', color: 'white' }} borderRadius="5px">
+                  <Box flex='1' textAlign='left' fontWeight='500'>
+                    {item.question}
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                {item.answer}
+              </AccordionPanel>
+            </AccordionItem>
+          )}
+        </Accordion>
+      </Box>
+    </Flex>
+  )
 }
 
-const Feature = ({ text, icon, iconBg }: FeatureProps) => {
-  return (
-    <Stack direction={'row'} align={'center'}>
-      <Flex
-        w={8}
-        h={8}
-        align={'center'}
-        justify={'center'}
-        rounded={'full'}
-        bg={iconBg}>
-        {icon}
-      </Flex>
-      <Text fontWeight={600}>{text}</Text>
-    </Stack>
-  );
-};
 
-function HomeFeatures() {
-  return (
-    <Container maxW={'5xl'} py={12}>
-      <ShoppingCart />
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
-        <Stack spacing={4}>
-          <Text
-            textTransform={'uppercase'}
-            color={'blue.400'}
-            fontWeight={600}
-            fontSize={'sm'}
-            bg={useColorModeValue('blue.50', 'blue.900')}
-            p={2}
-            alignSelf={'flex-start'}
-            rounded={'md'}>
-            Our Story
-          </Text>
-          <Heading> A digital Product design agency </Heading>
-          <Text color={'gray.500'} fontSize={'lg'}>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore
-          </Text>
-          <Stack
-            spacing={4}
-            divider={
-              <StackDivider
-                borderColor={useColorModeValue('gray.100', 'gray.700')}
-              />
-            }>
-            <Feature
-              icon={
-                <Icon as={IoAnalyticsSharp} color={'yellow.500'} w={5} h={5} />
-              }
-              iconBg={useColorModeValue('yellow.100', 'yellow.900')}
-              text={'Business Planning'}
-            />
-            <Feature
-              icon={<Icon as={IoLogoBitcoin} color={'green.500'} w={5} h={5} />}
-              iconBg={useColorModeValue('green.100', 'green.900')}
-              text={'Financial Planning'}
-            />
-            <Feature
-              icon={
-                <Icon as={IoSearchSharp} color={'purple.500'} w={5} h={5} />
-              }
-              iconBg={useColorModeValue('purple.100', 'purple.900')}
-              text={'Market Analysis'}
-            />
-          </Stack>
-        </Stack>
-        <Flex>
-          <Image rounded={'md'} alt={'feature image'}
-            src={
-              'https://images.unsplash.com/photo-1554200876-56c2f25224fa?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-            }
-            objectFit={'cover'}
-          />
-        </Flex>
-      </SimpleGrid>
-    </Container>
-  );
-}
 
 

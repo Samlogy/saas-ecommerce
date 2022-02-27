@@ -22,7 +22,8 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { AiOutlineMenu, AiOutlineClose, AiOutlineShoppingCart } from 'react-icons/ai';
-import { Logout } from "../components"
+
+import { Logout, SelectLanguage } from "../components"
 
 const Links = [
   {
@@ -49,6 +50,10 @@ const NavLink = ({ children, link }: { children: ReactNode, link: string }) => (
 
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const user = {
+    avatar: "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+  };
+  const isLogged = false
 
   return (
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -67,21 +72,9 @@ export default function NavBar() {
           </HStack>
 
           <Flex alignItems={'center'}>
+            <SelectLanguage  />
             <IconButton aria-label='Shopping Cart' icon={<AiOutlineShoppingCart size={24} />} mr="1rem" />
-            <Menu>
-              <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
-                <Avatar size={'sm'}
-                  src={
-                    'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                  }
-                />
-              </MenuButton>
-              <MenuList>
-                <MenuItem> <Link href="/profile"> My Account </Link> </MenuItem>
-                <MenuDivider />
-                <MenuItem> <Logout /> </MenuItem>
-              </MenuList>
-            </Menu>
+            { isLogged ?  <NavMenuConnected avatar={user.avatar} /> : <NavMenuUnConnected /> }
           </Flex>
         </Flex>
 
@@ -98,3 +91,28 @@ export default function NavBar() {
   );
 }
 
+
+const NavMenuConnected = ({ avatar }: { avatar: string }) => {
+  return(
+    <Menu>
+      <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
+        <Avatar size={'sm'} src={avatar} />
+      </MenuButton>
+      <MenuList>
+        <MenuItem> <Link href="/profile"> My Account </Link> </MenuItem>
+        <MenuDivider />
+        <MenuItem> <Logout /> </MenuItem>
+      </MenuList>
+    </Menu>
+  )
+}
+
+const NavMenuUnConnected = () => {
+  return(
+    <Flex>
+      <Box as="span"> <Link href="/register"> Sign Up </Link> </Box>
+      <Box w=".5rem"> </Box>
+      <Box as="span"> <Link href="/login"> Sign In </Link> </Box>
+    </Flex>
+  )
+}

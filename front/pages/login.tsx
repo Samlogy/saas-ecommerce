@@ -9,6 +9,7 @@ import {
     Text,
     Box,
     Checkbox,
+    IconButton,
     useColorModeValue,
     InputRightElement, InputGroup
   } from '@chakra-ui/react';
@@ -34,56 +35,55 @@ export default function Login() {
     };
 
   return (
-    <Flex minH="100vh" flexDir="column" justifyContent={'center'} alignItems={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
-        <Stack align={'center'} >
-            <Heading fontSize={'4xl'}> Sign in to your account </Heading>
-            <Text fontSize={'lg'} color={'gray.600'}>
-                to enjoy all of our cool <Box as="span" color={'blue.400'}> features </Box> ✌️
-            </Text>
-        </Stack>
+    <Layout isFooterVisible isHeaderVisible>
+        <Flex flexDir="column" justifyContent={'center'} alignItems={'center'}>
+            <Stack align={'center'} >
+                <Heading fontSize={'4xl'}> Sign in to your account </Heading>
+                <Text fontSize={'lg'} color={'gray.600'}>
+                    to enjoy all of our cool <Box as="span" color={'blue.400'}> features </Box> ✌️
+                </Text>
+            </Stack>
 
-        <FormTemplate>
-            <form onSubmit={handleSubmit(onLogin)}> 
-                <FormControl id="email" mb=".5rem">
-                    <FormLabel> Email Address </FormLabel>
-                    <Input type="email" placeholder="your-email@example.com" _placeholder={{ color: 'gray.500' }}
-                            isInvalid={errors.email ? true : false}
-                            errorBorderColor="error" borderColor="gray.500" borderRadius="4px" 
-                            {...register("email")} />
-                    {errors.email && <ErrorMessage error={errors.email.message} />}
-                </FormControl>
+            <FormTemplate>
+                <form onSubmit={handleSubmit(onLogin)}> 
+                    <FormControl id="email" mb=".5rem">
+                        <FormLabel> Email Address </FormLabel>
+                        <Input type="email" placeholder="your-email@example.com" _placeholder={{ color: 'gray.500' }}
+                                isInvalid={errors.email ? true : false}
+                                errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                {...register("email")} />
+                        {errors.email && <ErrorMessage error={errors.email.message} />}
+                    </FormControl>
 
-                <FormControl id="password" mb=".5rem">
-                    <FormLabel> Password </FormLabel>
-                    <InputGroup>
-                        <Input type={showPassword ? 'text' : 'password'} placeholder="" 
-                                isInvalid={errors.password ? true : false}
-                                errorBorderColor="error" borderColor="gray.500" borderRadius="4px" 
-                                {...register("password")} />
-                        <InputRightElement h={'full'}>
-                            <Button variant={'ghost'} onClick={() => setShowPassword(showPassword => !showPassword)}>
-                                {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
-                            </Button>
-                        </InputRightElement>
-                    </InputGroup>
-                    {errors.password && <ErrorMessage error={errors.password.message} />}
-                </FormControl>
+                    <FormControl id="password" mb=".5rem">
+                        <FormLabel> Password </FormLabel>
+                        <InputGroup>
+                            <Input type={showPassword ? 'text' : 'password'} placeholder="" 
+                                    isInvalid={errors.password ? true : false}
+                                    errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                    {...register("password")} />
+                            <InputRightElement h={'full'}>
+                                <IconButton variant='outline' aria-label='show-hide-password' _hover={{ bg:"transparent" }} borderColor="transparent"
+                                        onClick={() => setShowPassword(showPassword => !showPassword)}
+                                        icon={showPassword ? <AiFillEye /> : <AiFillEyeInvisible />} />
+                            </InputRightElement>
+                        </InputGroup>
+                        {errors.password && <ErrorMessage error={errors.password.message} />}
+                    </FormControl>
 
-                <Stack spacing={5}>
-                    <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
-                        <Checkbox> Remember me </Checkbox>
-                        <Link href="/forgotPassword"> 
-                            Forgot password?
-                            {/* <Box as="span" color={'blue.400'}> Forgot password? </Box>  */}
-                        </Link>
+                    <Stack spacing={5}>
+                        <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
+                            <Checkbox> Remember me </Checkbox>
+                            <Box as="span" color="blue.500"> <Link href="/forgotPassword">  Forgot password? </Link> </Box>
+                        </Stack>
+                        
+                        <Button type="submit" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
+                            Sign in
+                        </Button>
                     </Stack>
-                    
-                    <Button type="submit" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
-                        Sign in
-                    </Button>
-                </Stack>
-            </form>
-        </FormTemplate>
-    </Flex>
+                </form>
+            </FormTemplate>
+        </Flex>
+    </Layout>
   );
 }

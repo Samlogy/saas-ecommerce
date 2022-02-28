@@ -26,20 +26,10 @@ const BackTop = () => {
     };
   
     return (
-      <>
-        <div className="container">
-          <div className="box box--1"></div>
-          <div className="box box--2"></div>
-          <div className="box box--3"></div>
-          <div className="box box--4"></div>
-          <div className="box box--5"></div>
-        </div>
-  
-        {showButton && (
-          <button onClick={scrollToTop} className="back-to-top">            
+      <>  
+        {showButton && (         
             <IconButton aria-label='scroll-top' icon={<FaArrowUp size={30} color='white' />} onClick={scrollToTop} 
                bg="gray.500" _hover={{ bg: 'gray.600', cursor: 'pointer' }} position='fixed' right='20px' bottom='20px'  />
-          </button>
         )}
       </>
     );

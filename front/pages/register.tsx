@@ -95,7 +95,7 @@ export default function Register() {
                         {errors.confirm_password && <ErrorMessage error={errors.confirm_password.message} />}
                     </FormControl>
                     
-                    <Text fontSize="14px" mb=".75rem"> By creating an account, you agree to Amazon's 
+                    <Text fontSize=".8rem" mb=".75rem"> By creating an account, you agree to Amazon's 
                         <Box as="span" color="blue.500"> <Link href="/conditions"> Conditions of Use </Link> </Box>
                             and 
                         <Box as="span" color="blue.500"> <Link href="/privacy"> Privacy Notice </Link> </Box>
@@ -106,7 +106,7 @@ export default function Register() {
                     </Button>
                 </form>
 
-                <Text> Already have an account? <Box as="span" color='blue.500'> <Link href="/login"> Sign-In </Link> </Box> </Text>
+                <Text fontSize=".8rem"> Already have an account? <Box as="span" color='blue.500'> <Link href="/login"> Sign-In </Link> </Box> </Text>
             </FormTemplate>
         </Flex>
     </Layout>

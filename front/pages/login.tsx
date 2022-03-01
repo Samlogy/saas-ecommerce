@@ -73,8 +73,8 @@ export default function Login() {
 
                     <Stack spacing={5}>
                         <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
-                            <Checkbox> Remember me </Checkbox>
-                            <Box as="span" color="blue.500"> <Link href="/forgotPassword">  Forgot password? </Link> </Box>
+                            <Checkbox > <Box as="span" fontSize=".8rem"> Remember me </Box> </Checkbox>
+                            <Box as="span" color="blue.500" fontSize=".8rem"> <Link href="/forgotPassword">  Forgot password? </Link> </Box>
                         </Stack>
                         
                         <Button type="submit" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>

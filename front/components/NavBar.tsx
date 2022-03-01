@@ -23,7 +23,8 @@ import {
 } from '@chakra-ui/react';
 import { AiOutlineMenu, AiOutlineClose, AiOutlineShoppingCart } from 'react-icons/ai';
 
-import { Logout, SelectLanguage } from "../components"
+import { Logout, SelectLanguage, DarkModeToggle, ShoppingCartIcon } from "../components"
+import { useAuth } from "../store";
 
 const Links = [
   {
@@ -50,10 +51,17 @@ const NavLink = ({ children, link }: { children: ReactNode, link: string }) => (
 
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const isLogged = useAuth((state: any) => state.isLogged);
+  // const user = useAuth((state: any) => state.user);
+  const logged = useAuth((state: any) => state.logged);
+  // const notLogged = useAuth((state: any) => state.notLogged);
+
+  // console.log('user data: ', user.avatar)
+
   const user = {
     avatar: "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
   };
-  const isLogged = false
 
   return (
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -72,9 +80,10 @@ export default function NavBar() {
           </HStack>
 
           <Flex alignItems={'center'}>
-            <SelectLanguage  />
-            <IconButton aria-label='Shopping Cart' icon={<AiOutlineShoppingCart size={24} />} mr="1rem" />
-            { isLogged ?  <NavMenuConnected avatar={user.avatar} /> : <NavMenuUnConnected /> }
+            <SelectLanguage />
+            <DarkModeToggle />
+            <ShoppingCartIcon value={100} />
+            { isLogged ? <NavMenuConnected avatar={user.avatar} /> : <NavMenuUnConnected /> }
           </Flex>
         </Flex>
 
@@ -89,6 +98,19 @@ export default function NavBar() {
         ) : null}
       </Box>
   );
+}
+
+const ShoppingCartIcon = ({ value }: { value: number }) => {
+  return(
+    <Box pos="relative"> 
+      { value > 0 ?
+        <Box as="span" w="1.3rem" h="1.3rem" color="white" bg="error" display='flex' justifyContent='center' alignItems='center' fontSize='.5rem'     textAlign='center' borderRadius={'50%'} m="0" pos="absolute" zIndex={9000} right={0} bottom={'50%'}> 
+          { value >= 100 ? '99+' : value } 
+        </Box> : ''
+      }
+      <IconButton aria-label='Shopping Cart' icon={<AiOutlineShoppingCart size={24} />} mr=".2rem" /> 
+    </Box>
+  )
 }
 
 
@@ -110,9 +132,9 @@ const NavMenuConnected = ({ avatar }: { avatar: string }) => {
 const NavMenuUnConnected = () => {
   return(
     <Flex>
-      <Box as="span"> <Link href="/register"> Sign Up </Link> </Box>
+      <Box as="span" _hover={{ textDecor: 'underline' }}> <Link href="/register"> Sign Up </Link> </Box>
       <Box w=".5rem"> </Box>
-      <Box as="span"> <Link href="/login"> Sign In </Link> </Box>
+      <Box as="span" _hover={{ textDecor: 'underline' }}> <Link href="/login"> Sign In </Link> </Box>
     </Flex>
   )
 }

@@ -76,11 +76,11 @@ import {
   
         <Box borderTopWidth={1} borderStyle={'solid'} borderColor={useColorModeValue('gray.200', 'gray.700')}>
           <Container as={Stack} maxW={'6xl'} py={4} direction={{ base: 'column', md: 'row' }} spacing={4} justify={{ base: 'center', md: 'space-between' }} align={{ base: 'center', md: 'center' }}>
-            <Text> © 2022 Ecommerce. All rights reserved </Text>         
+            <Text fontSize=".8rem"> © 2022 Ecommerce. All rights reserved </Text>         
             <Flex>
-              <Box color="blue.500"> <Link href="/conditions"> Conditions and terms </Link>  </Box>
-              <Text mx=".5rem"> | </Text>
-              <Box color="blue.500"> <Link href="/privacy"> Privacy </Link>  </Box>
+              <Box color="blue.500" fontSize=".8rem"> <Link href="/conditions"> Conditions and terms </Link>  </Box>
+              <Text mx=".5rem" fontSize=".8rem"> | </Text>
+              <Box color="blue.500" fontSize=".8rem"> <Link href="/privacy"> Privacy </Link>  </Box>
             </Flex>
           </Container>
         </Box>

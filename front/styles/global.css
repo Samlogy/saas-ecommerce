@@ -3,3 +3,11 @@
  html, body {
   font-family: 'Poppins', sans-serif!important;
  }
+
+select.select-language {
+    background-color: transparent;
+    border-radius: 5px
+}
+select.select-language:hover {
+    cursor: pointer
+}

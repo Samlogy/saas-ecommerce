@@ -14,11 +14,11 @@ const DarkModeToggle = () => {
         setIsDark((isDark: boolean) => !isDark)
         toggleDarkMode()
     };
-    
+
     return(
       <IconButton aria-label='dark mode' bg="transparent" 
             onClick={() => handleChanges()} 
-            icon={isDark ? <FiMoon /> : <FiSun /> } />
+            icon={isDark ? <FiMoon color={isDark ? 'white' : 'black'} /> : <FiSun color={isDark ? 'white' : 'black'} /> } />
     )
 }
 export default DarkModeToggle;

@@ -42,6 +42,6 @@ let shoppingCartStore = (set: SetState<IShoppingCart>, get: GetState<IShoppingCa
 shoppingCartStore = devtools(shoppingCartStore)
 shoppingCartStore = persist(shoppingCartStore, { name: "shopping_cart" })
 
-const useShoppingCartStore = create<IShoppingCart>(shoppingCartStore)
+const useShoppingCart = create<IShoppingCart>(shoppingCartStore)
 
-export default useShoppingCartStore;
+export default useShoppingCart;

@@ -24,7 +24,7 @@ import {
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 
 import { Logout, SelectLanguage, DarkModeToggle, ShoppingCartIcon } from "../components"
-import { useAuth } from "../store";
+import { useAuth, useShoppingCart } from "../store";
 
 const Links = [
   {
@@ -53,7 +53,7 @@ export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const isLogged = useAuth((state: any) => state.isLogged);
-  const logged = useAuth((state: any) => state.logged);
+  const total = useShoppingCart((state: any) => state.total);
 
   const user = {
     avatar: "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
@@ -78,7 +78,7 @@ export default function NavBar() {
           <Flex alignItems={'center'}>
             <SelectLanguage />
             <DarkModeToggle />
-            <ShoppingCartIcon value={100} />
+            <ShoppingCartIcon value={total} />
             { isLogged ? <NavMenuConnected avatar={user.avatar} /> : <NavMenuUnConnected /> }
           </Flex>
         </Flex>

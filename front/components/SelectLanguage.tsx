@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
-import en from '../locales/en';
-import fr from '../locales/fr';
+
+import { useLocale } from "../lib/hooks";
 
 const SelectLanguage = () => {
     const router = useRouter();
-    const { locale } = router;
-    const t = locale === 'en' ? en : fr;
+
+    const { t, locale } = useLocale()
 
     const changeLanguage = (e: any) => {
       const locale = e.target.value;

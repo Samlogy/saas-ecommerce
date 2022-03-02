@@ -53,11 +53,7 @@ export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const isLogged = useAuth((state: any) => state.isLogged);
-  // const user = useAuth((state: any) => state.user);
   const logged = useAuth((state: any) => state.logged);
-  // const notLogged = useAuth((state: any) => state.notLogged);
-
-  // console.log('user data: ', user.avatar)
 
   const user = {
     avatar: "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"

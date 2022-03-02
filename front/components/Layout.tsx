@@ -1,14 +1,10 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Container, Box, Flex } from '@chakra-ui/react'
-
-import styles from './layout.module.css'
-import utilStyles from '../styles/utils.module.css'
+import { Container, Flex } from '@chakra-ui/react'
 
 import NavBar from "../components/NavBar"
 import Footer from "../components/Footer"
-
 
 interface ILayout {
   children: React.ReactNode,
@@ -30,10 +26,8 @@ export default function Layout({ children, isHeaderVisible, isFooterVisible, ...
 
       <Flex flexDir="column" {...rest}>
         { isHeaderVisible && <NavBar /> }
-          {/* <Box px="2rem" py="1rem"> */}
           <Container maxW="1024px" bg="#FFFC" minHeight='calc(100vh - 100px)' py="36px" px={["16px","","","50px", "100px"]} borderRadius="4px">
             {children}
-          {/* </Box> */}
           </Container>
         { isFooterVisible && <Footer /> }
       </Flex>

@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 
 import { Layout, FormTemplate, ErrorMessage } from "../components"
 import { loginSchema } from "../lib/validation";
+import { useAuth } from "../store";
 
 
 export default function Login() {
@@ -29,9 +30,14 @@ export default function Login() {
     const { register, handleSubmit, getValues, formState: { errors } } = useForm({
         resolver: yupResolver(loginSchema)
     });
+    const logged = useAuth((state: any) => state.logged);
 
     const onLogin = async (data: any) => {
         console.log('login: ', data);
+
+        // get user data from API
+        const user_data = data
+        logged(user_data)
     };
 
   return (
@@ -74,7 +80,7 @@ export default function Login() {
                     <Stack spacing={5}>
                         <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
                             <Checkbox > <Box as="span" fontSize=".8rem"> Remember me </Box> </Checkbox>
-                            <Box as="span" color="blue.500" fontSize=".8rem"> <Link href="/forgotPassword">  Forgot password? </Link> </Box>
+                            <Box as="span" color="blue.500" fontSize=".8rem"> <Link href="/forgotPassword"> Forgot password? </Link> </Box>
                         </Stack>
                         
                         <Button type="submit" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>

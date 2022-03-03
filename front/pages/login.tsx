@@ -10,6 +10,7 @@ import {
     Box,
     Checkbox,
     IconButton,
+    Divider,
     useColorModeValue,
     InputRightElement, InputGroup
   } from '@chakra-ui/react';
@@ -19,7 +20,7 @@ import Link from 'next/link'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
-import { Layout, FormTemplate, ErrorMessage } from "../components"
+import { Layout, FormTemplate, ErrorMessage, SocialMediaButton } from "../components"
 import { loginSchema } from "../lib/validation";
 import { useAuth } from "../store";
 
@@ -80,7 +81,7 @@ export default function Login() {
                     <Stack spacing={5}>
                         <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
                             <Checkbox > <Box as="span" fontSize=".8rem"> Remember me </Box> </Checkbox>
-                            <Box as="span" color="blue.500" fontSize=".8rem"> <Link href="/forgotPassword"> Forgot password? </Link> </Box>
+                            <Box as="span" color="blue.500" fontSize=".8rem"> <Link href="/forgot-password"> Forgot password? </Link> </Box>
                         </Stack>
                         
                         <Button type="submit" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
@@ -88,6 +89,19 @@ export default function Login() {
                         </Button>
                     </Stack>
                 </form>
+
+                <Flex justifyContent={'space-between'} alignItems={'center'} my="1rem">
+                    <Divider border='2px' borderColor='gray.300' bg='gray.300' />
+                    <Text fontSize='.8rem' color='gray.400' w='full' textAlign={'center'}> Or Connect With </Text>
+                    <Divider border='2px' borderColor='gray.300' bg='gray.300' />
+                </Flex>
+
+                <Flex justifyContent={'space-between'} m="0px">
+                    <SocialMediaButton type="facebook" />
+                    <SocialMediaButton type="twitter" />
+                    <SocialMediaButton type="linkedin" />
+                    <SocialMediaButton type="github" />
+                </Flex>
             </FormTemplate>
         </Flex>
     </Layout>

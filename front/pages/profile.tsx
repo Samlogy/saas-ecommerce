@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { AiOutlineUser, AiOutlineMail } from "react-icons/ai"
 import { HiOutlineLocationMarker } from "react-icons/hi"
 import { BsCalendarDate } from "react-icons/bs"
-import { useEffect } from 'react';
 
 import Layout from "../components/Layout"
 
@@ -22,10 +21,6 @@ export default function Profile() {
     console.log('load profile data')
   }
 
-  useEffect(() => {
-    onLoad()
-  }, []);
-
   return (
     <Layout isHeaderVisible isFooterVisible>
         <Heading as="h1" fontSize="30px">
@@ -36,10 +31,10 @@ export default function Profile() {
 
         <Flex flexWrap={'wrap'} justifyContent='space-evenly' mb="1.5rem">
           <Button bg={'blue.400'} color={'white'} w='11rem' mb={['1rem', '', '0', '']} _hover={{ bg: 'blue.500' }}>
-              <Link href="/resetPassword"> Reset My Password </Link>
+              <Link href="/reset-password"> Reset My Password </Link>
           </Button>
           <Button bg={'blue.400'} color={'white'} w='11rem' _hover={{ bg: 'blue.500' }}>
-              <Link href="/editProfile"> Edit My Profile </Link>
+              <Link href="/edit-profile"> Edit My Profile </Link>
           </Button>
         </Flex>
 

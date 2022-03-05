@@ -11,7 +11,7 @@ import {
     IconButton,
     Divider,
     useColorModeValue,
-    InputRightElement, InputGroup
+    InputRightElement, InputGroup, Checkbox
   } from '@chakra-ui/react';
   import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
   import { useState } from 'react';
@@ -95,12 +95,17 @@ export default function Register() {
                         </InputGroup>
                         {errors.confirm_password && <ErrorMessage error={errors.confirm_password.message} />}
                     </FormControl>
-                    
-                    <Text fontSize=".8rem" mb=".75rem"> By creating an account, you agree to Amazon's 
-                        <Box as="span" color="blue.500"> <Link href="/conditions"> Conditions of Use </Link> </Box>
-                            and 
-                        <Box as="span" color="blue.500"> <Link href="/privacy"> Privacy Notice </Link> </Box>
-                    </Text>
+
+                    <FormControl id="conditions_terms" mb=".5rem">
+                        <Checkbox {...register("acceptTerms")}>
+                            <Text fontSize=".8rem" mb=".75rem" color={errors.acceptTerms ? 'error' : 'black'}> By creating an account, you agree to Amazon's 
+                                <Box as="span" color={errors.acceptTerms ? 'error' : 'blue.500'}> <Link href="/conditions"> Conditions of Use </Link> </Box>
+                                    and 
+                                <Box as="span" color={errors.acceptTerms ? 'error' : 'blue.500'}> <Link href="/privacy"> Privacy Notice </Link> </Box>
+                            </Text>
+                        </Checkbox>
+                        {errors.acceptTerms && <ErrorMessage error={errors.acceptTerms.message} />}
+                    </FormControl>
 
                     <Button type="submit" w="full" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
                         Sign up

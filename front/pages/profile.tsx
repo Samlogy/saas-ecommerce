@@ -7,19 +7,15 @@ import { BsCalendarDate } from "react-icons/bs"
 import Layout from "../components/Layout"
 
 
-export default function Profile() {
-  const data = {
-    fullName: "John Doe",
-    avatar: 'https://bit.ly/dan-abramov',
-    email: "sam@gmail.com",
-    phone: "213 540498180",
-    address: "Karnavati, India",
-    createdAt: "24-02-2022"
-  }
-
-  const onLoad = () => {
-    console.log('load profile data')
-  }
+export default function Profile({ data }) {
+  // const data = {
+  //   fullName: "John Doe",
+  //   avatar: 'https://bit.ly/dan-abramov',
+  //   email: "sam@gmail.com",
+  //   phone: "213 540498180",
+  //   address: "Karnavati, India",
+  //   createdAt: "24-02-2022"
+  // }
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -117,4 +113,13 @@ const BoxData = ({ data }: { data: any }) => {
       <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem"> {data} </Box> :
       <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem" color='gray.500'> --- </Box>   
   )
+}
+
+
+
+export async function getStaticProps() {
+  // const data = (await getUserData()) || {};
+  return {
+    props: { data: {} },
+  };
 }

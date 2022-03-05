@@ -1,5 +1,4 @@
 import {
-    Container,
     Flex,
     Box,
     Heading,
@@ -27,7 +26,7 @@ import {
   import { yupResolver } from "@hookform/resolvers/yup";
   import { useForm } from "react-hook-form";
   
-  import { Layout, FormTemplate, ErrorMessage } from "../components"
+  import { Layout, ErrorMessage } from "../components"
   import { contactSchema } from "../lib/validation";
   
   export default function contact() {
@@ -39,6 +38,27 @@ import {
       const onContact = async (data: any) => {
           console.log('contact')
       }
+
+      const data = [
+        {
+            data: "+91-988888888",
+            icon: <MdPhone color="#1970F1" size="20px" />
+        },
+        {
+            data: "email@example.com",
+            icon: <MdEmail color="#1970F1" size="20px" />
+        },
+        {
+            data: "Bali, Indonesia",
+            icon: <MdLocationOn color="#1970F1" size="20px" />
+        },
+      ]
+
+      const socialMedia = [
+        <MdFacebook size="28px" />,
+        <BsGithub size="28px" />,
+        <BsDiscord size="28px" />
+      ]
 
     return (
         <Layout isHeaderVisible isFooterVisible>
@@ -56,66 +76,34 @@ import {
 
                                 <Box py={{ base: 5, sm: 5, md: 8, lg: 10 }}>
                                     <VStack pl={0} spacing={3} alignItems="flex-start">
-                                        <Button
-                                            size="md"
-                                            height="48px"
-                                            width="200px"
-                                            variant="ghost"
-                                            color="#DCE2FF"
-                                            _hover={{ border: '2px solid #1C6FEB' }}
-                                            leftIcon={<MdPhone color="#1970F1" size="20px" />}>
-                                        +91-988888888
-                                        </Button>
-                                        <Button
-                                            size="md"
-                                            height="48px"
-                                            width="200px"
-                                            variant="ghost"
-                                            color="#DCE2FF"
-                                            _hover={{ border: '2px solid #1C6FEB' }}
-                                            leftIcon={<MdEmail color="#1970F1" size="20px" />}>
-                                        hello@abc.com
-                                        </Button>
+                                        { data.map(el => 
                                             <Button
-                                            size="md"
-                                            height="48px"
-                                            width="200px"
-                                            variant="ghost"
-                                            color="#DCE2FF"
-                                            _hover={{ border: '2px solid #1C6FEB' }}
-                                            leftIcon={<MdLocationOn color="#1970F1" size="20px" />}>
-                                        Karnavati, India
-                                        </Button>
+                                                size="md"
+                                                height="48px"
+                                                width="250px"
+                                                variant="ghost"
+                                                color="#DCE2FF"
+                                                _hover={{ border: '2px solid #1C6FEB' }}
+                                                leftIcon={el.icon}>
+                                                    {el.data}
+                                            </Button>
+                                        )}
                                     </VStack>
                                 </Box>
                                     <HStack mt={{ lg: 10, md: 10 }}
                                         spacing={5}
                                         px={5}
                                         alignItems="flex-start">
-                                        <IconButton
-                                            aria-label="facebook"
-                                            variant="ghost"
-                                            size="lg"
-                                            isRound={true}
-                                            _hover={{ bg: '#0D74FF' }}
-                                            icon={<MdFacebook size="28px" />}
-                                        />
-                                        <IconButton
-                                            aria-label="github"
-                                            variant="ghost"
-                                            size="lg"
-                                            isRound={true}
-                                            _hover={{ bg: '#0D74FF' }}
-                                            icon={<BsGithub size="28px" />}
-                                        />
-                                        <IconButton
-                                            aria-label="discord"
-                                            variant="ghost"
-                                            size="lg"
-                                            isRound={true}
-                                            _hover={{ bg: '#0D74FF' }}
-                                            icon={<BsDiscord size="28px" />}
-                                        />
+                                            {   socialMedia.map(el =>
+                                                    <IconButton
+                                                        aria-label="facebook"
+                                                        variant="ghost"
+                                                        size="lg"
+                                                        isRound={true}
+                                                        _hover={{ bg: '#0D74FF' }}
+                                                        icon={el}
+                                                    /> 
+                                                )}                                        
                                     </HStack>
                             </Box>
                         </WrapItem>

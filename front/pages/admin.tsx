@@ -1,5 +1,5 @@
 import { 
-  Box, Heading, Text, Button, Image,
+  Box, Heading, Text, Button, Image, Flex,
   Table,
   Thead,
   Tbody,
@@ -37,7 +37,7 @@ import { useRef } from "react"
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
-import { Layout, FormTemplate, ErrorMessage } from "../components"
+import { Layout, ErrorMessage } from "../components"
 import { addProductSchema } from "../lib/validation";
 
 export default function Admin() {
@@ -60,6 +60,14 @@ export default function Admin() {
     products
   }
 
+  const product = {
+    img: 'https://bit.ly/dan-abramov',
+    name: 'The title ...',
+    description: 'la desc ...',
+    price: 0,
+    coupon: 'coupon ...'
+  }
+
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Heading as="h2" fontSize="24px">
@@ -67,12 +75,12 @@ export default function Admin() {
       </Heading>
 
       <Button colorScheme='blue' variant='outline' leftIcon={<AiOutlinePlus />} onClick={onOpen}> Add Product </Button>
-      {/* <AddProduct isOpen={isOpen} onClose={onClose} /> */}
+      <AddEditProduct isOpen={isOpen} onClose={onClose} product={product} mode='edit' />
 
-      <ProductBox isOpen={isOpen} onClose={onClose} type="disable" />
+      {/* <ProductBox isOpen={isOpen} onClose={onClose} type="disable" /> */}
 
-      <ProductsFilter />
-      <ProductsList data={data} />
+      {/* <ProductsFilter /> */}
+      {/* <ProductsList data={data} /> */}
     </Layout>
   );
 }
@@ -132,73 +140,86 @@ const ActionsMenu = ({ productId }: { productId: string }) => {
   )
 }
 
-function AddProduct({ isOpen, onClose }) {
-  // const { isOpen, onOpen, onClose } = useDisclosure()
+function AddEditProduct({ isOpen, onClose, product, mode }: { isOpen: any, onClose: any, product: any, mode: string }) {
 
-  const { register, handleSubmit, getValues, formState: { errors } } = useForm({
-      resolver: yupResolver(addProductSchema)
-  });
+    const formOptions = { 
+      resolver: yupResolver(addProductSchema),
+      defaultValues: mode === 'add' ? {} : product 
+    };
+    const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm(formOptions);
 
-  const onAdd = async (data: any) => {
-      console.log('add product: ', data);
-  };
 
-return (
-      <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-              <ModalHeader> Add Product </ModalHeader>
-              <ModalCloseButton />
+    function onSubmit(data: any) {
+        return mode === 'add' ? createProduct(data) : updateProduct(product.id, data);
+    }
 
-              <ModalBody>
-                  <form onSubmit={handleSubmit(onAdd)}> 
-                      <Image boxSize='100px' objectFit='cover' src='https://bit.ly/dan-abramov' alt='Product Image' mb="1rem" borderRadius='5px' />
-                      <FormControl id="image" mb=".5rem">
-                          <FormLabel> Choose Image </FormLabel>
-                          <Input type="file" placeholder="Product Image" border="none" px="0" isInvalid={errors.img ? true : false}
-                                  errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
-                                  {...register("img")} />
-                          {errors.img && <ErrorMessage error={errors.img.message} />}
-                      </FormControl>
+    function createProduct(data: any) {
+      console.log('create product: ', data)
+    }
 
-                      <FormControl id="title" mb=".5rem">
-                          <FormLabel> Title </FormLabel>
-                          <Input type="text" placeholder="Product Name" _placeholder={{ color: 'gray.500' }} isInvalid={errors.name ? true : false}
-                                  errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
-                                  {...register("name")} />
-                          {errors.name && <ErrorMessage error={errors.name.message} />}
-                      </FormControl>
+    function updateProduct(id: string, data: any) {
+      console.log('edit product: ', data, id)
+    }
 
-                      <FormControl id="description" mb=".5rem">
-                          <FormLabel> Description </FormLabel>
-                          <Textarea placeholder="Product Description" _placeholder={{ color: 'gray.500' }} isInvalid={errors.description ? true : false}
-                                  errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
-                                  {...register("description")} />
-                          {errors.description && <ErrorMessage error={errors.description.message} />}
-                      </FormControl>
+    return (
+          <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                  <ModalHeader> { mode === 'add' ? "Add" : 'Edit' } Product </ModalHeader>
+                  <ModalCloseButton />
 
-                      <FormControl id="price" mb=".5rem">
-                          <FormLabel> Price </FormLabel>
-                          <Input type="number" placeholder="Product Price" _placeholder={{ color: 'gray.500' }} isInvalid={errors.price ? true : false}
-                                  errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
-                                  {...register("price")} />
-                          {errors.price && <ErrorMessage error={errors.price.message} />}
-                      </FormControl>
+                  <ModalBody>
+                      <form onSubmit={handleSubmit(onSubmit)}> 
+                          <Image boxSize='100px' objectFit='cover' src={product.img} fallbackSrc='https://via.placeholder.com/150' alt='Product Image' mb="1rem" borderRadius='5px' />
+                          <FormControl id="image" mb=".5rem">
+                              <FormLabel> Choose Image </FormLabel>
+                              <Input type="file" placeholder="Product Image" border="none" px="0" isInvalid={errors.img ? true : false}
+                                      errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                      {...register("img")} />
+                              {errors.img && <ErrorMessage error={errors.img.message} />}
+                          </FormControl>
 
-                      <FormControl id="coupon" mb=".5rem">
-                          <FormLabel> Add Coupon </FormLabel>
-                          <Input type="text" placeholder="Product Coupon" _placeholder={{ color: 'gray.500' }} isInvalid={errors.coupon ? true : false}
-                                  errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
-                                  {...register("coupon")} />
-                          {errors.coupon && <ErrorMessage error={errors.coupon.message} />}
-                      </FormControl>
+                          <FormControl id="name" mb=".5rem">
+                              <FormLabel> Name </FormLabel>
+                              <Input type="text" placeholder="Product Name" _placeholder={{ color: 'gray.500' }} isInvalid={errors.name ? true : false}
+                                      errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                      {...register("name")} />
+                              {errors.name && <ErrorMessage error={errors.name.message} />}
+                          </FormControl>
 
-                      <Button type="submit" colorScheme='blue' mt="1rem" ml="auto" display={'flex'} justifyContent='flex-end'> Create </Button>
-                  </form>
-              </ModalBody>
-          </ModalContent>
-      </Modal>
-  );
+                          <FormControl id="description" mb=".5rem">
+                              <FormLabel> Description </FormLabel>
+                              <Textarea placeholder="Product Description" _placeholder={{ color: 'gray.500' }} isInvalid={errors.description ? true : false}
+                                      errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                      {...register("description")} />
+                              {errors.description && <ErrorMessage error={errors.description.message} />}
+                          </FormControl>
+
+                          <FormControl id="price" mb=".5rem">
+                              <FormLabel> Price </FormLabel>
+                              <Input type="number" placeholder="Product Price" _placeholder={{ color: 'gray.500' }} isInvalid={errors.price ? true : false}
+                                      errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                      {...register("price")} />
+                              {errors.price && <ErrorMessage error={errors.price.message} />}
+                          </FormControl>
+
+                          <FormControl id="coupon" mb=".5rem">
+                              <FormLabel> Add Coupon </FormLabel>
+                              <Input type="text" placeholder="Product Coupon" _placeholder={{ color: 'gray.500' }} isInvalid={errors.coupon ? true : false}
+                                      errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                      {...register("coupon")} />
+                              {errors.coupon && <ErrorMessage error={errors.coupon.message} />}
+                          </FormControl>
+
+                          <Flex flexDir="row"> 
+                            <Button type="submit" isLoading={isSubmitting || !product} bg='blue.600' color="white" mt="1rem" ml="auto" display={'flex'} justifyContent='flex-end' _hover={{ bg: 'blue.700' }}> Create </Button>
+                            <Button type="reset" bg="gray.600" color='white' mt="1rem" ml="1rem" display={'flex'} justifyContent='flex-end' _hover={{ bg: 'gray.700' }} onClick={() => reset(formOptions.defaultValues)}> Reset </Button>
+                          </Flex>
+                      </form>
+                  </ModalBody>
+              </ModalContent>
+          </Modal>
+      );
 }
 
 function ProductBox({ isOpen, onClose, type }: { isOpen: any, onClose: any, type: string }) {
@@ -239,8 +260,9 @@ function ProductBox({ isOpen, onClose, type }: { isOpen: any, onClose: any, type
 }
 
 export async function getStaticProps() {
-  // const data = (await getUserData()) || {};
+  // const data = (await getProducts()) || {};
   return {
     props: { products: {} },
   };
 }
+

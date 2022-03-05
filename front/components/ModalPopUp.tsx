@@ -37,12 +37,6 @@ const ModalPopUp = ({ isOpen, onClose, text, type }: IModalPopUp) => {
             </Flex>
             <Text> {text} </Text>
           </ModalBody>
-
-          <ModalFooter justifyContent={'center'}>
-            <Button colorScheme='blue' w="100px" onClick={onClose}>
-              Ok
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
   )

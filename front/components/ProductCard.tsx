@@ -10,13 +10,11 @@ import Link from 'next/link'
     Badge,
     useColorModeValue,
     Button,
-    Icon,
-    chakra,
-    Tooltip,
   } from '@chakra-ui/react';
   import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
   import { FiShoppingCart } from 'react-icons/fi';
   
+  import { useShoppingCart } from "../store";
   
   interface RatingProps {
     rating: number;
@@ -52,8 +50,11 @@ import Link from 'next/link'
   }
   
   const ProductCard = ({ data }: { data: any }) => {
+    const addToCart = useShoppingCart((state: any) => state.addToCart)
+
     const onAdd = () => {
       console.log('add to cart');
+      // addToCart()
     }
 
     return (

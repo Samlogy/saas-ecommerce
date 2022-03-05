@@ -2,16 +2,11 @@ import { Box, Heading, Text, Button } from '@chakra-ui/react';
 import Link from 'next/link'
 
 import Layout from "../components/Layout"
-
-import { useRouter } from "next/router";
-import en from '../locales/en';
-import fr from '../locales/fr';
+import { useLocale } from "../lib/hooks"
 
 
 export default function NotFound() {
-  const router = useRouter();
-  const { locale } = router;
-  const t = locale === 'en' ? en : fr;
+  const { t } = useLocale();
   
   return (
     <Layout textAlign="center" py={10} px={6} h="100vh" display="flex" justifyContent="center" mt="4rem">

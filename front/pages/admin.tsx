@@ -1,5 +1,5 @@
 import { 
-  Box, Heading, Text, Button, Image, Flex,
+  Box, Heading, Text, Button, Image, Flex, IconButton, Select,
   Table,
   Thead,
   Tbody,
@@ -25,23 +25,31 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  AlertDialogCloseButton
+  AlertDialogCloseButton,
+  ModalFooter
 } from '@chakra-ui/react';
-import Link from 'next/link'
+// import Link from 'next/link'
 import { AiOutlinePlus } from "react-icons/ai"
-import { BsThreeDotsVertical } from "react-icons/bs"
+import { BiDetail } from "react-icons/bi"
 import { FiEdit, FiTrash } from "react-icons/fi"
 import { AiOutlineClose } from 'react-icons/ai';
+import { FaEllipsisV } from "react-icons/fa"
 import { useRef } from "react"
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useState } from "react"
 
-import { Layout, ErrorMessage } from "../components"
+import { Layout, ErrorMessage, View } from "../components"
 import { addProductSchema } from "../lib/validation";
 
 export default function Admin() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  // const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const [action, setAction] = useState({ delete: false, disable: false, add: false, edit: false, details: false })
+  const [currentProduct, setCurrentProduct] = useState({
+    id: '', name: '', price: '', description: '', coupon: '', img: '', quantity: ''
+  })
 
   const headers = ['Name', 'Description', 'Quantity', 'Price', 'Actions']
   const products = [
@@ -49,7 +57,7 @@ export default function Admin() {
       id: "1",
       img: 'https://bit.ly/dan-abramov',
       name: "Throwback Hip Ba",
-      // description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
       quantity: 1,
       price: 90.00
     },
@@ -68,25 +76,49 @@ export default function Admin() {
     coupon: 'coupon ...'
   }
 
+  // click on button --> add - edit (product) - disable (id) - delete (id)
+
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Heading as="h2" fontSize="24px">
         Products List
       </Heading>
 
-      <Button colorScheme='blue' variant='outline' leftIcon={<AiOutlinePlus />} onClick={onOpen}> Add Product </Button>
-      <AddEditProduct isOpen={isOpen} onClose={onClose} product={product} mode='edit' />
+      <Button colorScheme='blue' variant='outline' ml="auto" display={'flex'} leftIcon={<AiOutlinePlus />} 
+        onClick={() => setAction({...action, add: true})}> Add Product </Button>
 
-      {/* <ProductBox isOpen={isOpen} onClose={onClose} type="disable" /> */}
+      {/* <ProductBox isOpen={isOpen} onClose={onClose} productId={"1"} mode="disable" /> */}
+      
+      <View cond={action.delete}>
+          <ProductBox isOpen={action.delete} setAction={setAction} onClose={() => setAction({...action, delete: false})} productId={"1"} mode="delete" />  
+      </View>
+
+      <View cond={action.disable}>
+          <ProductBox isOpen={action.disable} setAction={setAction} onClose={() => setAction({...action, disable: false})} productId={"1"} mode="disable" />  
+      </View>
+
+      <View cond={action.add}>
+        <AddEditProduct isOpen={action.add} 
+            currentProduct={currentProduct} onClose={() => setAction({...action, add: false})} mode='add' />
+      </View>
+
+      <View cond={action.edit}>
+        <AddEditProduct isOpen={action.edit} 
+              currentProduct={currentProduct} onClose={() => setAction({...action, edit: false})} product={product} mode='edit' />
+      </View>
+
+      <View cond={action.details}>
+        <ProductDetails isOpen={action.details} onClose={() => setAction({...action, details: false})} product={product} />
+      </View>
 
       {/* <ProductsFilter /> */}
-      {/* <ProductsList data={data} /> */}
+      <ProductsList data={data} setAction={setAction} />
     </Layout>
   );
 }
 
 
-const ProductsList = ({ data }: { data: any }) => {
+const ProductsList = ({ data, setAction }: { data: any, setAction: any }) => {
   return(
       <Table variant='striped' colorScheme='blue'>
         <Thead>
@@ -103,7 +135,7 @@ const ProductsList = ({ data }: { data: any }) => {
               <Td> <Text isTruncated w="2rem"> {product?.description} </Text>  </Td>
               <Td> {product?.quantity}  </Td>
               <Td> {product?.price}  </Td>
-              <Td> <ActionsMenu productId={product.id} /> </Td>
+              <Td> <ActionsMenu productId={product.id} setAction={setAction} /> </Td>
             </Tr>
           )}
         </Tbody>
@@ -118,29 +150,66 @@ const ProductsList = ({ data }: { data: any }) => {
 }
 
 const ProductsFilter = () => {
+  const onSort = (e: any) => {
+    const selected = e.target.value
+    console.log('selected: ', selected)
+  }
+  const onFilter = (e: any) => {
+    const filters = e.target.value;
+    console.log('filters: ', filters)
+  }
   return(
-    <>
-      <Input placeholder='Product Name' />
-    </>
+    <Flex flexDir="row" flexWrap={"wrap"} justifyContent={["space-between", "", "space-evenly", ""]} my="2rem">
+      <Flex alignItems={"center"}>
+        <Box as="span" fontSize="1rem" mr=".5rem"> Filter: </Box> 
+        <Input onChange={onFilter} placeholder='Search...' w={["80%", "", "20rem", ""]} />
+      </Flex>
+
+      <Flex alignItems={"center"}>
+        <Box as="span" fontSize="1rem" mr=".5rem"> Sort: </Box>
+        <Select onChange={onSort} placeholder="Order" w={["80%", "", "6rem", ""]}>
+          <option value='asc'> ASC </option> 
+          <option value='desc'> DESC </option> 
+        </Select>
+      </Flex>
+    </Flex>
   )
 }
 
-const ActionsMenu = ({ productId }: { productId: string }) => {
+const ActionsMenu = ({ productId, setAction }: { productId: string, setAction: any }) => {
+  const onEdit = (productId: string) => {
+    // console.log('edit product: ', productId)
+    setAction({ edit: true})
+  }
+  const onDelete = (productId: string) => {
+    // console.log('delete product: ', productId)
+    setAction({ delete: true })
+  }
+  const onDisable = (productId: string) => {
+    // console.log('disable product: ', productId)
+    setAction({ disable: true })
+  }
+  const onDetails = (productId: string) => {
+    // console.log('details product: ', productId)
+    setAction({ details: true })
+  }
+
   return(
     <Menu>
-      <MenuButton as={Button} rightIcon={<BsThreeDotsVertical />}>
+      <MenuButton as={IconButton} icon={<FaEllipsisV />}>
       </MenuButton>
 
       <MenuList>
-        <MenuItem > <FiEdit color='#deb055' /> <Box as="span" ml=".5rem" color='yellow.500'> Edit </Box> </MenuItem>
-        <MenuItem > <FiTrash color="#e53e3e" /> <Box as="span" ml=".5rem" color='red.500'> Delete </Box> </MenuItem>
-        <MenuItem > <AiOutlineClose color="#718096" />  <Box as="span" ml=".5rem" color='gray.500'> Disable </Box> </MenuItem>
+        <MenuItem color={"yellow.500"} icon={<FiEdit color='warning' size="18" />} onClick={() => onEdit(productId)}> Edit </MenuItem>
+        <MenuItem color={"red.500"} icon={<FiTrash color="error" size="18" />} onClick={() => onDelete(productId)}> Delete </MenuItem>
+        <MenuItem color={"gray.500"} icon={<AiOutlineClose color="disable" size="18" />} onClick={() => onDisable(productId)}> Disable </MenuItem>
+        <MenuItem color={"blue.500"} icon={<BiDetail color={'info'} size="18" />} onClick={() => onDetails(productId)}> Details </MenuItem>
       </MenuList>
     </Menu>
   )
 }
 
-function AddEditProduct({ isOpen, onClose, product, mode }: { isOpen: any, onClose: any, product: any, mode: string }) {
+const AddEditProduct = ({ isOpen, onClose, product, currentProduct, mode }: { isOpen: any, onClose: any, product?: any, currentProduct: any, mode: string }) => {
 
     const formOptions = { 
       resolver: yupResolver(addProductSchema),
@@ -170,11 +239,11 @@ function AddEditProduct({ isOpen, onClose, product, mode }: { isOpen: any, onClo
 
                   <ModalBody>
                       <form onSubmit={handleSubmit(onSubmit)}> 
-                          <Image boxSize='100px' objectFit='cover' src={product.img} fallbackSrc='https://via.placeholder.com/150' alt='Product Image' mb="1rem" borderRadius='5px' />
+                          <Image boxSize='100px' objectFit='cover' src={currentProduct?.img || product?.img} fallbackSrc='https://via.placeholder.com/150' alt='Product Image' mb="1rem" borderRadius='5px' />
                           <FormControl id="image" mb=".5rem">
                               <FormLabel> Choose Image </FormLabel>
                               <Input type="file" placeholder="Product Image" border="none" px="0" isInvalid={errors.img ? true : false}
-                                      errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                      errorBorderColor="error" borderColor="gray.300" borderRadius="4px"
                                       {...register("img")} />
                               {errors.img && <ErrorMessage error={errors.img.message} />}
                           </FormControl>
@@ -212,7 +281,7 @@ function AddEditProduct({ isOpen, onClose, product, mode }: { isOpen: any, onClo
                           </FormControl>
 
                           <Flex flexDir="row"> 
-                            <Button type="submit" isLoading={isSubmitting || !product} bg='blue.600' color="white" mt="1rem" ml="auto" display={'flex'} justifyContent='flex-end' _hover={{ bg: 'blue.700' }}> Create </Button>
+                            <Button type="submit" isLoading={isSubmitting} bg='blue.600' color="white" mt="1rem" ml="auto" display={'flex'} justifyContent='flex-end' _hover={{ bg: 'blue.700' }}> {mode === 'add' ? 'Create' : 'Edit'} </Button>
                             <Button type="reset" bg="gray.600" color='white' mt="1rem" ml="1rem" display={'flex'} justifyContent='flex-end' _hover={{ bg: 'gray.700' }} onClick={() => reset(formOptions.defaultValues)}> Reset </Button>
                           </Flex>
                       </form>
@@ -222,8 +291,18 @@ function AddEditProduct({ isOpen, onClose, product, mode }: { isOpen: any, onClo
       );
 }
 
-function ProductBox({ isOpen, onClose, type }: { isOpen: any, onClose: any, type: string }) {
+const ProductBox = ({ isOpen, onClose, productId, setAction, mode }: { isOpen: any, onClose: any, productId: string, setAction: any, mode: string }) => {
   const cancelRef = useRef()
+
+  const onDelete = (productId: string) => {
+    console.log('delete product: ', productId)
+    setAction({ delete: false })
+  }
+
+  const onDisable = (productId: string) => {
+    console.log('disable product: ', productId)
+    setAction({ disable: false })
+  }
 
   return(
       <AlertDialog
@@ -237,25 +316,49 @@ function ProductBox({ isOpen, onClose, type }: { isOpen: any, onClose: any, type
 
         <AlertDialogContent>
           <AlertDialogHeader>  
-            { type === 'delete' ? "Delete Product ?" : "Disable Product ?" }
+            { mode === 'delete' ? "Delete Product ?" : "Disable Product ?" }
           </AlertDialogHeader>
 
           <AlertDialogCloseButton />
 
           <AlertDialogBody>
-            { type === 'delete' ? "Are you sure you want to delete this product ?" : "Are you sure you want to disable this product ?" }
+            { mode === 'delete' ? "Are you sure you want to delete this product ?" : "Are you sure you want to disable this product ?" }
           </AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
-              No
-            </Button>
-            <Button colorScheme='red' ml={3}>
-              Yes
-            </Button>
+            <Button colorScheme='red' 
+                onClick={mode === 'delete' ? () => onDelete(productId) : () => onDisable(productId)}>
+                Yes
+              </Button>
+              <Button ref={cancelRef} onClick={onClose} bg="gray.600" color="white" _hover={{ bg: "gray.700" }} ml={3}>
+                No
+              </Button>            
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+  )
+}
+
+const ProductDetails = ({ isOpen, onClose, product }: { isOpen: any, onClose: any, product: any }) => {
+  return(
+    <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+            <ModalHeader> Product Details </ModalHeader>
+            <ModalCloseButton />
+
+            <ModalBody>
+                <Flex flexDir='column'>
+                  <Image src={product?.img} alt='product iamge' borderRadius={'5px'} w="5rem" h="5rem" />
+                  <Text> {product.name} </Text>
+                  <Text> {product.price} </Text>
+                  <Text> {product.quantity} </Text>
+                  <Text> {product.description} </Text>
+                </Flex>
+            </ModalBody>
+            <ModalFooter> <Button bg={'disable'} color='white' _hover={{ bg: 'gray.600' }} onClick={onClose}> Close </Button> </ModalFooter>
+        </ModalContent>
+    </Modal>
   )
 }
 

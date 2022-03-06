@@ -22,13 +22,14 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
 import { Logout, SelectLanguage, DarkModeToggle, ShoppingCartIcon } from "../components"
 import { useAuth, useShoppingCart } from "../store";
 
 const Links = [
   {
-    link: "/",
+    link: "",
     name: "Home"
   },
   {
@@ -41,13 +42,19 @@ const Links = [
   },
 ];
 
-const NavLink = ({ children, link }: { children: ReactNode, link: string }) => (
-  <Link href={`/${link}`}>
-    <Box px={2} py={1} rounded={'md'} _hover={{ textDecoration: 'none', bg: useColorModeValue('gray.200', 'gray.700') }}> 
-      {children}
-    </Box>
-  </Link>
-);
+const NavLink = ({ children, link, exact=false }: { children: ReactNode, link: string, exact?: boolean }) => {
+  const { pathname } = useRouter();
+  const isActive = pathname === `/${link}` 
+
+  return(
+    <Link href={`${link}`}>
+      <Box px={2} py={1} rounded={'md'} color={isActive ? "blue.600" : "black"} 
+          _hover={{ textDecoration: 'none', cursor: 'pointer', bg: useColorModeValue('gray.200', 'gray.700') }}> 
+        {children}
+      </Box>
+    </Link>
+  )
+};
 
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -73,7 +80,7 @@ export default function NavBar() {
             <Box> <Logo /> </Box>
             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
               {Links.map((link: any) => (
-                <NavLink key={link.link} link={link.link}> {link.name} </NavLink>
+                <NavLink key={link.link} link={link.link} exact={link.name === 'home' ? true : false}> {link.name} </NavLink>
               ))}
             </HStack>
           </HStack>

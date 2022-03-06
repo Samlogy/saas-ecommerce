@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/react"
 
 interface IView {
     children: React.ReactNode,
-    cond: boolean, 
+    cond: any, 
     rest?: React.ReactNode 
 }
 

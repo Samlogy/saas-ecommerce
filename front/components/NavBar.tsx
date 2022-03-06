@@ -29,22 +29,23 @@ import { useAuth, useShoppingCart } from "../store";
 
 const Links = [
   {
-    link: "",
+    link: "/",
     name: "Home"
   },
   {
-    link: "products",
+    link: "/products",
     name: "Products"
   },
   {
-    link: "contact",
+    link: "/contact",
     name: "Contact Us"
   },
 ];
 
-const NavLink = ({ children, link, exact=false }: { children: ReactNode, link: string, exact?: boolean }) => {
+const NavLink = ({ children, link }: { children: ReactNode, link: string }) => {
   const { pathname } = useRouter();
-  const isActive = pathname === `/${link}` 
+  const isActive = pathname === `${link}` 
+  // console.log('pathname: ', pathname, isActive)
 
   return(
     <Link href={`${link}`}>

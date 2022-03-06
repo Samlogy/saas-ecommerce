@@ -31,7 +31,7 @@ import {
   
   export default function contact() {
 
-        const { register, handleSubmit, getValues, formState: { errors } } = useForm({
+        const { register, handleSubmit, formState: { errors } } = useForm({
             resolver: yupResolver(contactSchema)
         });
 
@@ -83,6 +83,7 @@ import {
                                                 width="250px"
                                                 variant="ghost"
                                                 color="#DCE2FF"
+                                                display={'flex'} alignItems='center' justifyContent={'flex-start'}
                                                 _hover={{ border: '2px solid #1C6FEB' }}
                                                 leftIcon={el.icon}>
                                                     {el.data}

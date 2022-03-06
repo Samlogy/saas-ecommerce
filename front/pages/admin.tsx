@@ -17,8 +17,8 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
+  ModalFooter,
   FormControl, FormLabel, Input, Textarea,
-  useDisclosure,
   AlertDialog,
   AlertDialogBody,
   AlertDialogFooter,
@@ -26,7 +26,8 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   AlertDialogCloseButton,
-  ModalFooter
+  ListItem,
+  UnorderedList
 } from '@chakra-ui/react';
 // import Link from 'next/link'
 import { AiOutlinePlus } from "react-icons/ai"
@@ -44,14 +45,12 @@ import { Layout, ErrorMessage, View } from "../components"
 import { addProductSchema } from "../lib/validation";
 
 export default function Admin() {
-  // const { isOpen, onOpen, onClose } = useDisclosure()
-
   const [action, setAction] = useState({ delete: false, disable: false, add: false, edit: false, details: false })
   const [currentProduct, setCurrentProduct] = useState({
     id: '', name: '', price: '', description: '', coupon: '', img: '', quantity: ''
   })
 
-  const headers = ['Name', 'Description', 'Quantity', 'Price', 'Actions']
+  const headers = ['Image', 'Name', 'Description', 'Quantity', 'Price', 'Actions']
   const products = [
     {
       id: "1",
@@ -69,14 +68,14 @@ export default function Admin() {
   }
 
   const product = {
+    id: '1',
     img: 'https://bit.ly/dan-abramov',
     name: 'The title ...',
-    description: 'la desc ...',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis similique quam reprehenderit repudiandae adipisci saepe. Est officiis, dolore, natus molestias nemo facilis ad pariatur rem accusantium numquam quae, unde doloribus.',
     price: 0,
-    coupon: 'coupon ...'
+    coupon: '30%',
+    features: ['feature1', 'feature1', 'feature1', 'feature1', 'feature1', 'feature1']
   }
-
-  // click on button --> add - edit (product) - disable (id) - delete (id)
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -87,7 +86,6 @@ export default function Admin() {
       <Button colorScheme='blue' variant='outline' ml="auto" display={'flex'} leftIcon={<AiOutlinePlus />} 
         onClick={() => setAction({...action, add: true})}> Add Product </Button>
 
-      {/* <ProductBox isOpen={isOpen} onClose={onClose} productId={"1"} mode="disable" /> */}
       
       <View cond={action.delete}>
           <ProductBox isOpen={action.delete} setAction={setAction} onClose={() => setAction({...action, delete: false})} productId={"1"} mode="delete" />  
@@ -111,7 +109,7 @@ export default function Admin() {
         <ProductDetails isOpen={action.details} onClose={() => setAction({...action, details: false})} product={product} />
       </View>
 
-      {/* <ProductsFilter /> */}
+      <ProductsFilter />
       <ProductsList data={data} setAction={setAction} />
     </Layout>
   );
@@ -130,7 +128,7 @@ const ProductsList = ({ data, setAction }: { data: any, setAction: any }) => {
         <Tbody>
           { data.products.map((product: any) => 
             <Tr> 
-              <Td> <Image src={product?.img} alt='product iamge' borderRadius={'5px'} w="5rem" h="5rem" /> </Td>
+              <Td> <Image src={product?.img} fallbackSrc='https://via.placeholder.com/150' alt='product iamge' borderRadius={'5px'} w="5rem" h="5rem" /> </Td>
               <Td> {product?.name}  </Td>
               <Td> <Text isTruncated w="2rem"> {product?.description} </Text>  </Td>
               <Td> {product?.quantity}  </Td>
@@ -159,14 +157,14 @@ const ProductsFilter = () => {
     console.log('filters: ', filters)
   }
   return(
-    <Flex flexDir="row" flexWrap={"wrap"} justifyContent={["space-between", "", "space-evenly", ""]} my="2rem">
-      <Flex alignItems={"center"}>
-        <Box as="span" fontSize="1rem" mr=".5rem"> Filter: </Box> 
+    <Flex flexDir="row" flexWrap={"wrap"} justifyContent={["space-between", "", "space-evenly", ""]} my="3rem">
+      <Flex alignItems={"center"} mb={["1rem", "0", "", ""]}>
+        <Box as="span" fontSize="1rem" mr=".5rem" w="3rem"> Filter: </Box> 
         <Input onChange={onFilter} placeholder='Search...' w={["80%", "", "20rem", ""]} />
       </Flex>
 
       <Flex alignItems={"center"}>
-        <Box as="span" fontSize="1rem" mr=".5rem"> Sort: </Box>
+        <Box as="span" fontSize="1rem" mr=".5rem" w="3rem"> Sort: </Box>
         <Select onChange={onSort} placeholder="Order" w={["80%", "", "6rem", ""]}>
           <option value='asc'> ASC </option> 
           <option value='desc'> DESC </option> 
@@ -340,8 +338,20 @@ const ProductBox = ({ isOpen, onClose, productId, setAction, mode }: { isOpen: a
 }
 
 const ProductDetails = ({ isOpen, onClose, product }: { isOpen: any, onClose: any, product: any }) => {
+
+  const Display = (label: string, data: any) => {
+    return(
+      <Flex mb=".5rem"> 
+        <Box as="span" w="10rem" textAlign={'left'} fontWeight={'600'}> {label}: </Box>
+
+        { Array.isArray(data) ? <UnorderedList textAlign={'left'}> {data.map(el => <ListItem key={el.id}> {el} </ListItem>)} </UnorderedList> :
+          <Text ml='.5rem' textAlign={'left'} w="auto"> {data} </Text>
+        }
+      </Flex>
+    )
+  }
   return(
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size='xl'>
         <ModalOverlay />
         <ModalContent>
             <ModalHeader> Product Details </ModalHeader>
@@ -349,11 +359,12 @@ const ProductDetails = ({ isOpen, onClose, product }: { isOpen: any, onClose: an
 
             <ModalBody>
                 <Flex flexDir='column'>
-                  <Image src={product?.img} alt='product iamge' borderRadius={'5px'} w="5rem" h="5rem" />
-                  <Text> {product.name} </Text>
-                  <Text> {product.price} </Text>
-                  <Text> {product.quantity} </Text>
-                  <Text> {product.description} </Text>
+                  <Image src={product?.img} alt='product iamge' borderRadius={'5px'} w="5rem" h="5rem" mb=".5rem" />
+                  { Display('Name', product.name) }
+                  { Display('Quantity', product.quantity) }
+                  { Display('Description', product.description) }    
+                  { Display('Coupon', product.coupon) }   
+                  { Display('Features', product.features) }               
                 </Flex>
             </ModalBody>
             <ModalFooter> <Button bg={'disable'} color='white' _hover={{ bg: 'gray.600' }} onClick={onClose}> Close </Button> </ModalFooter>

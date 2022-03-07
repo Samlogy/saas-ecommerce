@@ -4,20 +4,24 @@ import { NumberSchema } from 'yup';
 
 const Pagination = () => {
     const num = [1, 2, 3]
+    
     return(
-        <Flex flexDir='row' justifyContent={'space-between'} w="20rem" m="1.5rem auto">
-            <IconButton aria-label='arrow left' icon={<RiArrowLeftSLine size={22} color='white' />} 
-                bg="blue.500" borderRadius={'full'} _hover={{ bg: 'blue.600' }}  /> 
+        <Flex flexDir='row' justifyContent={'space-between'} w="60%" m="1.5rem auto">
+            <Button color='gray.600' fontSize='.9rem' mx=".25rem" _hover={{ bg: 'gray.400', color: 'white' }}> Start </Button>
+            <IconButton aria-label='arrow left' icon={<RiArrowLeftSLine size={22} color='gray' />} 
+               _hover={{ bg: 'gray.300', color: 'white' }}  /> 
 
             <Flex flexDir='row' justifyContent={'center'}>
                 {
                     num.map(el => 
-                    <Button bg="blue.500" borderRadius={'full'} color='white' fontSize='.9rem' mx=".25rem" _hover={{ bg: 'blue.600' }}> {el} </Button>)
+                    <Button color='gray.600' fontSize='.9rem' mx=".25rem" _hover={{ bg: 'gray.400', color: 'white' }}> {el} </Button>)
                 }
             </Flex> 
 
-            <IconButton aria-label='arrow right' icon={<RiArrowRightSLine size={22} color='white' />} 
-                bg="blue.500" borderRadius={'full'} _hover={{ bg: 'blue.600' }}  /> 
+            <IconButton aria-label='arrow right' icon={<RiArrowRightSLine size={22} color='gray' />} 
+               _hover={{ bg: 'gray.300', color: 'white' }}  /> 
+
+            <Button color='gray.600' fontSize='.9rem' mx=".25rem" _hover={{ bg: 'gray.400', color: 'white' }}> Last </Button>
         </Flex>
     )
 }

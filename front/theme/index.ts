@@ -1,4 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
+import { StepsStyleConfig as Steps } from 'chakra-ui-steps';
 
 import { colors } from "./utilities"
 
@@ -13,7 +14,10 @@ const theme = extendTheme({
             xl: "1920px",
             "2xl": "2160px",
         }
-    }
+    },
+    components: {
+        Steps,
+    },
 });
 
 

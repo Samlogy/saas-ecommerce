@@ -11,6 +11,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@hookform/resolvers": "^2.8.8",
+    "chakra-ui-steps": "^1.6.2",
     "date-fns": "^2.11.1",
     "framer-motion": "^6",
     "gray-matter": "^4.0.2",

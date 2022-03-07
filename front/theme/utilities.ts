@@ -4,10 +4,11 @@ export const colors = {
     white: "#fff",
     black: "#000",
     accent: "#57980B",
-    error: "#EB5757",
-    warning: "#F2994A",
-    success: "#73C316",
-    info: "#00466E"
+    error: "#e53e3e",
+    warning: "#deb055",
+    success: "#38a169",
+    info: "#3182ce",
+    disable: "#718096"
 
     // green: {
     //     main: "#73C316",

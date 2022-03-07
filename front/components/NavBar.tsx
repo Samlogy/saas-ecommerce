@@ -45,7 +45,6 @@ const Links = [
 const NavLink = ({ children, link }: { children: ReactNode, link: string }) => {
   const { pathname } = useRouter();
   const isActive = pathname === `${link}` 
-  // console.log('pathname: ', pathname, isActive)
 
   return(
     <Link href={`${link}`}>
@@ -63,7 +62,7 @@ export default function NavBar() {
   const isLogged = useAuth((state: any) => state.isLogged);
   const user = useAuth((state: any) => state.user);
 
-  const total = useShoppingCart((state: any) => state.products)
+  const total = useShoppingCart((state: any) => state.total)
   
 
   // const user = {

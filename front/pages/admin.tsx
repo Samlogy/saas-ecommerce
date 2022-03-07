@@ -35,20 +35,61 @@ import { BiDetail } from "react-icons/bi"
 import { FiEdit, FiTrash } from "react-icons/fi"
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaEllipsisV } from "react-icons/fa"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useState } from "react"
 
 import { Layout, ErrorMessage, View } from "../components"
 import { addProductSchema } from "../lib/validation";
 
+const DATA = [
+  {
+    id: '1',
+    img: 'https://bit.ly/dan-abramov',
+    name: 'Pontalan',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis similique quam reprehenderit repudiandae adipisci saepe. Est officiis, dolore, natus molestias nemo facilis ad pariatur rem accusantium numquam quae, unde doloribus.',
+    price: 0,
+    coupon: '30%',
+    features: ['feature1', 'feature1', 'feature1', 'feature1', 'feature1', 'feature1']
+  },
+  {
+    id: '2',
+    img: 'https://bit.ly/dan-abramov',
+    name: 'veste',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis similique quam reprehenderit repudiandae adipisci saepe. Est officiis, dolore, natus molestias nemo facilis ad pariatur rem accusantium numquam quae, unde doloribus.',
+    price: 0,
+    coupon: '30%',
+    features: ['feature1', 'feature1', 'feature1', 'feature1', 'feature1', 'feature1']
+  },
+  {
+    id: '3',
+    img: 'https://bit.ly/dan-abramov',
+    name: 'gillet',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis similique quam reprehenderit repudiandae adipisci saepe. Est officiis, dolore, natus molestias nemo facilis ad pariatur rem accusantium numquam quae, unde doloribus.',
+    price: 0,
+    coupon: '30%',
+    features: ['feature1', 'feature1', 'feature1', 'feature1', 'feature1', 'feature1']
+  },
+  {
+    id: '4',
+    img: 'https://bit.ly/dan-abramov',
+    name: 'chemise',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis similique quam reprehenderit repudiandae adipisci saepe. Est officiis, dolore, natus molestias nemo facilis ad pariatur rem accusantium numquam quae, unde doloribus.',
+    price: 0,
+    coupon: '30%',
+    features: ['feature1', 'feature1', 'feature1', 'feature1', 'feature1', 'feature1']
+  },
+]
+
 export default function Admin() {
   const [action, setAction] = useState({ delete: false, disable: false, add: false, edit: false, details: false })
   const [currentProduct, setCurrentProduct] = useState({
-    id: '', name: '', price: '', description: '', coupon: '', img: '', quantity: ''
+    id: '', name: '', price: '', description: '', coupon: '', img: '', quantity: '', features: []
   })
+
+  const [query, setQuery] = useState('');
+  // const [products, setproducts] = useState([]); --> list of all products
 
   const headers = ['Image', 'Name', 'Description', 'Quantity', 'Price', 'Actions']
   const products = [
@@ -109,7 +150,7 @@ export default function Admin() {
         <ProductDetails isOpen={action.details} onClose={() => setAction({...action, details: false})} product={product} />
       </View>
 
-      <ProductsFilter />
+      <ProductsFilter setQuery={setQuery} query={query} />
       <ProductsList data={data} setAction={setAction} />
     </Layout>
   );
@@ -147,20 +188,26 @@ const ProductsList = ({ data, setAction }: { data: any, setAction: any }) => {
   )
 }
 
-const ProductsFilter = () => {
+const ProductsFilter = ({ setQuery, query }) => {
+
+  const keys = ['image', 'name', 'description', 'qunatity', 'price']
+
   const onSort = (e: any) => {
     const selected = e.target.value
     console.log('selected: ', selected)
   }
   const onFilter = (e: any) => {
-    const filters = e.target.value;
-    console.log('filters: ', filters)
+    const filters = e.target.value.toLowerCase()
+    // console.log('filters: ', filters)
+    setQuery(filters)
+    // call api --> filtering according to (name, description)
   }
   return(
     <Flex flexDir="row" flexWrap={"wrap"} justifyContent={["space-between", "", "space-evenly", ""]} my="3rem">
       <Flex alignItems={"center"} mb={["1rem", "0", "", ""]}>
         <Box as="span" fontSize="1rem" mr=".5rem" w="3rem"> Filter: </Box> 
-        <Input onChange={onFilter} placeholder='Search...' w={["80%", "", "20rem", ""]} />
+        <Input type="search" placeholder='Search...' w={["80%", "", "20rem", ""]} 
+            onChange={onFilter} />
       </Flex>
 
       <Flex alignItems={"center"}>

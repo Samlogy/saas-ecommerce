@@ -1,10 +1,9 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Container, Flex } from '@chakra-ui/react'
 
-import NavBar from "../components/NavBar"
-import Footer from "../components/Footer"
+import { NavBar, Footer, ProtectedPage } from "../components"
+
 
 interface ILayout {
   children: React.ReactNode,
@@ -14,6 +13,10 @@ interface ILayout {
 }
 
 export default function Layout({ children, isHeaderVisible, isFooterVisible, ...rest }: ILayout) {
+  const { pathname } = useRouter();
+  const isProtected = pathname === "/profile" || pathname === "/edit-profile" || pathname === "/admin"
+  // console.log('protected: ', pathname, isProtected)
+
   return (
     <>
       <Head>
@@ -26,9 +29,13 @@ export default function Layout({ children, isHeaderVisible, isFooterVisible, ...
 
       <Flex flexDir="column" {...rest}>
         { isHeaderVisible && <NavBar /> }
+
           <Container maxW="1024px" bg="#FFFC" minHeight='calc(100vh - 100px)' py="36px" px={["16px","","","50px", "100px"]} borderRadius="4px">
-            {children}
+            <ProtectedPage isProtected={isProtected}>
+              {children}
+            </ProtectedPage>
           </Container>
+
         { isFooterVisible && <Footer /> }
       </Flex>
     </>

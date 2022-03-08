@@ -14,38 +14,39 @@ import {
   import { View } from "../components";
   import { useShoppingCart } from "../store";
 
-  const  products = [
-    {
-      img: 'https://bit.ly/dan-abramov',
-      name: "Throwback Hip Ba",
-      quantity: 1,
-      price: 90.00
-    },
-    {
-      img: 'https://bit.ly/dan-abramov',
-      name: "Throwback Hip Ba",
-      quantity: 1,
-      price: 90.00
-    },
-    {
-      img: 'https://bit.ly/dan-abramov',
-      name: "Throwback Hip Ba",
-      quantity: 1,
-      price: 90.00
-    },
-    {
-      img: 'https://bit.ly/dan-abramov',
-      name: "Throwback Hip Ba",
-      quantity: 1,
-      price: 90.00
-    }
-  ];
+  // const  products = [
+  //   {
+  //     img: 'https://bit.ly/dan-abramov',
+  //     name: "Throwback Hip Ba",
+  //     quantity: 1,
+  //     price: 90.00
+  //   },
+  //   {
+  //     img: 'https://bit.ly/dan-abramov',
+  //     name: "Throwback Hip Ba",
+  //     quantity: 1,
+  //     price: 90.00
+  //   },
+  //   {
+  //     img: 'https://bit.ly/dan-abramov',
+  //     name: "Throwback Hip Ba",
+  //     quantity: 1,
+  //     price: 90.00
+  //   },
+  //   {
+  //     img: 'https://bit.ly/dan-abramov',
+  //     name: "Throwback Hip Ba",
+  //     quantity: 1,
+  //     price: 90.00
+  //   }
+  // ];
 
 const ShoppingCart = () => {
   const isVisible = useShoppingCart((state: any) => state.isVisible)
   const total = useShoppingCart((state: any) => state.total)
   const handleVisibility = useShoppingCart((state: any) => state.handleVisibility)
   const removeAll = useShoppingCart((state: any) => state.removeAll)
+  const products = useShoppingCart((state: any) => state.products)
 
   
     return(

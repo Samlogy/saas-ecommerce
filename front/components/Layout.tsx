@@ -2,8 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Container, Flex } from '@chakra-ui/react'
 
-import { NavBar, Footer, ProtectedPage } from "../components"
-
+import { NavBar, Footer, ProtectedPage, ShoppingCart } from "../components"
 
 interface ILayout {
   children: React.ReactNode,
@@ -34,6 +33,7 @@ export default function Layout({ children, isHeaderVisible, isFooterVisible, ...
             <ProtectedPage isProtected={isProtected}>
               {children}
             </ProtectedPage>
+            <ShoppingCart />
           </Container>
 
         { isFooterVisible && <Footer /> }

@@ -79,7 +79,7 @@ export default function NavBar() {
             <Box> <Logo /> </Box>
             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
               {Links.map((link: any) => (
-                <NavLink key={link.link} link={link.link} exact={link.name === 'home' ? true : false}> {link.name} </NavLink>
+                <NavLink key={link.link} link={link.link}> {link.name} </NavLink>
               ))}
             </HStack>
           </HStack>
@@ -87,7 +87,7 @@ export default function NavBar() {
           <Flex alignItems={'center'}>
             <SelectLanguage />
             <DarkModeToggle />
-            <ShoppingCartIcon value={total} />
+            <ShoppingCartIcon value={700} />
             { isLogged ? <NavMenuConnected avatar={user.avatar} /> : <NavMenuUnConnected /> }
           </Flex>
         </Flex>

@@ -1,6 +1,5 @@
 import { IconButton, Flex, Button } from '@chakra-ui/react';
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
-import { NumberSchema } from 'yup';
 
 const Pagination = () => {
     const num = [1, 2, 3]

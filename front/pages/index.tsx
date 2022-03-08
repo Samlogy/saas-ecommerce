@@ -254,7 +254,6 @@ export default function Home() {
 
         {/* <ModalPopUp isOpen={isOpen} onClose={onClose} text={text} type="info" /> */}
 
-        <Carousel slides={slides} />
 
         {/* <Hero />
         <Services data={services} />

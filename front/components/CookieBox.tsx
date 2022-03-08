@@ -6,7 +6,7 @@ export default function CookieBox() {
   return (
     <Stack p="4" boxShadow="lg" m="4" borderRadius="sm">
       <Stack direction="row" alignItems="center">
-        <Text fontWeight="semibold">Your Privacy</Text>
+        <Text fontWeight="semibold"> Your Privacy </Text>
         <FcLock />
       </Stack>
 
@@ -20,10 +20,10 @@ export default function CookieBox() {
         </Text>
 
         <Stack direction={{ base: 'column', md: 'row' }}>
-          <Button variant="outline" colorScheme="green">
+          <Button variant="outline" colorScheme="blue">
             Cookie Preferences
           </Button>
-          <Button colorScheme="green"> OK </Button>
+          <Button colorScheme="blue"> OK </Button>
         </Stack>
       </Stack>
     </Stack>

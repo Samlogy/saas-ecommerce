@@ -46,7 +46,7 @@ import {
 } from 'react-icons/io5';
 import { ReactElement, useRef, useEffect, useState } from 'react';
 
-import { ShoppingCart, Layout, ModalPopUp, SocialMediaButton, ErrorMessage, Carousel, ProductCard, BackTop, DarkModeToggle, Pagination, StepForm } from "../components" 
+import { ShoppingCart, Layout, CookieBox, ModalPopUp, SocialMediaButton, ErrorMessage, Carousel, ProductCard, BackTop, DarkModeToggle, Pagination, StepForm } from "../components" 
 import { useLocale } from "../lib/hooks";
 import { useShoppingCart } from "../store"
 
@@ -58,10 +58,12 @@ export default function Home() {
 
   const text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo";
 
-  const images = [
-    'https://images.unsplash.com/photo-1516796181074-bf453fbfa3e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-    'https://images.unsplash.com/photo-1438183972690-6d4658e3290e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2274&q=80',
-    'https://images.unsplash.com/photo-1507237998874-b4d52d1dd655?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
+  const slides = [
+    "https://images.pexels.com/photos/2599537/pexels-photo-2599537.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",,
+    "https://images.pexels.com/photos/2714581/pexels-photo-2714581.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "https://images.pexels.com/photos/2878019/pexels-photo-2878019.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "https://images.pexels.com/photos/1142950/pexels-photo-1142950.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "https://images.pexels.com/photos/3124111/pexels-photo-3124111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
   ];
   const qna = [
     {
@@ -162,6 +164,13 @@ export default function Home() {
     currency: '£'
   },
   ];
+  const services = [
+    {
+      title: 'Fiability',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+      icon: ''
+    },
+  ];
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -237,32 +246,23 @@ export default function Home() {
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Button bg="accent" color='white'> visibility </Button>
+      <BackTop />
 
-        <StepForm steps={steps} handleForm={handleSubmit(onLogin)} />
+        {/* <StepForm steps={steps} handleForm={handleSubmit(onLogin)} /> */}
 
         {/* <Pagination /> */}
 
-        {/* <DarkModeToggle /> */}
-
         {/* <ModalPopUp isOpen={isOpen} onClose={onClose} text={text} type="info" /> */}
 
-        {/* <CustomerReviews /> */}
+        <Carousel slides={slides} />
 
-        
-
-        {/* <ShoppingCart /> */}
-
-        {/* <Carousel data={images} /> */}
-
-        {/* <QuestionsAnswers data={qna} /> */}
-
-        {/* <CustomerReviews data={testimonials} /> */}
-
-        {/* <ProductsOnTrend data={products} /> */}
-
-        {/* <About /> */}
-
-        {/* <BackTop /> */}
+        {/* <Hero />
+        <Services data={services} />
+        <About />
+        <ProductsOnTrend data={products} />
+        <CustomerReviews data={testimonials} />
+        <QuestionsAnswers data={qna} />    */}
+  
     </Layout>
   );
 }
@@ -277,15 +277,17 @@ export default function Home() {
 
 const Services = ({ data }: { data: any}) => {
   return(
-  <>
-  </>
+  <Heading>
+    Services
+  </Heading>
   )
 }
 
-const Hero = ({ data }: { data: any}) => {
+const Hero = () => {
   return(
-  <>
-  </>
+  <Heading>
+    Hero
+  </Heading>
   )
 }
 

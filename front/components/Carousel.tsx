@@ -1,115 +1,105 @@
-import React from 'react';
+import React, { useState } from "react";
 import {
-  Box,
-  IconButton,
-  useBreakpointValue,
-  Stack,
-  Heading,
   Text,
-  Container,
-} from '@chakra-ui/react';
-// Here we have used react-icons package for the icons
-import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
-// And react-slick as our Carousel Lib
-import Slider from 'react-slick';
+  Box,
+  Flex,
+  useColorModeValue,
+  Image,
+  HStack,
+} from "@chakra-ui/react";
 
-// Settings for the slider
-const settings = {
-  dots: true,
-  arrows: false,
-  fade: true,
-  infinite: true,
-  autoplay: true,
-  speed: 500,
-  autoplaySpeed: 5000,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-};
+const Carousel = ({ slides }: { slides: any }) => {
+  const arrowStyles = {
+    cursor: "pointer",
+    pos: "absolute",
+    top: "50%",
+    w: "auto",
+    mt: "-22px",
+    p: "16px",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: "18px",
+    transition: "0.6s ease",
+    borderRadius: "0 3px 3px 0",
+    userSelect: "none",
+    _hover: {
+      opacity: 0.8,
+      bg: "black",
+    },
+  };
 
-export default function Carousel({ data }: { data: any }) {
-  // As we have used custom buttons, we need a reference variable to
-  // change the state
-  const [slider, setSlider] = React.useState<Slider | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  // These are the breakpoints which changes the position of the
-  // buttons as the screen size changes
-  const top = useBreakpointValue({ base: '90%', md: '50%' });
-  const side = useBreakpointValue({ base: '30%', md: '40px' });
+  const slidesCount = slides.length;
 
-  // This list contains all the data for carousels
-  // This can be static or loaded from a server
+  const prevSlide = () => {
+    setCurrentSlide((s) => (s === 0 ? slidesCount - 1 : s - 1));
+  };
+  const nextSlide = () => {
+    setCurrentSlide((s) => (s === slidesCount - 1 ? 0 : s + 1));
+  };
+  const setSlide = (slide) => {
+    setCurrentSlide(slide);
+  };
+  const carouselStyle = {
+    transition: "all .5s",
+    ml: `-${currentSlide * 100}%`,
+  };
 
   return (
-    <Box
-      position={'relative'}
-      height={'600px'}
-      width={'full'}
-      overflow={'hidden'}>
-      {/* CSS files for react-slick */}
-      <link
-        rel="stylesheet"
-        type="text/css"
-        charSet="UTF-8"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-      />
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-      />
-
-      {/* Left Icon */}
-      <IconButton
-        aria-label="left-arrow"
-        variant="ghost"
-        position="absolute"
-        left={side}
-        top={top}
-        transform={'translate(0%, -50%)'}
-        zIndex={2}
-        onClick={() => slider?.slickPrev()}>
-        <BiLeftArrowAlt size="40px" />
-      </IconButton>
-
-      {/* Right Icon */}
-      <IconButton
-        aria-label="right-arrow"
-        variant="ghost"
-        position="absolute"
-        right={side}
-        top={top}
-        transform={'translate(0%, -50%)'}
-        zIndex={2}
-        onClick={() => slider?.slickNext()}>
-        <BiRightArrowAlt size="40px" />
-      </IconButton>
-
-      {/* Slider */}
-      <Slider {...settings} ref={(slider) => setSlider(slider)}>
-        {data.map((img, idx) => (
-          <Box
-            key={idx}
-            height={'6xl'}
-            borderRadius="6px"
-            position="relative"
-            backgroundPosition="center"
-            backgroundRepeat="no-repeat"
-            backgroundSize="cover"
-            backgroundImage={`url(${img})`}>
-            {/* This is the block you need to change, to customize the caption */}
-            <Container size="container.lg" height="600px" position="relative">
-              <Stack
-                spacing={6}
-                w={'full'}
-                maxW={'lg'}
-                position="absolute"
-                top="50%"
-                transform="translate(0, -50%)">
-              </Stack>
-            </Container>
-          </Box>
-        ))}
-      </Slider>
-    </Box>
+    <Flex
+      w="full"
+      bg={useColorModeValue("gray.200", "gray.600")}
+      p={10}
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Flex w="full" overflow="hidden" pos="relative">
+        <Flex h="400px" w="full" {...carouselStyle}>
+          {slides.map((slide, sid) => (
+            <Box key={`slide-${sid}`} boxSize="full" shadow="md" flex="none">
+              <Text
+                color="white"
+                fontSize="xs"
+                p="8px 12px"
+                pos="absolute"
+                top="0"
+              >
+                {sid + 1} / {slidesCount}
+              </Text>
+              <Image
+                src={slide}
+                alt="carousel image"
+                boxSize="full"
+                backgroundSize="cover"
+              />
+            </Box>
+          ))}
+        </Flex>
+        <Text {...arrowStyles} left="0" onClick={prevSlide}>
+          &#10094;
+        </Text>
+        <Text {...arrowStyles} right="0" onClick={nextSlide}>
+          &#10095;
+        </Text>
+        <HStack justify="center" pos="absolute" bottom="8px" w="full">
+          {Array.from({ length: slidesCount }).map((_, slide) => (
+            <Box
+              key={`dots-${slide}`}
+              cursor="pointer"
+              boxSize={["7px", , "15px"]}
+              m="0 2px"
+              bg={currentSlide === slide ? "blackAlpha.800" : "blackAlpha.500"}
+              rounded="50%"
+              display="inline-block"
+              transition="background-color 0.6s ease"
+              _hover={{ bg: "blackAlpha.800" }}
+              onClick={() => setSlide(slide)}
+            ></Box>
+          ))}
+        </HStack>
+      </Flex>
+    </Flex>
   );
-}
+};
+export default Carousel;

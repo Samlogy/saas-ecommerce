@@ -85,7 +85,7 @@ import {
             </View>
 
             <View cond={data.img.length > 1}>
-              <Carousel data={data.img} />  
+              <Carousel slides={data.img} />  
             </View>
           {/* </Flex> */}
           

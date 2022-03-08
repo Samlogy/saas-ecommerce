@@ -1,33 +1,32 @@
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { VStack, Flex, Box, Button, Text } from "@chakra-ui/react";
+import { useRef } from 'react'
 
-const StepForm = ({ nbrSteps }: { nbrSteps: number }) => {
-  const { nextStep, prevStep, reset, activeStep } = useSteps({
-    initialStep: 1
-  });
+const StepForm = ({ initialStep = 3, steps, handleForm }: { initialStep?: number, steps: any, handleForm?: any }) => {
+  const { nextStep, prevStep, activeStep } = useSteps({
+    initialStep: initialStep
+  })
 
   const onSubmit = () => {
       console.log('form submitted !')
   }
 
-  const content = (
-    <Flex my="2rem" p={4} border='1px' borderRadius={'5px'}>
-      <Text> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde iste soluta officia molestias nemo vel officiis quaerat consequuntur iure error nam fugit nobis corrupti exercitationem blanditiis quasi, libero quam voluptates. </Text>
-    </Flex>
-  );
-
-  const steps = [
-    { label: 'Step 1', content },
-    { label: 'Step 2', content },
-    { label: 'Step 3', content },
-  ];
+  const btnRef = useRef(null);
+ 
 
   return (
     <Box my="2rem">
       <Steps activeStep={activeStep}>
-        {steps.map(({ label, content }) => (
-          <Step label={label} key={label}>
-            {content}
+        {steps.map(({ label, content, icon, description }) => (
+          <Step label={label} key={label} icon={icon} description={description} 
+            _hover={{ cursor: 'pointer' }}>
+            <form onSubmit={handleForm}>
+              {content}
+              <Button type="submit" mx="auto" size="sm" onClick={() => onSubmit()} ref={btnRef}
+                    display='none'>
+                Hidden
+              </Button>
+            </form>
           </Step>
         ))}
       </Steps>
@@ -35,15 +34,12 @@ const StepForm = ({ nbrSteps }: { nbrSteps: number }) => {
 
       {activeStep === steps.length ? (
         <Flex p={4}>
-          {/* <Button mx="auto" size="sm" onClick={reset}>
-            Reset
-          </Button> */}
-          <Button mx="auto" size="sm" onClick={() => onSubmit()}>
+          <Button mx="auto" size="sm" onClick={() => { console.log(btnRef) }}>
             Submit
           </Button>
         </Flex>
       ) : (
-        <Flex width="100%" justify="flex-end">
+        <Flex w="100%" justify="flex-end">
           <Button isDisabled={activeStep === 0} mr={4} onClick={prevStep} size="sm" variant="ghost">
             Prev
           </Button>

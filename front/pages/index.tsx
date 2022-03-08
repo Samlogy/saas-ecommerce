@@ -31,23 +31,30 @@ import {
   AccordionPanel,
   AccordionIcon,
   Divider,
-  Avatar
+  Avatar, 
+  FormControl,
+    FormLabel,
+    Input,
 } from '@chakra-ui/react';
+
+
 
 import {
   IoAnalyticsSharp,
   IoLogoBitcoin,
   IoSearchSharp,
 } from 'react-icons/io5';
-import { ReactElement } from 'react';
-import { useRouter } from 'next/router';
-import { FaLinkedinIn, FaGithub, FaTwitter, FaFacebook } from "react-icons/fa"
+import { ReactElement, useRef, useEffect, useState } from 'react';
 
-import { ShoppingCart, Layout, ModalPopUp, SocialMediaButton, Carousel, ProductCard } from "../components" 
-import { Item } from 'framer-motion/types/components/Reorder/Item';
+import { ShoppingCart, Layout, ModalPopUp, SocialMediaButton, ErrorMessage, Carousel, ProductCard, BackTop, DarkModeToggle, Pagination, StepForm } from "../components" 
+import { useLocale } from "../lib/hooks";
+import { useShoppingCart } from "../store"
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+
 
 export default function Home() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo";
 
@@ -156,19 +163,94 @@ export default function Home() {
   },
   ];
 
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const onLogin = () => {
+    console.log('login')
+  }
+
+
+  const form_1 = (
+    <Flex flexDir='column' alignItems={'center'} m="2rem auto" p={4} w="400px" rounded={'xl'} boxShadow={'lg'}>
+          <FormControl id="username" mb=".5rem">
+              <FormLabel> username </FormLabel>
+              <Input type="text" placeholder="" _placeholder={{ color: 'gray.500' }}
+                      isInvalid={errors.username ? true : false}
+                      errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                      {...register("username")} />
+              {errors.username && <ErrorMessage error={errors.username.message} />}
+          </FormControl>
+
+          <FormControl id="email" mb=".5rem">
+              <FormLabel> Email Address </FormLabel>
+              <Input type="email" placeholder="your-email@example.com" _placeholder={{ color: 'gray.500' }}
+                      isInvalid={errors.email ? true : false}
+                      errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                      {...register("email")} />
+              {errors.email && <ErrorMessage error={errors.email.message} />}
+          </FormControl>
+    </Flex>
+  );
+
+  const form_2 = (
+    <Flex flexDir='column' alignItems={'center'} m="2rem auto" p={4} w="400px" rounded={'xl'} boxShadow={'lg'}>
+          <FormControl id="fullName" mb=".5rem">
+              <FormLabel> fullName </FormLabel>
+              <Input type="text" placeholder="" _placeholder={{ color: 'gray.500' }}
+                      isInvalid={errors.fullName ? true : false}
+                      errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                      {...register("fullName")} />
+              {errors.fullName && <ErrorMessage error={errors.fullName.message} />}
+          </FormControl>
+
+          <FormControl id="email" mb=".5rem">
+              <FormLabel> address </FormLabel>
+              <Input type="text" placeholder="" _placeholder={{ color: 'gray.500' }}
+                      isInvalid={errors.address ? true : false}
+                      errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                      {...register("address")} />
+              {errors.address && <ErrorMessage error={errors.address.message} />}
+          </FormControl>
+    </Flex>
+  );
+
+  const form_3 = (
+    <Flex flexDir='column' alignItems={'center'} m="2rem auto" p={4} w="400px" rounded={'xl'} boxShadow={'lg'}>
+        <FormControl id="age" mb=".5rem">
+            <FormLabel> age </FormLabel>
+            <Input type="text" placeholder="" _placeholder={{ color: 'gray.500' }}
+                    isInvalid={errors.age ? true : false}
+                    errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                    {...register("age")} />
+            {errors.age && <ErrorMessage error={errors.age.message} />}
+        </FormControl>
+    </Flex>
+  );
+
+  const steps = [
+    { label: 'Form 1', content: form_1, icon: IoAnalyticsSharp, description: 'desc 1' },
+    { label: 'Form 2', content: form_2, icon: IoLogoBitcoin, description: 'desc 2' },
+    { label: 'Form 3', content: form_3, icon: IoSearchSharp, description: 'desc 3' },
+  ];
+  
+
   return (
     <Layout isHeaderVisible isFooterVisible>
-        <Button onClick={onOpen}> Open Modal </Button>
+      <Button bg="accent" color='white'> visibility </Button>
+
+        <StepForm steps={steps} handleForm={handleSubmit(onLogin)} />
+
+        {/* <Pagination /> */}
+
+        {/* <DarkModeToggle /> */}
+
         {/* <ModalPopUp isOpen={isOpen} onClose={onClose} text={text} type="info" /> */}
 
         {/* <CustomerReviews /> */}
 
-        {/* <SocialMediaButton type="facebook" />
-        <SocialMediaButton type="twitter" />
-        <SocialMediaButton type="linkedin" />
-        <SocialMediaButton type="github" /> */}
+        
 
-        {/* <ShoppingCart isOpen={isOpen} onClose={onClose} /> */}
+        {/* <ShoppingCart /> */}
 
         {/* <Carousel data={images} /> */}
 
@@ -179,6 +261,8 @@ export default function Home() {
         {/* <ProductsOnTrend data={products} /> */}
 
         {/* <About /> */}
+
+        {/* <BackTop /> */}
     </Layout>
   );
 }
@@ -186,6 +270,24 @@ export default function Home() {
 
 
 
+
+
+
+
+
+const Services = ({ data }: { data: any}) => {
+  return(
+  <>
+  </>
+  )
+}
+
+const Hero = ({ data }: { data: any}) => {
+  return(
+  <>
+  </>
+  )
+}
 
 const About = () => {
   return(
@@ -212,22 +314,6 @@ const About = () => {
   </Box>
   )
 }
-
-const Services = ({ data }: { data: any}) => {
-  return(
-  <>
-  </>
-  )
-}
-
-const Hero = ({ data }: { data: any}) => {
-  return(
-  <>
-  </>
-  )
-}
-
-
 interface TestimonialCardProps {
   name: string;
   role: string;

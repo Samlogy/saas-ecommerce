@@ -7,7 +7,7 @@ const ShoppingCartIcon = ({ value }: { value: number }) => {
   const handleVisibility = useShoppingCart(state => state.handleVisibility)
 
   const bgColor = useColorModeValue('gray.100', 'gray.700')
-  const bgHoverColor = useColorModeValue('gray.300', 'gray.500')
+  const bgHoverColor = useColorModeValue('gray.300', 'gray.600')
 
     return(
       <Box pos="relative" onClick={() => handleVisibility()}> 

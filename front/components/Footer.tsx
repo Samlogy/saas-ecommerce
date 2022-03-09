@@ -50,7 +50,7 @@ import {
   export default function Footer() {
     const textColor = useColorModeValue('black', 'gray.100')
     const bgColor = useColorModeValue('gray.100', 'gray.700')
-    const borderColor = useColorModeValue('gray.700', 'gray.600')
+    const borderColor = useColorModeValue('gray.300', 'gray.600')
 
     return (
       <Box bg={bgColor} color={textColor}>

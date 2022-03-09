@@ -48,8 +48,12 @@ import {
   };
   
   export default function Footer() {
+    const textColor = useColorModeValue('black', 'gray.100')
+    const bgColor = useColorModeValue('gray.100', 'gray.700')
+    const borderColor = useColorModeValue('gray.700', 'gray.600')
+
     return (
-      <Box bg={useColorModeValue('gray.50', 'gray.900')} color={useColorModeValue('gray.700', 'gray.200')}>
+      <Box bg={bgColor} color={textColor}>
         <Container as={Flex} maxW={'6xl'} py={4} spacing={4} justify={["center", "space-evenly", "space-between", ""]} align={'center'} flexWrap="wrap">
           <Logo />
 
@@ -74,7 +78,7 @@ import {
           </Stack>
         </Container>
   
-        <Box borderTopWidth={1} borderStyle={'solid'} borderColor={useColorModeValue('gray.200', 'gray.700')}>
+        <Box borderTopWidth={1} borderStyle={'solid'} borderColor={borderColor}>
           <Container as={Stack} maxW={'6xl'} py={4} direction={{ base: 'column', md: 'row' }} spacing={4} justify={{ base: 'center', md: 'space-between' }} align={{ base: 'center', md: 'center' }}>
             <Text fontSize=".8rem"> © 2022 Ecommerce. All rights reserved </Text>         
             <Flex>

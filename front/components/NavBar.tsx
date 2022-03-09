@@ -8,6 +8,7 @@ import {
   Box,
   Flex,
   Avatar,
+  Stack,
   HStack,
   IconButton,
   Button,
@@ -16,9 +17,7 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
-  useColorModeValue,
-  Stack,
+  useDisclosure, useColorModeValue, 
 } from '@chakra-ui/react';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useRouter } from 'next/router';

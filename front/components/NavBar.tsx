@@ -107,6 +107,7 @@ export default function NavBar() {
 
 const NavMenuConnected = ({ avatar }: { avatar: string }) => {
   const textColor = useColorModeValue('black', 'gray.100')
+  const textHoverColor = useColorModeValue('gray.100', 'white')
   const bgColor = useColorModeValue('gray.100', 'gray.700')
   const bgHoverColor = useColorModeValue('gray.700', 'gray.500')
 
@@ -116,9 +117,9 @@ const NavMenuConnected = ({ avatar }: { avatar: string }) => {
         <Avatar size={'sm'} src={avatar} />
       </MenuButton>
       <MenuList bg={bgColor}>
-        <MenuItem color={textColor} bg={bgColor} _hover={{ bg: bgHoverColor }}> <Link href="/profile"> My Account </Link> </MenuItem>
+        <MenuItem  bg={bgColor} _hover={{ bg: bgHoverColor, color: textHoverColor }}> <Link href="/profile"> My Account </Link> </MenuItem>
         <MenuDivider />
-        <MenuItem _hover={{ bg: bgHoverColor }}> <Logout /> </MenuItem>
+        <MenuItem _hover={{ bg: bgHoverColor, color: textHoverColor }}> <Logout /> </MenuItem>
       </MenuList>
     </Menu>
   )

@@ -13,6 +13,7 @@ const Logout: FC = () => {
     const router = useRouter();
 
     const textColor = useColorModeValue('black', 'gray.100')
+    const textHoverColor = useColorModeValue('gray.100', 'white')
 
     const logging_out = () => {
         notLogged();
@@ -24,7 +25,7 @@ const Logout: FC = () => {
 
     return(
         <Button leftIcon={<IconLogout />} variant="ghost" color={textColor}
-            fontWeight="400" mr="0rem" _hover={{ border: "none" }}
+            fontWeight="400" mr="0rem" _hover={{ border: "none", color: textHoverColor }}
             onClick={() => setLoggedOut(true)}>
             Logout
         </Button>

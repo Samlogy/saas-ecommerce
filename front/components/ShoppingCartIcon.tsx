@@ -1,10 +1,13 @@
-import { Box, IconButton } from '@chakra-ui/react';
+import { Box, IconButton, useColorModeValue } from '@chakra-ui/react';
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 
 import { useShoppingCart } from "../store";
 
 const ShoppingCartIcon = ({ value }: { value: number }) => {
   const handleVisibility = useShoppingCart(state => state.handleVisibility)
+
+  const bgColor = useColorModeValue('gray.100', 'gray.700')
+  const bgHoverColor = useColorModeValue('gray.300', 'gray.500')
 
     return(
       <Box pos="relative" onClick={() => handleVisibility()}> 
@@ -13,7 +16,7 @@ const ShoppingCartIcon = ({ value }: { value: number }) => {
             { value >= 100 ? '99+' : value } 
           </Box> : ''
         }
-        <IconButton aria-label='Shopping Cart' icon={<AiOutlineShoppingCart size={24} />} mr=".2rem" /> 
+        <IconButton aria-label='Shopping Cart' bg={bgColor} _hover={{ bg: bgHoverColor }} icon={<AiOutlineShoppingCart size={24} />} mr=".2rem" /> 
       </Box>
     )
 }

@@ -44,9 +44,11 @@ const NavLink = ({ children, link }: { children: ReactNode, link: string }) => {
   const { pathname } = useRouter();
   const isActive = pathname === `${link}` 
 
+  const textColor = useColorModeValue('black', 'gray.100')
+
   return(
     <Link href={`${link}`}>
-      <Box px={2} py={1} rounded={'md'} color={isActive ? "blue.600" : "black"} 
+      <Box px={2} py={1} rounded={'md'} color={isActive ? 'blue.600' : textColor} 
           _hover={{ textDecoration: 'none', cursor: 'pointer', bg: useColorModeValue('gray.200', 'gray.700') }}> 
         {children}
       </Box>
@@ -61,14 +63,12 @@ export default function NavBar() {
   const user = useAuth((state: any) => state.user);
 
   const total = useShoppingCart((state: any) => state.total)
+
+  const bgColor = useColorModeValue('gray.100', 'gray.700')
   
 
-  // const user = {
-  //   avatar: "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-  // };
-
   return (
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Box bg={bgColor} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton size={'md'} icon={isOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
             aria-label={'Toggle Menu'} display={{ md: 'none' }} onClick={isOpen ? onClose : onOpen}
@@ -106,26 +106,32 @@ export default function NavBar() {
 
 
 const NavMenuConnected = ({ avatar }: { avatar: string }) => {
+  const textColor = useColorModeValue('black', 'gray.100')
+  const bgColor = useColorModeValue('gray.100', 'gray.700')
+  const bgHoverColor = useColorModeValue('gray.700', 'gray.500')
+
   return(
     <Menu>
       <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
         <Avatar size={'sm'} src={avatar} />
       </MenuButton>
-      <MenuList>
-        <MenuItem> <Link href="/profile"> My Account </Link> </MenuItem>
+      <MenuList bg={bgColor}>
+        <MenuItem color={textColor} bg={bgColor} _hover={{ bg: bgHoverColor }}> <Link href="/profile"> My Account </Link> </MenuItem>
         <MenuDivider />
-        <MenuItem> <Logout /> </MenuItem>
+        <MenuItem _hover={{ bg: bgHoverColor }}> <Logout /> </MenuItem>
       </MenuList>
     </Menu>
   )
 }
 
 const NavMenuUnConnected = () => {
+  const textColor = useColorModeValue('black', 'gray.100')
+
   return(
     <Flex>
-      <Box as="span" _hover={{ textDecor: 'underline' }}> <Link href="/register"> Sign Up </Link> </Box>
+      <Box as="span" color={textColor} _hover={{ textDecor: 'underline' }}> <Link href="/register"> Sign Up </Link> </Box>
       <Box w=".5rem"> </Box>
-      <Box as="span" _hover={{ textDecor: 'underline' }}> <Link href="/login"> Sign In </Link> </Box>
+      <Box as="span" color={textColor} _hover={{ textDecor: 'underline' }}> <Link href="/login"> Sign In </Link> </Box>
     </Flex>
   )
 }

@@ -18,7 +18,7 @@ import {
   import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
   import React, { useState } from "react";
 
-  import { Layout, Carousel, View } from "../components"
+  import { Layout, Carousel, View, ListingComments } from "../components"
 
   
   const data = {
@@ -159,6 +159,8 @@ import {
               <MdLocalShipping size={20} />
               <Text> {data.delivery} delivery </Text>
             </Stack>
+
+            <ListingComments />
           </Stack>
         </SimpleGrid>
       </Layout>

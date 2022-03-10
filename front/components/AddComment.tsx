@@ -65,7 +65,7 @@ const AddComment = ({ isOpen, onClose }: { isOpen: any, onClose: any }) => {
 
                     <FormControl id="comment" mb="1rem">
                         <FormLabel> Your Comment </FormLabel>
-                        <Textarea type="text" placeholder="Your Comment ..." _placeholder={{ color: 'gray.500' }}
+                        <Textarea placeholder="Your Comment ..." _placeholder={{ color: 'gray.500' }}
                                 isInvalid={errors.comment ? true : false}
                                 errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
                                 {...register("comment")} />

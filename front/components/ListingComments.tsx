@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Flex, Box, Text, Button } from "@chakra-ui/react"
+import { Flex, Box, Text, Button, Heading } from "@chakra-ui/react"
 
 import { Comment, View, AddComment } from "../components"
 
@@ -27,6 +27,7 @@ const ListingComments = () => {
     return(
         <Flex flexDir="column">
             <AddComment isOpen={showAddComment} onClose={() => setShowAddComment(false)} />
+            <Heading size="lg" textAlign={'center'} my="1.5rem"> Leave a Comment </Heading>
             
             <Button w="10rem" display={'flex'} ml="auto" onClick={() => setShowAddComment(true)}> Add Comment </Button>
 

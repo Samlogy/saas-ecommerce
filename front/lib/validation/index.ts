@@ -44,3 +44,10 @@ export const profileSchema = yup.object().shape({
     mobile: yup.string(),
     address: yup.string()
 });
+
+export const commentSchema = yup.object().shape({
+    fullName: yup.string(),
+    email: yup.string().email('Enter a valid Email Address'),
+    comment: yup.string().required('Enter your comment please'),
+    // isChecked: yup.bool().oneOf([true], 'Accept Ts & Cs is required')
+});

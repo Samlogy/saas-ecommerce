@@ -1,0 +1,18 @@
+import React, { FC } from "react";
+import { Flex, Box, Text } from "@chakra-ui/react"
+
+
+const Comment = ({ data }) => {
+    return(
+        <Flex flexDir="row" flexWrap="wrap" alignItems="flex-start" my="1.5rem" p='1rem' boxShadow='md' borderRadius={'5px'}>
+            <Flex alignItems='center'>
+                <Box as="span" fontWeight="600"> {data.name} </Box>
+                <Box as="span" fontWeight='300' fontSize='.8rem' ml='.25rem'> on </Box>
+                <Box as="span" fontStyle={'italic'} fontSize='.8rem' ml='.5rem'> {data.createdAt} </Box>
+            </Flex>
+            <Text fontSize={'1rem'} fontWeight='300'> {data.comment} </Text>
+        </Flex>
+    )
+}
+
+export default Comment;

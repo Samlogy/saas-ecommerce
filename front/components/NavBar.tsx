@@ -17,10 +17,12 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
+  Spinner, 
   useDisclosure, useColorModeValue, 
 } from '@chakra-ui/react';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useRouter } from 'next/router';
+import { useUser } from '@auth0/nextjs-auth0';
 
 import { Logout, SelectLanguage, DarkModeToggle, ShoppingCartIcon } from "../components"
 import { useAuth, useShoppingCart } from "../store";
@@ -59,12 +61,14 @@ const NavLink = ({ children, link }: { children: ReactNode, link: string }) => {
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const isLogged = useAuth((state: any) => state.isLogged);
-  const user = useAuth((state: any) => state.user);
+  // const isLogged = useAuth((state: any) => state.isLogged);
+  // const user = useAuth((state: any) => state.user);
 
   const total = useShoppingCart((state: any) => state.total)
 
   const bgColor = useColorModeValue('gray.100', 'gray.700')
+
+  const { user, isLoading } = useUser()
   
 
   return (
@@ -86,8 +90,9 @@ export default function NavBar() {
           <Flex alignItems={'center'}>
             <SelectLanguage />
             <DarkModeToggle />
-            <ShoppingCartIcon value={700} />
-            { isLogged ? <NavMenuConnected avatar={user.avatar} /> : <NavMenuUnConnected /> }
+            <ShoppingCartIcon value={total} />
+            { (!isLoading && !user) &&  <NavMenuUnConnected /> }
+            { user && <NavMenuConnected avatar={user.picture} /> }
           </Flex>
         </Flex>
 
@@ -130,9 +135,9 @@ const NavMenuUnConnected = () => {
 
   return(
     <Flex>
-      <Box as="span" color={textColor} _hover={{ textDecor: 'underline' }}> <Link href="/register"> Sign Up </Link> </Box>
-      <Box w=".5rem"> </Box>
-      <Box as="span" color={textColor} _hover={{ textDecor: 'underline' }}> <Link href="/login"> Sign In </Link> </Box>
+      {/* <Box as="span" color={textColor} _hover={{ textDecor: 'underline' }}> <a href="/register"> Sign Up </a> </Box>
+      <Box w=".5rem"> </Box> */}
+      <Box as="span" color={textColor} _hover={{ textDecor: 'underline' }}> <a href="/api/auth/login"> Sign In </a> </Box>
     </Flex>
   )
 }

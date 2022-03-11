@@ -1,7 +1,18 @@
 export default {
     greeting: "welcome",
     globals: {
-        
+        edit: "Edit",
+        delete: "Delete",
+        disable: "disable",
+        details: "Details",
+        add: "Add",
+        create: "Create",
+        product: "Product",
+        products: "Products",
+        yes: "Yes",
+        no: "No",
+        close: 'Close',
+        open: 'Open'
     },
     menu: {
         home: 'Home',
@@ -18,16 +29,26 @@ export default {
         conditions: 'Conditions and terms',
         privacy: 'Privacy'
     },
-    NotFound: {
-        title: "Page Not Found",
-        text: "The page you're looking for does not seem to exist",
-        button: 'Go to Home'
-    },
     shopping_cart: {
         shopping_cart: 'Shopping Cart',
         remove_all: 'Remove All',
         msg: 'Shipping and taxes calculated at checkout.',
         continue_shipping: 'Continue Shipping',
         checkout: 'Checkout'
-    }
+    },
+    NotFound: {
+        title: "Page Not Found",
+        text: "The page you're looking for does not seem to exist",
+        button: 'Go to Home'
+    },
+    Admin: {},
+    EditProfile: {},
+    Login: {},
+    Register: {},
+    ForgotPassword: {},
+    ResetPassword: {},
+    Contact: {},
+    Profile: {},
+    ProductDetails: {},
+
 }

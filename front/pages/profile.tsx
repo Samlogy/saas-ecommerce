@@ -1,13 +1,14 @@
-import { Box, Heading, Button, Flex, Image } from '@chakra-ui/react';
+import { Box, Heading, Button, Flex, Image, Text, Spinner } from '@chakra-ui/react';
 import Link from 'next/link'
 import { AiOutlineUser, AiOutlineMail } from "react-icons/ai"
 import { HiOutlineLocationMarker } from "react-icons/hi"
 import { BsCalendarDate } from "react-icons/bs"
+import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
 
-import Layout from "../components/Layout"
+import { Layout, View } from "../components"
 
 
-export default function Profile({ data }) {
+function Profile() {
   // const data = {
   //   fullName: "John Doe",
   //   avatar: 'https://bit.ly/dan-abramov',
@@ -16,25 +17,34 @@ export default function Profile({ data }) {
   //   address: "Karnavati, India",
   //   createdAt: "24-02-2022"
   // }
+  const  data = {}
+  const { user, isLoading } = useUser();
+  console.log(user)
 
   return (
     <Layout isHeaderVisible isFooterVisible>
-        <Heading as="h1" fontSize="30px">
-          Profile
-        </Heading>
+        <View cond={isLoading}>
+          <Spinner thickness='4px' speed='0.65s' size='xl' />
+        </View>
 
-        <DisplayUserData data={data} />
+        <View cond={(!isLoading && user)}>
+          <Heading as="h1" fontSize="30px">
+            Profile
+          </Heading>
 
-        <Flex flexWrap={'wrap'} justifyContent='space-evenly' mb="1.5rem">
-          <Button bg={'blue.400'} color={'white'} w='11rem' mb={['1rem', '', '0', '']} _hover={{ bg: 'blue.500' }}>
-              <Link href="/reset-password"> Reset My Password </Link>
-          </Button>
-          <Button bg={'blue.400'} color={'white'} w='11rem' _hover={{ bg: 'blue.500' }}>
-              <Link href="/edit-profile"> Edit My Profile </Link>
-          </Button>
-        </Flex>
+          <DisplayUserData data={user} />
 
-        <DisplayBillingData data={data} />
+          <Flex flexWrap={'wrap'} justifyContent='space-evenly' mb="1.5rem">
+            <Button bg={'blue.400'} color={'white'} w='11rem' mb={['1rem', '', '0', '']} _hover={{ bg: 'blue.500' }}>
+                <a href="/reset-password"> Reset My Password </a>
+            </Button>
+            <Button bg={'blue.400'} color={'white'} w='11rem' _hover={{ bg: 'blue.500' }}>
+                <a href="/edit-profile"> Edit My Profile </a>
+            </Button>
+          </Flex>
+
+          {/* <DisplayBillingData data={data} /> */}
+        </View>
   </Layout>
   );
 }
@@ -43,13 +53,13 @@ const DisplayUserData = ({ data }: { data: any }) => {
   return(
     <>
     <Heading as="h2" fontSize="1.5rem" mb='1rem'> My Personal Informations </Heading>
-      <Image borderRadius='full' boxSize='150px' src={data.avatar} alt='Dan Abramov' fallbackSrc='https://via.placeholder.com/150'/>
+      <Image borderRadius='full' boxSize='150px' src={data.picture} alt='Dan Abramov' fallbackSrc='https://via.placeholder.com/150'/>
 
       <Flex flexDir="column" mb="1.5rem" mt='.5rem'>
         <Flex alignItems={"center"} mb=".5rem">
           <AiOutlineUser size={24} />
           <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Full Name: </Box> 
-          <BoxData data={data.fullName} />
+          <BoxData data={data.name} />
         </Flex>
 
         <Flex alignItems={"center"} mb=".5rem">
@@ -61,7 +71,7 @@ const DisplayUserData = ({ data }: { data: any }) => {
         <Flex alignItems={"center"} mb=".5rem">
           <HiOutlineLocationMarker size={24} />
           <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Address: </Box> 
-          <BoxData data={data.address} />
+          <BoxData data={data?.address} />
         </Flex>
 
         <Flex alignItems={"center"} mb=".5rem">
@@ -115,11 +125,7 @@ const BoxData = ({ data }: { data: any }) => {
   )
 }
 
-
-
-export async function getStaticProps() {
-  // const data = (await getUserData()) || {};
-  return {
-    props: { data: {} },
-  };
-}
+export default withPageAuthRequired(Profile, {
+  onRedirecting: () => <Spinner thickness='4px' speed='0.65s' size='xl' />,
+  onError: error => <Text> {error.message} </Text>
+});

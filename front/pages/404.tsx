@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Button } from '@chakra-ui/react';
+import { Heading, Text, Button } from '@chakra-ui/react';
 import Link from 'next/link'
 
 import Layout from "../components/Layout"
@@ -20,9 +20,11 @@ export default function NotFound() {
         {t.NotFound.text}
       </Text>
 
-      <Button colorScheme="teal" bgGradient="linear(to-r, teal.400, teal.500, teal.600)" color="white" variant="solid">
-        {/* <Link href="/"> {t.NotFound.button} </Link> */}
-      </Button>
+      <Link href="/">
+        <Button colorScheme="teal" bgGradient="linear(to-r, teal.400, teal.500, teal.600)" color="white" variant="solid">
+          {t.NotFound.button} 
+        </Button>
+      </Link>
     </Layout>
   );
 }

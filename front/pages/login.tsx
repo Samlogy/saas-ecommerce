@@ -28,7 +28,7 @@ import { useAuth } from "../store";
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
 
-    const { register, handleSubmit, getValues, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(loginSchema)
     });
     const logged = useAuth((state: any) => state.logged);
@@ -57,7 +57,7 @@ export default function Login() {
                         <FormLabel> Email Address </FormLabel>
                         <Input type="email" placeholder="your-email@example.com" _placeholder={{ color: 'gray.500' }}
                                 isInvalid={errors.email ? true : false}
-                                errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                errorBorderColor="error" borderColor="gray.300" borderRadius="5px" 
                                 {...register("email")} />
                         {errors.email && <ErrorMessage error={errors.email.message} />}
                     </FormControl>
@@ -67,7 +67,7 @@ export default function Login() {
                         <InputGroup>
                             <Input type={showPassword ? 'text' : 'password'} placeholder="" 
                                     isInvalid={errors.password ? true : false}
-                                    errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
+                                    errorBorderColor="error" borderColor="gray.300" borderRadius="5px" 
                                     {...register("password")} />
                             <InputRightElement h={'full'}>
                                 <IconButton variant='outline' aria-label='show-hide-password' _hover={{ bg:"transparent" }} borderColor="transparent"
@@ -81,10 +81,10 @@ export default function Login() {
                     <Stack spacing={5}>
                         <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
                             <Checkbox > <Box as="span" fontSize=".8rem"> Remember me </Box> </Checkbox>
-                            <Box as="span" color="blue.500" fontSize=".8rem"> <Link href="/forgot-password"> Forgot password? </Link> </Box>
+                            <Box as="span" color="blue.500" fontSize=".8rem"> <a href="/forgot-password"> Forgot password? </a> </Box>
                         </Stack>
                         
-                        <Button type="submit" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
+                        <Button type="submit" bg={'blue.400'} color={'white'} borderRadius="5px" _hover={{ bg: 'blue.500' }}>
                             Sign in
                         </Button>
                     </Stack>

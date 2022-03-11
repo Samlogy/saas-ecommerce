@@ -13,29 +13,30 @@ import {
 import { AiFillCheckCircle, AiFillInfoCircle, AiFillWarning, AiFillCloseCircle } from "react-icons/ai";
 
 interface IModalPopUp {
-  isOpen: any, 
-  onClose: any,  
+  open: boolean, 
+  close: () => void,  
   text: string,
-  type: string
+  mode: string
 }
 
-const ModalPopUp = ({ isOpen, onClose, text, type }: IModalPopUp) => {
-  // types --> success - warning - error - info 
+const ModalPopUp = ({ open, close, text, mode }: IModalPopUp) => {
+  // modes --> success - warning - error - info 
+  const Icon = (
+    mode === "success" ? <AiFillCheckCircle size={100} color="#38a169" /> :
+    mode === "error" ? <AiFillCloseCircle size={100} color="#e53e3e" /> :
+    mode === "warning" ? <AiFillWarning size={100} color="#deb055" /> :
+    mode === "info" ? <AiFillInfoCircle size={100} color="#3182ce" /> : ""
+  );
+
   return(
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={open} onClose={close} size={'xs'} blockScrollOnMount={false} >
         <ModalOverlay />
-        <ModalContent>
-          <ModalCloseButton />
-          <ModalBody >
-            <Flex justifyContent="center" mt="2rem" mb=".5rem">
-              {
-                type === "success" ? <AiFillCheckCircle size={100} color="green" /> :
-                type === "error" ? <AiFillCloseCircle size={100} color="red" /> :
-                type === "warning" ? <AiFillWarning size={100} color="orange" /> :
-                type === "info" ? <AiFillInfoCircle size={100} color="blue" /> : ""
-              }
+        <ModalContent top="15%">
+          <ModalBody py="1rem">
+            <Flex justifyContent="center" p=".5rem">
+              { Icon }
             </Flex>
-            <Text> {text} </Text>
+            <Text textAlign={'center'}> {text} </Text>
           </ModalBody>
         </ModalContent>
       </Modal>

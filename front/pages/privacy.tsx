@@ -1,4 +1,4 @@
-import { Box, Heading, Text, s
+import { Box, Heading, Text, 
     ListItem,
     UnorderedList, } from '@chakra-ui/react';
 

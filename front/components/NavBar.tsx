@@ -1,8 +1,4 @@
 import Link from 'next/link'
-
-import { Logo } from "../public/icons"
-
-
 import { ReactNode } from 'react';
 import {
   Box,
@@ -17,7 +13,6 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-  Spinner, 
   useDisclosure, useColorModeValue, 
 } from '@chakra-ui/react';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
@@ -26,6 +21,7 @@ import { useUser } from '@auth0/nextjs-auth0';
 
 import { Logout, SelectLanguage, DarkModeToggle, ShoppingCartIcon } from "../components"
 import { useAuth, useShoppingCart } from "../store";
+import { Logo } from "../public/icons"
 
 const Links = [
   {

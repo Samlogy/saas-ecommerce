@@ -1,14 +1,29 @@
-import { Box, Heading, Text, 
-    List,
+import { Box, Heading, Text, s
     ListItem,
-    ListIcon,
-    OrderedList,
     UnorderedList, } from '@chakra-ui/react';
-import Link from 'next/link'
 
-import Layout from "../components/Layout"
+import { Layout, View } from "../components"
 
 export default function Privacy() {
+    const date = "May 3, 2021"
+    const data = [
+        {
+            title: 'Please read these conditions carefully',
+            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis",
+            link: 'Lorem ipsum dolor sit amet'
+        },
+        {
+            title: 'Please read these conditions carefully',
+            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis",
+            link: 'Lorem ipsum dolor sit amet'
+        },
+        {
+            title: 'Please read these conditions carefully',
+            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis",
+            link: 'Lorem ipsum dolor sit amet'
+        }
+    ]
+
   return (
     <Layout isHeaderVisible isFooterVisible textAlign="left">
       <Box py={10} px={0}>
@@ -16,67 +31,27 @@ export default function Privacy() {
             Conditions of Use
         </Heading>
 
-        <Text color={'gray.500'} fontSize="12px">
-        Last updated: May 3, 2021
+        <Text color={'gray.500'} fontSize="12px" mt=".25rem">
+            Last updated: {date}
         </Text>
 
         <UnorderedList my="1rem">
-            <ListItem color="blue.500">Lorem ipsum dolor sit amet</ListItem>
-            <ListItem color="blue.500">Lorem ipsum dolor sit amet</ListItem>
-            <ListItem color="blue.500">Lorem ipsum dolor sit amet</ListItem>
-            <ListItem color="blue.500">Lorem ipsum dolor sit amet</ListItem>
-            <ListItem color="blue.500">Lorem ipsum dolor sit amet</ListItem>
+            { data.map((el) => <ListItem color="blue.500"> {el?.link} </ListItem>) }
         </UnorderedList>
 
-        <Heading as="h2" fontSize="1.5rem">
-            Please read these conditions carefully
-        </Heading>
+        <View cond={data.length > 0}>
+            {  data.map((el) => 
+                <Box my="2rem">
+                    <Heading as="h2" fontSize="1.5rem">
+                        {el.title}
+                    </Heading>
 
-        <Text fontSize="1rem" mt={3} mb={2}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-        </Text>
-
-        <Heading as="h2" fontSize="1.5rem">
-            Please read these conditions carefully
-        </Heading>
-
-        <Text fontSize="1rem" mt={3} mb={2}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-        </Text>
-
-        <Heading as="h2" fontSize="1.5rem">
-            Please read these conditions carefully
-        </Heading>
-
-        <Text fontSize="1rem" mt={3} mb={2}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-        </Text>
-
-        <Heading as="h2" fontSize="1.5rem">
-            Please read these conditions carefully
-        </Heading>
-
-        <Text fontSize="1rem" mt={3} mb={2}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-        </Text>
-
-        <Heading as="h2" fontSize="1.5rem">
-            Please read these conditions carefully
-        </Heading>
-
-        <Text fontSize="1rem" mt={3} mb={2}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo asperiores omnis earum repellendus, et natus harum. Vel corporis praesentium nostrum at, nemo tenetur temporibus ad, amet vero, delectus pariatur perspiciatis.
-        </Text>
+                    <Text fontSize="1rem" mt=".5rem">
+                        {el.text}
+                    </Text>
+                </Box>
+            )}
+        </View>
       </Box>
     </Layout>
   );

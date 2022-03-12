@@ -23,3 +23,4 @@ export { default as ProtectedPage} from "./ProtectedPage"
 export { default as Comment} from "./Comment"
 export { default as ListingComments } from "./ListingComments"
 export { default as AddComment} from './AddComment'
+export { default as Rating} from "./Rating"

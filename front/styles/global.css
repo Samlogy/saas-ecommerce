@@ -11,3 +11,7 @@ select.select-language {
 select.select-language:hover {
     cursor: pointer
 }
+
+.star:hover {
+    cursor: pointer;
+}

@@ -1,35 +1,33 @@
 
-import { FaStar } from "react-icons/fa"
-import { useState } from "react";
-import { Flex, Radio, Box } from "@chakra-ui/react"
+import { BsFillStarFill, BsStarFill, BsStarHalf } from "react-icons/bs"
+import { useState, useMemo } from "react";
+import { Flex, Box } from "@chakra-ui/react"
 
 const Rating = ({ initRate }: { initRate?: number }) => {
-    const [rate, setRate] = useState(initRate || null);
+    const [rate, setRate] = useState(initRate || null)
     const [hover, setHover] = useState(null);
-  
-    // const styles = {
-    //   input: {
-    //     display: "none"
-    //   },
-    //   container: {
-    //     display: 'flex'
-    //   }
-    // }
   
     return(
       <Flex>
-        { [...Array(5)].map((star, idx: number) => {
+        { [1, 2, 3, 4, 5].map((star, idx: number) => {
             const currentRate = idx + 1; 
+            console.log(currentRate)
             return(
-              <Box as="label">
-                {/* <input type="radio" name="rate" style={styles.input} value={currentRate} onClick={() => setRate(currentRate)} /> */}
-                <Radio value={currentRate} onChange={() => setRate(currentRate)} name="rate" display="none"> rate </Radio>
-                <FaStar className='star' 
+              <Box as="label" key={idx}>
+                <input type="radio" name="rate" style={{ display: "none" }} value={currentRate} onClick={() => setRate(currentRate)} />
+                  <BsStarFill className='star' 
                     color={currentRate <= (hover || rate) ? '#ffc107' : '#e4e5e9'} 
                     size={20}
                     onMouseEnter={() => setHover(currentRate)}
                     onMouseLeave={() => setHover(null)}
-                    />
+                  /> 
+                  {/* { ((rate - currentRate) > 0 && (rate - currentRate) < 1) ? 
+                      <BsStarHalf className='star' 
+                        color={currentRate <= (hover || rate) ? '#ffc107' : '#e4e5e9'} 
+                        size={20}
+                        onMouseEnter={() => setHover(currentRate)}
+                        onMouseLeave={() => setHover(null)}
+                      /> : ''} */}
               </Box>
             )
           })

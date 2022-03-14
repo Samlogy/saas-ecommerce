@@ -1,28 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Flex, Text, Button, Heading } from "@chakra-ui/react"
 
 import { Comment, View, AddComment } from "../components"
 
-const comments =[
-    {
-        name: 'Sam',
-        comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-        createdAt: '15/03/2022'
-    },
-    {
-        name: 'Sam',
-        comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-        createdAt: '15/03/2022'
-    },
-    {
-        name: 'Sam',
-        comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-        createdAt: '15/03/2022'
-    },
-];
+interface IPCommentList {
+    productId: string,
+    comments: any
+}
 
-const ListingComments = ({ productId }: { productId: string }) => {
+const ListingComments = (props: IPCommentList) => {
     const [showAddComment, setShowAddComment] = useState(false);
+    // const comments = props.comments
+    const [comments, setComments] = useState([]);
+
+    // console.log('props: ', props)
+    // console.log('comments: ', comments)
+    useEffect(() => {
+        // api call --> load comments
+        const data = [
+            {
+                name: 'Sam',
+                comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+                createdAt: '15/03/2022'
+            },
+            {
+                name: 'Sam',
+                comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+                createdAt: '15/03/2022'
+            },
+            {
+                name: 'Sam',
+                comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+                createdAt: '15/03/2022'
+            },
+        ];
+        setComments(data)
+    }, [props.productId])
 
     return(
         <Flex flexDir="column">
@@ -43,3 +56,30 @@ const ListingComments = ({ productId }: { productId: string }) => {
 }
 
 export default ListingComments;
+
+
+// export const getServerSideProps = async (context) => {
+//     // api call (context.params.id)
+//     const data = [
+//         {
+//             name: 'Sam',
+//             comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+//             createdAt: '15/03/2022'
+//         },
+//         {
+//             name: 'Sam',
+//             comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+//             createdAt: '15/03/2022'
+//         },
+//         {
+//             name: 'Sam',
+//             comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+//             createdAt: '15/03/2022'
+//         },
+//     ];
+//     return {
+//       props: {
+//         comments: data
+//       }
+//     }
+//   }

@@ -3,7 +3,7 @@ import {
   Text,
   Box,
   Flex,
-  useColorModeValue,
+  // useColorModeValue,
   Image,
   HStack,
 } from "@chakra-ui/react";
@@ -47,13 +47,7 @@ const Carousel = ({ slides }: { slides: any }) => {
   };
 
   return (
-    <Flex
-      w="full"
-      bg={useColorModeValue("gray.200", "gray.600")}
-      p={10}
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Flex >
       <Flex w="full" overflow="hidden" pos="relative">
         <Flex h="400px" w="full" {...carouselStyle}>
           {slides.map((slide, sid) => (
@@ -61,14 +55,16 @@ const Carousel = ({ slides }: { slides: any }) => {
               <Text
                 color="white"
                 fontSize="xs"
-                p="8px 12px"
+                p="5px 8px"
                 pos="absolute"
-                top="0"
+                top="0" left="0"
+                bg="gray.400"
+                borderRadius={'5px'}
               >
                 {sid + 1} / {slidesCount}
               </Text>
               <Image
-                src={slide}
+                src={slide} borderRadius={'5px'}
                 alt="carousel image"
                 boxSize="full"
                 backgroundSize="cover"
@@ -76,12 +72,15 @@ const Carousel = ({ slides }: { slides: any }) => {
             </Box>
           ))}
         </Flex>
-        <Text {...arrowStyles} left="0" onClick={prevSlide}>
+
+        <Text {...arrowStyles} left="0" onClick={prevSlide} borderRadius={'5px'}>
           &#10094;
         </Text>
-        <Text {...arrowStyles} right="0" onClick={nextSlide}>
+
+        <Text {...arrowStyles} right="0" onClick={nextSlide} borderRadius={'5px'}>
           &#10095;
         </Text>
+
         <HStack justify="center" pos="absolute" bottom="8px" w="full">
           {Array.from({ length: slidesCount }).map((_, slide) => (
             <Box

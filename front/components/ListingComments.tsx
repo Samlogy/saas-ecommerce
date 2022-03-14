@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Flex, Box, Text, Button, Heading } from "@chakra-ui/react"
+import { Flex, Text, Button, Heading } from "@chakra-ui/react"
 
 import { Comment, View, AddComment } from "../components"
 
@@ -21,7 +21,7 @@ const comments =[
     },
 ];
 
-const ListingComments = () => {
+const ListingComments = ({ productId }: { productId: string }) => {
     const [showAddComment, setShowAddComment] = useState(false);
 
     return(

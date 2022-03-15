@@ -66,7 +66,7 @@ export default function Products() {
         <Text> Product result are: {data.length} </Text>
 
         <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
-          { data.map((el: any) => <ProductCard data={el} />) }
+          { data.map((el: any, idx: number) => <ProductCard idx={idx} data={el} />) }
         </Flex>
       </View>
 

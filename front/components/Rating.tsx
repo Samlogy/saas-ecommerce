@@ -11,7 +11,7 @@ const Rating = ({ initRate }: { initRate?: number }) => {
       <Flex>
         { [1, 2, 3, 4, 5].map((star, idx: number) => {
             const currentRate = idx + 1; 
-            console.log(currentRate)
+            // console.log(currentRate)
             return(
               <Box as="label" key={idx}>
                 <input type="radio" name="rate" style={{ display: "none" }} value={currentRate} onClick={() => setRate(currentRate)} />

@@ -20,7 +20,7 @@ import { useRouter } from 'next/router';
 import { useUser } from '@auth0/nextjs-auth0';
 
 import { Logout, SelectLanguage, DarkModeToggle, ShoppingCartIcon } from "../components"
-import { useAuth, useShoppingCart } from "../store";
+import { useShoppingCart } from "../store";
 import { Logo } from "../public/icons"
 
 const Links = [
@@ -60,7 +60,7 @@ export default function NavBar() {
   // const isLogged = useAuth((state: any) => state.isLogged);
   // const user = useAuth((state: any) => state.user);
 
-  const total = useShoppingCart((state: any) => state.total)
+  const products = useShoppingCart((state: any) => state.products)
 
   const bgColor = useColorModeValue('gray.100', 'gray.700')
 
@@ -86,7 +86,7 @@ export default function NavBar() {
           <Flex alignItems={'center'}>
             <SelectLanguage />
             <DarkModeToggle />
-            <ShoppingCartIcon value={total} />
+            <ShoppingCartIcon value={products.length} />
             { (!isLoading && !user) &&  <NavMenuUnConnected /> }
             { user && <NavMenuConnected avatar={user.picture} /> }
           </Flex>

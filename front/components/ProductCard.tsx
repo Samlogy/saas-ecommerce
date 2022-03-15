@@ -12,53 +12,27 @@ import Link from 'next/link'
     Button,
   } from '@chakra-ui/react';
   import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
-  import { FiShoppingCart } from 'react-icons/fi';
   
   import { useShoppingCart } from "../store";
-  
-  interface RatingProps {
-    rating: number;
-    numReviews: number;
-  }
-  
-  function Rating({ rating, numReviews }: RatingProps) {
-    return (
-      <Box d="flex" alignItems="center">
-        {Array(5)
-          .fill('')
-          .map((_, i) => {
-            const roundedRating = Math.round(rating * 2) / 2;
-            if (roundedRating - i >= 1) {
-              return (
-                <BsStarFill
-                  key={i}
-                  style={{ marginLeft: '1' }}
-                  color={i < rating ? 'teal.500' : 'gray.300'}
-                />
-              );
-            }
-            if (roundedRating - i === 0.5) {
-              return <BsStarHalf key={i} style={{ marginLeft: '1' }} />;
-            }
-            return <BsStar key={i} style={{ marginLeft: '1' }} />;
-          })}
-        <Box as="span" ml="2" color="gray.600" fontSize="sm">
-          {numReviews} review{numReviews > 1 && 's'}
-        </Box>
-      </Box>
-    );
-  }
-  
-  const ProductCard = ({ data }: { data: any }) => {
+  import { Rating } from "../components"
+   
+  const ProductCard = ({ idx, data }: { idx: any, data: any }) => {
     const addToCart = useShoppingCart((state: any) => state.addToCart)
 
     const onAdd = () => {
-      console.log('add to cart');
-      // addToCart()
+      const newProduct = {
+        id: 1,
+        img: 'https://bit.ly/dan-abramov',
+        name: "Throwback Hip Ba",
+        quantity: 1,
+        price: 90.00,
+        discount: .2
+      }
+      addToCart(newProduct)
     }
 
     return (
-      <Flex p={50} w="400px" alignItems="center" justifyContent="center">
+      <Flex key={idx} p={50} w="400px" alignItems="center" justifyContent="center">
         <Box bg={useColorModeValue('white', 'gray.800')} maxW="sm" borderWidth="1px" rounded="lg" shadow="lg" position="relative">
           {data.isNew && (
             <Circle size="10px" position="absolute" top={2} right={2} bg="red.200" />
@@ -66,7 +40,7 @@ import Link from 'next/link'
   
           <Image src={data.imageURL} alt={`Picture of ${data.name}`} roundedTop="lg" />
 
-          <Box p="6">
+          <Box p="6" mb=".3rem">
             <Box d="flex" alignItems="baseline">
               {data.isNew && (
                 <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="red">
@@ -86,8 +60,13 @@ import Link from 'next/link'
               </Box>
             </Flex>
   
-            <Flex justifyContent="space-between" alignContent="center">
-              <Rating rating={data.rating} numReviews={data.numReviews} />
+            <Flex flexDir={'column'} justifyContent="space-between" alignContent="center" >
+              <Flex my=".3rem">
+                <Rating initRate={data.rating} />
+                <Box as="span"> {data.numReviews} </Box>
+                <Box as="span" ml=".1rem"> Reviews </Box>
+              </Flex>
+              
               <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
                 <Box as="span" color={'gray.600'} fontSize="lg">
                   {data.currency}

@@ -1,71 +1,99 @@
 import create, { SetState, GetState } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
+const addProduct = (products: any, newProduct: any) => {
+    return products.length > 0 ? [...products, newProduct] : [newProduct]
+};
+const incrementProduct = (productId: number, products) => {
+    const new_products = products.map((product) => ({
+        ...product,
+        quantity: product.id == productId ? product.quantity++ : product.quantity
+    })) 
+    return new_products
+};
+const decrementProduct = (productId: number, products) => {
+    const new_products = products.map((product) => ({
+        ...product,
+        quantity: (product.id === productId && product.quantity > 1) ? product.quantity-- : (product.id === productId && product.quantity === 1) ? 0 : product.quantity
+    })) 
+    // console.log('products: ', new_products) product.quantity--
+    return new_products
+};
+const removeOneProduct = (productId: number, products) => {
+    return products.filter(({ id }) => productId !== id)
+};
+const removeAllProducts = () => {
+    return []
+};
+const calculateProductsTotal = (products: any) => {
+    const productsPrices = products.map((product: any) => product.quantity * product.price)
+    const new_total = productsPrices.reduce(
+        (prev, current) => prev + current,
+        0
+    );
+    return new_total;
+};
+
 
 // Shopping Cart Store
 type IShoppingCart = {
+    newProduct: any,
     products: any,
     total: number,
     isVisible: boolean,
-    handleVisibility: () => void,
+    handleCartVisibility: (visible: boolean) => void,
     addToCart: (newProduct: any) => void,
     increment: (id: any) => void,
     decrement: (id: any) => void,
     removeOne: (id: any) => void,
     removeAll: () => void,
+    computeTotal: () => number
 };
 
-let shoppingCartStore = (set: SetState<IShoppingCart>, get: GetState<IShoppingCart>) => ({
+let shoppingCartStore = (set: SetState<IShoppingCart>) => ({
     products: [],
     total: 0,
     isVisible: false,
-    handleVisibility: (): void => {
-        let { isVisible } = get()
+    handleCartVisibility: (isVisible: boolean) => {
         set({ isVisible: !isVisible })
     },
-    addToCart: (newProduct: any): void => {
-        let { products, total } = get();
-        const productExist = products.find((product: any) => product.id === newProduct.id)
-        if (productExist) {
-            productExist.quantity++
-            set({ products, total: total++ })
-        } else {
-            products.push({ ...newProduct, quantity: 1 })
-            set({ products, total: total++ })
-        }
+    addToCart: (newProduct: any) => {
+        set((state) => ({
+            ...state,
+            products: addProduct(state.products, newProduct)
+        }))
     },
-    increment: (id: any): void => {
-        let { products } = get()
-        const new_products = products.map((product: any) => {
-            if(product.id === id) return product.quantity++
-        })
-        const new_total = products.reduce((accumulator, product) => accumulator + product.quantity * product.price, 0)
-        set({ products: new_products, total: new_total })
+    increment: (productId) => {
+        set((state) => ({
+            ...state,
+            products: incrementProduct(productId, state.products)
+        }))
     },
-    decrement: (id: any): void => {
-        const { products } = get()
-        const product = products.find((product: any) => product.id === id)
-
-        if (product.quantity === 1) {
-            const index = products.findIndex((item: any) => item.id === id)
-            products.splice(index, 1)
-            const new_total = products.reduce((accumulator, product) => accumulator + product.quantity * product.price, 0)
-            set({ products: products, total: new_total });
-        } else {
-            product.quantity--
-            const new_total = products.reduce((accumulator, product) => accumulator + product.quantity * product.price, 0)
-            set({ products: products, total: new_total });
-        }
+    decrement: (productId) => {
+        set((state) => ({
+            ...state,
+            products: decrementProduct(productId, state.products)
+        }))
     },
-    removeOne: (id: any): void =>  {
-        const { products } = get();
-        const index = products.findIndex((product: any) => product.id === id);
-        products.splice(index, 1);
-        const new_total = products.reduce((accumulator, product) => accumulator + product.quantity * product.price, 0)
-        set({ products: products, total: new_total });
+    removeOne: (productId) => {
+        set((state) => ({
+            ...state,
+            products: removeOneProduct(productId, state.products)
+        }))
     },
-    removeAll: () => set({ products: [], total: 0 }),
-}) 
+    removeAll: () => {
+        set((state) => ({
+            ...state,
+            products: removeAllProducts()
+        }))
+    },
+    computeTotal: () => {
+        set((state) => ({
+            ...state,
+            total: calculateProductsTotal(state.products)
+        }))
+    }
+})
 
 shoppingCartStore = devtools(shoppingCartStore)
 shoppingCartStore = persist(shoppingCartStore, { name: "shopping_cart" })

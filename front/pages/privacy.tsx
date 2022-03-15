@@ -36,7 +36,7 @@ export default function Privacy() {
         </Text>
 
         <UnorderedList my="1rem">
-            { data.map((el) => <ListItem color="blue.500"> {el?.link} </ListItem>) }
+            { data.map((el) => <ListItem color="blue.500" _hover={{ cursor: 'pointer' }}> {el?.link} </ListItem>) }
         </UnorderedList>
 
         <View cond={data.length > 0}>

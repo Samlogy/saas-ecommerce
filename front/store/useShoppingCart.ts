@@ -4,18 +4,28 @@ import { devtools, persist } from 'zustand/middleware'
 const addProduct = (products: any, newProduct: any) => {
     return products.length > 0 ? [...products, newProduct] : [newProduct]
 };
-const incrementProduct = (productId: number, products) => {
-    const new_products = products.map((product) => ({
+const incrementProduct = (productId: number, products: any) => {
+    const isItemInCart = products.find((product: any) => product.id === productId);
+
+    if (isItemInCart) {
+        return products.map((product: any) =>
+          product.id === productId
+            ? { ...product, quantity: product.quantity + 1 }
+            : product
+        );
+    }
+
+    return products.map((product) => ({
         ...product,
-        quantity: product.id == productId ? product.quantity++ : product.quantity
+        quantity: product.id == productId ? product.quantity + 1 : product.quantity
     })) 
-    return new_products
 };
 const decrementProduct = (productId: number, products) => {
     const new_products = products.map((product) => ({
         ...product,
-        quantity: (product.id === productId && product.quantity > 1) ? product.quantity-- : (product.id === productId && product.quantity === 1) ? 0 : product.quantity
+        quantity: (product.id === productId && product.quantity > 1) ? product.quantity - 1 : (product.id === productId) ? product.quantity : 'never shown'
     })) 
+    // (product.id === productId && product.quantity === 1)
     // console.log('products: ', new_products) product.quantity--
     return new_products
 };
@@ -25,13 +35,12 @@ const removeOneProduct = (productId: number, products) => {
 const removeAllProducts = () => {
     return []
 };
-const calculateProductsTotal = (products: any) => {
-    const productsPrices = products.map((product: any) => product.discount > 0 ? product.quantity * product.price * product.discount : product.quantity * product.price)
-    const new_total = productsPrices.reduce(
+const calculateProductsTotal =  (products: any) => {
+    const productsPrices = products.map((product: any) => product.discount > 0 ? product.quantity * product.price * (1-product.discount) : product.quantity * product.price)
+    return productsPrices.reduce(
         (prev, current) => prev + current,
         0
     );
-    return new_total;
 };
 
 
@@ -54,7 +63,7 @@ type IShoppingCart = {
 let shoppingCartStore = (set: SetState<IShoppingCart>) => ({
     products: [],
     total: 0,
-    price: 0,
+    // price: 0,
     isVisible: false,
     handleCartVisibility: (isVisible: boolean) => {
         set({ isVisible: !isVisible })
@@ -89,7 +98,7 @@ let shoppingCartStore = (set: SetState<IShoppingCart>) => ({
             products: removeAllProducts()
         }))
     },
-    computeTotal: () => {
+    computeTotal: async () => {
         set((state) => ({
             ...state,
             price: calculateProductsTotal(state.products)

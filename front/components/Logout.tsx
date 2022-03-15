@@ -2,9 +2,10 @@
 import React, { FC, useState } from "react";
 import { Button, useColorModeValue } from "@chakra-ui/react"
 import { useRouter } from "next/router";
+import { HiOutlineLogout } from "react-icons/hi"
 
-import { IconLogout } from "../public/icons"
-import { useAuth } from "../store";
+// import { IconLogout } from "../public/icons"
+// import { useAuth } from "../store";
 
 const Logout: FC = () => {
     const [loggedOut, setLoggedOut] = useState(false);
@@ -24,7 +25,7 @@ const Logout: FC = () => {
     if ( loggedOut ) logging_out();
 
     return(
-        <Button leftIcon={<IconLogout />} variant="ghost" color={textColor}
+        <Button leftIcon={<HiOutlineLogout />} variant="ghost" color={textColor}
             fontWeight="400" mr="0rem" _hover={{ border: "none", color: textHoverColor }}
             // onClick={() => setLoggedOut(true)}
             >

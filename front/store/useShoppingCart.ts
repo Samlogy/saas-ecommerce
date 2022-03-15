@@ -26,7 +26,7 @@ const removeAllProducts = () => {
     return []
 };
 const calculateProductsTotal = (products: any) => {
-    const productsPrices = products.map((product: any) => product.quantity * product.price)
+    const productsPrices = products.map((product: any) => product.discount > 0 ? product.quantity * product.price * product.discount : product.quantity * product.price)
     const new_total = productsPrices.reduce(
         (prev, current) => prev + current,
         0
@@ -40,6 +40,7 @@ type IShoppingCart = {
     newProduct: any,
     products: any,
     total: number,
+    price: number,
     isVisible: boolean,
     handleCartVisibility: (visible: boolean) => void,
     addToCart: (newProduct: any) => void,
@@ -53,6 +54,7 @@ type IShoppingCart = {
 let shoppingCartStore = (set: SetState<IShoppingCart>) => ({
     products: [],
     total: 0,
+    price: 0,
     isVisible: false,
     handleCartVisibility: (isVisible: boolean) => {
         set({ isVisible: !isVisible })
@@ -90,7 +92,7 @@ let shoppingCartStore = (set: SetState<IShoppingCart>) => ({
     computeTotal: () => {
         set((state) => ({
             ...state,
-            total: calculateProductsTotal(state.products)
+            price: calculateProductsTotal(state.products)
         }))
     }
 })

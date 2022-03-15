@@ -12,11 +12,11 @@ import {
   import { useShoppingCart } from "../store";
 
 const ShoppingCart = () => {
-  const isVisible = useShoppingCart((state: any) => state.isVisible)
-  const computeTotal = useShoppingCart((state: any) => state.computeTotal)
-  const handleCartVisibility = useShoppingCart((state: any) => state.handleCartVisibility)
-  const removeAll = useShoppingCart((state: any) => state.removeAll)
-  const products = useShoppingCart((state: any) => state.products)
+    const isVisible = useShoppingCart((state: any) => state.isVisible)
+    const price = useShoppingCart((state: any) => state.price)
+    const handleCartVisibility = useShoppingCart((state: any) => state.handleCartVisibility)
+    const removeAll = useShoppingCart((state: any) => state.removeAll)
+    const products = useShoppingCart((state: any) => state.products)
 
   
     return(
@@ -36,7 +36,7 @@ const ShoppingCart = () => {
 
                 <Flex justifyContent={'space-between'} mt="1rem">
                   <Text fontWeight="600"> Total </Text>
-                  <Text fontWeight="600"> ${computeTotal()} </Text>
+                  <Text fontWeight="600"> ${price} </Text>
                 </Flex>
               </View>
 

@@ -1,8 +1,4 @@
-import Head from 'next/head'
-import Link from 'next/link'
-// import Image from 'next/image'
-
-  import {
+import {
     Flex,
     Circle,
     Box,
@@ -11,7 +7,6 @@ import Link from 'next/link'
     useColorModeValue,
     Button,
   } from '@chakra-ui/react';
-  import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
   
   import { useShoppingCart } from "../store";
   import { Rating } from "../components"
@@ -19,16 +14,13 @@ import Link from 'next/link'
   const ProductCard = ({ idx, data }: { idx: any, data: any }) => {
     const addToCart = useShoppingCart((state: any) => state.addToCart)
 
-    const onAdd = () => {
-      const newProduct = {
-        id: 1,
-        img: 'https://bit.ly/dan-abramov',
-        name: "Throwback Hip Ba",
-        quantity: 1,
-        price: 90.00,
-        discount: .2
-      }
-      addToCart(newProduct)
+    const newProduct = {
+      id: 1,
+      img: 'https://bit.ly/dan-abramov',
+      name: "Throwback Hip Ba",
+      quantity: 1,
+      price: 90.00,
+      discount: .2
     }
 
     return (
@@ -61,11 +53,7 @@ import Link from 'next/link'
             </Flex>
   
             <Flex flexDir={'column'} justifyContent="space-between" alignContent="center" >
-              <Flex my=".3rem">
-                <Rating initRate={data.rating} />
-                <Box as="span"> {data.numReviews} </Box>
-                <Box as="span" ml=".1rem"> Reviews </Box>
-              </Flex>
+              <Rating initRate={data.rating} reviews={data.numReviews} />
               
               <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
                 <Box as="span" color={'gray.600'} fontSize="lg">
@@ -75,7 +63,7 @@ import Link from 'next/link'
               </Box>
             </Flex>
 
-            <Button colorScheme='blue' w="full" mt="1.5rem" onClick={() => onAdd()}>
+            <Button colorScheme='blue' w="full" mt="1.5rem" onClick={() => addToCart(newProduct)}>
                 Add to Cart
             </Button>
           </Box>

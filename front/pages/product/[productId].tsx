@@ -16,32 +16,38 @@ import {
 } from '@chakra-ui/react';
 import { MdLocalShipping } from 'react-icons/md';
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-import React, { useState } from "react";
-import { useRouter } from 'next/router';
+// import React, { useState } from "react";
+// import { useRouter } from 'next/router';
 
 import { Layout, Carousel, View, ListingComments } from "../../components"
+import { useShoppingCart } from '../../store';
 
 
 export default function Product({ product }) {
-  const [quantity, setQuantity] = useState(1);
+  // const [quantity, setQuantity] = useState(1);
+  const increment = useShoppingCart((state: any) => state.increment)
+  const decrement = useShoppingCart((state: any) => state.decrement)
+  const addToCart = useShoppingCart((state: any) => state.addToCart)
 
-  const router = useRouter()
-  let { productId } = router.query
-  productId = productId.toString()
+  // const router = useRouter()
+  // let { productId } = router.query
+  // productId = productId.toString()
 
   // laod data from db (all product data) + delete useRouter logic
 
   const handleQuantity = (type: string) => {
-    if (type === "dec") {
-      if (quantity > 1) {
-        setQuantity(quantity - 1)
-        // call store
-      }
-    } else {
-      setQuantity(quantity + 1);
-      // call store
-    }
+    if (type === "dec") decrement(product.id)
+    else increment(product.id)
   };
+
+  const newProduct = {
+    id: 1,
+    img: 'https://bit.ly/dan-abramov',
+    name: "Throwback Hip Ba",
+    quantity: 1,
+    price: 90.00,
+    discount: .2
+  }
 
   return (
   <Layout isHeaderVisible isFooterVisible>
@@ -66,7 +72,7 @@ export default function Product({ product }) {
               {product.name}
             </Heading>
             <Text color={useColorModeValue('gray.900', 'gray.400')} fontWeight={300} fontSize={'2xl'}>
-              {product.price}
+              $ {product.price} 
             </Text>
           </Box>
 
@@ -116,12 +122,14 @@ export default function Product({ product }) {
           <Flex flexDir="row-reverse" justifyContent={'space-between'}>
             <Flex justifyContent={'space-evenly'} alignItems='center' w="150px" mt={8}>
               <IconButton icon={<AiOutlineMinus />} aria-label='descrement' onClick={() => handleQuantity('dec')} />
-              <Text my="auto"> {quantity} </Text>
+              <Text my="auto"> {product.quantity} </Text>
+              {console.log('quantity: ', product.quantity)}
               <IconButton icon={<AiOutlinePlus />} aria-label='increment' onClick={() => handleQuantity('inc')} />
             </Flex>
   
             <Button w="200px" mt={8} size={'lg'} py={'7'} bg={"blue.500"} color={"white"} textTransform={'uppercase'}
-              _hover={{ transform: 'translateY(2px)', boxShadow: 'lg' }}>
+              _hover={{ transform: 'translateY(2px)', boxShadow: 'lg' }}
+              onClick={() => addToCart(newProduct)}>
               Add to cart
             </Button>
           </Flex>
@@ -134,7 +142,7 @@ export default function Product({ product }) {
         </Stack>
       </SimpleGrid>
 
-      <ListingComments productId={productId} />
+      <ListingComments productId={product.id} />
     </Layout>
   );
 }
@@ -148,7 +156,8 @@ export const getServerSideProps = async (context) => {
       'https://images.unsplash.com/photo-1438183972690-6d4658e3290e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2274&q=80',
       'https://images.unsplash.com/photo-1507237998874-b4d52d1dd655?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
     ],
-    price: "$350.00 USD",
+    quantity: 1,
+    price: 350,
     description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore",
     description2: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut laboreLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore",
     features: ['Chronograph', 'anti-magnetic', 'Tachymeter', 'Chronometer', 'Small seconds'],

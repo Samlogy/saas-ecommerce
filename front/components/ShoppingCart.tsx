@@ -18,6 +18,9 @@ const ShoppingCart = () => {
     const removeAll = useShoppingCart((state: any) => state.removeAll)
     const products = useShoppingCart((state: any) => state.products)
 
+    const computeTotal = useShoppingCart((state: any) => state.computeTotal)
+
+  console.log('total: ', price)
   
     return(
         <Drawer isOpen={isVisible} placement='right' size="sm" onClose={() => handleCartVisibility(isVisible)}>

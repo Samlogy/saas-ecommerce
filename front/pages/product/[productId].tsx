@@ -19,16 +19,14 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import React, { useState } from "react";
 import { useRouter } from 'next/router';
 
-import { Layout, Carousel, View, ListingComments } from "../../../components"
-
-
+import { Layout, Carousel, View, ListingComments } from "../../components"
 
 
 export default function Product({ product }) {
   const [quantity, setQuantity] = useState(1);
 
   const router = useRouter()
-  let { id: productId } = router.query
+  let { productId } = router.query
   productId = productId.toString()
 
   // laod data from db (all product data) + delete useRouter logic

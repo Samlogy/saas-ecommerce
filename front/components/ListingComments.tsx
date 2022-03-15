@@ -5,7 +5,7 @@ import { Comment, View, AddComment } from "../components"
 
 interface IPCommentList {
     productId: string,
-    comments: any
+    // comments: any
 }
 
 const ListingComments = (props: IPCommentList) => {
@@ -16,7 +16,7 @@ const ListingComments = (props: IPCommentList) => {
     // console.log('props: ', props)
     // console.log('comments: ', comments)
     useEffect(() => {
-        // api call --> load comments
+        // api call --> load comments (use react query instead)
         const data = [
             {
                 name: 'Sam',

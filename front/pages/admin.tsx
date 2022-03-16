@@ -35,7 +35,7 @@ import { BiDetail } from "react-icons/bi"
 import { FiEdit, FiTrash } from "react-icons/fi"
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaEllipsisV } from "react-icons/fa"
-import { useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -82,10 +82,28 @@ const DATA = [
   },
 ]
 
+interface ICurrentProduct {
+  id: number | string,
+  name: string,
+  price: number | string,
+  description: string,
+  discount: number, // ]0,1[
+  img: string,
+  quantity: number | string,
+  features: string[]
+}
+interface IAction {
+  delete: boolean,
+  disable: boolean,
+  add: boolean,
+  edit: boolean,
+  details: boolean
+}
+
 export default function Admin() {
   const [action, setAction] = useState({ delete: false, disable: false, add: false, edit: false, details: false })
   const [currentProduct, setCurrentProduct] = useState({
-    id: '', name: '', price: '', description: '', coupon: '', img: '', quantity: '', features: []
+    id: '', name: '', price: '', description: '', discount: 0, img: '', quantity: '', features: []
   })
 
   const [query, setQuery] = useState('');
@@ -129,11 +147,11 @@ export default function Admin() {
 
       
       <View cond={action.delete}>
-          <ProductBox isOpen={action.delete} setAction={setAction} onClose={() => setAction({...action, delete: false})} productId={"1"} mode="delete" />  
+          <ProductBox isOpen={action.delete} setAction={setAction} onClose={() => setAction({...action, delete: false})} productId={1} mode="delete" />  
       </View>
 
       <View cond={action.disable}>
-          <ProductBox isOpen={action.disable} setAction={setAction} onClose={() => setAction({...action, disable: false})} productId={"1"} mode="disable" />  
+          <ProductBox isOpen={action.disable} setAction={setAction} onClose={() => setAction({...action, disable: false})} productId={1} mode="disable" />  
       </View>
 
       <View cond={action.add}>
@@ -156,8 +174,11 @@ export default function Admin() {
   );
 }
 
-
-const ProductsList = ({ data, setAction }: { data: any, setAction: any }) => {
+interface IProductsList {
+  data: any,
+  setAction: Dispatch<React.SetStateAction<{ delete: boolean; disable: boolean; add: boolean; edit: boolean; details: boolean; }>>
+}
+const ProductsList = ({ data, setAction }: IProductsList) => {
   return(
       <Table variant='striped' colorScheme='blue'>
         <Thead>
@@ -188,7 +209,11 @@ const ProductsList = ({ data, setAction }: { data: any, setAction: any }) => {
   )
 }
 
-const ProductsFilter = ({ setQuery, query }) => {
+interface IProductFilter {
+  setQuery: Dispatch<React.SetStateAction<string>>,
+  query: string
+}
+const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
 
   const keys = ['image', 'name', 'description', 'qunatity', 'price']
 
@@ -221,7 +246,11 @@ const ProductsFilter = ({ setQuery, query }) => {
   )
 }
 
-const ActionsMenu = ({ productId, setAction }: { productId: string, setAction: any }) => {
+interface IActionMenu {
+  productId: number,
+  setAction: () => void
+}
+const ActionsMenu = ({ productId, setAction }: IActionMenu) => {
   const onEdit = (productId: string) => {
     // console.log('edit product: ', productId)
     setAction({ edit: true})
@@ -254,7 +283,14 @@ const ActionsMenu = ({ productId, setAction }: { productId: string, setAction: a
   )
 }
 
-const AddEditProduct = ({ isOpen, onClose, product, currentProduct, mode }: { isOpen: any, onClose: any, product?: any, currentProduct: any, mode: string }) => {
+interface IAddEditProduct {
+  isOpen: boolean,
+  onClose: () => void,
+  product?: any,
+  currentProduct: any,
+  mode: string
+}
+const AddEditProduct = ({ isOpen, onClose, product, currentProduct, mode }: IAddEditProduct) => {
 
     const formOptions = { 
       resolver: yupResolver(addProductSchema),
@@ -336,7 +372,14 @@ const AddEditProduct = ({ isOpen, onClose, product, currentProduct, mode }: { is
       );
 }
 
-const ProductBox = ({ isOpen, onClose, productId, setAction, mode }: { isOpen: any, onClose: any, productId: string, setAction: any, mode: string }) => {
+interface IProductBox {
+  isOpen: boolean,
+  onClose: () => void,
+  productId: number,
+  setAction: Dispatch<React.SetStateAction<{ delete: boolean; disable: boolean; add: boolean; edit: boolean; details: boolean; }>>,
+  mode: string
+}
+const ProductBox = ({ isOpen, onClose, productId, setAction, mode }: IProductBox) => {
   const cancelRef = useRef()
 
   const onDelete = (productId: string) => {
@@ -384,7 +427,12 @@ const ProductBox = ({ isOpen, onClose, productId, setAction, mode }: { isOpen: a
   )
 }
 
-const ProductDetails = ({ isOpen, onClose, product }: { isOpen: any, onClose: any, product: any }) => {
+interface IProductDetails {
+  isOpen: boolean,
+  onClose: () => void,
+  product: any
+}
+const ProductDetails = ({ isOpen, onClose, product }: IProductDetails) => {
 
   const Display = (label: string, data: any) => {
     return(
@@ -420,10 +468,5 @@ const ProductDetails = ({ isOpen, onClose, product }: { isOpen: any, onClose: an
   )
 }
 
-export async function getStaticProps() {
-  // const data = (await getProducts()) || {};
-  return {
-    props: { products: {} },
-  };
-}
+
 

@@ -1,13 +1,10 @@
 import {
   Text,
-  Button,
   Flex,
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton,
 } from '@chakra-ui/react';
 
 import { AiFillCheckCircle, AiFillInfoCircle, AiFillWarning, AiFillCloseCircle } from "react-icons/ai";

@@ -1,5 +1,5 @@
 
-import { BsFillStarFill, BsStarFill, BsStarHalf } from "react-icons/bs"
+import { BsStarFill, BsStarHalf } from "react-icons/bs"
 import { useState, useMemo } from "react";
 import { Flex, Box } from "@chakra-ui/react"
 

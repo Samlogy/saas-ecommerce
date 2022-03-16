@@ -1,22 +1,8 @@
 import {
-    Button,
-    FormControl,
-    FormLabel,
     Flex,
-    Heading,
-    Input,
     Stack,
-    Text,
-    Box,
-    Checkbox,
     useColorModeValue,
-    InputRightElement, InputGroup
   } from '@chakra-ui/react';
-  import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
-// import Link from 'next/link'
-
-import { Layout, View } from "../components"
-
 
 export default function FormTemplate({ children }: { children: React.ReactNode }) {
   return (

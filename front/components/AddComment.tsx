@@ -13,7 +13,12 @@ import { ErrorMessage } from '../components'
 import { commentSchema } from "../lib/validation";
 import { saveState, removeState } from "../utils/localStorage"
 
-const AddComment = ({ isOpen, onClose }: { isOpen: any, onClose: any }) => {
+interface IAddComment {
+    isOpen: boolean,
+    onClose: () => void
+}
+
+const AddComment = ({ isOpen, onClose }: IAddComment) => {
     const [isChecked, setIsChecked] = useState(false);
 
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({

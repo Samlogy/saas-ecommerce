@@ -22,7 +22,6 @@ import { useShoppingCart } from '../../store';
 
 
 export default function Product({ product }) {
-  // const [quantity, setQuantity] = useState(1);
   const increment = useShoppingCart((state: any) => state.increment)
   const decrement = useShoppingCart((state: any) => state.decrement)
   const addToCart = useShoppingCart((state: any) => state.addToCart)

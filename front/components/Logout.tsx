@@ -25,7 +25,7 @@ const Logout: FC = () => {
     if ( loggedOut ) logging_out();
 
     return(
-        <Button leftIcon={<HiOutlineLogout />} variant="ghost" color={textColor}
+        <Button leftIcon={<HiOutlineLogout />} variant="ghost" color={textColor} h="20px" px="0px"
             fontWeight="400" mr="0rem" _hover={{ border: "none", color: textHoverColor }}
             // onClick={() => setLoggedOut(true)}
             >

@@ -18,6 +18,7 @@ import {
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { useUser } from '@auth0/nextjs-auth0';
+import { FiSettings } from "react-icons/fi"
 
 import { Logout, SelectLanguage, DarkModeToggle, ShoppingCartIcon } from "../components"
 import { useShoppingCart } from "../store";
@@ -118,7 +119,9 @@ const NavMenuConnected = ({ avatar }: { avatar: string }) => {
         <Avatar size={'sm'} src={avatar} />
       </MenuButton>
       <MenuList bg={bgColor}>
-        <MenuItem  bg={bgColor} _hover={{ bg: bgHoverColor, color: textHoverColor }}> <Link href="/profile"> My Account </Link> </MenuItem>
+        <MenuItem  bg={bgColor} _hover={{ bg: bgHoverColor, color: textHoverColor }} icon={<FiSettings />}> 
+          <Link href="/profile"> My Account </Link> 
+        </MenuItem>
         <MenuDivider />
         <MenuItem _hover={{ bg: bgHoverColor, color: textHoverColor }}> <Logout /> </MenuItem>
       </MenuList>

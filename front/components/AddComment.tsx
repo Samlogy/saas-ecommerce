@@ -3,20 +3,15 @@ import { Box,
     Modal,
     ModalOverlay,
     ModalContent,
-    ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
     FormControl, FormLabel, Input, Textarea, Checkbox, Stack, Button } from "@chakra-ui/react"
-
-import { FormTemplate, ErrorMessage } from '../components'
-
-import Link from 'next/link'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
-// import { Layout, FormTemplate, ErrorMessage, SocialMediaButton } from "../components"
+import { ErrorMessage } from '../components'
 import { commentSchema } from "../lib/validation";
+import { saveState, removeState } from "../utils/localStorage"
 
 const AddComment = ({ isOpen, onClose }: { isOpen: any, onClose: any }) => {
     const [isChecked, setIsChecked] = useState(false);
@@ -26,12 +21,7 @@ const AddComment = ({ isOpen, onClose }: { isOpen: any, onClose: any }) => {
     });
 
     const onAdd = async (data: any) => {
-        if (isChecked) {
-            console.log('store data inside locale storage: ', data, isChecked)
-            localStorage.setItem('user_data_comment', JSON.stringify(data))
-        } else {
-            localStorage.removeItem('user_data_comment')
-        }
+        isChecked ? saveState('user_data_comment', JSON.stringify(data)) : removeState('user_data_comment')
     }
 
     const handleChange = (e: any) => {
@@ -46,7 +36,10 @@ const AddComment = ({ isOpen, onClose }: { isOpen: any, onClose: any }) => {
             <ModalBody py="1.5rem">
                 <form onSubmit={handleSubmit(onAdd)}> 
                     <FormControl id="fullName" mb="1rem">
-                        <FormLabel> Full Name </FormLabel>
+                        <FormLabel> 
+                            Full Name 
+                            <Box as="span" color="gray.500" fontSize=".85rem" fontStyle={'italic'}> (Optional) </Box> 
+                        </FormLabel>
                         <Input type="text" placeholder="Full Name" _placeholder={{ color: 'gray.500' }}
                                 isInvalid={errors.fullName ? true : false}
                                 errorBorderColor="error" borderColor="gray.300" borderRadius="4px" 
@@ -76,7 +69,7 @@ const AddComment = ({ isOpen, onClose }: { isOpen: any, onClose: any }) => {
                         <Checkbox value={'true'} checked={isChecked} onChange={handleChange}> <Box as="span" fontWeight={'300'} fontSize=".8rem"> Save my name, email in this browser for the next time I comment. </Box> </Checkbox>
                     </Stack>
 
-                    <Button type="submit"  bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
+                    <Button type="submit" isLoading={isSubmitting}  bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }}>
                         Post Comment
                     </Button>
                 </form>

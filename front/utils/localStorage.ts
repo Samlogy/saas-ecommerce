@@ -1,4 +1,4 @@
-export const loadStorage = (key: string) => {
+export const loadState = (key: string) => {
     try {
       const serialState = localStorage.getItem(key);
       if (serialState === null) {
@@ -10,7 +10,7 @@ export const loadStorage = (key: string) => {
     }
 };
 
-export const saveStorage = (key: string, state: any) => {
+export const saveState = (key: string, state: any) => {
     try {
       const serialState = JSON.stringify(state);
       localStorage.setItem(key, serialState);
@@ -20,7 +20,7 @@ export const saveStorage = (key: string, state: any) => {
     }
 };
 
-export const removeStorage = (key: string) => {
+export const removeState = (key: string) => {
   try {
     localStorage.removeItem(key);
   } catch (err) {

@@ -47,7 +47,15 @@ export const profileSchema = yup.object().shape({
 
 export const commentSchema = yup.object().shape({
     fullName: yup.string(),
-    email: yup.string().email('Enter a valid Email Address'),
+    email: yup.string().email('Enter a valid Email Address').required('Email Address required'),
     comment: yup.string().required('Enter your comment please'),
-    // isChecked: yup.bool().oneOf([true], 'Accept Ts & Cs is required')
+});
+
+
+export const testSchema = yup.object().shape({  
+    fullName: yup.string().required("Full Name required"),
+    username: yup.string().required("username required"),
+    address: yup.string().required("address required"),
+    email: yup.string().email("Enter a valid Email Address").required("Email Address required"),
+    age: yup.string().required("address required"),
 });

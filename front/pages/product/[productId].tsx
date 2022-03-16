@@ -16,8 +16,6 @@ import {
 } from '@chakra-ui/react';
 import { MdLocalShipping } from 'react-icons/md';
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-// import React, { useState } from "react";
-// import { useRouter } from 'next/router';
 
 import { Layout, Carousel, View, ListingComments } from "../../components"
 import { useShoppingCart } from '../../store';
@@ -28,10 +26,6 @@ export default function Product({ product }) {
   const increment = useShoppingCart((state: any) => state.increment)
   const decrement = useShoppingCart((state: any) => state.decrement)
   const addToCart = useShoppingCart((state: any) => state.addToCart)
-
-  // const router = useRouter()
-  // let { productId } = router.query
-  // productId = productId.toString()
 
   // laod data from db (all product data) + delete useRouter logic
 
@@ -83,12 +77,12 @@ export default function Product({ product }) {
               <Text color={useColorModeValue('gray.500', 'gray.400')} fontSize={'2xl'} fontWeight={'300'}>
                 {product.description}
               </Text>
-              <Text fontSize={'lg'}>
+              {/* <Text fontSize={'lg'}>
               {product.description2} 
-              </Text>
+              </Text> */}
             </VStack>
 
-            <Box>
+            {/* <Box>
               <Text fontSize={{ base: '16px', lg: '18px' }} color="blue.500" fontWeight={'500'} textTransform={'uppercase'} mb={'4'}>
                 Features
               </Text>
@@ -98,9 +92,9 @@ export default function Product({ product }) {
                   { product.features.map((el: any) => <ListItem> {el} </ListItem>) }
                 </List>
               </SimpleGrid>
-            </Box>
+            </Box> */}
 
-            <Box>
+            {/* <Box>
               <Text fontSize={{ base: '16px', lg: '18px' }} color="blue.500" fontWeight={'500'} textTransform={'uppercase'} mb={'4'}>
                 Product Details
               </Text>
@@ -116,14 +110,14 @@ export default function Product({ product }) {
                   )
                 }
               </List>
-            </Box>
+            </Box> */}
           </Stack>
 
           <Flex flexDir="row-reverse" justifyContent={'space-between'}>
             <Flex justifyContent={'space-evenly'} alignItems='center' w="150px" mt={8}>
               <IconButton icon={<AiOutlineMinus />} aria-label='descrement' onClick={() => handleQuantity('dec')} />
               <Text my="auto"> {product.quantity} </Text>
-              {console.log('quantity: ', product.quantity)}
+              {console.log('quantity: ', product.id)}
               <IconButton icon={<AiOutlinePlus />} aria-label='increment' onClick={() => handleQuantity('inc')} />
             </Flex>
   
@@ -150,6 +144,7 @@ export default function Product({ product }) {
 export const getServerSideProps = async (context) => {
   // api call (context.params.id)
   const data = {
+    id: 1,
     name: "Automatic Watch",
     img: [
       'https://images.unsplash.com/photo-1516796181074-bf453fbfa3e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
@@ -159,34 +154,6 @@ export const getServerSideProps = async (context) => {
     quantity: 1,
     price: 350,
     description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore",
-    description2: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut laboreLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore",
-    features: ['Chronograph', 'anti-magnetic', 'Tachymeter', 'Chronometer', 'Small seconds'],
-    details: [
-      {
-        key: "Between lugs",
-        value: "20 mm"
-      },
-      {
-        key: "Bracelet",
-        value: "leather strap"
-      },
-      {
-        key: "Case",
-        value: "Steel"
-      },
-      {
-        key: "Case diameter",
-        value: "42 mm"
-      },
-      {
-        key: "Case diameter",
-        value: "42 mm"
-      },
-      {
-        key: "Case diameter",
-        value: "42 mm"
-      },
-    ],
     delivery: "2-3 business days"
   }
   return {

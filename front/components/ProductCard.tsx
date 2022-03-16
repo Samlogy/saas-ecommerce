@@ -11,7 +11,7 @@ import {
   import { useShoppingCart } from "../store";
   import { Rating } from "../components"
    
-  const ProductCard = ({ idx, data }: { idx: any, data: any }) => {
+  const ProductCard = ({ data }: { data: any }) => {
     const addToCart = useShoppingCart((state: any) => state.addToCart)
 
     const newProduct = {
@@ -24,13 +24,13 @@ import {
     }
 
     return (
-      <Flex key={idx} p={50} w="400px" alignItems="center" justifyContent="center">
+      <Flex key={data.id} p={50} w="400px" alignItems="center" justifyContent="center">
         <Box bg={useColorModeValue('white', 'gray.800')} maxW="sm" borderWidth="1px" rounded="lg" shadow="lg" position="relative">
           {data.isNew && (
             <Circle size="10px" position="absolute" top={2} right={2} bg="red.200" />
           )}
   
-          <Image src={data.imageURL} alt={`Picture of ${data.name}`} roundedTop="lg" />
+          <Image src={data.img} alt={`Picture of ${data.name}`} roundedTop="lg" />
 
           <Box p="6" mb=".3rem">
             <Box d="flex" alignItems="baseline">
@@ -53,7 +53,7 @@ import {
             </Flex>
   
             <Flex flexDir={'column'} justifyContent="space-between" alignContent="center" >
-              <Rating initRate={data.rating} reviews={data.numReviews} />
+              <Rating initRate={data.rating} reviews={data.reviews} />
               
               <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
                 <Box as="span" color={'gray.600'} fontSize="lg">

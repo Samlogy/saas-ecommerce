@@ -107,7 +107,6 @@ export default function Admin() {
   })
 
   const [query, setQuery] = useState('');
-  // const [products, setproducts] = useState([]); --> list of all products
 
   const headers = ['Image', 'Name', 'Description', 'Quantity', 'Price', 'Actions']
   const products = [

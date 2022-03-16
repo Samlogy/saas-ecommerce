@@ -24,7 +24,7 @@ export const loginSchema = yup.object().shape({
 });
 
 export const contactSchema = yup.object().shape({
-    name: yup.string().required("Full Name required"),
+    name: yup.string(),
     email: yup.string().email("Enter a valid Email Address").required("Email Address required"),
     message: yup.string().required("Message required"),
 });
@@ -47,7 +47,7 @@ export const profileSchema = yup.object().shape({
 
 export const commentSchema = yup.object().shape({
     fullName: yup.string(),
-    email: yup.string().email('Enter a valid Email Address').required('Email Address required'),
+    email: yup.string().email('Enter a valid Email Address').required('Email Address re'),
     comment: yup.string().required('Enter your comment please'),
 });
 

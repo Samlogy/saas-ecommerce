@@ -115,7 +115,10 @@ import {
                                     <VStack spacing={5}>
                                         <form onSubmit={handleSubmit(onContact)}> 
                                             <FormControl id="name" mb=".5rem">
-                                                <FormLabel> Your Name </FormLabel>
+                                                <FormLabel> 
+                                                    Your Name
+                                                    <Box as="span" color="gray.500" fontSize=".85rem" fontStyle={'italic'}> (Optional) </Box>
+                                                </FormLabel>
                                                 <InputGroup borderColor="#E0E1E7">
                                                     <InputLeftElement pointerEvents="none" children={<BsPerson color="gray.800" />} />
                                                     <Input type="text" size="md" isInvalid={errors.name ? true : false}

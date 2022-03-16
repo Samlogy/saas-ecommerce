@@ -1,10 +1,15 @@
-import React, { FC } from "react";
 import { Flex, Box, Text } from "@chakra-ui/react"
 
+interface IComment {
+    id: number,
+    name: string,
+    createdAt: string,
+    comment: string
+}
 
-const Comment = ({ data }) => {
+const Comment = ({ data }: { data: IComment }) => {
     return(
-        <Flex flexDir="row" flexWrap="wrap" alignItems="flex-start" my="1.5rem" p='1rem' boxShadow='md' borderRadius={'5px'}>
+        <Flex key={data.id} flexDir="row" flexWrap="wrap" alignItems="flex-start" my="1.5rem" p='1rem' boxShadow='md' borderRadius={'5px'}>
             <Flex alignItems='center'>
                 <Box as="span" fontWeight="600"> {data.name} </Box>
                 <Box as="span" fontWeight='300' fontSize='.8rem' ml='.25rem'> on </Box>

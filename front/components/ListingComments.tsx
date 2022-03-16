@@ -10,7 +10,6 @@ interface IPCommentList {
 
 const ListingComments = (props: IPCommentList) => {
     const [showAddComment, setShowAddComment] = useState(false);
-    // const comments = props.comments
     const [comments, setComments] = useState([]);
 
     // console.log('props: ', props)
@@ -19,17 +18,20 @@ const ListingComments = (props: IPCommentList) => {
         // api call --> load comments (use react query instead)
         const data = [
             {
+                id: 1,
                 name: 'Sam',
                 comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
                 createdAt: '15/03/2022'
             },
             {
-                name: 'Sam',
+                id: 2,
+                name: 'ghiles',
                 comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
                 createdAt: '15/03/2022'
             },
             {
-                name: 'Sam',
+                id: 3,
+                name: 'sadek',
                 comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
                 createdAt: '15/03/2022'
             },
@@ -45,11 +47,11 @@ const ListingComments = (props: IPCommentList) => {
             <Button w="10rem" display={'flex'} ml="auto" onClick={() => setShowAddComment(true)}> Add Comment </Button>
 
             <View cond={comments.length > 0 }>
-                { comments.map((el: any) =>  <Comment data={el} />) }
+                { comments.map((comment) =>  <Comment data={comment} />) }
             </View>
 
             <View cond={comments.length === 0 }>
-                <Text> There's no comment posted yet ! </Text>
+                <Text textAlign={'center'} my="2rem"> There's no comment posted yet ! </Text>
             </View>
         </Flex>
     )

@@ -1,52 +1,46 @@
-import React, { useState } from "react";
-import {
-  Text,
-  Box,
-  Flex,
-  Image,
-  HStack,
-} from "@chakra-ui/react";
+import React, { useState } from 'react'
+import { Text, Box, Flex, Image, HStack } from '@chakra-ui/react'
 
 const Carousel = ({ slides }: { slides: any }) => {
   const arrowStyles = {
-    cursor: "pointer",
-    pos: "absolute",
-    top: "50%",
-    w: "auto",
-    mt: "-22px",
-    p: "16px",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "18px",
-    transition: "0.6s ease",
-    borderRadius: "0 3px 3px 0",
-    userSelect: "none",
+    cursor: 'pointer',
+    pos: 'absolute',
+    top: '50%',
+    w: 'auto',
+    mt: '-22px',
+    p: '16px',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: '18px',
+    transition: '0.6s ease',
+    borderRadius: '0 3px 3px 0',
+    userSelect: 'none',
     _hover: {
       opacity: 0.8,
-      bg: "black",
-    },
-  };
+      bg: 'black'
+    }
+  }
 
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0)
 
-  const slidesCount = slides.length;
+  const slidesCount = slides.length
 
   const prevSlide = () => {
-    setCurrentSlide((s) => (s === 0 ? slidesCount - 1 : s - 1));
-  };
+    setCurrentSlide(s => (s === 0 ? slidesCount - 1 : s - 1))
+  }
   const nextSlide = () => {
-    setCurrentSlide((s) => (s === slidesCount - 1 ? 0 : s + 1));
-  };
-  const setSlide = (slide) => {
-    setCurrentSlide(slide);
-  };
+    setCurrentSlide(s => (s === slidesCount - 1 ? 0 : s + 1))
+  }
+  const setSlide = slide => {
+    setCurrentSlide(slide)
+  }
   const carouselStyle = {
-    transition: "all .5s",
-    ml: `-${currentSlide * 100}%`,
-  };
+    transition: 'all .5s',
+    ml: `-${currentSlide * 100}%`
+  }
 
   return (
-    <Flex >
+    <Flex>
       <Flex w="full" overflow="hidden" pos="relative">
         <Flex h="400px" w="full" {...carouselStyle}>
           {slides.map((slide, sid) => (
@@ -56,14 +50,16 @@ const Carousel = ({ slides }: { slides: any }) => {
                 fontSize="xs"
                 p="5px 8px"
                 pos="absolute"
-                top="0" left="0"
+                top="0"
+                left="0"
                 bg="gray.400"
                 borderRadius={'5px'}
               >
                 {sid + 1} / {slidesCount}
               </Text>
               <Image
-                src={slide} borderRadius={'5px'}
+                src={slide}
+                borderRadius={'5px'}
                 alt="carousel image"
                 boxSize="full"
                 backgroundSize="cover"
@@ -85,19 +81,19 @@ const Carousel = ({ slides }: { slides: any }) => {
             <Box
               key={`dots-${slide}`}
               cursor="pointer"
-              boxSize={["7px", , "15px"]}
+              boxSize={['7px', , '15px']}
               m="0 2px"
-              bg={currentSlide === slide ? "blackAlpha.800" : "blackAlpha.500"}
+              bg={currentSlide === slide ? 'blackAlpha.800' : 'blackAlpha.500'}
               rounded="50%"
               display="inline-block"
               transition="background-color 0.6s ease"
-              _hover={{ bg: "blackAlpha.800" }}
+              _hover={{ bg: 'blackAlpha.800' }}
               onClick={() => setSlide(slide)}
             ></Box>
           ))}
         </HStack>
       </Flex>
     </Flex>
-  );
-};
-export default Carousel;
+  )
+}
+export default Carousel

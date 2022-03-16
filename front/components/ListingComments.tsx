@@ -1,87 +1,74 @@
-import React, { useEffect, useState } from "react";
-import { Flex, Text, Button, Heading } from "@chakra-ui/react"
+import React, { useEffect, useState } from 'react'
+import { Flex, Text, Button, Heading } from '@chakra-ui/react'
 
-import { Comment, View, AddComment } from "../components"
+import { Comment, View, AddComment } from '../components'
 
 interface IPCommentList {
-    productId: string,
-    // comments: any
+  productId: string
+  // comments: any
 }
 
 const ListingComments = (props: IPCommentList) => {
-    const [showAddComment, setShowAddComment] = useState(false);
-    const [comments, setComments] = useState([]);
+  const [showAddComment, setShowAddComment] = useState(false)
+  const [comments, setComments] = useState([])
 
-    // console.log('props: ', props)
-    // console.log('comments: ', comments)
-    useEffect(() => {
-        // api call --> load comments (use react query instead)
-        const data = [
-            {
-                id: 1,
-                name: 'Sam',
-                comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-                createdAt: '15/03/2022'
-            },
-            {
-                id: 2,
-                name: 'ghiles',
-                comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-                createdAt: '15/03/2022'
-            },
-            {
-                id: 3,
-                name: 'sadek',
-                comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-                createdAt: '15/03/2022'
-            },
-        ];
-        setComments(data)
-    }, [props.productId])
+  // console.log('props: ', props)
+  // console.log('comments: ', comments)
+  useEffect(() => {
+    // api call --> load comments (use react query instead)
+    const data = [
+      {
+        id: 1,
+        name: 'Sam',
+        comment:
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+        createdAt: '15/03/2022'
+      },
+      {
+        id: 2,
+        name: 'ghiles',
+        comment:
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+        createdAt: '15/03/2022'
+      },
+      {
+        id: 3,
+        name: 'sadek',
+        comment:
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+        createdAt: '15/03/2022'
+      }
+    ]
+    setComments(data)
+  }, [props.productId])
 
-    return(
-        <Flex flexDir="column">
-            <AddComment isOpen={showAddComment} onClose={() => setShowAddComment(false)} />
-            <Heading size="lg" textAlign={'center'} my="1.5rem"> Leave a Comment </Heading>
-            
-            <Button w="10rem" display={'flex'} ml="auto" onClick={() => setShowAddComment(true)}> Add Comment </Button>
+  return (
+    <Flex flexDir="column">
+      <AddComment isOpen={showAddComment} onClose={() => setShowAddComment(false)} />
+      <Heading size="lg" textAlign={'center'} my="1.5rem">
+        {' '}
+        Leave a Comment{' '}
+      </Heading>
 
-            <View cond={comments.length > 0 }>
-                { comments.map((comment) =>  <Comment data={comment} />) }
-            </View>
+      <Button w="10rem" display={'flex'} ml="auto" onClick={() => setShowAddComment(true)}>
+        {' '}
+        Add Comment{' '}
+      </Button>
 
-            <View cond={comments.length === 0 }>
-                <Text textAlign={'center'} my="2rem"> There's no comment posted yet ! </Text>
-            </View>
-        </Flex>
-    )
+      <View cond={comments.length > 0}>
+        {comments.map(comment => (
+          <Comment data={comment} />
+        ))}
+      </View>
+
+      <View cond={comments.length === 0}>
+        <Text textAlign={'center'} my="2rem">
+          {' '}
+          There's no comment posted yet !{' '}
+        </Text>
+      </View>
+    </Flex>
+  )
 }
 
-export default ListingComments;
-
-
-// export const getServerSideProps = async (context) => {
-//     // api call (context.params.id)
-//     const data = [
-//         {
-//             name: 'Sam',
-//             comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-//             createdAt: '15/03/2022'
-//         },
-//         {
-//             name: 'Sam',
-//             comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-//             createdAt: '15/03/2022'
-//         },
-//         {
-//             name: 'Sam',
-//             comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-//             createdAt: '15/03/2022'
-//         },
-//     ];
-//     return {
-//       props: {
-//         comments: data
-//       }
-//     }
-//   }
+export default ListingComments

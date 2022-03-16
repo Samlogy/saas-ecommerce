@@ -1,12 +1,11 @@
-import { Box, Heading, Button, Flex, Image, Text, Spinner } from '@chakra-ui/react';
+import { Box, Heading, Button, Flex, Image, Text, Spinner } from '@chakra-ui/react'
 import Link from 'next/link'
-import { AiOutlineUser, AiOutlineMail } from "react-icons/ai"
-import { HiOutlineLocationMarker } from "react-icons/hi"
-import { BsCalendarDate } from "react-icons/bs"
-import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { AiOutlineUser, AiOutlineMail } from 'react-icons/ai'
+import { HiOutlineLocationMarker } from 'react-icons/hi'
+import { BsCalendarDate } from 'react-icons/bs'
+import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0'
 
-import { Layout, View } from "../components"
-
+import { Layout, View } from '../components'
 
 function Profile() {
   // const data = {
@@ -17,66 +16,93 @@ function Profile() {
   //   address: "Karnavati, India",
   //   createdAt: "24-02-2022"
   // }
-  const  data = {}
-  const { user, isLoading } = useUser();
+  const data = {}
+  const { user, isLoading } = useUser()
   console.log(user)
 
   return (
     <Layout isHeaderVisible isFooterVisible>
-        <View cond={isLoading}>
-          <Spinner thickness='4px' speed='0.65s' size='xl' />
-        </View>
+      <View cond={isLoading}>
+        <Spinner thickness="4px" speed="0.65s" size="xl" />
+      </View>
 
-        <View cond={(!isLoading && user)}>
-          <Heading as="h1" fontSize="30px">
-            Profile
-          </Heading>
+      <View cond={!isLoading && user}>
+        <Heading as="h1" fontSize="30px">
+          Profile
+        </Heading>
 
-          <DisplayUserData data={user} />
+        <DisplayUserData data={user} />
 
-          <Flex flexWrap={'wrap'} justifyContent='space-evenly' mb="1.5rem">
-            <Button bg={'blue.400'} color={'white'} w='11rem' mb={['1rem', '', '0', '']} _hover={{ bg: 'blue.500' }}>
-                <a href="/reset-password"> Reset My Password </a>
-            </Button>
-            <Button bg={'blue.400'} color={'white'} w='11rem' _hover={{ bg: 'blue.500' }}>
-                <a href="/edit-profile"> Edit My Profile </a>
-            </Button>
-          </Flex>
+        <Flex flexWrap={'wrap'} justifyContent="space-evenly" mb="1.5rem">
+          <Button
+            bg={'blue.400'}
+            color={'white'}
+            w="11rem"
+            mb={['1rem', '', '0', '']}
+            _hover={{ bg: 'blue.500' }}
+          >
+            <a href="/reset-password"> Reset My Password </a>
+          </Button>
+          <Button bg={'blue.400'} color={'white'} w="11rem" _hover={{ bg: 'blue.500' }}>
+            <a href="/edit-profile"> Edit My Profile </a>
+          </Button>
+        </Flex>
 
-          {/* <DisplayBillingData data={data} /> */}
-        </View>
-  </Layout>
-  );
+        {/* <DisplayBillingData data={data} /> */}
+      </View>
+    </Layout>
+  )
 }
 
 const DisplayUserData = ({ data }: { data: any }) => {
-  return(
+  return (
     <>
-    <Heading as="h2" fontSize="1.5rem" mb='1rem'> My Personal Informations </Heading>
-      <Image borderRadius='full' boxSize='150px' src={data.picture} alt='Dan Abramov' fallbackSrc='https://via.placeholder.com/150'/>
+      <Heading as="h2" fontSize="1.5rem" mb="1rem">
+        {' '}
+        My Personal Informations{' '}
+      </Heading>
+      <Image
+        borderRadius="full"
+        boxSize="150px"
+        src={data.picture}
+        alt="Dan Abramov"
+        fallbackSrc="https://via.placeholder.com/150"
+      />
 
-      <Flex flexDir="column" mb="1.5rem" mt='.5rem'>
-        <Flex alignItems={"center"} mb=".5rem">
+      <Flex flexDir="column" mb="1.5rem" mt=".5rem">
+        <Flex alignItems={'center'} mb=".5rem">
           <AiOutlineUser size={24} />
-          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Full Name: </Box> 
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
+            {' '}
+            Full Name:{' '}
+          </Box>
           <BoxData data={data.name} />
         </Flex>
 
-        <Flex alignItems={"center"} mb=".5rem">
+        <Flex alignItems={'center'} mb=".5rem">
           <AiOutlineMail size={24} />
-          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Email Address: </Box> 
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
+            {' '}
+            Email Address:{' '}
+          </Box>
           <BoxData data={data.email} />
         </Flex>
 
-        <Flex alignItems={"center"} mb=".5rem">
+        <Flex alignItems={'center'} mb=".5rem">
           <HiOutlineLocationMarker size={24} />
-          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Address: </Box> 
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
+            {' '}
+            Address:{' '}
+          </Box>
           <BoxData data={data?.address} />
         </Flex>
 
-        <Flex alignItems={"center"} mb=".5rem">
+        <Flex alignItems={'center'} mb=".5rem">
           <BsCalendarDate size={24} />
-          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Date creation: </Box> 
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
+            {' '}
+            Date creation:{' '}
+          </Box>
           <BoxData data={data.createdAt} />
         </Flex>
       </Flex>
@@ -85,47 +111,68 @@ const DisplayUserData = ({ data }: { data: any }) => {
 }
 
 const DisplayBillingData = ({ data }: { data: any }) => {
-  return(
+  return (
     <>
-      <Heading as="h2" fontSize="1.5rem"> My Billing Informations </Heading>
+      <Heading as="h2" fontSize="1.5rem">
+        {' '}
+        My Billing Informations{' '}
+      </Heading>
       <Flex flexDir="column" my="1.5rem">
-        <Flex alignItems={"center"} mb=".5rem">
-            <AiOutlineUser size={24} />
-            <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Full Name: </Box> 
-            <BoxData data={data.fullName} />
-          </Flex>
+        <Flex alignItems={'center'} mb=".5rem">
+          <AiOutlineUser size={24} />
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
+            {' '}
+            Full Name:{' '}
+          </Box>
+          <BoxData data={data.fullName} />
+        </Flex>
 
-          <Flex alignItems={"center"} mb=".5rem">
-            <AiOutlineMail size={24} />
-            <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Email Address: </Box> 
-            <BoxData data={data.email} />
-          </Flex>
+        <Flex alignItems={'center'} mb=".5rem">
+          <AiOutlineMail size={24} />
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
+            {' '}
+            Email Address:{' '}
+          </Box>
+          <BoxData data={data.email} />
+        </Flex>
 
-          <Flex alignItems={"center"} mb=".5rem">
-            <HiOutlineLocationMarker size={24} />
-            <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Address: </Box> 
-            <BoxData data={data.address} />
-          </Flex>
+        <Flex alignItems={'center'} mb=".5rem">
+          <HiOutlineLocationMarker size={24} />
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
+            {' '}
+            Address:{' '}
+          </Box>
+          <BoxData data={data.address} />
+        </Flex>
 
-          <Flex alignItems={"center"} mb=".5rem">
-            <BsCalendarDate size={24} />
-            <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem"> Date creation: </Box> 
-            <BoxData data={data.createdAt} />
-          </Flex>
+        <Flex alignItems={'center'} mb=".5rem">
+          <BsCalendarDate size={24} />
+          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
+            {' '}
+            Date creation:{' '}
+          </Box>
+          <BoxData data={data.createdAt} />
+        </Flex>
       </Flex>
     </>
   )
 }
 
 const BoxData = ({ data }: { data: any }) => {
-  return(
-    data ?
-      <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem"> {data} </Box> :
-      <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem" color='gray.500'> --- </Box>   
+  return data ? (
+    <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem">
+      {' '}
+      {data}{' '}
+    </Box>
+  ) : (
+    <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem" color="gray.500">
+      {' '}
+      ---{' '}
+    </Box>
   )
 }
 
 export default withPageAuthRequired(Profile, {
-  onRedirecting: () => <Spinner thickness='4px' speed='0.65s' size='xl' />,
+  onRedirecting: () => <Spinner thickness="4px" speed="0.65s" size="xl" />,
   onError: error => <Text> {error.message} </Text>
-});
+})

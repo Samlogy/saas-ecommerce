@@ -5,7 +5,7 @@ import { useLocale } from "../lib/hooks";
 const SelectLanguage = () => {
     const router = useRouter();
 
-    const { t, locale } = useLocale()
+    const { locale } = useLocale()
 
     const changeLanguage = (e: any) => {
       const locale = e.target.value;

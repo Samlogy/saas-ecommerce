@@ -17,9 +17,10 @@ const Pagination = ({ page, changePage, pages, nextPage, prevPage, startPage, en
 
             <Flex flexDir='row' justifyContent={'center'}>
                 {   pages.map((el: number) => 
-                    <Button color='gray.600' fontSize='.9rem' mx=".25rem" 
-                            _hover={{ bg: 'gray.400', color: 'white' }}
-                            onClick={() => changePage(el)}> {el} </Button>)
+                        <Button color='gray.600' fontSize='.9rem' mx=".25rem" 
+                                _hover={{ bg: 'gray.400', color: 'white' }}
+                                onClick={() => changePage(el)}> {el} 
+                        </Button>)
                 }
             </Flex> 
 

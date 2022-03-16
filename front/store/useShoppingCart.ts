@@ -1,4 +1,4 @@
-import create, { SetState, GetState } from 'zustand'
+import create, { SetState } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
 const addProduct = (products: any, newProduct: any) => {

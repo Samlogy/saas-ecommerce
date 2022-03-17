@@ -1,16 +1,12 @@
-import React from 'react';
+import React from 'react'
 
-import { Admin, NotFound } from "./pages"
-import { ProtectedRoute } from "./components"
+import { Admin, NotFound } from './pages'
+import { ProtectedRoute } from './components'
 
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 const Routing = () => {
-  return(
+  return (
     <BrowserRouter>
       <Routes>
         <Route path="login" element={<h1> Login </h1>} />
@@ -29,9 +25,7 @@ const Routing = () => {
 }
 
 function App() {
-  return (
-    <Routing />
-  );
+  return <Routing />
 }
 
-export default App;
+export default App

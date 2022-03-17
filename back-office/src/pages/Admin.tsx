@@ -1,77 +1,95 @@
-import { 
-    Heading, Button
-  } from '@chakra-ui/react';
-  import { AiOutlinePlus } from "react-icons/ai"
-  import React, { useEffect, useState } from "react"
-  
-  import { Layout, View, ProductsList, ProductsFilter, ProductBox, ProductDetails, AddEditProduct } from "../components"
+import { Heading, Button } from '@chakra-ui/react'
+import { AiOutlinePlus } from 'react-icons/ai'
+import React, { useEffect, useState } from 'react'
 
-  
-  interface ICurrentProduct {
-    id: number | string,
-    name: string,
-    price: number | string,
-    description: string,
-    coupon: number, // ]0,1[
-    img: string,
-    quantity: number | string,
-    // features: string[]
-  }
-  interface IAction {
-    delete: boolean,
-    disable: boolean,
-    add: boolean,
-    edit: boolean,
-    details: boolean
-  }
-  
-  export default function Admin() {
-    const [action, setAction] = useState({ delete: false, disable: false, add: false, edit: false, details: false })
-    const [currentProduct, setCurrentProduct] = useState({
-      id: '', name: '', price: '', description: '', discount: 0, img: '', quantity: '', features: []
-    })
-    const [products, setProducts] = useState<ICurrentProduct[]>()
-  
-    const [query, setQuery] = useState('');
-  
-    // const headers = ['Image', 'Name', 'Description', 'Quantity', 'Price', 'Coupon', 'Actions']
-    // const data = {
-    //   headers,
-    //   products
-    // }
+import {
+  Layout,
+  View,
+  ProductsList,
+  ProductsFilter,
+  ProductBox,
+  ProductDetails,
+  AddEditProduct
+} from '../components'
 
-    // useEffect(() => {
-      // load products data
-      // const data = [
-      //   {
-      //     id: 1,
-      //     img: 'https://bit.ly/dan-abramov',
-      //     name: "Throwback Hip Ba",
-      //     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
-      //     quantity: 1,
-      //     price: 90.00,
-      //     coupon: .2
-      //   },
-      //   {
-      //     id: 2,
-      //     img: 'https://bit.ly/dan-abramov',
-      //     name: "Throwback Hip Ba",
-      //     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
-      //     quantity: 1,
-      //     price: 50.00,
-      //     coupon: .2
-      //   }
-      // ]
-      // setProducts(data)
-    // }, []);
-  
-    return (
-      <Layout isHeaderVisible isFooterVisible>
-        <Heading as="h2" fontSize="24px">
-          Products List
-        </Heading>
-  
-        {/* <Button colorScheme='blue' variant='outline' ml="auto" display={'flex'} leftIcon={<AiOutlinePlus />} 
+interface ICurrentProduct {
+  id: number | string
+  name: string
+  price: number | string
+  description: string
+  coupon: number // ]0,1[
+  img: string
+  quantity: number | string
+  // features: string[]
+}
+interface IAction {
+  delete: boolean
+  disable: boolean
+  add: boolean
+  edit: boolean
+  details: boolean
+}
+
+export default function Admin() {
+  const [action, setAction] = useState({
+    delete: false,
+    disable: false,
+    add: false,
+    edit: false,
+    details: false
+  })
+  const [currentProduct, setCurrentProduct] = useState({
+    id: '',
+    name: '',
+    price: '',
+    description: '',
+    discount: 0,
+    img: '',
+    quantity: '',
+    features: []
+  })
+  const [products, setProducts] = useState<ICurrentProduct[]>()
+
+  const [query, setQuery] = useState('')
+
+  // const headers = ['Image', 'Name', 'Description', 'Quantity', 'Price', 'Coupon', 'Actions']
+  // const data = {
+  //   headers,
+  //   products
+  // }
+
+  // useEffect(() => {
+  // load products data
+  // const data = [
+  //   {
+  //     id: 1,
+  //     img: 'https://bit.ly/dan-abramov',
+  //     name: "Throwback Hip Ba",
+  //     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
+  //     quantity: 1,
+  //     price: 90.00,
+  //     coupon: .2
+  //   },
+  //   {
+  //     id: 2,
+  //     img: 'https://bit.ly/dan-abramov',
+  //     name: "Throwback Hip Ba",
+  //     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
+  //     quantity: 1,
+  //     price: 50.00,
+  //     coupon: .2
+  //   }
+  // ]
+  // setProducts(data)
+  // }, []);
+
+  return (
+    <Layout isHeaderVisible isFooterVisible>
+      <Heading as="h2" fontSize="24px">
+        Products List
+      </Heading>
+
+      {/* <Button colorScheme='blue' variant='outline' ml="auto" display={'flex'} leftIcon={<AiOutlinePlus />} 
           onClick={() => setAction({...action, add: true})}> Add Product </Button>
   
         
@@ -99,17 +117,6 @@ import {
   
         <ProductsFilter setQuery={setQuery} query={query} />
         <ProductsList data={data} setAction={setAction} /> */}
-      </Layout>
-    );
-  }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+    </Layout>
+  )
+}

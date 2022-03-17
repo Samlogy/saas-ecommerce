@@ -19,7 +19,7 @@ const SelectLanguage = () => {
   return (
     <select onChange={changeLanguage} defaultValue={locale} className="select-language">
       {languages.map((el: string) => (
-        <option className={style} value={el}>
+        <option key={el} className={style} value={el}>
           {' '}
           {el}{' '}
         </option>

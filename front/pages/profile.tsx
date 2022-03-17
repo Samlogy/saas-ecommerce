@@ -7,48 +7,30 @@ import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0'
 
 import { Layout, View } from '../components'
 
-function Profile() {
-  // const data = {
-  //   fullName: "John Doe",
-  //   avatar: 'https://bit.ly/dan-abramov',
-  //   email: "sam@gmail.com",
-  //   phone: "213 540498180",
-  //   address: "Karnavati, India",
-  //   createdAt: "24-02-2022"
-  // }
-  const data = {}
+function Profile(props: any) {
   const { user, isLoading } = useUser()
-  console.log(user)
 
+  const userData = {
+    ...user, ...props.userExtend
+  }
+  
   return (
     <Layout isHeaderVisible isFooterVisible>
-      <View cond={isLoading}>
+      {/* <View cond={isLoading}>
         <Spinner thickness="4px" speed="0.65s" size="xl" />
-      </View>
+      </View> */}
 
       <View cond={!isLoading && user}>
         <Heading as="h1" fontSize="30px">
           Profile
         </Heading>
 
-        <DisplayUserData data={user} />
+        <DisplayUserData data={userData} />
+        <DisplayBillingData data={props.shipping} />
 
-        <Flex flexWrap={'wrap'} justifyContent="space-evenly" mb="1.5rem">
-          <Button
-            bg={'blue.400'}
-            color={'white'}
-            w="11rem"
-            mb={['1rem', '', '0', '']}
-            _hover={{ bg: 'blue.500' }}
-          >
-            <a href="/reset-password"> Reset My Password </a>
-          </Button>
-          <Button bg={'blue.400'} color={'white'} w="11rem" _hover={{ bg: 'blue.500' }}>
-            <a href="/edit-profile"> Edit My Profile </a>
-          </Button>
-        </Flex>
-
-        {/* <DisplayBillingData data={data} /> */}
+        <Button bg={'blue.400'} color={'white'} w="11rem" _hover={{ bg: 'blue.500' }}>
+          <Link href="/edit-profile"> Edit My Profile </Link>
+        </Button>
       </View>
     </Layout>
   )
@@ -170,6 +152,20 @@ const BoxData = ({ data }: { data: any }) => {
       ---{' '}
     </Box>
   )
+}
+
+export async function getStaticProps() {
+  // api call
+  const userExtend = {}
+  const shipping = {}
+
+  return {
+    props: {
+      userExtend,
+      shipping
+    },
+    revalidate: 10,
+  }
 }
 
 export default withPageAuthRequired(Profile, {

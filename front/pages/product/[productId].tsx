@@ -20,27 +20,33 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { Layout, Carousel, View, ListingComments } from "../../components"
 import { useShoppingCart } from '../../store';
 
+export interface IComment {
+  id: number,
+  fullName: string,
+  email: string,
+  comment: string,
+  createdAt: Date
+}
+interface IProduct {
+  id: number,
+  name: string,
+  img: string[],
+  description: string,
+  price: number,
+  quantity: number,
+  discount: number,
+  createdAt: Date
+}
 
-export default function Product({ product }) {
+export default function Product({ product, comments }: { product: any, comments: IComment }) {
   const increment = useShoppingCart((state: any) => state.increment)
   const decrement = useShoppingCart((state: any) => state.decrement)
   const addToCart = useShoppingCart((state: any) => state.addToCart)
-
-  // laod data from db (all product data) + delete useRouter logic
 
   const handleQuantity = (type: string) => {
     if (type === "dec") decrement(product.id)
     else increment(product.id)
   };
-
-  const newProduct = {
-    id: 1,
-    img: 'https://bit.ly/dan-abramov',
-    name: "Throwback Hip Ba",
-    quantity: 1,
-    price: 90.00,
-    discount: .2
-  }
 
   return (
   <Layout isHeaderVisible isFooterVisible>
@@ -122,7 +128,7 @@ export default function Product({ product }) {
   
             <Button w="200px" mt={8} size={'lg'} py={'7'} bg={"blue.500"} color={"white"} textTransform={'uppercase'}
               _hover={{ transform: 'translateY(2px)', boxShadow: 'lg' }}
-              onClick={() => addToCart(newProduct)}>
+              onClick={() => addToCart(product)}>
               Add to cart
             </Button>
           </Flex>
@@ -135,14 +141,14 @@ export default function Product({ product }) {
         </Stack>
       </SimpleGrid>
 
-      <ListingComments productId={product.id} />
+      <ListingComments comments={comments} />
     </Layout>
   );
 }
 
 export const getServerSideProps = async (context) => {
-  // api call (context.params.id)
-  const data = {
+  // api call (context.params.id) --> productId
+  const product = {
     id: 1,
     name: "Automatic Watch",
     img: [
@@ -155,9 +161,33 @@ export const getServerSideProps = async (context) => {
     description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore",
     delivery: "2-3 business days"
   }
+  const comments = [
+    {
+      id: 1,
+      name: 'Sam',
+      comment:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+      createdAt: '15/03/2022'
+    },
+    {
+      id: 2,
+      name: 'ghiles',
+      comment:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+      createdAt: '15/03/2022'
+    },
+    {
+      id: 3,
+      name: 'sadek',
+      comment:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+      createdAt: '15/03/2022'
+    }
+  ]
   return {
     props: {
-      product: data
+      product,
+      comments
     }
   }
 }

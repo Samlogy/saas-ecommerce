@@ -1,46 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Flex, Text, Button, Heading } from '@chakra-ui/react'
 
 import { Comment, View, AddComment } from '../components'
+import { IComment } from "../pages/product/[productId]"
 
-interface IPCommentList {
-  productId: string
-  // comments: any
-}
-
-const ListingComments = (props: IPCommentList) => {
+const ListingComments = ({ comments }: { comments: IComment[] }) => {
   const [showAddComment, setShowAddComment] = useState(false)
-  const [comments, setComments] = useState([])
-
-  // console.log('props: ', props)
-  // console.log('comments: ', comments)
-  useEffect(() => {
-    // api call --> load comments (use react query instead)
-    const data = [
-      {
-        id: 1,
-        name: 'Sam',
-        comment:
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-        createdAt: '15/03/2022'
-      },
-      {
-        id: 2,
-        name: 'ghiles',
-        comment:
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-        createdAt: '15/03/2022'
-      },
-      {
-        id: 3,
-        name: 'sadek',
-        comment:
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-        createdAt: '15/03/2022'
-      }
-    ]
-    setComments(data)
-  }, [props.productId])
 
   return (
     <Flex flexDir="column">
@@ -55,13 +20,13 @@ const ListingComments = (props: IPCommentList) => {
         Add Comment{' '}
       </Button>
 
-      <View cond={comments.length > 0}>
-        {comments.map(comment => (
+      <View cond={comments?.length > 0}>
+        {comments?.map(comment => (
           <Comment data={comment} />
         ))}
       </View>
 
-      <View cond={comments.length === 0}>
+      <View cond={comments?.length === 0}>
         <Text textAlign={'center'} my="2rem">
           {' '}
           There's no comment posted yet !{' '}

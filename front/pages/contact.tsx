@@ -23,6 +23,26 @@ import { useForm } from 'react-hook-form'
 import { Layout, ErrorMessage } from '../components'
 import { contactSchema } from '../lib/validation'
 
+const data = [
+  {
+    data: '+91-988888888',
+    icon: <MdPhone color="#1970F1" size="20px" />
+  },
+  {
+    data: 'email@example.com',
+    icon: <MdEmail color="#1970F1" size="20px" />
+  },
+  {
+    data: 'Bali, Indonesia',
+    icon: <MdLocationOn color="#1970F1" size="20px" />
+  }
+]
+const socialMedia = [
+  <MdFacebook size="28px" />,
+  <BsGithub size="28px" />,
+  <BsDiscord size="28px" />
+]
+
 export default function contact() {
   const {
     register,
@@ -34,28 +54,9 @@ export default function contact() {
 
   const onContact = async (data: any) => {
     console.log('contact')
+    // api call
   }
 
-  const data = [
-    {
-      data: '+91-988888888',
-      icon: <MdPhone color="#1970F1" size="20px" />
-    },
-    {
-      data: 'email@example.com',
-      icon: <MdEmail color="#1970F1" size="20px" />
-    },
-    {
-      data: 'Bali, Indonesia',
-      icon: <MdLocationOn color="#1970F1" size="20px" />
-    }
-  ]
-
-  const socialMedia = [
-    <MdFacebook size="28px" />,
-    <BsGithub size="28px" />,
-    <BsDiscord size="28px" />
-  ]
 
   return (
     <Layout isHeaderVisible isFooterVisible>

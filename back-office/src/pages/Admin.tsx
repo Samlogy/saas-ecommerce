@@ -9,7 +9,8 @@ import {
   ProductsFilter,
   ProductBox,
   ProductDetails,
-  AddEditProduct
+  AddEditProduct,
+  LogoutButton
 } from '../components'
 
 interface ICurrentProduct {
@@ -89,6 +90,7 @@ export default function Admin() {
         Products List
       </Heading>
 
+      <LogoutButton />
       {/* <Button colorScheme='blue' variant='outline' ml="auto" display={'flex'} leftIcon={<AiOutlinePlus />} 
           onClick={() => setAction({...action, add: true})}> Add Product </Button>
   

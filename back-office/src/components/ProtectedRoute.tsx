@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 import { loadState } from '../utils/localStorage'
 
-const ProtectedRoutes = (props: any) => {
+const ProtectedRoutes = () => {
   const auth = loadState('auth-admin')
 
   // autho --> for redireection

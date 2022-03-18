@@ -9,14 +9,13 @@ const Routing = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="login" element={<h1> Login </h1>} />
-
-        <Route element={<ProtectedRoute />}>
+        {/* <Route element={<ProtectedRoute />}>
           <Route path="home" element={<Admin />} />
           <Route path="admin" element={<Admin />} />
           <Route path="/" element={<Admin />} />
           <Route path="dashboard" element={<Admin />} />
-        </Route>
+        </Route> */}
+        <Route path="/" element={<Admin />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

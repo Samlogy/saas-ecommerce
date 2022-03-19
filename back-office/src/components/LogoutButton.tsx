@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { Button } from '@chakra-ui/react'
+import { FiLogOut } from 'react-icons/fi'
 
 import { removeState } from '../utils/localStorage'
 
@@ -18,7 +19,12 @@ function LogoutButton() {
     return <div>Oops... {error.message}</div>
   }
 
-  return <Button onClick={() => onLogout()}> Log Out </Button>
+  return (
+    <Button rightIcon={<FiLogOut />} onClick={() => onLogout()}>
+      {' '}
+      Log Out{' '}
+    </Button>
+  )
 }
 
 export default LogoutButton

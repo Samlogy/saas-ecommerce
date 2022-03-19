@@ -6,7 +6,7 @@ function TotalRevenue() {
     <Flex
       flexDir={'column'}
       borderColor="gray.400"
-      p=".5rem 1rem"
+      p=".75rem 1rem"
       w="30rem"
       borderRadius={'25px'}
       boxShadow="md"

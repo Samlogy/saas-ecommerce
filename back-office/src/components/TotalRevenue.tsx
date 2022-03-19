@@ -5,8 +5,6 @@ function TotalRevenue() {
   return (
     <Flex
       flexDir={'column'}
-      justifyContent={'space-between'}
-      alignItems="center"
       borderColor="gray.400"
       p=".5rem 1rem"
       w="30rem"
@@ -17,23 +15,25 @@ function TotalRevenue() {
         Total Revenue
       </Text>
 
-      <CircularProgress value={40} color="green.400" size="5rem" thickness="10px">
-        <CircularProgressLabel color={'gray.500'} fontSize=".9rem">
+      <Flex flexDir={'column'} justifyContent={'space-between'} alignItems="center">
+        <CircularProgress value={40} color="green.400" size="5rem" thickness="10px">
+          <CircularProgressLabel color={'gray.500'} fontSize=".9rem">
+            {' '}
+            40%{' '}
+          </CircularProgressLabel>
+        </CircularProgress>
+
+        <Text color={'gray.400'}>Total Sales made today</Text>
+        <Text fontSize="2rem" fontWeight={'600'}>
           {' '}
-          40%{' '}
-        </CircularProgressLabel>
-      </CircularProgress>
+          $ 420{' '}
+        </Text>
+        <Text color={'gray.400'} fontSize=".9rem" fontWeight={'400'}>
+          Summary of today's transactions
+        </Text>
 
-      <Text color={'gray.400'}>Total Sales made today</Text>
-      <Text fontSize="2rem" fontWeight={'600'}>
-        {' '}
-        $ 420{' '}
-      </Text>
-      <Text color={'gray.400'} fontSize=".9rem" fontWeight={'400'}>
-        Summary of today's transactions
-      </Text>
-
-      <Box></Box>
+        <Box></Box>
+      </Flex>
     </Flex>
   )
 }

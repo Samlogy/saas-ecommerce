@@ -3,7 +3,7 @@ import { Container, Flex } from '@chakra-ui/react'
 import { SideBar, TopBar } from '../components'
 
 interface ILayout {
-  children: React.ReactNode
+  children?: React.ReactNode
   isHeaderVisible?: boolean
   rest?: any
 }

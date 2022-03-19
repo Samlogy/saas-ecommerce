@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Box, Image, Stack, Text, Avatar, IconButton } from '@chakra-ui/react'
 import { BiMenu } from 'react-icons/bi'
+// import { Link } from 'react-router-dom'
 
-import { SideBar, LogoutButton, DarkModeToggle, NotificationButton } from '../components'
+import { SideBar, LogoutButton, DarkModeToggle, NotificationButton, Dropdown } from '../components'
 
 interface ITopBar {
   isFixedNav?: boolean
@@ -11,8 +12,8 @@ interface ITopBar {
 const TopBar = ({ isFixedNav }: ITopBar) => {
   const [isVisible, setIsVisible] = useState(false)
 
+  // load user data
   const logo = ''
-  const notifs = 0
   const avatar = ''
 
   return (
@@ -50,16 +51,11 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
 
         <Stack direction={['column', 'row']} alignItems={['flex-end', 'center']}>
           <DarkModeToggle />
-          <NotificationButton notifs={10} />
+          <NotificationButton />
 
-          <IconButton
-            aria-label="avatar-button"
-            icon={<Avatar name="admin" src={avatar} size="sm" />}
-            bg={'transparent'}
-            _hover={{ bg: 'transparent' }}
-          />
-
-          <LogoutButton />
+          <Dropdown icon={<Avatar name="admin" src={avatar} size="sm" />}>
+            <LogoutButton />
+          </Dropdown>
         </Stack>
       </Box>
 

@@ -1,4 +1,4 @@
-import { Admin, NotFound } from './pages'
+import { Admin, NotFound, Stats, Notifications, Notification } from './pages'
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -12,7 +12,12 @@ const Routing = () => {
           <Route path="/" element={<Admin />} />
           <Route path="dashboard" element={<Admin />} />
         </Route> */}
-        <Route path="/" element={<Admin />} />
+        <Route path="/" element={<Stats />} />
+        <Route path="statistics" element={<Stats />} />
+
+        <Route path="products" element={<Admin />} />
+        <Route path="notifications" element={<Notifications />} />
+        <Route path="notification/:id" element={<Notification />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

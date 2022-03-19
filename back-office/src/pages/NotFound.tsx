@@ -6,9 +6,7 @@ import Layout from '../components/Layout'
 
 function NotFound() {
   // const { t } = useLocale();
-  {
-    /* textAlign="center" py={10} px={6} h="100vh" display="flex" justifyContent="center" mt="4rem" */
-  }
+  // h="100vh" alignItems="center" mt="4rem"
   return (
     <Layout>
       <Heading

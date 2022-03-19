@@ -19,6 +19,4 @@ export { default as NotificationButton } from './NotificationButton'
 export { default as Widget } from './Widget'
 export { default as TotalRevenue } from './TotalRevenue'
 export { default as Dropdown } from './Dropdown'
-// export { default as Chart } from './Chart'
-
-// nav bar -
+export { default as Chart } from './Chart'

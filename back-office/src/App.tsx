@@ -1,7 +1,6 @@
-import React from 'react'
-
+import React, { useState } from 'react'
 import { Admin, NotFound } from './pages'
-import { ProtectedRoute } from './components'
+import { SideBar, TopBar, Widget, TotalRevenue } from './components'
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -24,7 +23,34 @@ const Routing = () => {
 }
 
 function App() {
-  return <Routing />
+  const data = [
+    {
+      name: 'sales',
+      description: 'Total sales today',
+      revenue: 1000.0
+    },
+    {
+      name: 'sales',
+      description: 'Total sales today',
+      revenue: 1000.0
+    },
+    {
+      name: 'sales',
+      description: 'Total sales today',
+      revenue: 1000.0
+    }
+  ]
+  return (
+    // <Routing />
+    <>
+      {/* <TopBar /> */}
+      {/* <SideBar isOpen={isVisible} onClose={() => setIsVisible(false)} /> */}
+      {data.map(el => (
+        <Widget data={el} />
+      ))}
+      <TotalRevenue />
+    </>
+  )
 }
 
 export default App

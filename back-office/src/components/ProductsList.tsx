@@ -7,19 +7,20 @@ interface IProductsList {
   setAction: any
 }
 const ProductsList = ({ data, setAction }: IProductsList) => {
+  console.log('data: ', data)
   return (
     <Table variant="striped" colorScheme="blue">
       <Thead>
         <Tr>
           {data?.headers.map((header: string) => (
-            <Th> {header} </Th>
+            <Th key={header}> {header} </Th>
           ))}
         </Tr>
       </Thead>
 
       <Tbody>
         {data?.products.map((product: any) => (
-          <Tr>
+          <Tr key={product.id}>
             <Td>
               {' '}
               <Image
@@ -52,7 +53,7 @@ const ProductsList = ({ data, setAction }: IProductsList) => {
       <Tfoot>
         <Tr>
           {data?.headers.map((header: string) => (
-            <Th> {header} </Th>
+            <Th key={header}> {header} </Th>
           ))}
         </Tr>
       </Tfoot>

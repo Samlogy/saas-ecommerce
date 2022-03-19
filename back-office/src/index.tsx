@@ -14,7 +14,7 @@ ReactDOM.render(
   <Auth0Provider domain={DOMAIN} clientId={CLIENT_ID} redirectUri={window.location.origin}>
     <React.StrictMode>
       <ChakraProvider>
-        <LoginButton />
+        {/* <LoginButton /> */}
         <App />
       </ChakraProvider>
     </React.StrictMode>

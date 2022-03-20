@@ -1,17 +1,23 @@
-import { Button, Badge, Box } from '@chakra-ui/react'
+import { Button, Badge, Box, MenuItem, Text } from '@chakra-ui/react'
 import { MdNotificationsActive } from 'react-icons/md'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Dropdown } from '../components'
+import { useNotificationStore } from '../store'
 
 const NotificationButton = () => {
-  const [notifications, setNotifications] = useState<any>([])
+  // const [notifications, setNotifications] = useState<any>([])
+  const notifications = useNotificationStore((state: any) => state.notifications)
+  const handleNotificationVisibility = useNotificationStore(
+    (state: any) => state.handleNotificationVisibility
+  )
+  const setNotification = useNotificationStore((state: any) => state.setNotification)
 
   const notifs = notifications.length
 
   useEffect(() => {
-    // load notification data (useQuery)
+    // load notification data (useQuery) --> delete useEffect & state related to it
     const data = [
       {
         id: 1,
@@ -32,11 +38,30 @@ const NotificationButton = () => {
         createdAt: '19/03/2022'
       }
     ]
-    setNotifications(data)
+    // setNotifications(data)
   }, [])
 
+  const handleClickNotification = (data: any) => {
+    handleNotificationVisibility(true)
+    setNotification(data)
+  }
+
   return (
-    <Dropdown data={notifications} icon={<CustomButton notifs={notifs} />}>
+    <Dropdown
+      // data={notifications}
+      icon={<CustomButton notifs={notifs} />}
+    >
+      {notifications?.map((el: any) => (
+        <MenuItem
+          key={el.id}
+          flexDir={'row'}
+          justifyContent="space-between"
+          onClick={() => handleClickNotification(el)}
+        >
+          <Text> {el.title} </Text>
+          <Text> {el.text} </Text>
+        </MenuItem>
+      ))}
       <Box textAlign="center" color="blue.500">
         <Link to="/notifications"> View All </Link>
       </Box>

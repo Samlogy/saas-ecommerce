@@ -12,12 +12,16 @@ import {
   NotificationDetails
 } from '../components'
 
+import { useSideBarStore } from '../store'
+
 interface ITopBar {
   isFixedNav?: boolean
 }
 
 const TopBar = ({ isFixedNav }: ITopBar) => {
-  const [isVisible, setIsVisible] = useState(false)
+  // const [isVisible, setIsVisible] = useState(false)
+  const isVisible = useSideBarStore(state => state.isVisible)
+  const handleSideBarVisibility = useSideBarStore(state => state.handleSideBarVisibility)
 
   // load user data --> auth0 hook
   const { isLoading, isAuthenticated, error, user } = useAuth0<{ name: string }>()
@@ -40,7 +44,7 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
       >
         <IconButton
           aria-label="side-bar-button"
-          icon={<BiMenu size="24" onClick={() => setIsVisible(true)} />}
+          icon={<BiMenu size="24" onClick={() => handleSideBarVisibility(true)} />}
         />
 
         <Stack display="flex" flexDirection="row" alignItems="center">
@@ -70,7 +74,7 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
         </Stack>
       </Box>
 
-      <SideBar isOpen={isVisible} onClose={() => setIsVisible(false)} />
+      <SideBar isOpen={isVisible} onClose={() => handleSideBarVisibility(false)} />
       <NotificationDetails />
     </>
   )

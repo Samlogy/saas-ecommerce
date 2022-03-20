@@ -3,7 +3,7 @@ import { MdNotificationsActive } from 'react-icons/md'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Dropdown } from '../components'
+import { Dropdown, View } from '../components'
 import { useNotificationStore } from '../store'
 
 const NotificationButton = () => {
@@ -47,24 +47,30 @@ const NotificationButton = () => {
   }
 
   return (
-    <Dropdown
-      // data={notifications}
-      icon={<CustomButton notifs={notifs} />}
-    >
-      {notifications?.map((el: any) => (
-        <MenuItem
-          key={el.id}
-          flexDir={'row'}
-          justifyContent="space-between"
-          onClick={() => handleClickNotification(el)}
-        >
-          <Text> {el.title} </Text>
-          <Text> {el.text} </Text>
-        </MenuItem>
-      ))}
-      <Box textAlign="center" color="blue.500">
-        <Link to="/notifications"> View All </Link>
-      </Box>
+    <Dropdown icon={<CustomButton notifs={notifs} />}>
+      <View cond={notifications.length > 0}>
+        {notifications?.map((el: any) => (
+          <MenuItem
+            key={el.id}
+            flexDir={'row'}
+            justifyContent="space-between"
+            onClick={() => handleClickNotification(el)}
+          >
+            <Text> {el.title} </Text>
+            <Text> {el.text} </Text>
+          </MenuItem>
+        ))}
+        <Box textAlign="center" color="blue.500">
+          <Link to="/notifications"> View All </Link>
+        </Box>
+      </View>
+
+      <View cond={notifications.length === 0}>
+        <Text textAlign={'center'} color="gray.500">
+          {' '}
+          There's no new Notification{' '}
+        </Text>
+      </View>
     </Dropdown>
   )
 }

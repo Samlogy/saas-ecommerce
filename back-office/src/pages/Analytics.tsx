@@ -1,10 +1,9 @@
-import { Heading, Flex, Box } from '@chakra-ui/react'
+import { Heading, Flex } from '@chakra-ui/react'
 // import React, { useEffect, useState } from 'react'
-// import { Link } from 'react-router-dom'
 
 import { Layout, Widget, TotalRevenue, Chart } from '../components'
 
-export default function Stats() {
+export default function Analytics() {
   const data = [
     {
       name: 'name...',

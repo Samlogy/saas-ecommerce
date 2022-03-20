@@ -10,9 +10,7 @@ import {
   Text,
   Box
 } from '@chakra-ui/react'
-import { Link, useLocation } from 'react-router-dom'
-
-// import { BiMessageSquareDetail } from 'react-icons/bi'
+import { Link } from 'react-router-dom'
 import { AiFillHome } from 'react-icons/ai'
 import { FaProductHunt } from 'react-icons/fa'
 import LogoutButton from './LogoutButton'

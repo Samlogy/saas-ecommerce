@@ -5,15 +5,7 @@
 }
 
 /* Table */
-.card {
-  padding: 30px;
-  margin-bottom: 30px;
-  background-color: var(--main-bg);
-  box-shadow: var(--box-shadow);
-  border-radius: var(--border-radius);
-}
-
-.table-wrapper {
+/* .table-wrapper {
   overflow-y: auto;
 }
 
@@ -74,4 +66,4 @@ tbody > tr:hover {
 .table__pagination-item:hover {
   color: var(--txt-white);
   background-color: var(--second-color);
-}
+} */

@@ -1,7 +1,7 @@
-import { Heading, Flex } from '@chakra-ui/react'
+import { Heading, Flex, Tr, Th, Td } from '@chakra-ui/react'
 // import React, { useEffect, useState } from 'react'
 
-import { Layout, Widget, TotalRevenue, Charts, Table } from '../components'
+import { Layout, Widget, TotalRevenue, Charts, CustomTable } from '../components'
 
 const customerList = [
   {
@@ -187,18 +187,22 @@ const customerList = [
 ]
 const customerTableHead = ['', 'name', 'email', 'phone', 'total orders', 'total spend', 'location']
 
-const renderHead = (item: any, index: any) => <th key={index}>{item}</th>
+const renderHead = (item: any, idx: any) => (
+  <Th key={idx} p="15px 10px" textAlign={'left'}>
+    {item}
+  </Th>
+)
 
-const renderBody = (item: any, index: any) => (
-  <tr key={index}>
-    <td>{item.id}</td>
-    <td>{item.name}</td>
-    <td>{item.email}</td>
-    <td>{item.phone}</td>
-    <td>{item.total_orders}</td>
-    <td>{item.total_spend}</td>
-    <td>{item.location}</td>
-  </tr>
+const renderBody = (item: any, idx: any) => (
+  <Tr key={idx} textAlign="left">
+    <Td p="15px 10px">{item.id}</Td>
+    <Td p="15px 10px">{item.name}</Td>
+    <Td p="15px 10px">{item.email}</Td>
+    <Td p="15px 10px">{item.phone}</Td>
+    <Td p="15px 10px">{item.total_orders}</Td>
+    <Td p="15px 10px">{item.total_spend}</Td>
+    <Td p="15px 10px">{item.location}</Td>
+  </Tr>
 )
 
 // chart options
@@ -251,19 +255,19 @@ export default function Analytics() {
           <Widget data={el} />
         ))}
 
-        <TotalRevenue />
+        {/* <TotalRevenue />
         <Charts type={'line'} options={chartOptions} />
         <Charts type={'bar'} options={chartOptions} />
-        <Charts type={'area'} options={chartOptions} />
+        <Charts type={'area'} options={chartOptions} /> */}
       </Flex>
 
-      {/* <Table
-        limit="10"
+      <CustomTable
+        limit="4"
         headData={customerTableHead}
         renderHead={(item: any, index: any) => renderHead(item, index)}
         bodyData={customerList}
         renderBody={(item: any, index: any) => renderBody(item, index)}
-      /> */}
+      />
     </Layout>
   )
 }

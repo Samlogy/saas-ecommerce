@@ -28,16 +28,7 @@ const Dropdown = ({ data, icon, children }: IDropdown) => {
         _hover={{ bg: 'gray.400' }}
         _focus={{ boxShadow: 'outline' }}
       ></MenuButton>
-      <MenuList>
-        {/* {data?.map((el: any) => (
-          <MenuItem key={el.id} display="flex" flexDir={'column'}>
-            <Text> {el.title} </Text>
-            <Text> {el.text} </Text>
-          </MenuItem>
-        ))} */}
-        {/* <MenuItem flexDir={'column'}> {children} </MenuItem> */}
-        {children}
-      </MenuList>
+      <MenuList>{children}</MenuList>
     </Menu>
   )
 }

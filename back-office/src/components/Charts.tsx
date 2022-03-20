@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Flex, useColorMode } from '@chakra-ui/react'
 import ReactApexChart from 'react-apexcharts'
 
@@ -7,37 +7,65 @@ interface IChart {
   options: any
 }
 function Charts({ type = 'area', options }: IChart) {
-  // const { colorMode: mode } = useColorMode()
+  const { colorMode: mode } = useColorMode()
+  // const mode = 'dark'
+  console.log('mode: ', mode)
+
+  const [optionsChart, setOptionsCart] = useState(options)
 
   const Chart =
     type === 'area' ? (
       <ReactApexChart
         type={'area'}
-        options={options.options}
-        series={options.series}
+        options={{ ...optionsChart.options, theme: { mode: mode } }}
+        series={optionsChart.series}
         height={350}
       />
     ) : type === 'line' ? (
       <ReactApexChart
         type={'line'}
-        options={options.options}
-        series={options.series}
+        options={{ ...optionsChart.options, theme: { mode: mode } }}
+        series={optionsChart.series}
         height={350}
+        width={400}
       />
     ) : type === 'bar' ? (
-      <ReactApexChart type={'bar'} options={options.options} series={options.series} height={350} />
+      <ReactApexChart
+        type={'bar'}
+        options={{ ...optionsChart.options, theme: { mode: mode } }}
+        series={optionsChart.series}
+        height={350}
+        width={400}
+      />
     ) : type === 'donut' ? (
       <ReactApexChart
         type={'donut'}
-        options={options.options}
-        series={options.series}
+        options={{ ...optionsChart.options, theme: { mode: mode } }}
+        series={optionsChart.series}
         height={350}
+        width={400}
       />
     ) : type === 'pie' ? (
-      <ReactApexChart type={'pie'} options={options.options} series={options.series} height={350} />
+      <ReactApexChart
+        type={'pie'}
+        options={{ ...optionsChart.options, theme: { mode: mode } }}
+        series={optionsChart.series}
+        height={350}
+        width={400}
+      />
     ) : (
       ''
     )
+
+  // useEffect(() => {
+  //   console.log('mode -->: ', mode)
+  //   setOptionsCart({
+  //     options: {
+  //       ...options,
+  //       theme: { mode: mode }
+  //     }
+  //   })
+  // }, [mode])
 
   return (
     <Flex

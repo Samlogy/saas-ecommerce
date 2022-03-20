@@ -10,6 +10,7 @@ function TotalRevenue() {
       w="30rem"
       borderRadius={'25px'}
       boxShadow="md"
+      mb="1.5rem"
     >
       <Text textAlign={'left'} fontWeight="600" color={'gray.500'}>
         Total Revenue

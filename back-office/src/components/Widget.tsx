@@ -18,6 +18,7 @@ function Widget({ data }: IWidget) {
       w="15em"
       borderRadius={'25px'}
       boxShadow="md"
+      mb="1.5rem"
     >
       <Flex flexDir="column">
         <Text> {data.name} </Text>

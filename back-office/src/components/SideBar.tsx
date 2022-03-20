@@ -7,16 +7,14 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  //   useColorModeValue,
   Text,
-  Box,
-  Link
+  Box
 } from '@chakra-ui/react'
-// import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
-import { BiMessageSquareDetail } from 'react-icons/bi'
+// import { BiMessageSquareDetail } from 'react-icons/bi'
 import { AiFillHome } from 'react-icons/ai'
-import { FaUsers, FaProductHunt, FaRegNewspaper } from 'react-icons/fa'
+import { FaProductHunt } from 'react-icons/fa'
 import LogoutButton from './LogoutButton'
 
 interface ISideBar {
@@ -24,20 +22,7 @@ interface ISideBar {
   isOpen: boolean
 }
 const SideBar = ({ onClose, isOpen }: ISideBar) => {
-  const [showList, setShowList] = useState({ state: false, id: null })
-
-  const handleList = (item: any) => {
-    // show / hide subMenu (list)
-    if (!showList.state) {
-      // #1 click
-      setShowList({ ...showList, state: true, id: item.id })
-      return
-    } // #2 click
-    setShowList({ ...showList, state: false, id: null })
-
-    // update global store
-    // dispatch(setSideBarItem(item))
-  }
+  const activeItem = sideBarData.findIndex(item => item.url === window.location.pathname)
 
   return (
     <Drawer placement="left" onClose={onClose} isOpen={isOpen} size="xs">
@@ -49,24 +34,8 @@ const SideBar = ({ onClose, isOpen }: ISideBar) => {
         <DrawerHeader borderBottomWidth="1px"> Dashboard </DrawerHeader>
 
         <DrawerBody display="flex" flexDirection="column" justifyContent="left">
-          {sideBarData.map((el: any) => (
-            <Link key={el.id} href={el.url}>
-              <Box
-                display="flex"
-                flexDirection="row"
-                fontSize="15"
-                justifyContent="left"
-                mb="1rem"
-                p="1rem"
-                borderRadius="md"
-                // bg={showList.id === el.id && 'bgClrHover'}
-                _hover={{ bg: 'bgClrHover', fontWeight: 'medium' }}
-                onClick={() => handleList(el)}
-              >
-                {el.icon}
-                <Text ml="1.5rem"> {el.label} </Text>
-              </Box>
-            </Link>
+          {sideBarData.map((el: any, idx: number) => (
+            <SideBarItem data={el} active={idx === activeItem} />
           ))}
         </DrawerBody>
 
@@ -80,6 +49,28 @@ const SideBar = ({ onClose, isOpen }: ISideBar) => {
 
 export default SideBar
 
+const SideBarItem = ({ data, active }: { data: any; active: boolean }) => {
+  return (
+    <Link key={data.id} to={data.url}>
+      <Box
+        display="flex"
+        flexDirection="row"
+        fontSize="15"
+        justifyContent="left"
+        mb=".5rem"
+        p=".75rem 1rem"
+        borderRadius="md"
+        bg={active ? 'blue.500' : ''}
+        color={active ? 'white' : ''}
+        _hover={{ bg: 'bgClrHover', fontWeight: 'medium', textDecor: 'none' }}
+      >
+        {data.icon}
+        <Text ml="1.5rem"> {data.label} </Text>
+      </Box>
+    </Link>
+  )
+}
+
 export const sideBarData = [
   {
     url: '/',
@@ -88,27 +79,9 @@ export const sideBarData = [
     id: 0
   },
   {
-    url: '/users',
-    icon: <FaUsers size="24" />,
-    label: 'Users Management',
-    id: 1
-  },
-  {
     url: '/products',
     icon: <FaProductHunt size="24" />,
     label: 'Products Management',
-    id: 2
-  },
-  {
-    url: '/newsletters',
-    icon: <FaRegNewspaper size="24" />,
-    label: 'Newsletters',
-    id: 3
-  },
-  {
-    url: '/contacts',
-    icon: <BiMessageSquareDetail size="24" />,
-    label: 'Contacts',
-    id: 4
+    id: 1
   }
 ]

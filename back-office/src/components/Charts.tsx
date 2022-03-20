@@ -2,29 +2,43 @@ import React from 'react'
 import { Flex, useColorMode } from '@chakra-ui/react'
 import ReactApexChart from 'react-apexcharts'
 
-const options = {
-  chart: {
-    height: 350,
-    zoom: {
-      enabled: true
-    }
-  }
+interface IChart {
+  type: string
+  options: any
 }
+function Charts({ type = 'area', options }: IChart) {
+  // const { colorMode: mode } = useColorMode()
 
-const series = [
-  {
-    name: 'All Tasks',
-    data: [31, 40, 28, 51, 42, 109, 100]
-  },
-  {
-    name: 'My Tasks',
-    data: [11, 32, 45, 32, 34, 52, 41]
-  }
-]
+  const Chart =
+    type === 'area' ? (
+      <ReactApexChart
+        type={'area'}
+        options={options.options}
+        series={options.series}
+        height={350}
+      />
+    ) : type === 'line' ? (
+      <ReactApexChart
+        type={'line'}
+        options={options.options}
+        series={options.series}
+        height={350}
+      />
+    ) : type === 'bar' ? (
+      <ReactApexChart type={'bar'} options={options.options} series={options.series} height={350} />
+    ) : type === 'donut' ? (
+      <ReactApexChart
+        type={'donut'}
+        options={options.options}
+        series={options.series}
+        height={350}
+      />
+    ) : type === 'pie' ? (
+      <ReactApexChart type={'pie'} options={options.options} series={options.series} height={350} />
+    ) : (
+      ''
+    )
 
-function Charts() {
-  const { colorMode: mode } = useColorMode()
-  console.log('mode: ', mode)
   return (
     <Flex
       flexDir="row"
@@ -36,7 +50,7 @@ function Charts() {
       borderRadius={'25px'}
       boxShadow="md"
     >
-      <ReactApexChart type="line" options={options} series={series} height={350} />
+      {Chart}
     </Flex>
   )
 }

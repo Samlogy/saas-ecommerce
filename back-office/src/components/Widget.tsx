@@ -8,6 +8,7 @@ interface IWidget {
 function Widget({ data }: IWidget) {
   return (
     <Flex
+      key={data.name}
       flexDir="row"
       justifyContent={'space-between'}
       alignItems="center"

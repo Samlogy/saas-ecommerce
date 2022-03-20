@@ -10,7 +10,7 @@ const DarkModeToggle = () => {
   return (
     <IconButton
       aria-label="dark mode"
-      bg={bgColor}
+      bg="transparent"
       _hover={{ bg: bgHoverColor }}
       onClick={() => toggleColorMode()}
       icon={

@@ -3,7 +3,14 @@ import { Box, Image, Stack, Text, Avatar, IconButton } from '@chakra-ui/react'
 import { BiMenu } from 'react-icons/bi'
 // import { Link } from 'react-router-dom'
 
-import { SideBar, LogoutButton, DarkModeToggle, NotificationButton, Dropdown } from '../components'
+import {
+  SideBar,
+  LogoutButton,
+  DarkModeToggle,
+  NotificationButton,
+  Dropdown,
+  NotificationDetails
+} from '../components'
 
 interface ITopBar {
   isFixedNav?: boolean
@@ -12,7 +19,7 @@ interface ITopBar {
 const TopBar = ({ isFixedNav }: ITopBar) => {
   const [isVisible, setIsVisible] = useState(false)
 
-  // load user data
+  // load user data --> auth0 hook
   const logo = ''
   const avatar = ''
 
@@ -60,6 +67,7 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
       </Box>
 
       <SideBar isOpen={isVisible} onClose={() => setIsVisible(false)} />
+      <NotificationDetails />
     </>
   )
 }

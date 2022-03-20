@@ -11,7 +11,7 @@ import {
 interface IDropdown {
   data?: any
   icon?: any
-  children?: React.ReactElement
+  children?: any
 }
 
 const Dropdown = ({ data, icon, children }: IDropdown) => {
@@ -24,18 +24,19 @@ const Dropdown = ({ data, icon, children }: IDropdown) => {
         py={2}
         transition="all 0.2s"
         borderRadius="md"
-        borderWidth="1px"
+        bg="transparent"
         _hover={{ bg: 'gray.400' }}
         _focus={{ boxShadow: 'outline' }}
       ></MenuButton>
       <MenuList>
-        {data?.map((el: any) => (
+        {/* {data?.map((el: any) => (
           <MenuItem key={el.id} display="flex" flexDir={'column'}>
             <Text> {el.title} </Text>
             <Text> {el.text} </Text>
           </MenuItem>
-        ))}
-        <MenuItem flexDir={'column'}> {children} </MenuItem>
+        ))} */}
+        {/* <MenuItem flexDir={'column'}> {children} </MenuItem> */}
+        {children}
       </MenuList>
     </Menu>
   )

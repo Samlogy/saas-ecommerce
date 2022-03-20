@@ -1,5 +1,5 @@
-export { default as Admin } from './Admin'
+export { default as Products } from './Products'
 export { default as NotFound } from './NotFound'
-export { default as Stats } from './Stats'
+export { default as Analytics } from './Analytics'
 export { default as Notifications } from './Notifications'
-export { default as Notification } from './Notification'
+// export { default as Notification } from './Notification'

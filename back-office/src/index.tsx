@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { ChakraProvider } from '@chakra-ui/react'
-import { CustomLoader } from './components'
+import { Auth0Provider } from '@auth0/auth0-react'
 
 import './index.css'
 import App from './App'
-import { Auth0Provider } from '@auth0/auth0-react'
+import CustomPreLoader from './components/CustomPreLoader'
 import './lib/lang/i18'
 
 const DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN as string
@@ -15,7 +15,7 @@ ReactDOM.render(
   <Auth0Provider domain={DOMAIN} clientId={CLIENT_ID} redirectUri={window.location.origin}>
     <React.StrictMode>
       <ChakraProvider>
-        <Suspense fallback={<CustomLoader />}>
+        <Suspense fallback={<CustomPreLoader />}>
           <App />
         </Suspense>
       </ChakraProvider>

@@ -10,10 +10,9 @@ import {
   NotificationButton,
   Dropdown,
   NotificationDetails,
-  LanguageSelector
+  LanguageSelector,
+  EmailButton
 } from '../components'
-
-// import { useSideBarStore } from '../store'
 
 interface ITopBar {
   isFixedNav?: boolean
@@ -21,8 +20,6 @@ interface ITopBar {
 
 const TopBar = ({ isFixedNav }: ITopBar) => {
   const [isVisible, setIsVisible] = useState(false)
-  // const isVisible = useSideBarStore(state => state.isVisible)
-  // const handleSideBarVisibility = useSideBarStore(state => state.handleSideBarVisibility)
 
   // load user data --> auth0 hook
   const { isLoading, isAuthenticated, error, user } = useAuth0<{ name: string }>()
@@ -65,6 +62,7 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
           <LanguageSelector />
           <DarkModeToggle />
           <NotificationButton />
+          <EmailButton />
 
           <Dropdown icon={<Avatar name="admin" src={user?.name} size="sm" />}>
             <MenuItem flexDir={'column'}>

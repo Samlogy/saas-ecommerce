@@ -9,7 +9,8 @@ import {
   DarkModeToggle,
   NotificationButton,
   Dropdown,
-  NotificationDetails
+  NotificationDetails,
+  LanguageSelector
 } from '../components'
 
 import { useSideBarStore } from '../store'
@@ -36,7 +37,6 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
         justifyContent="space-between"
         alignItems="center"
         p=".5rem"
-        // bg={bgClr}
         boxShadow="md"
         width="100%"
         pos={isFixedNav ? 'fixed' : 'inherit'}
@@ -48,13 +48,13 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
         />
 
         <Stack display="flex" flexDirection="row" alignItems="center">
-          <Image
+          {/* <Image
             boxSize="45px"
             borderRadius="md"
             mr=".5rem"
             src={logo}
             fallbackSrc="https://via.placeholder.com/150"
-          />
+          /> */}
 
           <Text fontSize="lg" fontWeight="500">
             ADMIN Panel
@@ -62,6 +62,7 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
         </Stack>
 
         <Stack direction={['column', 'row']} alignItems={['flex-end', 'center']}>
+          <LanguageSelector />
           <DarkModeToggle />
           <NotificationButton />
 

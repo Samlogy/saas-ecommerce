@@ -67,3 +67,8 @@
     transform: rotate(calc(360deg));
   }
 }
+
+/*  language selector */
+.select-language * {
+  text-transform: uppercase;
+}

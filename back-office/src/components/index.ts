@@ -10,6 +10,7 @@ export { default as AddEditProduct } from './AddEditProduct'
 // export { default as ProtectedRoute } from './ProtectedRoute'
 export { default as LoginButton } from './LoginButton'
 export { default as LogoutButton } from './LogoutButton'
+export { default as EmailButton } from './EmailButton'
 
 export { default as SideBar } from './SideBar'
 export { default as TopBar } from './TopBar'

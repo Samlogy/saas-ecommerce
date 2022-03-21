@@ -42,19 +42,19 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
         pos={isFixedNav ? 'fixed' : 'inherit'}
         zIndex="999"
       >
-        {/* <IconButton
+        <IconButton
           aria-label="side-bar-button"
           icon={<BiMenu size="24" onClick={() => setIsVisible(true)} />}
-        /> */}
+        />
 
         <Stack display="flex" flexDirection="row" alignItems="center">
-          {/* <Image
+          <Image
             boxSize="45px"
             borderRadius="md"
             mr=".5rem"
             src={logo}
             fallbackSrc="https://via.placeholder.com/150"
-          /> */}
+          />
 
           <Text fontSize="lg" fontWeight="500">
             ADMIN Panel

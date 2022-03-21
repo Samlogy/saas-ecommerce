@@ -1,15 +1,16 @@
-import { Heading, Button } from '@chakra-ui/react'
+import { Heading, Button, Tr, Th, Td } from '@chakra-ui/react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import React, { useEffect, useState } from 'react'
 
 import {
   Layout,
   View,
-  ProductsList,
+  CustomTable,
   ProductsFilter,
   ProductBox,
   ProductDetails,
-  AddEditProduct
+  AddEditProduct,
+  ActionsMenu
 } from '../components'
 
 interface ICurrentProduct {
@@ -62,7 +63,7 @@ export default function Products() {
     quantity: 11
   }
 
-  const headers = ['Image', 'Name', 'Description', 'Quantity', 'Price', 'Coupon', 'Actions']
+  // const headers = ['Image', 'Name', 'Description', 'Quantity', 'Price', 'Coupon', 'Actions']
 
   useEffect(() => {
     // load products data
@@ -91,7 +92,62 @@ export default function Products() {
     setProducts(data)
   }, [])
 
-  const data = ['New File', 'New File', 'New File']
+  // products list
+  const productList = [
+    {
+      id: 1,
+      image: '',
+      name: 'Brittan Rois',
+      quantity: 10,
+      price: 24011
+    },
+    {
+      id: 2,
+      image: '',
+      name: 'Brittan Rois',
+      quantity: 10,
+      price: 24011
+    },
+    {
+      id: 3,
+      image: '',
+      name: 'Brittan Rois',
+      quantity: 10,
+      price: 24011
+    },
+    {
+      id: 4,
+      image: '',
+      name: 'Brittan Rois',
+      quantity: 10,
+      price: 24011
+    },
+    {
+      id: 5,
+      image: '',
+      name: 'Brittan Rois',
+      quantity: 10,
+      price: 24011
+    }
+  ]
+  const productTableHead = ['name', 'quantity', 'price', 'actions']
+
+  const renderHead = (product: any, idx: any) => (
+    <Th key={idx} p="15px 10px" textAlign={'left'}>
+      {product}
+    </Th>
+  )
+
+  const renderBody = (product: any, idx: any) => (
+    <Tr key={idx} textAlign="left">
+      <Td p="15px 10px">{product.name}</Td>
+      <Td p="15px 10px">{product.quantity}</Td>
+      <Td p="15px 10px">{product.price}</Td>
+      <Td>
+        <ActionsMenu productId={product.id} setAction={setAction} />
+      </Td>
+    </Tr>
+  )
 
   return (
     <Layout isHeaderVisible>
@@ -159,7 +215,14 @@ export default function Products() {
       </View>
 
       <ProductsFilter setQuery={setQuery} query={query} />
-      {/* <ProductsList data={{ headers, products }} setAction={setAction} /> */}
+
+      <CustomTable
+        limit="4"
+        headData={productTableHead}
+        renderHead={(product: any, idx: any) => renderHead(product, idx)}
+        bodyData={productList}
+        renderBody={(product: any, idx: any) => renderBody(product, idx)}
+      />
     </Layout>
   )
 }

@@ -29,6 +29,8 @@ const CustomTable = (props: any) => {
     setCurrPage(page)
   }
 
+  // console.log(dataShow.map((item: any, idx: any) => props.renderBody(item, idx)))
+
   return (
     <>
       <div className="table-wrapper">

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { ChakraProvider } from '@chakra-ui/react'
+import { CustomLoader } from './components'
 
 import './index.css'
 import App from './App'
@@ -14,7 +15,9 @@ ReactDOM.render(
   <Auth0Provider domain={DOMAIN} clientId={CLIENT_ID} redirectUri={window.location.origin}>
     <React.StrictMode>
       <ChakraProvider>
-        <App />
+        <Suspense fallback={<CustomLoader />}>
+          <App />
+        </Suspense>
       </ChakraProvider>
     </React.StrictMode>
   </Auth0Provider>,

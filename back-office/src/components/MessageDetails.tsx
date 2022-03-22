@@ -36,15 +36,24 @@ const MessageDetails = () => {
               h="5rem"
               mb=".5rem"
             />
-            <Text> {message.title} </Text>
-            <Text> {message.text} </Text>
-            <Text> {message.createdAt} </Text>
+            <Text mb=".5rem" fontSize="1.3rem">
+              {' '}
+              {message.title}{' '}
+            </Text>
+            <Text mb=".5rem" color="gray.700">
+              {' '}
+              {message.text}{' '}
+            </Text>
+            <Text fontSize=".8rem" fontStyle="italic" textAlign={'right'} color="gray.500">
+              {' '}
+              {message.createdAt}{' '}
+            </Text>
           </Flex>
         </ModalBody>
         <ModalFooter>
           {' '}
           <Button
-            bg={'disable'}
+            bg={'gray.500'}
             color="white"
             _hover={{ bg: 'gray.600' }}
             onClick={() => handleMessageVisibility(false)}

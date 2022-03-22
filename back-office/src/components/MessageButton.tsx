@@ -53,8 +53,8 @@ function MessageButton() {
             justifyContent="space-between"
             onClick={() => handleClickMessage(el)}
           >
-            <Text> {el.title} </Text>
-            <Text> {el.text} </Text>
+            <Text isTruncated> {el.title} </Text>
+            <Text isTruncated> {el.text} </Text>
           </MenuItem>
         ))}
         <Box textAlign="center" color="blue.500">

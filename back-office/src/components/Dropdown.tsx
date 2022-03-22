@@ -20,7 +20,9 @@ const Dropdown = ({ data, icon, children }: IDropdown) => {
         _hover={{ bg: 'gray.400' }}
         _focus={{ boxShadow: 'outline' }}
       ></MenuButton>
-      <MenuList p={'.75rem 1rem'}>{children}</MenuList>
+      <MenuList p={'.75rem 1rem'} maxW="5rem">
+        {children}
+      </MenuList>
     </Menu>
   )
 }

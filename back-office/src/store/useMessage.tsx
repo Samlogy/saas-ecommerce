@@ -18,13 +18,13 @@ let messageStore = (set: SetState<IMessages>) => ({
     {
       id: 1,
       title: 'title',
-      text: 'text...',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores rerum delectus minus dolorem sequi nostrum atque officia mollitia voluptatibus, cumque sunt? Necessitatibus dolorem nisi veritatis voluptatum possimus quam deserunt ipsum.',
       createdAt: '19/03/2022'
     },
     {
       id: 2,
       title: 'title 2',
-      text: 'text 2...',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores rerum delectus minus dolorem sequi nostrum atque officia mollitia voluptatibus, cumque sunt? Necessitatibus dolorem nisi veritatis voluptatum possimus quam deserunt ipsum.',
       createdAt: '20/03/2022'
     }
   ],

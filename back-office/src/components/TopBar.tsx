@@ -11,7 +11,8 @@ import {
   Dropdown,
   NotificationDetails,
   LanguageSelector,
-  EmailButton
+  MessageButton,
+  MessageDetails
 } from 'components'
 
 interface ITopBar {
@@ -62,7 +63,7 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
           <LanguageSelector />
           <DarkModeToggle />
           <NotificationButton />
-          <EmailButton />
+          <MessageButton />
 
           <Dropdown icon={<Avatar name="admin" src={user?.name} size="sm" />}>
             <MenuItem flexDir={'column'}>
@@ -75,6 +76,7 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
 
       <SideBar isOpen={isVisible} onClose={() => setIsVisible(false)} />
       <NotificationDetails />
+      <MessageDetails />
     </>
   )
 }

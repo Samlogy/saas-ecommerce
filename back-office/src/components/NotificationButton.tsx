@@ -7,7 +7,6 @@ import { Dropdown, View } from 'components'
 import { useNotificationStore } from '../store'
 
 const NotificationButton = () => {
-  // const [notifications, setNotifications] = useState<any>([])
   const notifications = useNotificationStore((state: any) => state.notifications)
   const handleNotificationVisibility = useNotificationStore(
     (state: any) => state.handleNotificationVisibility

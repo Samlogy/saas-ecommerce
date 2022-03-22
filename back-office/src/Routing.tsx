@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import { Products, NotFound, Analytics, Notifications } from 'pages'
+import { Products, NotFound, Analytics, Notifications, Messages } from 'pages'
 
 const Routing = () => {
   return (
@@ -15,7 +15,7 @@ const Routing = () => {
         <Route path="/" element={<Analytics />} />
         <Route path="products" element={<Products />} />
         <Route path="notifications" element={<Notifications />} />
-        {/* <Route path="message" element={<Messages />} /> */}
+        <Route path="messages" element={<Messages />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

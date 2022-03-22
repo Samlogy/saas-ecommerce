@@ -14,20 +14,7 @@ type IMessages = {
 let messageStore = (set: SetState<IMessages>) => ({
   isVisible: false,
   message: {},
-  messages: [
-    {
-      id: 1,
-      title: 'title',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores rerum delectus minus dolorem sequi nostrum atque officia mollitia voluptatibus, cumque sunt? Necessitatibus dolorem nisi veritatis voluptatum possimus quam deserunt ipsum.',
-      createdAt: '19/03/2022'
-    },
-    {
-      id: 2,
-      title: 'title 2',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores rerum delectus minus dolorem sequi nostrum atque officia mollitia voluptatibus, cumque sunt? Necessitatibus dolorem nisi veritatis voluptatum possimus quam deserunt ipsum.',
-      createdAt: '20/03/2022'
-    }
-  ],
+  messages: [],
   handleMessageVisibility: (isVisible: boolean) => {
     set({ isVisible: isVisible })
   },
@@ -47,7 +34,6 @@ let messageStore = (set: SetState<IMessages>) => ({
 
 // @ts-ignore
 messageStore = devtools(messageStore)
-// notificationStore = persist(notificationStore, { name: 'notifications' })
 
 const useMessage = create<IMessages>(messageStore)
 

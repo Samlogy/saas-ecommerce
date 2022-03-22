@@ -16,6 +16,7 @@ interface IProductBox {
   productId: number
   setAction: any
   mode: string
+  setProduct: any
 }
 const ProductBox = ({ isOpen, onClose, productId, setAction, mode }: IProductBox) => {
   const cancelRef = useRef(null)

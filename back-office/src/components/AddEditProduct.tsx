@@ -129,19 +129,19 @@ const AddEditProduct = ({ isOpen, onClose, product, currentProduct, mode }: IAdd
               {errors.price && <ErrorMessage error={errors.price.message} />}
             </FormControl>
 
-            <FormControl id="coupon" mb=".5rem">
-              <FormLabel> Add Coupon </FormLabel>
+            <FormControl id="discount" mb=".5rem">
+              <FormLabel> Add Discount </FormLabel>
               <Input
                 type="text"
-                placeholder="Product Coupon"
+                placeholder="Product Discount"
                 _placeholder={{ color: 'gray.500' }}
-                isInvalid={errors.coupon ? true : false}
+                isInvalid={errors.discount ? true : false}
                 errorBorderColor="error"
                 borderColor="gray.300"
                 borderRadius="4px"
-                {...register('coupon')}
+                {...register('discount')}
               />
-              {errors.coupon && <ErrorMessage error={errors.coupon.message} />}
+              {errors.discount && <ErrorMessage error={errors.discount.message} />}
             </FormControl>
 
             <Flex flexDir="row">

@@ -11,7 +11,7 @@ import {
   ProductDetails,
   AddEditProduct,
   ActionsMenu
-} from '../components'
+} from 'components'
 
 interface ICurrentProduct {
   id: number | string
@@ -53,17 +53,26 @@ export default function Products() {
 
   const [query, setQuery] = useState('')
 
-  const product = {
-    id: 1,
-    name: 'name',
-    description: 'desc',
-    img: '',
-    price: 0,
-    coupon: 0.2,
-    quantity: 11
-  }
+  // const product = {
+  //   id: 1,
+  //   name: 'name',
+  //   description: 'desc',
+  //   img: '',
+  //   price: 0,
+  //   coupon: 0.2,
+  //   quantity: 11
+  // }
 
   // const headers = ['Image', 'Name', 'Description', 'Quantity', 'Price', 'Coupon', 'Actions']
+  const [product, setProduct] = useState({
+    id: 0,
+    name: '',
+    image: '',
+    discount: 0,
+    description: '',
+    quantity: 0,
+    price: ''
+  })
 
   useEffect(() => {
     // load products data
@@ -144,7 +153,12 @@ export default function Products() {
       <Td p="15px 10px">{product.quantity}</Td>
       <Td p="15px 10px">{product.price}</Td>
       <Td>
-        <ActionsMenu productId={product.id} setAction={setAction} />
+        <ActionsMenu
+          productId={product.id}
+          setAction={setAction}
+          setProduct={setProduct}
+          product={product}
+        />
       </Td>
     </Tr>
   )
@@ -172,7 +186,8 @@ export default function Products() {
           isOpen={action.delete}
           setAction={setAction}
           onClose={() => setAction({ ...action, delete: false })}
-          productId={1}
+          productId={product.id}
+          setProduct={setProduct}
           mode="delete"
         />
       </View>
@@ -182,7 +197,8 @@ export default function Products() {
           isOpen={action.disable}
           setAction={setAction}
           onClose={() => setAction({ ...action, disable: false })}
-          productId={1}
+          productId={product.id}
+          setProduct={setProduct}
           mode="disable"
         />
       </View>

@@ -7,24 +7,30 @@ import { FaEllipsisV } from 'react-icons/fa'
 interface IActionMenu {
   productId: number | string
   setAction: any
+  setProduct: any
+  product: any
 }
 
-const ActionsMenu = ({ productId, setAction }: IActionMenu) => {
+const ActionsMenu = ({ productId, setAction, setProduct, product }: IActionMenu) => {
   const onEdit = (productId: string | number) => {
-    // console.log('edit product: ', productId)
+    console.log('edit product: ', productId)
     setAction({ edit: true })
+    setProduct(product)
   }
   const onDelete = (productId: string | number) => {
     // console.log('delete product: ', productId)
     setAction({ delete: true })
+    setProduct({ id: productId })
   }
   const onDisable = (productId: string | number) => {
     // console.log('disable product: ', productId)
     setAction({ disable: true })
+    setProduct({ id: productId })
   }
   const onDetails = (productId: string | number) => {
     // console.log('details product: ', productId)
     setAction({ details: true })
+    setProduct(product)
   }
 
   return (

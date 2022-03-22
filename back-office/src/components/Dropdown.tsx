@@ -1,12 +1,11 @@
 import { IconButton, Menu, MenuButton, MenuList } from '@chakra-ui/react'
 
 interface IDropdown {
-  data?: any
   icon?: any
   children?: any
 }
 
-const Dropdown = ({ data, icon, children }: IDropdown) => {
+const Dropdown = ({ icon, children }: IDropdown) => {
   return (
     <Menu>
       <MenuButton

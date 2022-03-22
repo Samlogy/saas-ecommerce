@@ -85,7 +85,7 @@ const CustomButton = ({ notifs }: { notifs: number }) => {
       ) : (
         ''
       )}
-      <MdNotificationsActive size="24" color={'#ccc'} />
+      <MdNotificationsActive size="20" color={'#ccc'} />
     </Button>
   )
 }

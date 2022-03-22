@@ -1,9 +1,8 @@
-import { Heading, Flex, Button, Stack, Select } from '@chakra-ui/react'
-// import React, { useEffect, useState } from 'react'
+import { Heading, Flex, Button, Stack, Select, useColorMode } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
 import { Layout, Widget, TotalRevenue, Charts } from 'components'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // chart options
 const chartOptions = {
@@ -53,11 +52,15 @@ const totalRevenueData = {
   price: 5000
 }
 export default function Analytics() {
+  // const { colorMode: mode } = useColorMode()
+  // console.log('mode: ', mode)
   const [options, setOptions] = useState(chartOptions.options)
   const [series, setSeries] = useState(chartOptions.series)
   const [sorted, setSorted] = useState('daily')
 
-  // const { t } = useTranslation()
+  const { t } = useTranslation()
+
+  // , theme: { mode: mode }
 
   const handleClick = (e: any) => {
     const category = e.target.value.toLowerCase()
@@ -109,14 +112,32 @@ export default function Analytics() {
           </Select>
 
           <Flex justifyContent={'space-evenly'} flexWrap="wrap">
-            <Charts type={'line'} options={options} series={series} sorted={sorted} />
-            <Charts type={'area'} options={options} series={series} sorted={sorted} />
-            <Charts type={'bar'} options={options} series={series} sorted={sorted} />
+            <Charts
+              type={'line'}
+              options={options}
+              series={series}
+              sorted={sorted}
+              setOptions={setOptions}
+            />
+            <Charts
+              type={'area'}
+              options={options}
+              series={series}
+              sorted={sorted}
+              setOptions={setOptions}
+            />
+            <Charts
+              type={'bar'}
+              options={options}
+              series={series}
+              sorted={sorted}
+              setOptions={setOptions}
+            />
           </Flex>
         </Flex>
       </Flex>
 
-      {/* {t('greeting')} */}
+      {t('greeting')}
     </Layout>
   )
 }

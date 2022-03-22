@@ -7,59 +7,30 @@ interface IChart {
   options: any
   series: any
   sorted: string
+  setOptions: any
 }
-function Charts({ type = 'area', options, series, sorted }: IChart) {
+function Charts({ type = 'area', options, series, sorted, setOptions }: IChart) {
   const { colorMode: mode } = useColorMode()
+  // console.log(options)
 
   const Chart =
     type === 'area' ? (
-      <ReactApexChart
-        type={'area'}
-        options={{ ...options, theme: { mode: mode } }}
-        series={series}
-        height={350}
-      />
+      <ReactApexChart type={'area'} options={{ ...options }} series={series} height={350} />
     ) : type === 'line' ? (
-      <ReactApexChart
-        type={'line'}
-        options={{ ...options, theme: { mode: mode } }}
-        series={series}
-        height={350}
-      />
+      <ReactApexChart type={'line'} options={{ ...options }} series={series} height={350} />
     ) : type === 'bar' ? (
-      <ReactApexChart
-        type={'bar'}
-        options={{ ...options, theme: { mode: mode } }}
-        series={series}
-        height={350}
-      />
+      <ReactApexChart type={'bar'} options={{ ...options }} series={series} height={350} />
     ) : type === 'donut' ? (
-      <ReactApexChart
-        type={'donut'}
-        options={{ ...options, theme: { mode: mode } }}
-        series={series}
-        height={350}
-      />
+      <ReactApexChart type={'donut'} options={{ ...options }} series={series} height={350} />
     ) : type === 'pie' ? (
-      <ReactApexChart
-        type={'pie'}
-        options={{ ...options, theme: { mode: mode } }}
-        series={series}
-        height={350}
-      />
+      <ReactApexChart type={'pie'} options={{ ...options }} series={series} height={350} />
     ) : (
       ''
     )
 
-  // useEffect(() => {
-  //   console.log('mode -->: ', mode)
-  //   setOptionsCart({
-  //     options: {
-  //       ...options,
-  //       theme: { mode: mode }
-  //     }
-  //   })
-  // }, [mode])
+  useEffect(() => {
+    setOptions({ ...options, theme: { mode: 'dark', palette: 'palette' } })
+  }, [mode])
 
   return (
     <Flex

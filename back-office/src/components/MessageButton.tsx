@@ -83,7 +83,7 @@ const CustomButton = ({ msgs }: { msgs: number }) => {
       ) : (
         ''
       )}
-      <MdEmail size="20" color="#ccc" />
+      <MdEmail size="18" color="#ccc" />
     </Button>
   )
 }

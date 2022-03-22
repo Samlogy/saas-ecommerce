@@ -1,12 +1,4 @@
-import {
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  Text
-} from '@chakra-ui/react'
+import { IconButton, Menu, MenuButton, MenuList } from '@chakra-ui/react'
 
 interface IDropdown {
   data?: any

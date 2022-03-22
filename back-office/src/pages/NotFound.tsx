@@ -1,7 +1,7 @@
 import { Heading, Text, Button } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
-import Layout from 'components/Layout'
+import { Layout } from 'components'
 // import { useLocale } from "../lib/hooks";
 
 function NotFound() {

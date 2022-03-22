@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Text, Flex, CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
+import { Text, Flex, CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 
 interface IWidget {
   data?: any
@@ -12,7 +12,6 @@ function Widget({ data }: IWidget) {
       flexDir="row"
       justifyContent={'space-between'}
       alignItems="center"
-      //   border="1px solid"
       borderColor="gray.400"
       p=".75rem 1rem"
       w="15em"

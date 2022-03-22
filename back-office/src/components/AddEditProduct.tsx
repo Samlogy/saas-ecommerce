@@ -17,7 +17,7 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
-import { ErrorMessage } from '../components'
+import { ErrorMessage } from 'components'
 import { addProductSchema } from '../lib/validation'
 
 interface IAddEditProduct {

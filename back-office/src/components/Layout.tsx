@@ -1,6 +1,6 @@
 import { Container, Flex } from '@chakra-ui/react'
 
-import { SideBar, TopBar } from '../components'
+import { TopBar } from 'components'
 
 interface ILayout {
   children?: React.ReactNode

@@ -13,7 +13,7 @@ import {
   ModalFooter
 } from '@chakra-ui/react'
 
-import { useNotificationStore } from '../store'
+import { useNotificationStore } from 'store'
 
 const NotificationDetails = () => {
   const handleNotificationVisibility = useNotificationStore(

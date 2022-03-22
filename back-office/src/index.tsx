@@ -5,7 +5,7 @@ import { Auth0Provider } from '@auth0/auth0-react'
 
 import './index.css'
 import App from './App'
-import CustomPreLoader from './components/CustomPreLoader'
+import { CustomPreLoader } from 'components'
 import './lib/lang/i18'
 
 const DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN as string

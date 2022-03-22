@@ -3,7 +3,7 @@ import { MdNotificationsActive } from 'react-icons/md'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Dropdown, View } from '../components'
+import { Dropdown, View } from 'components'
 import { useNotificationStore } from '../store'
 
 const NotificationButton = () => {

@@ -12,7 +12,7 @@ import {
   NotificationDetails,
   LanguageSelector,
   EmailButton
-} from '../components'
+} from 'components'
 
 interface ITopBar {
   isFixedNav?: boolean

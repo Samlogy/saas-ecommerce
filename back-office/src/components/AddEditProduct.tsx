@@ -24,7 +24,6 @@ interface IAddEditProduct {
   isOpen: boolean
   onClose: () => void
   product?: any
-  // currentProduct: any
   mode: string
 }
 const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => {

@@ -5,5 +5,5 @@ export const addProductSchema = yup.object().shape({
   name: yup.string().required('Product Name required'),
   description: yup.string().required('Product Description required'),
   price: yup.number().required('Product Price required'),
-  coupon: yup.string()
+  discount: yup.number()
 })

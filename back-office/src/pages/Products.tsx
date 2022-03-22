@@ -12,16 +12,66 @@ import {
   AddEditProduct,
   ActionsMenu
 } from 'components'
-
-interface ICurrentProduct {
+const productList = [
+  {
+    id: 1,
+    // image: '',
+    name: 'Brittan Rois',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
+    discount: 0.1,
+    quantity: 10,
+    price: 24011
+  },
+  {
+    id: 2,
+    // image: '',
+    name: 'Brittan Rois',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
+    discount: 0.1,
+    quantity: 10,
+    price: 24011
+  },
+  {
+    id: 3,
+    // image: '',
+    name: 'Brittan Rois',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
+    discount: 0.1,
+    quantity: 10,
+    price: 24011
+  },
+  {
+    id: 4,
+    // image: '',
+    name: 'Brittan Rois',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
+    discount: 0.1,
+    quantity: 10,
+    price: 24011
+  },
+  {
+    id: 5,
+    // image: '',
+    name: 'Brittan Rois',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
+    discount: 0.1,
+    quantity: 10,
+    price: 24011
+  }
+]
+interface IProduct {
   id: number | string
   name: string
   price: number | string
   description: string
-  coupon: number // ]0,1[
-  img: string
+  discount: number // ]0,1[
+  image: string
   quantity: number | string
-  // features: string[]
 }
 interface IAction {
   delete: boolean
@@ -39,7 +89,7 @@ export default function Products() {
     edit: false,
     details: false
   })
-  const [products, setProducts] = useState<ICurrentProduct[]>()
+  const [products, setProducts] = useState<IProduct[]>()
   const [query, setQuery] = useState('')
   const [product, setProduct] = useState({
     id: 0,
@@ -53,70 +103,20 @@ export default function Products() {
 
   useEffect(() => {
     // load products data
-    const data = [
-      {
-        id: 1,
-        img: 'https://bit.ly/dan-abramov',
-        name: 'Throwback Hip Ba',
-        description:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
-        quantity: 1,
-        price: 90.0,
-        coupon: 0.2
-      },
-      {
-        id: 2,
-        img: 'https://bit.ly/dan-abramov',
-        name: 'Throwback Hip Ba',
-        description:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
-        quantity: 1,
-        price: 50.0,
-        coupon: 0.2
-      }
-    ]
-    setProducts(data)
+    // setProducts(data)
   }, [])
 
   // products list
-  const productList = [
-    {
-      id: 1,
-      image: '',
-      name: 'Brittan Rois',
-      quantity: 10,
-      price: 24011
-    },
-    {
-      id: 2,
-      image: '',
-      name: 'Brittan Rois',
-      quantity: 10,
-      price: 24011
-    },
-    {
-      id: 3,
-      image: '',
-      name: 'Brittan Rois',
-      quantity: 10,
-      price: 24011
-    },
-    {
-      id: 4,
-      image: '',
-      name: 'Brittan Rois',
-      quantity: 10,
-      price: 24011
-    },
-    {
-      id: 5,
-      image: '',
-      name: 'Brittan Rois',
-      quantity: 10,
-      price: 24011
-    }
+  const productTableHead = [
+    '',
+    'name',
+    // 'image',
+    'description',
+    'quantity',
+    'price',
+    'discount',
+    'actions'
   ]
-  const productTableHead = ['name', 'quantity', 'price', 'actions']
 
   const renderHead = (product: any, idx: any) => (
     <Th key={idx} p="15px 10px" textAlign={'left'}>
@@ -126,10 +126,28 @@ export default function Products() {
 
   const renderBody = (product: any, idx: any) => (
     <Tr key={idx} textAlign="left">
-      <Td p="15px 10px">{product.name}</Td>
-      <Td p="15px 10px">{product.quantity}</Td>
-      <Td p="15px 10px">{product.price}</Td>
-      <Td>
+      <Td p="15px 10px" maxW="2rem">
+        {product.id}
+      </Td>
+      <Td p="15px 10px" maxW="2rem">
+        {product.name}
+      </Td>
+      <Td p="15px 10px" maxW="2rem">
+        {product.image}
+      </Td>
+      <Td p="15px 10px" maxW="2rem" isTruncated>
+        {product.description}
+      </Td>
+      <Td p="15px 10px" maxW="2rem">
+        {product.quantity}
+      </Td>
+      <Td p="15px 10px" maxW="2rem">
+        {product.price}
+      </Td>
+      <Td p="15px 10px" maxW="2rem">
+        {product.discount}
+      </Td>
+      <Td p="15px 10px" w="2rem">
         <ActionsMenu
           productId={product.id}
           setAction={setAction}

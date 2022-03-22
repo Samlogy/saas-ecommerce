@@ -29,10 +29,8 @@ const CustomTable = (props: any) => {
     setCurrPage(page)
   }
 
-  // console.log(dataShow.map((item: any, idx: any) => props.renderBody(item, idx)))
-
   return (
-    <>
+    <Box borderRadius={'8px'} boxShadow="md" p=".75rem 1rem">
       <div className="table-wrapper">
         <Table variant="striped" colorScheme="blue">
           {props.headData && props.renderHead ? (
@@ -71,7 +69,7 @@ const CustomTable = (props: any) => {
           ))}
         </Flex>
       ) : null}
-    </>
+    </Box>
   )
 }
 

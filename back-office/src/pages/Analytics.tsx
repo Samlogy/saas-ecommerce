@@ -1,8 +1,8 @@
-import { Heading, Flex, Tr, Th, Td } from '@chakra-ui/react'
+import { Heading, Flex } from '@chakra-ui/react'
 // import React, { useEffect, useState } from 'react'
-import { useTranslation, Trans } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
-import { Layout, Widget, TotalRevenue, Charts, CustomTable } from '../components'
+import { Layout, Widget, TotalRevenue, Charts } from 'components'
 
 // chart options
 const chartOptions = {
@@ -63,7 +63,7 @@ export default function Analytics() {
         <Charts type={'area'} options={chartOptions} />
       </Flex>
 
-      {t('greeting')}
+      {/* {t('greeting')} */}
     </Layout>
   )
 }

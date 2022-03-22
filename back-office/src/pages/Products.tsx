@@ -39,31 +39,8 @@ export default function Products() {
     edit: false,
     details: false
   })
-  const [currentProduct, setCurrentProduct] = useState({
-    id: '',
-    name: '',
-    price: '',
-    description: '',
-    discount: 0,
-    img: '',
-    quantity: '',
-    features: []
-  })
   const [products, setProducts] = useState<ICurrentProduct[]>()
-
   const [query, setQuery] = useState('')
-
-  // const product = {
-  //   id: 1,
-  //   name: 'name',
-  //   description: 'desc',
-  //   img: '',
-  //   price: 0,
-  //   coupon: 0.2,
-  //   quantity: 11
-  // }
-
-  // const headers = ['Image', 'Name', 'Description', 'Quantity', 'Price', 'Coupon', 'Actions']
   const [product, setProduct] = useState({
     id: 0,
     name: '',
@@ -206,7 +183,6 @@ export default function Products() {
       <View cond={action.add}>
         <AddEditProduct
           isOpen={action.add}
-          currentProduct={currentProduct}
           onClose={() => setAction({ ...action, add: false })}
           mode="add"
         />
@@ -215,7 +191,6 @@ export default function Products() {
       <View cond={action.edit}>
         <AddEditProduct
           isOpen={action.edit}
-          currentProduct={currentProduct}
           onClose={() => setAction({ ...action, edit: false })}
           product={product}
           mode="edit"

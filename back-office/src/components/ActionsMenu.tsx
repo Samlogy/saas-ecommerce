@@ -13,7 +13,7 @@ interface IActionMenu {
 
 const ActionsMenu = ({ productId, setAction, setProduct, product }: IActionMenu) => {
   const onEdit = (productId: string | number) => {
-    console.log('edit product: ', productId)
+    // console.log('edit product: ', productId)
     setAction({ edit: true })
     setProduct(product)
   }

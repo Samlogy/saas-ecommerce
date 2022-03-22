@@ -24,10 +24,11 @@ interface IAddEditProduct {
   isOpen: boolean
   onClose: () => void
   product?: any
-  currentProduct: any
+  // currentProduct: any
   mode: string
 }
-const AddEditProduct = ({ isOpen, onClose, product, currentProduct, mode }: IAddEditProduct) => {
+const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => {
+  console.log(product)
   const formOptions = {
     resolver: yupResolver(addProductSchema),
     defaultValues: mode === 'add' ? {} : product
@@ -63,7 +64,7 @@ const AddEditProduct = ({ isOpen, onClose, product, currentProduct, mode }: IAdd
             <Image
               boxSize="100px"
               objectFit="cover"
-              src={currentProduct?.img || product?.img}
+              src={product?.img}
               fallbackSrc="https://via.placeholder.com/150"
               alt="Product Image"
               mb="1rem"
@@ -76,13 +77,13 @@ const AddEditProduct = ({ isOpen, onClose, product, currentProduct, mode }: IAdd
                 placeholder="Product Image"
                 border="none"
                 px="0"
-                isInvalid={errors.img ? true : false}
+                isInvalid={errors.image ? true : false}
                 errorBorderColor="error"
                 borderColor="gray.300"
                 borderRadius="4px"
-                {...register('img')}
+                {...register('image')}
               />
-              {errors.img && <ErrorMessage error={errors.img.message} />}
+              {errors.image && <ErrorMessage error={errors.image.message} />}
             </FormControl>
 
             <FormControl id="name" mb=".5rem">
@@ -132,7 +133,7 @@ const AddEditProduct = ({ isOpen, onClose, product, currentProduct, mode }: IAdd
             <FormControl id="discount" mb=".5rem">
               <FormLabel> Add Discount </FormLabel>
               <Input
-                type="text"
+                type="number"
                 placeholder="Product Discount"
                 _placeholder={{ color: 'gray.500' }}
                 isInvalid={errors.discount ? true : false}

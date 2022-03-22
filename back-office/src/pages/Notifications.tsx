@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Heading, Flex } from '@chakra-ui/react'
 // import React, { useEffect, useState } from 'react'
 
-import { Layout } from '../components'
+import { Layout } from 'components'
 
 function Notifications() {
   const [notifications, setNotifications] = useState([])

@@ -1,6 +1,6 @@
 import React from 'react'
 import { IconButton } from '@chakra-ui/react'
-import { AiOutlineMail } from 'react-icons/ai'
+import { MdEmail } from 'react-icons/md'
 
 function EmailButton() {
   const onEmail = () => {
@@ -11,7 +11,7 @@ function EmailButton() {
       aria-label="dark mode"
       bg="transparent"
       onClick={() => onEmail()}
-      icon={<AiOutlineMail size="20" />}
+      icon={<MdEmail size="20" color="#ccc" />}
     />
   )
 }

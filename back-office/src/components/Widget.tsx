@@ -32,10 +32,10 @@ function Widget({ data }: IWidget) {
         </Text>
       </Flex>
 
-      <CircularProgress value={40} color="green.400" size="5rem" thickness="10px">
+      <CircularProgress value={data?.percent} color="green.400" size="5rem" thickness="10px">
         <CircularProgressLabel color={'gray.500'} fontSize=".9rem">
           {' '}
-          40%{' '}
+          {data?.percent}%{' '}
         </CircularProgressLabel>
       </CircularProgress>
     </Flex>

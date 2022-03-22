@@ -12,6 +12,7 @@ import {
   AddEditProduct,
   ActionsMenu
 } from 'components'
+
 const productList = [
   {
     id: 1,
@@ -65,7 +66,7 @@ const productList = [
   }
 ]
 interface IProduct {
-  id: number | string
+  id: number
   name: string
   price: number | string
   description: string
@@ -82,7 +83,7 @@ interface IAction {
 }
 
 export default function Products() {
-  const [action, setAction] = useState({
+  const [action, setAction] = useState<IAction>({
     delete: false,
     disable: false,
     add: false,
@@ -91,7 +92,7 @@ export default function Products() {
   })
   const [products, setProducts] = useState<IProduct[]>()
   const [query, setQuery] = useState('')
-  const [product, setProduct] = useState({
+  const [product, setProduct] = useState<IProduct>({
     id: 0,
     name: '',
     image: '',

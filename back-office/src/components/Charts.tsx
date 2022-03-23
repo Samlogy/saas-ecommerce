@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Flex, useColorMode, Box } from '@chakra-ui/react'
 import ReactApexChart from 'react-apexcharts'
+
+export interface IOptions {
+  color: string[]
+  chart: { height: number; width: number; fontFamily: string; zoom: { enabled: boolean } }
+}
 
 interface IChart {
   type: string
   options: any
   series: any
   sorted: string
-  setOptions: any
+  setOptions: React.Dispatch<React.SetStateAction<IOptions>>
 }
 function Charts({ type = 'area', options, series, sorted, setOptions }: IChart) {
   const { colorMode: mode } = useColorMode()
@@ -29,7 +34,13 @@ function Charts({ type = 'area', options, series, sorted, setOptions }: IChart) 
     )
 
   useEffect(() => {
-    setOptions({ ...options, theme: { mode: 'dark', palette: 'palette' } })
+    setOptions({
+      ...options,
+      theme: {
+        mode: mode,
+        shadeTo: mode
+      }
+    })
   }, [mode])
 
   return (
@@ -41,7 +52,7 @@ function Charts({ type = 'area', options, series, sorted, setOptions }: IChart) 
       borderRadius={'25px'}
       boxShadow="md"
       mb="1.5rem"
-      flexBasis="20rem"
+      minW="20rem"
     >
       <Box mb="1rem" ml="auto" color={'gray.400'}>
         sorted:{' '}

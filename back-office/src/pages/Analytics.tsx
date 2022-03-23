@@ -1,8 +1,9 @@
-import { Heading, Flex, Button, Stack, Select, useColorMode } from '@chakra-ui/react'
+import { Heading, Flex, Select } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
 
 import { Layout, Widget, TotalRevenue, Charts } from 'components'
-import { useState, useEffect } from 'react'
+import { IOptions } from 'components/Charts'
 
 // chart options
 const chartOptions = {
@@ -11,10 +12,16 @@ const chartOptions = {
     chart: {
       height: 350,
       width: 450,
+      fontFamily: 'Poppins, sans-serif',
       zoom: {
         enabled: true
       }
     }
+  },
+  theme: {
+    palette: 'palette',
+    monochrome: { enabled: false },
+    shadeIntensity: 0.5
   },
   series: [
     {
@@ -51,16 +58,13 @@ const totalRevenueData = {
   percent: 50,
   price: 5000
 }
+
 export default function Analytics() {
-  // const { colorMode: mode } = useColorMode()
-  // console.log('mode: ', mode)
-  const [options, setOptions] = useState(chartOptions.options)
+  const [options, setOptions] = useState<IOptions>(chartOptions.options)
   const [series, setSeries] = useState(chartOptions.series)
   const [sorted, setSorted] = useState('daily')
 
   const { t } = useTranslation()
-
-  // , theme: { mode: mode }
 
   const handleClick = (e: any) => {
     const category = e.target.value.toLowerCase()
@@ -96,6 +100,7 @@ export default function Analytics() {
       <Heading as="h2" fontSize="24px">
         Analytics
       </Heading>
+
       <Flex flexWrap="wrap" justifyContent={'space-evenly'}>
         {widgetsData?.map((el: any) => (
           <Widget data={el} />

@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next'
-import { IconButton, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
+import { IconButton, MenuItem } from '@chakra-ui/react'
 import { AiOutlineGlobal } from 'react-icons/ai'
 
 import { Dropdown } from 'components'
 
-function LanguageSelector() {
+function LanguageSwitcher() {
   const { i18n } = useTranslation()
 
   const changeLanguage = (lang: string) => {
@@ -47,4 +47,4 @@ function LanguageSelector() {
   )
 }
 
-export default LanguageSelector
+export default LanguageSwitcher

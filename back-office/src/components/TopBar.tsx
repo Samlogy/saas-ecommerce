@@ -10,7 +10,7 @@ import {
   NotificationButton,
   Dropdown,
   NotificationDetails,
-  LanguageSelector,
+  LanguageSwitcher,
   MessageButton,
   MessageDetails
 } from 'components'
@@ -60,7 +60,7 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
         </Stack>
 
         <Stack direction={['column', 'row']} alignItems={['flex-end', 'center']}>
-          <LanguageSelector />
+          <LanguageSwitcher />
           <DarkModeToggle />
           <NotificationButton />
           <MessageButton />

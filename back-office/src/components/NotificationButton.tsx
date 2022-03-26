@@ -1,6 +1,6 @@
 import { Button, Badge, Box, MenuItem, Text } from '@chakra-ui/react'
 import { MdNotificationsActive } from 'react-icons/md'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Dropdown, View } from 'components'

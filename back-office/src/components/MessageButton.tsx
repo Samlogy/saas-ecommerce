@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { MdEmail } from 'react-icons/md'
 import { Button, Badge, Box, MenuItem, Text } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'

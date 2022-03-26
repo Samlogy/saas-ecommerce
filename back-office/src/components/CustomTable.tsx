@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, Image, Table, Thead, Tbody, Tfoot, Tr, Th, Td, Flex, Box } from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tr, Flex, Box } from '@chakra-ui/react'
 
 const CustomTable = (props: any) => {
   const initDataShow =

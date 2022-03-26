@@ -1,4 +1,4 @@
-import { Heading, Button, Tr, Th, Td } from '@chakra-ui/react'
+import { Heading, Button, Tr, Th, Td, Image } from '@chakra-ui/react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import React, { useEffect, useState } from 'react'
 
@@ -12,6 +12,7 @@ import {
   AddEditProduct,
   ActionsMenu
 } from 'components'
+import { IAction, IProduct } from '../lib/interfaces'
 
 const productList = [
   {
@@ -65,22 +66,6 @@ const productList = [
     price: 24011
   }
 ]
-interface IProduct {
-  id: number
-  name: string
-  price: number | string
-  description: string
-  discount: number // ]0,1[
-  image: string
-  quantity: number | string
-}
-interface IAction {
-  delete: boolean
-  disable: boolean
-  add: boolean
-  edit: boolean
-  details: boolean
-}
 
 export default function Products() {
   const [action, setAction] = useState<IAction>({
@@ -110,8 +95,8 @@ export default function Products() {
   // products list
   const productTableHead = [
     '',
+    'image',
     'name',
-    // 'image',
     'description',
     'quantity',
     'price',
@@ -129,6 +114,16 @@ export default function Products() {
     <Tr key={idx} textAlign="left">
       <Td p="15px 10px" maxW="2rem">
         {product.id}
+      </Td>
+      <Td p="15px 10px">
+        <Image
+          boxSize="100px"
+          borderRadius={'5px'}
+          objectFit="cover"
+          src={product.image}
+          fallbackSrc="https://via.placeholder.com/100"
+          alt={product.name}
+        />
       </Td>
       <Td p="15px 10px" maxW="2rem">
         {product.name}

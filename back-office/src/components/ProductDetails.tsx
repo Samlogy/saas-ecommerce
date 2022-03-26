@@ -14,11 +14,12 @@ import {
   ListItem,
   UnorderedList
 } from '@chakra-ui/react'
+import { IProduct } from 'lib/interfaces'
 
 interface IProductDetails {
   isOpen: boolean
   onClose: () => void
-  product: any
+  product: IProduct
 }
 const ProductDetails = ({ isOpen, onClose, product }: IProductDetails) => {
   return (
@@ -31,7 +32,7 @@ const ProductDetails = ({ isOpen, onClose, product }: IProductDetails) => {
         <ModalBody>
           <Flex flexDir="column">
             <Image
-              src={product?.img}
+              src={product?.image}
               alt="product iamge"
               borderRadius={'5px'}
               w="5rem"
@@ -41,8 +42,7 @@ const ProductDetails = ({ isOpen, onClose, product }: IProductDetails) => {
             <Display label="Name" data={product.name} />
             <Display label="Quantity" data={product.description} />
             <Display label="Description" data={product.name} />
-            <Display label="Coupon" data={product.coupon} />
-            <Display label="Features" data={product.Features} />
+            <Display label="Discount" data={product.discount} />
           </Flex>
         </ModalBody>
         <ModalFooter>

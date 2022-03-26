@@ -3,6 +3,7 @@ import { Heading, Flex, Box, Text } from '@chakra-ui/react'
 
 import { Layout } from 'components'
 import { useMessageStore } from 'store'
+import { IMessage } from 'lib/interfaces'
 
 function Messages() {
   useEffect(() => {
@@ -16,30 +17,31 @@ function Messages() {
         Messages
       </Heading>
       <Flex flexDir="column" justifyContent={'center'} mt="2rem">
-        {messages?.map((message: any) => (
-          <Box
-            key={message.id}
-            boxShadow="md"
-            mb="1.5rem"
-            borderRadius={'10px'}
-            p=".75rem 1rem"
-            maxW="30rem"
-            minW="20rem"
-          >
-            <Text mb=".5rem" fontSize="1.3rem">
-              {' '}
-              {message.title}{' '}
-            </Text>
-            <Text mb=".5rem" color="gray.700">
-              {' '}
-              {message.text}{' '}
-            </Text>
-            <Text fontSize=".8rem" fontStyle="italic" textAlign={'right'} color="gray.500">
-              {' '}
-              {message.createdAt}{' '}
-            </Text>
-          </Box>
-        ))}
+        {messages.length > 0 &&
+          messages?.map((message: IMessage) => (
+            <Box
+              key={message.id}
+              boxShadow="md"
+              mb="1.5rem"
+              borderRadius={'10px'}
+              p=".75rem 1rem"
+              maxW="30rem"
+              minW="20rem"
+            >
+              <Text mb=".5rem" fontSize="1.3rem">
+                {' '}
+                {message.title}{' '}
+              </Text>
+              <Text mb=".5rem" color="gray.700">
+                {' '}
+                {message.text}{' '}
+              </Text>
+              <Text fontSize=".8rem" fontStyle="italic" textAlign={'right'} color="gray.500">
+                {' '}
+                {message.createdAt}{' '}
+              </Text>
+            </Box>
+          ))}
       </Flex>
     </Layout>
   )

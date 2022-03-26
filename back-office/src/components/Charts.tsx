@@ -2,10 +2,7 @@ import React, { useEffect } from 'react'
 import { Flex, useColorMode, Box } from '@chakra-ui/react'
 import ReactApexChart from 'react-apexcharts'
 
-export interface IOptions {
-  color: string[]
-  chart: { height: number; width: number; fontFamily: string; zoom: { enabled: boolean } }
-}
+import { IOptions } from 'lib/interfaces'
 
 interface IChart {
   type: string

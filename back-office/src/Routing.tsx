@@ -1,17 +1,85 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ProtectedRoute } from 'components'
+import { Analytics, Messages, NotFound, Notifications, Products } from 'pages'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import SuperTokens, { getSuperTokensRoutesForReactRouterDom } from 'supertokens-auth-react'
+import Session from 'supertokens-auth-react/recipe/session'
+import ThirdPartyEmailPassword, {
+  Apple,
+  Google
+} from 'supertokens-auth-react/recipe/thirdpartyemailpassword'
 
-import { Products, NotFound, Analytics, Notifications, Messages } from 'pages'
+// import SessionExpiredPopup from './SessionExpiredPopup'
+
+// export function getApiDomain() {
+//   const apiPort = process.env.REACT_APP_API_PORT || 3001
+//   const apiUrl = process.env.REACT_APP_API_URL || `http://localhost:${apiPort}`
+//   return apiUrl
+// }
+
+// export function getWebsiteDomain() {
+//   const websitePort = process.env.REACT_APP_WEBSITE_PORT || 3000
+//   const websiteUrl = process.env.REACT_APP_WEBSITE_URL || `http://localhost:${websitePort}`
+//   return websiteUrl
+// }
+
+SuperTokens.init({
+  appInfo: {
+    appName: 'saas-ecommerce-web-app', // TODO: Your app name
+    apiDomain: 'http://localhost:5000/',
+    websiteDomain: 'http://localhost:3000'
+  },
+  recipeList: [
+    ThirdPartyEmailPassword.init({
+      signInAndUpFeature: {
+        providers: [Google.init(), Apple.init()]
+      },
+      emailVerificationFeature: {
+        mode: 'REQUIRED'
+      }
+    }),
+    Session.init()
+  ]
+})
 
 const Routing = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route element={<ProtectedRoute />}>
-          <Route path="home" element={<Admin />} />
-          <Route path="admin" element={<Admin />} />
-          <Route path="/" element={<Admin />} />
-          <Route path="dashboard" element={<Admin />} />
-        </Route> */}
+        {getSuperTokensRoutesForReactRouterDom(require('react-router-dom'))}
+        {/* <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Analytics />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="products"
+          element={
+            <ProtectedRoute>
+              <Products />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="notifications"
+          element={
+            <ProtectedRoute>
+              <Notifications />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="messages"
+          element={
+            <ProtectedRoute>
+              <Messages />
+            </ProtectedRoute>
+          }
+        /> */}
+
         <Route path="/" element={<Analytics />} />
         <Route path="products" element={<Products />} />
         <Route path="notifications" element={<Notifications />} />

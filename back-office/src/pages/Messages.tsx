@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Heading, Flex, Box, Text } from '@chakra-ui/react'
 
-import { Layout } from 'components'
+import { Layout, View } from 'components'
 import { useMessageStore } from 'store'
 import { IMessage } from 'lib/interfaces'
 
@@ -17,8 +17,8 @@ function Messages() {
         Messages
       </Heading>
       <Flex flexDir="column" justifyContent={'center'} mt="2rem">
-        {messages.length > 0 &&
-          messages?.map((message: IMessage) => (
+        <View cond={messages.length > 0}>
+          {messages?.map((message: IMessage) => (
             <Box
               key={message.id}
               boxShadow="md"
@@ -42,6 +42,11 @@ function Messages() {
               </Text>
             </Box>
           ))}
+        </View>
+
+        <View cond={messages.length === 0}>
+          <Text color="gray.500"> There's no Messages </Text>
+        </View>
       </Flex>
     </Layout>
   )

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Heading, Flex, Box, Text } from '@chakra-ui/react'
 
-import { Layout } from 'components'
+import { Layout, View } from 'components'
 import { useNotificationStore } from 'store'
 import { INotification } from 'lib/interfaces'
 
@@ -19,8 +19,8 @@ function Notifications() {
         Notifications
       </Heading>
       <Flex flexDir="column" justifyContent={'center'} mt="2rem">
-        {notifications.length > 0 &&
-          notifications?.map((notification: INotification) => (
+        <View cond={notifications.length > 0}>
+          {notifications?.map((notification: INotification) => (
             <Box
               key={notification.id}
               boxShadow="md"
@@ -44,6 +44,11 @@ function Notifications() {
               </Text>
             </Box>
           ))}
+        </View>
+
+        <View cond={notifications.length === 0}>
+          <Text color="gray.500"> There's no Notifications </Text>
+        </View>
       </Flex>
     </Layout>
   )

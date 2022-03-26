@@ -1,25 +1,26 @@
-html, body {
-  font-family: 'Poppins', sans-serif!important;
+html,
+body {
+  font-family: 'Poppins', sans-serif !important;
 }
 
 select.select-language {
-    background-color: transparent;
-    border-radius: 5px
+  background-color: transparent;
+  border-radius: 5px;
+  text-transform: uppercase!;
 }
 select.select-language:hover {
-    cursor: pointer
+  cursor: pointer;
 }
-select .option {
+/* select .option {
     color: #fff!important;
-    text-transform: uppercase!important;
     background-color: #2d3748;
 }
 select .option .active {
     color: #2d3748!important;
     text-transform: uppercase!important;
     background-color: #fff;
-}
+} */
 
 .star:hover {
-    cursor: pointer;
+  cursor: pointer;
 }

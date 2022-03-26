@@ -13,17 +13,6 @@ function LanguageSwitcher() {
   }
 
   return (
-    // <select onChange={changeLanguage} defaultValue={i18n.language} className="select-language">
-    //   {i18n.options.supportedLngs &&
-    //     i18n.options.supportedLngs.map(
-    //       (lang: string) =>
-    //         lang !== 'cimode' && (
-    //           <option key={lang} value={lang}>
-    //             {lang}
-    //           </option>
-    //         )
-    //     )}
-    // </select>
     <Dropdown
       icon={
         <IconButton
@@ -32,12 +21,17 @@ function LanguageSwitcher() {
           bg="transparent"
         />
       }
+      label={i18n.language}
     >
       {i18n.options.supportedLngs &&
         i18n.options.supportedLngs.map(
           (lang: string) =>
             lang !== 'cimode' && (
-              <MenuItem onClick={() => changeLanguage(lang)} textTransform="uppercase">
+              <MenuItem
+                onClick={() => changeLanguage(lang)}
+                textTransform="uppercase"
+                bg={i18n.language === lang ? '#ccc' : '#fff'}
+              >
                 {' '}
                 {lang}{' '}
               </MenuItem>

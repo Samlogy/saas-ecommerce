@@ -12,8 +12,7 @@ const Dropdown = ({ icon, label, children }: IDropdown) => {
       <MenuButton
         as={label ? Button : IconButton}
         icon={icon}
-        px={4}
-        py={2}
+        p=".1rem 0"
         transition="all 0.2s"
         borderRadius="md"
         bg="transparent"
@@ -21,14 +20,13 @@ const Dropdown = ({ icon, label, children }: IDropdown) => {
         // _hover={{ bg: 'gray.400' }}
         _focus={{ boxShadow: 'outline' }}
       >
-        <Box as="span" textTransform="uppercase" color="#ccc">
-          {' '}
-          {label && label}{' '}
-        </Box>
+        {label && (
+          <Box as="span" textTransform="uppercase" color="#ccc">
+            {label}
+          </Box>
+        )}
       </MenuButton>
-      <MenuList p={'.75rem 1rem'} maxW="5rem">
-        {children}
-      </MenuList>
+      <MenuList p={'.5rem 1rem'}>{children}</MenuList>
     </Menu>
   )
 }

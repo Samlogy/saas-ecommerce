@@ -23,6 +23,7 @@ function LanguageSwitcher() {
                 onClick={() => changeLanguage(lang)}
                 textTransform="uppercase"
                 bg={i18n.language === lang ? '#ccc' : 'transparent'}
+                borderRadius="5px"
               >
                 {' '}
                 {lang}{' '}

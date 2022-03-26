@@ -1,5 +1,6 @@
-import { Box, Flex, Select, Input } from '@chakra-ui/react'
+import { Box, Flex, Select, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import React from 'react'
+import { AiOutlineSearch } from 'react-icons/ai'
 
 interface IProductFilter {
   setQuery: any
@@ -31,12 +32,20 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
           {' '}
           Filter:{' '}
         </Box>
-        <Input
-          type="search"
-          placeholder="Search..."
-          w={['80%', '', '20rem', '']}
-          onChange={onFilter}
-        />
+
+        <InputGroup>
+          <Input
+            type="search"
+            placeholder="Search..."
+            w={['80%', '', '20rem', '']}
+            onChange={onFilter}
+          />
+          <InputRightElement
+            children={<AiOutlineSearch size="18" />}
+            cursor="pointer"
+            mr=".25rem"
+          />
+        </InputGroup>
       </Flex>
 
       <Flex alignItems={'center'}>

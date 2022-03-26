@@ -19,6 +19,11 @@ interface ISideBar {
   onClose: () => void
   isOpen: boolean
 }
+interface ISideBarItem {
+  key: number
+  data: any
+  active: boolean
+}
 const SideBar = ({ onClose, isOpen }: ISideBar) => {
   const activeItem = sideBarData.findIndex(item => item.url === window.location.pathname)
 
@@ -33,7 +38,7 @@ const SideBar = ({ onClose, isOpen }: ISideBar) => {
 
         <DrawerBody display="flex" flexDirection="column" justifyContent="left">
           {sideBarData.map((el: any, idx: number) => (
-            <SideBarItem data={el} active={idx === activeItem} />
+            <SideBarItem key={el.id} data={el} active={idx === activeItem} />
           ))}
         </DrawerBody>
 
@@ -47,9 +52,9 @@ const SideBar = ({ onClose, isOpen }: ISideBar) => {
 
 export default SideBar
 
-const SideBarItem = ({ data, active }: { data: any; active: boolean }) => {
+const SideBarItem = ({ key, data, active }: ISideBarItem) => {
   return (
-    <Link key={data.id} to={data.url}>
+    <Link key={key} to={data.url}>
       <Box
         display="flex"
         flexDirection="row"
@@ -79,7 +84,7 @@ export const sideBarData = [
   {
     url: '/products',
     icon: <FaProductHunt size="24" />,
-    label: 'Products Management',
+    label: 'Products',
     id: 1
   }
 ]

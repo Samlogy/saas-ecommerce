@@ -1,7 +1,7 @@
 import { Heading, Text, Flex } from '@chakra-ui/react'
 
-import { Layout, ProductCard, View, Filter } from '../components'
-
+import { Layout, ProductCard, View, Filter, Pagination } from '../components'
+import { IProduct } from '../lib/interfaces'
 
 export default function Products({ products }: { products: any }) {
   return (
@@ -76,7 +76,7 @@ export const getServerSideProps = async () => {
       reviews: 34,
       currency: '£',
       discount: 0.2
-    },
+    }
   ]
 
   return {

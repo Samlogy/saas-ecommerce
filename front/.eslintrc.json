@@ -3,11 +3,12 @@
     "next/core-web-vitals",
     "next",
     "eslint:recommended",
-    "prettier"
+    "prettier",
+    "plugin:prettier/recommended"
   ],
   "plugins": ["prettier"],
   "rules": {
-    "comma-dangle": "off",
-    "prettier/prettier": ["error"]
+    // "comma-dangle": "off",
+    // "prettier/prettier": ["error"]
   }
 }

@@ -8,30 +8,16 @@ import ThirdPartyEmailPassword, {
   Google
 } from 'supertokens-auth-react/recipe/thirdpartyemailpassword'
 
-// import SessionExpiredPopup from './SessionExpiredPopup'
-
-// export function getApiDomain() {
-//   const apiPort = process.env.REACT_APP_API_PORT || 3001
-//   const apiUrl = process.env.REACT_APP_API_URL || `http://localhost:${apiPort}`
-//   return apiUrl
-// }
-
-// export function getWebsiteDomain() {
-//   const websitePort = process.env.REACT_APP_WEBSITE_PORT || 3000
-//   const websiteUrl = process.env.REACT_APP_WEBSITE_URL || `http://localhost:${websitePort}`
-//   return websiteUrl
-// }
-
 SuperTokens.init({
   appInfo: {
-    appName: 'saas-ecommerce-web-app', // TODO: Your app name
-    apiDomain: 'http://localhost:5000/',
+    appName: 'demo app', // saas-ecommerce-web-app
+    apiDomain: 'http://localhost:3001',
     websiteDomain: 'http://localhost:3000'
   },
   recipeList: [
     ThirdPartyEmailPassword.init({
       signInAndUpFeature: {
-        providers: [Google.init(), Apple.init()]
+        providers: [Google.init()]
       },
       emailVerificationFeature: {
         mode: 'REQUIRED'
@@ -46,7 +32,7 @@ const Routing = () => {
     <BrowserRouter>
       <Routes>
         {getSuperTokensRoutesForReactRouterDom(require('react-router-dom'))}
-        {/* <Route
+        <Route
           path="/"
           element={
             <ProtectedRoute>
@@ -78,12 +64,12 @@ const Routing = () => {
               <Messages />
             </ProtectedRoute>
           }
-        /> */}
+        />
 
-        <Route path="/" element={<Analytics />} />
+        {/* <Route path="/" element={<Analytics />} />
         <Route path="products" element={<Products />} />
         <Route path="notifications" element={<Notifications />} />
-        <Route path="messages" element={<Messages />} />
+        <Route path="messages" element={<Messages />} /> */}
 
         <Route path="*" element={<NotFound />} />
       </Routes>

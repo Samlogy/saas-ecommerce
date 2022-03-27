@@ -8,7 +8,7 @@ const ProductCard = ({ data }: { data: any }) => {
 
   const newProduct = {
     id: 1,
-    img: 'https://bit.ly/dan-abramov',
+    image: 'https://bit.ly/dan-abramov',
     name: 'Throwback Hip Ba',
     quantity: 1,
     price: 90.0,
@@ -27,7 +27,7 @@ const ProductCard = ({ data }: { data: any }) => {
       >
         {data.isNew && <Circle size="10px" position="absolute" top={2} right={2} bg="red.200" />}
 
-        <Image src={data.img} alt={`Picture of ${data.name}`} roundedTop="lg" />
+        <Image src={data.image} alt={`Picture of ${data.name}`} roundedTop="lg" />
 
         <Box p="6" mb=".3rem">
           <Box d="flex" alignItems="baseline">
@@ -45,7 +45,7 @@ const ProductCard = ({ data }: { data: any }) => {
           </Flex>
 
           <Flex flexDir={'column'} justifyContent="space-between" alignContent="center">
-            <Rating initRate={data.rating} reviews={data.reviews} />
+            <Rating initRate={data.rate} reviews={data.reviews} />
 
             <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
               <Box as="span" color={'gray.600'} fontSize="lg">

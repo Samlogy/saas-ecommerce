@@ -5,6 +5,7 @@ import {
   Heading,
   chakra,
   Container,
+  Radio, 
   Text,
   Button,
   Stack,
@@ -35,24 +36,26 @@ import {
   FormControl,
     FormLabel,
     Input,
+    useColorMode 
 } from '@chakra-ui/react';
-
-
 
 import {
   IoAnalyticsSharp,
   IoLogoBitcoin,
   IoSearchSharp,
 } from 'react-icons/io5';
-import { ReactElement, useRef, useEffect, useState } from 'react';
+import { ReactElement, useRef, useEffect, useState, useCallback, useMemo, createContext, useContext, useReducer } from 'react';
 
-import { ShoppingCart, Layout, CookieBox, ModalPopUp, SocialMediaButton, ErrorMessage, Carousel, ProductCard, BackTop, DarkModeToggle, Pagination, StepForm } from "../components" 
+import { ShoppingCart, Layout, CookieBox, ModalPopUp, SocialMediaButton, ErrorMessage, Carousel, ProductCard, Rating, BackTop, DarkModeToggle, Pagination, StepForm, Comment, AddComment, ListingComments, Filter } from "../components" 
 import { useLocale } from "../lib/hooks";
 import { useShoppingCart } from "../store"
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
+import { getAllUsers, getOneUser, createUser, updateUser, deleteUser } from "../services"
+import { testSchema } from "../lib/validation"
 
 export default function Home() {
 
@@ -172,10 +175,12 @@ export default function Home() {
     },
   ];
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(testSchema)
+  });
 
-  const onLogin = () => {
-    console.log('login')
+  const onTest = (data) => {
+    console.log('step form: ', data)
   }
 
 
@@ -241,19 +246,36 @@ export default function Home() {
     { label: 'Form 2', content: form_2, icon: IoLogoBitcoin, description: 'desc 2' },
     { label: 'Form 3', content: form_3, icon: IoSearchSharp, description: 'desc 3' },
   ];
-  
+
+
+
 
   return (
     <Layout isHeaderVisible isFooterVisible>
-      <Button bg="accent" color='white'> visibility </Button>
-      <BackTop />
 
-        {/* <StepForm steps={steps} handleForm={handleSubmit(onLogin)} /> */}
+      <Filter />
+   
+
+        {/* <Pagination page={page} 
+                  pages={[page, page+1, page+2, page+3]} 
+                  changePage={setPage}
+                  nextPage={() => setPage((prev) => prev + 1)} 
+                  prevPage={() => setPage((prev) => prev - 1)} 
+                  startPage={() => setPage(1)}
+                  endPage={() => setPage(data.info.pages)}
+                  /> */}
+
+
+      {/* <BackTop /> */}
+
+        {/* <StepForm steps={steps} handleForm={handleSubmit(onTest)} /> */}
 
         {/* <Pagination /> */}
+        
+        {/* <Button onClick={() => setShow(true)}> show </Button>
+        <ModalPopUp open={show} close={setShow} text={text} mode="warning" /> */}
 
-        {/* <ModalPopUp isOpen={isOpen} onClose={onClose} text={text} type="info" /> */}
-
+        
 
         {/* <Hero />
         <Services data={services} />
@@ -261,15 +283,9 @@ export default function Home() {
         <ProductsOnTrend data={products} />
         <CustomerReviews data={testimonials} />
         <QuestionsAnswers data={qna} />    */}
-  
     </Layout>
   );
 }
-
-
-
-
-
 
 
 

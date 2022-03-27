@@ -1,4 +1,5 @@
-import { Box, Heading, Text, ListItem, UnorderedList } from '@chakra-ui/react'
+import { Box, Heading, Text } from '@chakra-ui/react'
+import Link from 'next/link'
 
 import { Layout, View } from '../components'
 
@@ -14,34 +15,34 @@ export default function Privacy({ data }: { data: any }) {
           Last updated: {data?.createdAt || data?.editedAt}
         </Text>
 
-        <UnorderedList my="1rem">
-          {data?.content?.map(el => (
-            <ListItem color="blue.500" _hover={{ cursor: 'pointer' }}>
-              {el?.link}
-            </ListItem>
-          ))}
-        </UnorderedList>
-
         <View cond={data?.content?.length > 0}>
-          {data?.content?.map(el => (
-            <Box my="2rem">
-              <Heading as="h2" fontSize="1.5rem">
-                {el.title}
-              </Heading>
+          {data &&
+            data?.content?.map(el => (
+              <>
+                <Link key={el?.content?.link} href="/">
+                  <Box color="blue.500" _hover={{ cursor: 'pointer' }}>
+                    {el?.content?.link}
+                  </Box>
+                </Link>
 
-              <Text fontSize="1rem" mt=".5rem">
-                {el.text}
-              </Text>
-            </Box>
-          ))}
+                <Box key={el?.content?.title} my="2rem">
+                  <Heading as="h2" fontSize="1.5rem">
+                    {el.title}
+                  </Heading>
+
+                  <Text fontSize="1rem" mt=".5rem">
+                    {el.text}
+                  </Text>
+                </Box>
+              </>
+            ))}
         </View>
       </Box>
     </Layout>
   )
 }
 
-
-export const getStaticProps = () => {
+export const getStaticProps = async () => {
   const data = {
     content: [
       {
@@ -60,8 +61,8 @@ export const getStaticProps = () => {
         link: 'Lorem ipsum dolor sit amet'
       }
     ],
-    editedAt: "May 3, 2021",
-    createdAt: "Jan 1, 2020"
+    editedAt: 'May 3, 2021',
+    createdAt: 'Jan 1, 2020'
   }
 
   return {

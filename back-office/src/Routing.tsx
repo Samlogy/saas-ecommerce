@@ -17,7 +17,7 @@ SuperTokens.init({
   recipeList: [
     ThirdPartyEmailPassword.init({
       signInAndUpFeature: {
-        providers: [Google.init()]
+        providers: [Google.init(), Apple.init()]
       },
       emailVerificationFeature: {
         mode: 'REQUIRED'
@@ -66,8 +66,8 @@ const Routing = () => {
           }
         />
 
-        {/* <Route path="/" element={<Analytics />} />
-        <Route path="products" element={<Products />} />
+        {/* <Route path="/" element={<Analytics />} /> */}
+        {/* <Route path="products" element={<Products />} />
         <Route path="notifications" element={<Notifications />} />
         <Route path="messages" element={<Messages />} /> */}
 

@@ -1,8 +1,9 @@
-// import { useAuth0 } from '@auth0/auth0-react'
 import { Button } from '@chakra-ui/react'
 import { FiLogOut } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import { signOut } from 'supertokens-auth-react/recipe/thirdpartyemailpassword'
+import { redirectToAuth } from 'supertokens-auth-react/recipe/thirdpartyemailpassword'
+// import { useAuth0 } from '@auth0/auth0-react'
 
 import { removeState } from '../utils/localStorage'
 
@@ -14,7 +15,8 @@ function LogoutButton() {
     // isAuthenticated && removeState('auth-admin')
     // logout({ returnTo: window.location.origin })
     await signOut()
-    navigate('/auth')
+    redirectToAuth()
+    // navigate('/auth')
   }
 
   // if (isLoading) {

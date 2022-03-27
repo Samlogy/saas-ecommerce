@@ -7,7 +7,7 @@ import { languages } from '../locales'
 
 const SelectLanguage = () => {
   const router = useRouter()
-  const { colorMode: mode, toggleColorMode } = useColorMode()
+  const { colorMode: mode } = useColorMode()
   const { locale } = useLocale()
 
   const changeLanguage = (e: any) => {

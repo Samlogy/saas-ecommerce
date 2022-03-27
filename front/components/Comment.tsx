@@ -1,11 +1,6 @@
 import { Flex, Box, Text } from '@chakra-ui/react'
 
-interface IComment {
-  id: number
-  name: string
-  createdAt: string
-  comment: string
-}
+import { IComment } from '../lib/interfaces'
 
 const Comment = ({ data }: { data: IComment }) => {
   return (

@@ -2,7 +2,12 @@ import { BsStarFill, BsStarHalf } from 'react-icons/bs'
 import { useState, useMemo } from 'react'
 import { Flex, Box } from '@chakra-ui/react'
 
-const Rating = ({ initRate, reviews }: { initRate?: number; reviews?: number }) => {
+interface IRating {
+  initRate?: number
+  reviews?: number
+}
+
+const Rating = ({ initRate, reviews }: IRating) => {
   const [rate, setRate] = useState(initRate || null)
   const [hover, setHover] = useState(null)
 

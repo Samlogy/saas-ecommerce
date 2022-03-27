@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Flex, Text, Button, Heading } from '@chakra-ui/react'
 
 import { Comment, View, AddComment } from '../components'
-import { IComment } from "../pages/product/[productId]"
+import { IComment } from '../lib/interfaces'
 
 const ListingComments = ({ comments }: { comments: IComment[] }) => {
   const [showAddComment, setShowAddComment] = useState(false)

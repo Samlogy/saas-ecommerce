@@ -112,98 +112,59 @@ export default function Home() {
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo'
     }
   ]
-  const testimonials = [
-    {
-      name: 'Brandon P.',
-      role: 'Chief Marketing Officer',
-      content:
-        'It really saves me time and effort. It is exactly what our business has been lacking. EEZY is the most valuable business resource we have EVER purchased. After using EEZY my business skyrocketed!',
-      avatar:
-        'https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80'
-    },
-    {
-      name: 'Krysta B.',
-      role: 'Entrepreneur',
-      content:
-        "I didn't even need training. We've used EEZY for the last five years. I have gotten at least 50 times the value from EEZY. I made back the purchase price in just 48 hours!",
-      avatar:
-        'https://images.unsplash.com/photo-1598550874175-4d0ef436c909?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80'
-    },
-    {
-      name: 'Darcy L.',
-      role: 'Movie star',
-      content:
-        "Thank you for making it painless, pleasant and most of all, hassle free! I'm good to go. No matter where you go, EEZY is the coolest, most happening thing around! I love EEZY!",
-      avatar:
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=334&q=80'
-    },
-    {
-      name: 'Daniel T.',
-      role: 'Musician',
-      content:
-        'I am so pleased with this product. EEZY is both attractive and highly adaptable. Without EEZY, we would have gone bankrupt by now. Thank you for creating this product!',
-      avatar:
-        'https://images.unsplash.com/photo-1606513542745-97629752a13b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80'
-    }
-  ]
-  const products = [
+  const productsData = [
     {
       isNew: true,
-      imageURL:
-        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
+      image: 'https://bit.ly/dan-abramov',
       name: 'Wayfarer Classic',
-      price: 4.5,
-      rating: 4.2,
-      numReviews: 34,
+      price: 45,
+      rate: 4.2,
+      reviews: 34,
       currency: '£'
     },
     {
       isNew: true,
-      imageURL:
-        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
+      image: 'https://bit.ly/dan-abramov',
       name: 'Wayfarer Classic',
-      price: 4.5,
-      rating: 4.2,
-      numReviews: 34,
+      price: 45,
+      rate: 4.2,
+      reviews: 34,
       currency: '£'
     },
     {
       isNew: true,
-      imageURL:
-        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
+      image: 'https://bit.ly/dan-abramov',
       name: 'Wayfarer Classic',
-      price: 4.5,
-      rating: 4.2,
-      numReviews: 34,
+      price: 45,
+      rate: 4.2,
+      reviews: 34,
       currency: '£'
     },
     {
       isNew: true,
-      imageURL:
-        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
+      image: 'https://bit.ly/dan-abramov',
       name: 'Wayfarer Classic',
-      price: 4.5,
-      rating: 4.2,
-      numReviews: 34,
-      currency: '£'
-    },
-    {
-      isNew: true,
-      imageURL:
-        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
-      name: 'Wayfarer Classic',
-      price: 4.5,
-      rating: 4.2,
-      numReviews: 34,
+      price: 45,
+      rate: 4.2,
+      reviews: 34,
       currency: '£'
     }
   ]
   const services = [
     {
+      icon: <IoAnalyticsSharp size={24} />,
       title: 'Fiability',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-      icon: ''
+      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+    },
+    {
+      icon: <IoAnalyticsSharp size={24} />,
+      title: 'Fiability',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+    },
+    {
+      icon: <IoAnalyticsSharp size={24} />,
+      title: 'Fiability',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
     }
   ]
   const reviewsData = [
@@ -383,17 +344,49 @@ export default function Home() {
 
       {/* <Hero /> */}
       {/* <Services data={services} /> */}
-      {/* <About /> */}
-      {/* <ProductsOnTrend data={products} /> */}
-      {/* <CustomerReviews data={testimonials} /> */}
-      {/* <QuestionsAnswers data={qna} /> */}
+      {/* <About />
+      <ProductsOnTrend data={productsData} />
       <CustomerReviews data={reviewsData} />
+      <QuestionsAnswers data={qna} /> */}
     </Layout>
   )
 }
 
 const Services = ({ data }: { data: any }) => {
-  return <Heading>Services</Heading>
+  return (
+    <Flex flexDir="column">
+      <Heading fontSize="24px" mb="1rem">
+        Our Services
+      </Heading>
+      <Divider w="10rem" borderColor="blue.500" borderWidth="1px" mb="1rem" />
+
+      <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly" p="2.5rem 1.5rem">
+        {data.length > 0 &&
+          data.map((el: any) => (
+            <Flex
+              flexDir={'column'}
+              justifyContent="center"
+              alignItems={'center'}
+              boxShadow={'md'}
+              minW="5rem"
+              maxW="10rem"
+              borderRadius={'10px'}
+              p=".5rem 1rem"
+            >
+              <Box mb=".75rem"> {el.icon} </Box>
+              <Text fontWeight={'600'} mb=".75rem">
+                {' '}
+                {el.title}{' '}
+              </Text>
+              <Text fontSize=".9rem" mb=".75rem" h="5rem">
+                {' '}
+                {el.text}{' '}
+              </Text>
+            </Flex>
+          ))}
+      </Flex>
+    </Flex>
+  )
 }
 
 const Hero = () => {
@@ -402,7 +395,7 @@ const Hero = () => {
 
 const About = () => {
   return (
-    <Box border="1px" p="2.5rem 1.5rem" borderColor="blue.500" borderRadius="5px">
+    <Box p="2.5rem 1.5rem">
       <Box textAlign={'center'} mb="1.5rem">
         <Heading fontSize="1.2rem" fontWeight="400" color="teal.500">
           {' '}
@@ -439,13 +432,6 @@ const About = () => {
     </Box>
   )
 }
-interface TestimonialCardProps {
-  name: string
-  role: string
-  content: string
-  avatar: string
-  index: number
-}
 
 const QuestionsAnswers = ({ data }: { data: any }) => {
   return (
@@ -456,7 +442,7 @@ const QuestionsAnswers = ({ data }: { data: any }) => {
       </Heading>
       <Divider w="10rem" borderColor="blue.500" borderWidth="1px" mb="1rem" />
 
-      <Box p="2.5rem 1.5rem" border="1px" borderColor="blue.500" borderRadius="5px">
+      <Box p="1.5rem 1rem">
         <Accordion defaultIndex={[0]} allowMultiple>
           {data.map((item: any) => (
             <AccordionItem>
@@ -493,18 +479,8 @@ const ProductsOnTrend = ({ data }: { data: any }) => {
       </Heading>
       <Divider w="10rem" borderColor="blue.500" borderWidth="1px" mb="1rem" />
 
-      <Flex
-        flexDir="row"
-        flexWrap="wrap"
-        justifyContent="space-evenly"
-        p="2.5rem 1.5rem"
-        border="1px"
-        borderColor="blue.500"
-        borderRadius="5px"
-      >
-        {data.map((el: any) => (
-          <ProductCard data={el} />
-        ))}
+      <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly" p="2.5rem 1.5rem">
+        {data.length > 0 && data.map((el: any) => <ProductCard data={el} />)}
       </Flex>
     </Flex>
   )
@@ -512,41 +488,48 @@ const ProductsOnTrend = ({ data }: { data: any }) => {
 
 const CustomerReviews = ({ data }: { data: any }) => {
   return (
-    <Flex flexDir={'row'} flexWrap={'wrap'} justifyContent={'space-around'}>
-      {data.length > 0 &&
-        data.map((el: any) => (
-          <Flex
-            flexDir={'column'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            boxShadow={'lg'}
-            p="1rem .75rem"
-            borderRadius={'10px'}
-            maxW="20rem"
-            mb="1rem"
-          >
-            <Box mr="auto">
-              <IconReview />
-            </Box>
-            <Text my=".75rem" fontStyle={'italic'} textAlign="center">
-              {' '}
-              {el.review}{' '}
-            </Text>
-            <Rating initRate={el?.rate} />
-            <Image
-              src={el.avatar}
-              alt={el.name}
-              boxSize="100px"
-              fallbackSrc="https://via.placeholder.com/100"
-              borderRadius={'full'}
-              my=".75rem"
-            />
-            <Text fontWeight={'600'} fontSize="1.2rem" textTransform={'uppercase'}>
-              {' '}
-              {el.name}{' '}
-            </Text>
-          </Flex>
-        ))}
+    <Flex flexDir={'column'}>
+      <Heading fontSize="24px" mb="1rem">
+        Customer Reviews
+      </Heading>
+      <Divider w="10rem" borderColor="blue.500" borderWidth="1px" mb="1rem" />
+      <Flex flexDir={'row'} flexWrap={'wrap'} justifyContent={'space-around'}>
+        {data.length > 0 &&
+          data.map((el: any) => (
+            <Flex
+              flexDir={'column'}
+              justifyContent={'center'}
+              alignItems={'center'}
+              boxShadow={'lg'}
+              p="1rem .75rem"
+              borderRadius={'10px'}
+              maxW="20rem"
+              minW="15rem"
+              mb="1rem"
+            >
+              <Box mr="auto">
+                <IconReview />
+              </Box>
+              <Text my=".75rem" fontStyle={'italic'} textAlign="center">
+                {' '}
+                {el.review}{' '}
+              </Text>
+              <Rating initRate={el?.rate} />
+              <Image
+                src={el.avatar}
+                alt={el.name}
+                boxSize="100px"
+                fallbackSrc="https://via.placeholder.com/100"
+                borderRadius={'full'}
+                my=".75rem"
+              />
+              <Text fontWeight={'600'} fontSize="1.2rem" textTransform={'uppercase'}>
+                {' '}
+                {el.name}{' '}
+              </Text>
+            </Flex>
+          ))}
+      </Flex>
     </Flex>
   )
 }

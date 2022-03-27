@@ -1,7 +1,25 @@
 import { IconButton, Flex, Button } from '@chakra-ui/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 
-const Pagination = ({ page, changePage, pages, nextPage, prevPage, startPage, endPage }) => {
+interface IPagination {
+  page: number
+  changePage: any
+  pages: number[]
+  nextPage: any
+  prevPage: any
+  startPage: any
+  endPage: any
+}
+
+const Pagination = ({
+  page,
+  changePage,
+  pages,
+  nextPage,
+  prevPage,
+  startPage,
+  endPage
+}: IPagination) => {
   return (
     <Flex flexDir="row" justifyContent={'space-between'} w="60%" m="1.5rem auto">
       <Button

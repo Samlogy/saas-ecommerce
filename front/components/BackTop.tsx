@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react'
-import { FaArrowUp } from 'react-icons/fa'
 import { IconButton } from '@chakra-ui/react'
-
-// import './style.css';
+import { useEffect, useState } from 'react'
+import { FaArrowUp } from 'react-icons/fa'
 
 const BackTop = () => {
   const [showButton, setShowButton] = useState(false)

@@ -1,7 +1,6 @@
-import { Flex, Circle, Box, Image, Badge, useColorModeValue, Button } from '@chakra-ui/react'
-
-import { useShoppingCart } from '../store'
+import { Badge, Box, Button, Circle, Flex, Image, useColorModeValue } from '@chakra-ui/react'
 import { Rating } from '../components'
+import { useShoppingCart } from '../store'
 
 const ProductCard = ({ data }: { data: any }) => {
   const addToCart = useShoppingCart((state: any) => state.addToCart)

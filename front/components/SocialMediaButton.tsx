@@ -1,5 +1,5 @@
 import { IconButton } from '@chakra-ui/react'
-import { FaLinkedinIn, FaGithub, FaTwitter, FaFacebook } from 'react-icons/fa'
+import { FaFacebook, FaGithub, FaLinkedinIn, FaTwitter } from 'react-icons/fa'
 
 const SocialMediaButton = ({ type, ...rest }: { type: string; rest?: any }) => {
   const icon = (type: string) => {

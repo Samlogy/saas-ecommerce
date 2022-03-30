@@ -1,25 +1,24 @@
-import React, { useState } from 'react'
 import {
   Box,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
-  ModalCloseButton,
+  Button,
+  Checkbox,
   FormControl,
   FormLabel,
   Input,
-  Textarea,
-  Checkbox,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalOverlay,
   Stack,
-  Button
+  Textarea
 } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-
 import { ErrorMessage } from '../components'
 import { commentSchema } from '../lib/validation'
-import { saveState, removeState } from '../utils/localStorage'
+import { removeState, saveState } from '../utils/localStorage'
 
 interface IAddComment {
   isOpen: boolean

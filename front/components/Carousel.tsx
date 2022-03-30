@@ -1,5 +1,5 @@
+import { Box, Flex, HStack, Image, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { Text, Box, Flex, Image, HStack } from '@chakra-ui/react'
 
 const Carousel = ({ slides }: { slides: any }) => {
   const arrowStyles = {

@@ -1,5 +1,5 @@
-import React, { FC } from 'react'
 import { Box } from '@chakra-ui/react'
+import React from 'react'
 
 interface IView {
   children: React.ReactNode
@@ -7,7 +7,7 @@ interface IView {
   rest?: React.ReactNode
 }
 
-const View: FC = ({ children, cond, ...rest }: IView) => {
+const View = ({ children, cond, ...rest }: IView) => {
   if (cond) return <Box {...rest}>{children}</Box>
   else return null
 }

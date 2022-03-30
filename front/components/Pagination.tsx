@@ -1,4 +1,4 @@
-import { IconButton, Flex, Button } from '@chakra-ui/react'
+import { Button, Flex, IconButton } from '@chakra-ui/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 
 interface IPagination {

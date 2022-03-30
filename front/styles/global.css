@@ -6,7 +6,7 @@ body {
 select.select-language {
   background-color: transparent;
   border-radius: 5px;
-  text-transform: uppercase!;
+  text-transform: uppercase;
 }
 select.select-language:hover {
   cursor: pointer;

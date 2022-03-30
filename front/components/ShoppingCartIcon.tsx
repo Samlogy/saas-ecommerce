@@ -1,6 +1,5 @@
 import { Box, IconButton, useColorModeValue } from '@chakra-ui/react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
-
 import { useShoppingCart } from '../store'
 
 const ShoppingCartIcon = ({ value }: { value: number }) => {

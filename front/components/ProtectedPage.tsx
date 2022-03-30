@@ -1,6 +1,6 @@
-import { useEffect, ReactNode } from 'react'
-import { useRouter } from 'next/router'
 import { useUser } from '@auth0/nextjs-auth0'
+import { useRouter } from 'next/router'
+import { ReactNode, useEffect } from 'react'
 
 // import { useAuth } from "../store";
 interface IProtected {

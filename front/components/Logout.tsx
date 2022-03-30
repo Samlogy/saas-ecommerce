@@ -1,11 +1,11 @@
-import React, { FC, useState } from 'react'
 import { Button, useColorModeValue } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import React from 'react'
 import { HiOutlineLogout } from 'react-icons/hi'
 
 // import { useAuth } from "../store";
 
-const Logout: FC = () => {
+const Logout = () => {
   // const [loggedOut, setLoggedOut] = useState(false);
 
   // const notLogged = useAuth((state: any) => state.notLogged);

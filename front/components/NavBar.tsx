@@ -1,29 +1,28 @@
-import Link from 'next/link'
-import { ReactNode } from 'react'
+import { useUser } from '@auth0/nextjs-auth0'
 import {
-  Box,
-  Flex,
   Avatar,
-  Stack,
+  Box,
+  Button,
+  Flex,
   HStack,
   IconButton,
-  Button,
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
   MenuDivider,
-  useDisclosure,
-  useColorModeValue
+  MenuItem,
+  MenuList,
+  Stack,
+  useColorModeValue,
+  useDisclosure
 } from '@chakra-ui/react'
-import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useUser } from '@auth0/nextjs-auth0'
+import { ReactNode } from 'react'
+import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
 import { FiSettings } from 'react-icons/fi'
-
-import { Logout, SelectLanguage, DarkModeToggle, ShoppingCartIcon } from '../components'
-import { useShoppingCart } from '../store'
+import { DarkModeToggle, Logout, SelectLanguage, ShoppingCartIcon } from '../components'
 import { Logo } from '../public/icons'
+import { useShoppingCart } from '../store'
 
 const Links = [
   {

@@ -1,6 +1,5 @@
-import { useRouter } from 'next/router'
 import { useColorMode } from '@chakra-ui/react'
-
+import { useRouter } from 'next/router'
 import { useLocale } from '../lib/hooks'
 // import lang from "../locales/index.json"
 import { languages } from '../locales'

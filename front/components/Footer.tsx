@@ -1,17 +1,16 @@
-import Link from 'next/link'
 import {
   Box,
-  Flex,
   chakra,
   Container,
+  Flex,
   Stack,
   Text,
   useColorModeValue,
   VisuallyHidden
 } from '@chakra-ui/react'
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
+import Link from 'next/link'
 import { ReactNode } from 'react'
-
+import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 import { Logo } from '../public/icons'
 
 const SocialButton = ({

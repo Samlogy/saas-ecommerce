@@ -1,6 +1,6 @@
-import { BsStarFill, BsStarHalf } from 'react-icons/bs'
-import { useState, useMemo } from 'react'
-import { Flex, Box } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
+import { useState } from 'react'
+import { BsStarFill } from 'react-icons/bs'
 
 interface IRating {
   initRate?: number

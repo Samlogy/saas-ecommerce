@@ -1,10 +1,9 @@
-import { Text, Flex, Modal, ModalOverlay, ModalContent, ModalBody } from '@chakra-ui/react'
-
+import { Flex, Modal, ModalBody, ModalContent, ModalOverlay, Text } from '@chakra-ui/react'
 import {
   AiFillCheckCircle,
+  AiFillCloseCircle,
   AiFillInfoCircle,
-  AiFillWarning,
-  AiFillCloseCircle
+  AiFillWarning
 } from 'react-icons/ai'
 
 interface IModalPopUp {

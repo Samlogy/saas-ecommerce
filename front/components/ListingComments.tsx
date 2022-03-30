@@ -1,7 +1,6 @@
+import { Button, Flex, Heading, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { Flex, Text, Button, Heading } from '@chakra-ui/react'
-
-import { Comment, View, AddComment } from '../components'
+import { AddComment, Comment, View } from '../components'
 import { IComment } from '../lib/interfaces'
 
 const ListingComments = ({ comments }: { comments: IComment[] }) => {

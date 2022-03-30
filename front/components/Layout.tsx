@@ -1,8 +1,7 @@
+import { Container, Flex } from '@chakra-ui/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Container, Flex } from '@chakra-ui/react'
-
-import { NavBar, Footer, ProtectedPage, ShoppingCart } from '../components'
+import { Footer, NavBar, ProtectedPage, ShoppingCart } from '../components'
 
 interface ILayout {
   children: React.ReactNode

@@ -1,22 +1,21 @@
 import {
-  Flex,
-  Button,
-  Image,
-  Text,
-  Divider,
-  IconButton,
   Box,
+  Button,
+  Divider,
   Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerHeader,
   DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
   DrawerFooter,
-  DrawerCloseButton
+  DrawerHeader,
+  DrawerOverlay,
+  Flex,
+  IconButton,
+  Image,
+  Text
 } from '@chakra-ui/react'
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { FaTrash } from 'react-icons/fa'
-import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
-
 import { View } from '../components'
 import { useShoppingCart } from '../store'
 

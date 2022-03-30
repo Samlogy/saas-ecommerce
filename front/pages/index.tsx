@@ -83,6 +83,9 @@ import { FiPlus, FiMinus } from 'react-icons/fi'
 import { getAllUsers, getOneUser, createUser, updateUser, deleteUser } from '../services'
 import { testSchema } from '../lib/validation'
 
+import heroImage from '../public/images/home.png'
+import productImage from '../public/images/product.png'
+
 export default function Home() {
   const text =
     'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo'
@@ -342,8 +345,8 @@ export default function Home() {
       {/* <Button onClick={() => setShow(true)}> show </Button>
         <ModalPopUp open={show} close={setShow} text={text} mode="warning" /> */}
 
-      {/* <Hero /> */}
-      {/* <Services data={services} /> */}
+      <Hero />
+      <Services data={services} />
       {/* <About />
       <ProductsOnTrend data={productsData} />
       <CustomerReviews data={reviewsData} />
@@ -368,20 +371,21 @@ const Services = ({ data }: { data: any }) => {
               justifyContent="center"
               alignItems={'center'}
               boxShadow={'md'}
-              minW="5rem"
-              maxW="10rem"
+              w="18rem"
               borderRadius={'10px'}
-              p=".5rem 1rem"
+              p="2rem 1.5rem"
             >
-              <Box mb=".75rem"> {el.icon} </Box>
-              <Text fontWeight={'600'} mb=".75rem">
+              <Text fontWeight={'600'} fontSize="1.3rem" textAlign="center" mb=".75rem">
                 {' '}
                 {el.title}{' '}
               </Text>
-              <Text fontSize=".9rem" mb=".75rem" h="5rem">
+              {/* <Box mb=".75rem"> {el.icon} </Box> */}
+              <Image src={heroImage.src} boxSize={['135px', '', '', '']} />
+              <Text fontSize=".9rem" mb=".75rem">
                 {' '}
                 {el.text}{' '}
               </Text>
+              <Text fontWeight={'bold'}> Learn More </Text>
             </Flex>
           ))}
       </Flex>
@@ -390,7 +394,44 @@ const Services = ({ data }: { data: any }) => {
 }
 
 const Hero = () => {
-  return <Heading>Hero</Heading>
+  console.log(heroImage)
+  return (
+    <Flex
+      flexDir="row"
+      flexWrap={'wrap-reverse'}
+      justifyContent={['center', '', 'space-between', '']}
+      my="2rem"
+    >
+      <Flex
+        flexDir={'column'}
+        alignItems="center"
+        justifyContent={'center'}
+        w={['30rem', '', '25rem', '']}
+      >
+        <Heading mb="1.5rem"> Plants will make your life better </Heading>
+        <Text mb="1.5rem">
+          {' '}
+          Create incredible plant design for your offices or apastaments. Add fresness to your new
+          ideas.{' '}
+        </Text>
+        <Button
+          w="120px"
+          mr={['0', '', 'auto', '']}
+          mx={['auto', '', '0', '']}
+          colorScheme={'green'}
+        >
+          {' '}
+          Explore{' '}
+        </Button>
+      </Flex>
+      <Image
+        src={heroImage.src}
+        boxSize={['18rem', '', '20rem', '']}
+        mx={['auto', '', '0', '']}
+        mb={['1rem', '', '0', '']}
+      />
+    </Flex>
+  )
 }
 
 const About = () => {

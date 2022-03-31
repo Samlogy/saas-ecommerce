@@ -1,4 +1,4 @@
-import { useUser } from '@auth0/nextjs-auth0'
+// import { useUser } from '@auth0/nextjs-auth0'
 import {
   Avatar,
   Box,
@@ -74,7 +74,7 @@ export default function NavBar() {
 
   const bgColor = useColorModeValue('gray.100', 'gray.700')
 
-  const { user, isLoading } = useUser()
+  const user = {}
 
   return (
     <Box bg={bgColor} px={4}>
@@ -106,8 +106,7 @@ export default function NavBar() {
           <SelectLanguage />
           <DarkModeToggle />
           <ShoppingCartIcon value={products.length} />
-          {!isLoading && !user && <NavMenuUnConnected />}
-          {user && <NavMenuConnected avatar={user.picture} />}
+          {user ? <NavMenuConnected avatar={user?.picture} /> : <NavMenuUnConnected />}
         </Flex>
       </Flex>
 

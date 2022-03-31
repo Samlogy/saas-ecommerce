@@ -1,26 +1,23 @@
-import { Box, Heading, Button, Flex, Image, Text, Spinner } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Image } from '@chakra-ui/react'
 import Link from 'next/link'
-import { AiOutlineUser, AiOutlineMail } from 'react-icons/ai'
-import { HiOutlineLocationMarker } from 'react-icons/hi'
+import { AiOutlineMail, AiOutlineUser } from 'react-icons/ai'
 import { BsCalendarDate } from 'react-icons/bs'
-import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0'
-
+import { HiOutlineLocationMarker } from 'react-icons/hi'
+// import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0'
 import { Layout, View } from '../components'
+import profileImage from '../public/images/profile.jpg'
 
 function Profile(props: any) {
-  const { user, isLoading } = useUser()
+  const user = { avatar: profileImage.src }
 
   const userData = {
-    ...user, ...props.userExtend
+    ...user,
+    ...props.userExtend
   }
-  
+
   return (
     <Layout isHeaderVisible isFooterVisible>
-      {/* <View cond={isLoading}>
-        <Spinner thickness="4px" speed="0.65s" size="xl" />
-      </View> */}
-
-      <View cond={!isLoading && user}>
+      <View cond={user}>
         <Heading as="h1" fontSize="30px">
           Profile
         </Heading>
@@ -28,7 +25,7 @@ function Profile(props: any) {
         <DisplayUserData data={userData} />
         <DisplayBillingData data={props.shipping} />
 
-        <Button bg={'blue.400'} color={'white'} w="11rem" _hover={{ bg: 'blue.500' }}>
+        <Button bg={'green.400'} color={'white'} w="11rem" _hover={{ bg: 'green.500' }}>
           <Link href="/edit-profile"> Edit My Profile </Link>
         </Button>
       </View>
@@ -46,7 +43,7 @@ const DisplayUserData = ({ data }: { data: any }) => {
       <Image
         borderRadius="full"
         boxSize="150px"
-        src={data.picture}
+        src={data?.avatar}
         alt="Dan Abramov"
         fallbackSrc="https://via.placeholder.com/150"
       />
@@ -164,11 +161,12 @@ export async function getStaticProps() {
       userExtend,
       shipping
     },
-    revalidate: 10,
+    revalidate: 10
   }
 }
 
-export default withPageAuthRequired(Profile, {
-  onRedirecting: () => <Spinner thickness="4px" speed="0.65s" size="xl" />,
-  onError: error => <Text> {error.message} </Text>
-})
+export default Profile
+// export default withPageAuthRequired(Profile, {
+//   onRedirecting: () => <Spinner thickness="4px" speed="0.65s" size="xl" />,
+//   onError: error => <Text> {error.message} </Text>
+// })

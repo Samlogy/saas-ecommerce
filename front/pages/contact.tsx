@@ -57,11 +57,10 @@ export default function contact() {
     // api call
   }
 
-
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Box
-        bg="#02054B"
+        boxShadow={'md'}
         color="white"
         borderRadius="lg"
         m={{ sm: 4, md: 16, lg: 10 }}
@@ -76,39 +75,31 @@ export default function contact() {
           <Flex justifyContent="space-evenly" flexWrap="wrap-reverse">
             <WrapItem>
               <Box>
-                <Text mt={{ sm: 3, md: 3, lg: 5 }} color="gray.500">
-                  Fill up the form below to contact
+                <Text mt={{ sm: 3, md: 3, lg: 5 }} color="gray.500" fontSize={'1.2rem'}>
+                  Reach out to us today via any of the given information
                 </Text>
 
                 <Box py={{ base: 5, sm: 5, md: 8, lg: 10 }}>
                   <VStack pl={0} spacing={3} alignItems="flex-start">
                     {data.map(el => (
-                      <Button
-                        size="md"
-                        height="48px"
-                        width="250px"
-                        variant="ghost"
-                        color="#DCE2FF"
-                        display={'flex'}
-                        alignItems="center"
-                        justifyContent={'flex-start'}
-                        _hover={{ border: '2px solid #1C6FEB' }}
-                        leftIcon={el.icon}
-                      >
-                        {el.data}
-                      </Button>
+                      <Flex justifyContent={'space-between'} w="15rem">
+                        <Box as="span"> {el.icon} </Box>
+                        <Text fontSize="1rem" color="black" w="10rem">
+                          {' '}
+                          {el.data}{' '}
+                        </Text>
+                      </Flex>
                     ))}
                   </VStack>
                 </Box>
                 <HStack mt={{ lg: 10, md: 10 }} spacing={5} px={5} alignItems="flex-start">
-                  {socialMedia.map(el => (
+                  {socialMedia.map(icon => (
                     <IconButton
                       aria-label="facebook"
                       variant="ghost"
                       size="lg"
                       isRound={true}
-                      _hover={{ bg: '#0D74FF' }}
-                      icon={el}
+                      icon={icon}
                     />
                   ))}
                 </HStack>
@@ -183,10 +174,9 @@ export default function contact() {
                       <FormControl id="name" float="right" mb=".5rem">
                         <Button
                           type="submit"
-                          variant="solid"
-                          bg="#0D74FF"
+                          bg="green.500"
                           color="white"
-                          _hover={{}}
+                          _hover={{ color: 'green.600' }}
                         >
                           Send Message
                         </Button>

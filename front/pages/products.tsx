@@ -2,8 +2,9 @@ import { Heading, Text, Flex } from '@chakra-ui/react'
 
 import { Layout, ProductCard, View, Filter, Pagination } from '../components'
 import { IProduct } from '../lib/interfaces'
+import productImage from '../public/images/product.png'
 
-export default function Products({ products }: { products: any }) {
+export default function Products({ products }: { products: IProduct[] }) {
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Heading as="h2"> Products </Heading>
@@ -14,9 +15,7 @@ export default function Products({ products }: { products: any }) {
         <Text> Product result are: {products?.length} </Text>
 
         <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
-          {products?.map((el: any) => (
-            <ProductCard data={el} />
-          ))}
+          {products?.length > 0 && products?.map((product: any) => <ProductCard data={product} />)}
         </Flex>
       </View>
 
@@ -32,7 +31,7 @@ export const getServerSideProps = async () => {
     {
       id: 1,
       isNew: true,
-      img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
+      image: productImage.src,
       name: 'Wayfarer Classic',
       price: 6,
       rating: 4.2,
@@ -44,7 +43,7 @@ export const getServerSideProps = async () => {
     {
       id: 2,
       isNew: true,
-      img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
+      image: productImage.src,
       name: 'Wayfarer Classic',
       price: 4,
       rating: 4.2,
@@ -56,7 +55,7 @@ export const getServerSideProps = async () => {
     {
       id: 3,
       isNew: true,
-      img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
+      image: productImage.src,
       name: 'Wayfarer Classic',
       price: 2,
       rating: 4.2,
@@ -68,7 +67,7 @@ export const getServerSideProps = async () => {
     {
       id: 4,
       isNew: true,
-      img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
+      img: productImage.src,
       name: 'Wayfarer Classic',
       price: 20,
       rating: 4.2,

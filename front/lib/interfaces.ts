@@ -8,10 +8,11 @@ export interface IComment {
 export interface IProduct {
     id: number
     name: string
-    img: string[]
+    image: string[]
     description: string
     price: number
     quantity: number
     discount: number
-    createdAt: Date
+    createdAt: string
+    editedAt: string
 }

@@ -319,8 +319,6 @@ export default function Home() {
 
   return (
     <Layout isHeaderVisible isFooterVisible>
-      {/* <Filter /> */}
-
       {/* <Pagination page={page} 
                   pages={[page, page+1, page+2, page+3]} 
                   changePage={setPage}
@@ -333,8 +331,6 @@ export default function Home() {
       <BackTop />
 
       {/* <StepForm steps={steps} handleForm={handleSubmit(onTest)} /> */}
-
-      {/* <Pagination /> */}
 
       {/* <Button onClick={() => setShow(true)}> show </Button>
         <ModalPopUp open={show} close={setShow} text={text} mode="warning" /> */}

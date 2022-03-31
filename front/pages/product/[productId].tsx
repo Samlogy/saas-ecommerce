@@ -10,9 +10,7 @@ import {
   Heading,
   SimpleGrid,
   StackDivider,
-  useColorModeValue,
-  List,
-  ListItem
+  useColorModeValue
 } from '@chakra-ui/react'
 import { MdLocalShipping } from 'react-icons/md'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
@@ -21,7 +19,9 @@ import { Layout, Carousel, View, ListingComments } from '../../components'
 import { useShoppingCart } from '../../store'
 import { IComment, IProduct } from '../../lib/interfaces'
 
-export default function Product({ product, comments }: { product: any; comments: IComment }) {
+import productImage from '../../public/images/product.png'
+
+export default function Product({ product, comments }: { product: any; comments: IComment[] }) {
   const increment = useShoppingCart((state: any) => state.increment)
   const decrement = useShoppingCart((state: any) => state.decrement)
   const addToCart = useShoppingCart((state: any) => state.addToCart)
@@ -91,40 +91,7 @@ export default function Product({ product, comments }: { product: any; comments:
               >
                 {product.description}
               </Text>
-              {/* <Text fontSize={'lg'}>
-              {product.description2} 
-              </Text> */}
             </VStack>
-
-            {/* <Box>
-              <Text fontSize={{ base: '16px', lg: '18px' }} color="blue.500" fontWeight={'500'} textTransform={'uppercase'} mb={'4'}>
-                Features
-              </Text>
-
-              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
-                <List spacing={2}>
-                  { product.features.map((el: any) => <ListItem> {el} </ListItem>) }
-                </List>
-              </SimpleGrid>
-            </Box> */}
-
-            {/* <Box>
-              <Text fontSize={{ base: '16px', lg: '18px' }} color="blue.500" fontWeight={'500'} textTransform={'uppercase'} mb={'4'}>
-                Product Details
-              </Text>
-
-              <List spacing={2}>
-                { product.details.map((el: any) =>
-                    <ListItem>
-                      <Text as={'span'} fontWeight={'bold'}>
-                        {el.key}:
-                      </Text>{' '}
-                      {el.value}
-                    </ListItem>
-                  )
-                }
-              </List>
-            </Box> */}
           </Stack>
 
           <Flex flexDir="row-reverse" justifyContent={'space-between'}>
@@ -175,11 +142,7 @@ export const getServerSideProps = async context => {
   const product = {
     id: 1,
     name: 'Automatic Watch',
-    img: [
-      'https://images.unsplash.com/photo-1516796181074-bf453fbfa3e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1438183972690-6d4658e3290e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2274&q=80',
-      'https://images.unsplash.com/photo-1507237998874-b4d52d1dd655?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60'
-    ],
+    img: [productImage.src, productImage.src, productImage.src],
     quantity: 1,
     price: 350,
     description:

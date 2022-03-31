@@ -23,39 +23,6 @@ import card2 from '../public/images/card2.png'
 import card3 from '../public/images/card3.png'
 import card4 from '../public/images/card4.png'
 
-const SocialButton = ({
-  children,
-  label,
-  href
-}: {
-  children: ReactNode
-  label: string
-  href: string
-}) => {
-  return (
-    <chakra.button
-      bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
-      rounded={'full'}
-      w={8}
-      h={8}
-      mb="1rem"
-      cursor={'pointer'}
-      as={'a'}
-      href={href}
-      display={'inline-flex'}
-      alignItems={'center'}
-      justifyContent={'center'}
-      transition={'background 0.3s ease'}
-      _hover={{
-        bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200')
-      }}
-    >
-      <VisuallyHidden>{label}</VisuallyHidden>
-      {children}
-    </chakra.button>
-  )
-}
-
 export default function Footer() {
   const textColor = useColorModeValue('black', 'gray.100')
   const bgColor = useColorModeValue('gray.100', 'gray.700')
@@ -210,15 +177,57 @@ const Links = () => {
       </Heading>
       <Flex flexDir={'column'} my=".5rem">
         <Link href={'/'}>
-          <Box mb="1rem"> Home </Box>
+          <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'green.600' }}>
+            {' '}
+            Home{' '}
+          </Box>
         </Link>
         <Link href={'/products'}>
-          <Box mb="1rem"> Products </Box>
+          <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'green.600' }}>
+            {' '}
+            Products{' '}
+          </Box>
         </Link>
         <Link href={'/contact'}>
-          <Box mb="1rem"> Contact </Box>
+          <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'green.600' }}>
+            {' '}
+            Contact{' '}
+          </Box>
         </Link>
       </Flex>
     </Flex>
+  )
+}
+
+const SocialButton = ({
+  children,
+  label,
+  href
+}: {
+  children: ReactNode
+  label: string
+  href: string
+}) => {
+  return (
+    <chakra.button
+      bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+      rounded={'full'}
+      w={8}
+      h={8}
+      mb="1rem"
+      cursor={'pointer'}
+      as={'a'}
+      href={href}
+      display={'inline-flex'}
+      alignItems={'center'}
+      justifyContent={'center'}
+      transition={'background 0.3s ease'}
+      _hover={{
+        bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200')
+      }}
+    >
+      <VisuallyHidden>{label}</VisuallyHidden>
+      {children}
+    </chakra.button>
   )
 }

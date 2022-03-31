@@ -98,7 +98,7 @@ export default function Home() {
     'https://images.pexels.com/photos/1142950/pexels-photo-1142950.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
     'https://images.pexels.com/photos/3124111/pexels-photo-3124111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
   ]
-  const qna = [
+  const questionsanswersdata = [
     {
       question: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
       answer:
@@ -153,7 +153,7 @@ export default function Home() {
       currency: '£'
     }
   ]
-  const services = [
+  const servicesData = [
     {
       icon: <IoAnalyticsSharp size={24} />,
       title: 'Fiability',
@@ -176,21 +176,21 @@ export default function Home() {
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
       rate: 2.5,
       name: 'jane',
-      avatar: 'https://bit.ly/dan-abramov'
+      avatar: productImage.src
     },
     {
       review:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
       rate: 4,
       name: 'bob',
-      avatar: 'https://bit.ly/dan-abramov'
+      avatar: productImage.src
     },
     {
       review:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
       rate: 5,
       name: 'jone',
-      avatar: 'https://bit.ly/dan-abramov'
+      avatar: productImage.src
     }
   ]
 
@@ -346,11 +346,14 @@ export default function Home() {
         <ModalPopUp open={show} close={setShow} text={text} mode="warning" /> */}
 
       <Hero />
-      <Services data={services} />
+      <Services data={servicesData} />
+      <AppStore />
+      <CustomerReviews data={reviewsData} />
+      <QuestionsAnswers data={questionsanswersdata} />
       {/* <About />
       <ProductsOnTrend data={productsData} />
-      <CustomerReviews data={reviewsData} />
-      <QuestionsAnswers data={qna} /> */}
+      
+      <QuestionsAnswers data={questionsanswersdata} /> */}
     </Layout>
   )
 }
@@ -358,10 +361,20 @@ export default function Home() {
 const Services = ({ data }: { data: any }) => {
   return (
     <Flex flexDir="column">
-      <Heading fontSize="24px" mb="1rem">
-        Our Services
-      </Heading>
-      <Divider w="10rem" borderColor="blue.500" borderWidth="1px" mb="1rem" />
+      <Box textAlign={'center'}>
+        <Heading fontSize="24px" mb="1rem">
+          Some Services We <br />
+          Offer
+        </Heading>
+        <Divider
+          w="10rem"
+          borderColor="green.500"
+          borderWidth="2px"
+          bg="green.500"
+          borderRadius={'10px'}
+          m="0 auto 1rem auto"
+        />
+      </Box>
 
       <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly" p="2.5rem 1.5rem">
         {data.length > 0 &&
@@ -371,15 +384,15 @@ const Services = ({ data }: { data: any }) => {
               justifyContent="center"
               alignItems={'center'}
               boxShadow={'md'}
-              w="18rem"
+              w="15rem"
               borderRadius={'10px'}
               p="2rem 1.5rem"
+              m={'.5rem'}
             >
               <Text fontWeight={'600'} fontSize="1.3rem" textAlign="center" mb=".75rem">
                 {' '}
                 {el.title}{' '}
               </Text>
-              {/* <Box mb=".75rem"> {el.icon} </Box> */}
               <Image src={heroImage.src} boxSize={['135px', '', '', '']} />
               <Text fontSize=".9rem" mb=".75rem">
                 {' '}
@@ -394,7 +407,6 @@ const Services = ({ data }: { data: any }) => {
 }
 
 const Hero = () => {
-  console.log(heroImage)
   return (
     <Flex
       flexDir="row"
@@ -530,34 +542,43 @@ const ProductsOnTrend = ({ data }: { data: any }) => {
 const CustomerReviews = ({ data }: { data: any }) => {
   return (
     <Flex flexDir={'column'}>
-      <Heading fontSize="24px" mb="1rem">
-        Customer Reviews
-      </Heading>
-      <Divider w="10rem" borderColor="blue.500" borderWidth="1px" mb="1rem" />
-      <Flex flexDir={'row'} flexWrap={'wrap'} justifyContent={'space-around'}>
+      <Box textAlign={'center'} mb="1rem">
+        <Heading fontSize="24px" mb="1rem">
+          Customer Reviews
+        </Heading>
+        <Divider
+          w="10rem"
+          borderColor="green.500"
+          borderWidth="2px"
+          bg="green.500"
+          borderRadius={'10px'}
+          m="0 auto 1rem auto"
+        />
+      </Box>
+
+      <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
         {data.length > 0 &&
           data.map((el: any) => (
             <Flex
               flexDir={'column'}
-              justifyContent={'center'}
+              justifyContent="center"
               alignItems={'center'}
-              boxShadow={'lg'}
-              p="1rem .75rem"
+              boxShadow={'md'}
+              w="15rem"
               borderRadius={'10px'}
-              maxW="20rem"
-              minW="15rem"
-              mb="1rem"
+              p="1.5rem"
+              m={'1rem .5rem'}
             >
               <Box mr="auto">
-                <IconReview />
+                <IconReview color="#38a169" />
               </Box>
-              <Text my=".75rem" fontStyle={'italic'} textAlign="center">
+              <Text my=".75rem" fontStyle={'italic'} textAlign="center" fontSize=".9rem">
                 {' '}
                 {el.review}{' '}
               </Text>
               <Rating initRate={el?.rate} />
               <Image
-                src={el.avatar}
+                src={productImage.src}
                 alt={el.name}
                 boxSize="100px"
                 fallbackSrc="https://via.placeholder.com/100"
@@ -570,6 +591,49 @@ const CustomerReviews = ({ data }: { data: any }) => {
               </Text>
             </Flex>
           ))}
+      </Flex>
+    </Flex>
+  )
+}
+
+const AppStore = () => {
+  return (
+    <Flex flexDir={'column'}>
+      <Box textAlign={'center'}>
+        <Heading fontSize="24px" mb="1rem">
+          Watch Your Delivery <br /> At Any Time
+        </Heading>
+        <Divider
+          w="10rem"
+          borderColor="green.500"
+          borderWidth="2px"
+          bg="green.500"
+          borderRadius={'10px'}
+          m="0 auto 1rem auto"
+        />
+      </Box>
+
+      <Flex flexDir={['column', '', 'row-reverse', '']} mt="1.5rem">
+        <Flex flexDir={'column'} justifyContent="center" alignItems="center">
+          <Text mb="1rem" textAlign={'center'} maxW="24rem" fontSize={'.9rem'}>
+            {' '}
+            With our app you can view the route of your order, from our local headquarters to the
+            place where you are. Look for the app now!{' '}
+          </Text>
+
+          <Flex mb="2rem">
+            <Button colorScheme={'green'} borderRadius="20px" mx=".5rem" fontSize=".9rem">
+              {' '}
+              App Store{' '}
+            </Button>
+            <Button colorScheme={'green'} borderRadius="20px" mx=".5rem" fontSize=".9rem">
+              {' '}
+              Google Play{' '}
+            </Button>
+          </Flex>
+        </Flex>
+
+        <Image src={heroImage.src} boxSize={['180px', '', '', '']} mx="auto" />
       </Flex>
     </Flex>
   )

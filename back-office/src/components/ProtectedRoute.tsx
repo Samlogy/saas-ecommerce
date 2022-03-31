@@ -4,7 +4,8 @@ import { ThirdPartyEmailPasswordAuth } from 'supertokens-auth-react/recipe/third
 const ProtectedRoute = ({ children }: { children: any }) => {
   // const auth = loadState('auth-admin')
   // autho --> for redireection
-  return <ThirdPartyEmailPasswordAuth>{children}</ThirdPartyEmailPasswordAuth>
+  // ThirdPartyEmailPasswordAuth
+  return <>{children}</>
 }
 
 export default ProtectedRoute

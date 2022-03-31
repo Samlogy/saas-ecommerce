@@ -25,7 +25,7 @@ function TotalRevenue({ data }: { data: any }) {
         </CircularProgress>
 
         <Text color={'gray.400'}>Total Sales made today</Text>
-        <Text fontSize="2rem" fontWeight={'600'}>
+        <Text fontSize="1.5rem" fontWeight={'600'}>
           {' '}
           $ {data?.price}{' '}
         </Text>

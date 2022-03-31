@@ -4,7 +4,7 @@ import { Box } from '@chakra-ui/react'
 interface IView {
   children: React.ReactNode
   cond: any
-  rest?: React.ReactNode
+  rest?: any
 }
 
 const View = ({ children, cond, ...rest }: IView) => {

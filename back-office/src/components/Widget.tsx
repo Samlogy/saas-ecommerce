@@ -25,7 +25,7 @@ function Widget({ data }: IWidget) {
           {' '}
           {data.description}{' '}
         </Text>
-        <Text fontSize="2rem" fontWeight="600">
+        <Text fontSize="1.5rem" fontWeight="600">
           {' '}
           ${data.revenue}{' '}
         </Text>

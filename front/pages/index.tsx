@@ -182,6 +182,11 @@ export default function Home() {
       avatar: productImage.src
     }
   ]
+  const aboutData = {
+    image: heroImage.src,
+    title: 'Best Food In The Country',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi facilis, minus earum labore vero animi necessitatibus tempora? Assumenda, itaque ad eveniet explicabo quia vero porro quos voluptatum ipsum velit.'
+  }
 
   const {
     register,
@@ -335,61 +340,13 @@ export default function Home() {
         <ModalPopUp open={show} close={setShow} text={text} mode="warning" /> */}
 
       <Hero />
-      {/* <About /> */}
+      <About data={aboutData} />
       <Services data={servicesData} />
       <ProductsOnTrend data={productsData} />
       <CustomerReviews data={reviewsData} />
       <QuestionsAnswers data={questionsanswersdata} />
       <AppStore />
     </Layout>
-  )
-}
-
-const Services = ({ data }: { data: any }) => {
-  return (
-    <Flex flexDir="column">
-      <Box textAlign={'center'}>
-        <Heading fontSize="24px" mb="1rem">
-          Some Services We <br />
-          Offer
-        </Heading>
-        <Divider
-          w="10rem"
-          borderColor="green.500"
-          borderWidth="2px"
-          bg="green.500"
-          borderRadius={'10px'}
-          m="0 auto 1rem auto"
-        />
-      </Box>
-
-      <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly" p="2.5rem 1.5rem">
-        {data.length > 0 &&
-          data.map((el: any) => (
-            <Flex
-              flexDir={'column'}
-              justifyContent="center"
-              alignItems={'center'}
-              boxShadow={'md'}
-              w="15rem"
-              borderRadius={'10px'}
-              p="2rem 1.5rem"
-              m={'.5rem'}
-            >
-              <Text fontWeight={'600'} fontSize="1.3rem" textAlign="center" mb=".75rem">
-                {' '}
-                {el.title}{' '}
-              </Text>
-              <Image src={heroImage.src} boxSize={['135px', '', '', '']} />
-              <Text fontSize=".9rem" mb=".75rem">
-                {' '}
-                {el.text}{' '}
-              </Text>
-              <Text fontWeight={'bold'}> Learn More </Text>
-            </Flex>
-          ))}
-      </Flex>
-    </Flex>
   )
 }
 
@@ -432,64 +389,73 @@ const Hero = () => {
     </Flex>
   )
 }
-
-const About = () => {
+const Services = ({ data }: { data: any }) => {
   return (
-    <Box p="2.5rem 1.5rem">
-      <Box textAlign={'center'} mb="1.5rem">
-        <Heading fontSize="1.2rem" fontWeight="400" color="teal.500">
-          {' '}
-          About Us{' '}
-        </Heading>
-        <Heading fontSize="1.8rem" fontWeight="500" color="blue.800">
-          {' '}
-          WHY CHOOSE US ?{' '}
-        </Heading>
-      </Box>
-
+    <SectionWrapper title="Some Services We Offer">
+      <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
+        {data.length > 0 &&
+          data.map((el: any) => (
+            <Flex
+              flexDir={'column'}
+              justifyContent="center"
+              alignItems={'center'}
+              boxShadow={'md'}
+              w="15rem"
+              borderRadius={'10px'}
+              p="2rem 1.5rem"
+              m={'.5rem'}
+            >
+              <Text fontWeight={'600'} fontSize="1.3rem" textAlign="center" mb=".75rem">
+                {' '}
+                {el.title}{' '}
+              </Text>
+              <Image src={heroImage.src} boxSize={['135px', '', '', '']} />
+              <Text fontSize=".9rem" mb=".75rem">
+                {' '}
+                {el.text}{' '}
+              </Text>
+              <Text fontWeight={'bold'}> Learn More </Text>
+            </Flex>
+          ))}
+      </Flex>
+    </SectionWrapper>
+  )
+}
+const About = ({ data }: { data: any }) => {
+  return (
+    <SectionWrapper title="WHY CHOOSE US ?">
       <Flex flexWrap="wrap" justifyContent={'space-evenly'}>
-        {/* <Box boxSize='sm'>
-        <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
-      </Box> */}
-        <Image src="https://bit.ly/dan-abramov" alt="Dan Abramov" borderRadius={'5px'} />
+        <Image src={data?.image} alt="about image" boxSize="250px" borderRadius={'5px'} />
 
         <Flex flexDir="column" w={['80%', '', '40%', '']} mt={['1.5rem', '', '0rem', '']}>
-          <Heading fontSize="1.8rem" fontWeight="700" mb="1rem" color="blue.800">
-            {' '}
-            Best Food In The Country{' '}
+          <Heading fontSize="1.8rem" fontWeight="700" mb="1rem" color="#38a169">
+            {data?.title}
           </Heading>
-          <Text fontSize="1rem">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi facilis, minus
-            earum labore vero animi necessitatibus tempora? Assumenda, itaque ad eveniet explicabo
-            quia vero porro quos voluptatum ipsum velit.
+          <Text fontSize=".9rem" color="gray.500">
+            {data?.text}
           </Text>
-          <Button variant="solid" bg="blue.800" color="white" w="150px" mt="1rem">
-            {' '}
-            Learn More{' '}
+          <Button
+            color="#38a169"
+            bg="transparent"
+            border="1px solid"
+            borderColor={'#38a169'}
+            w="100px"
+            borderRadius={'10px'}
+            mt="1rem"
+            fontSize=".9rem"
+            _hover={{ bg: 'transparent' }}
+          >
+            Shop Now
           </Button>
         </Flex>
       </Flex>
-    </Box>
+    </SectionWrapper>
   )
 }
 
 const QuestionsAnswers = ({ data }: { data: any }) => {
   return (
-    <Flex flexDir="column">
-      <Box textAlign={'center'}>
-        <Heading fontSize="24px" mb="1rem">
-          Some common questions <br /> were often asked
-        </Heading>
-        <Divider
-          w="10rem"
-          borderColor="green.500"
-          borderWidth="2px"
-          bg="green.500"
-          borderRadius={'10px'}
-          m="0 auto 1rem auto"
-        />
-      </Box>
-
+    <SectionWrapper title="Some common questions were often asked">
       <Box p="1.5rem 1rem">
         <Accordion defaultIndex={[0]} allowMultiple border="none">
           {data.map((item: any) => (
@@ -523,51 +489,23 @@ const QuestionsAnswers = ({ data }: { data: any }) => {
           ))}
         </Accordion>
       </Box>
-    </Flex>
+    </SectionWrapper>
   )
 }
 
 const ProductsOnTrend = ({ data }: { data: any }) => {
   return (
-    <Flex flexDir="column">
-      <Box textAlign={'center'}>
-        <Heading fontSize="24px" mb="1rem">
-          Check out our <br /> products
-        </Heading>
-        <Divider
-          w="10rem"
-          borderColor="green.500"
-          borderWidth="2px"
-          bg="green.500"
-          borderRadius={'10px'}
-          m="0 auto 1rem auto"
-        />
-      </Box>
-
-      <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly" p="2.5rem 1.5rem">
+    <SectionWrapper title="Check out our products">
+      <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
         {data.length > 0 && data.map((el: any) => <ProductCard data={el} />)}
       </Flex>
-    </Flex>
+    </SectionWrapper>
   )
 }
 
 const CustomerReviews = ({ data }: { data: any }) => {
   return (
-    <Flex flexDir={'column'}>
-      <Box textAlign={'center'} mb="1rem">
-        <Heading fontSize="24px" mb="1rem">
-          Customer Reviews
-        </Heading>
-        <Divider
-          w="10rem"
-          borderColor="green.500"
-          borderWidth="2px"
-          bg="green.500"
-          borderRadius={'10px'}
-          m="0 auto 1rem auto"
-        />
-      </Box>
-
+    <SectionWrapper title="Customer Reviews">
       <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
         {data.length > 0 &&
           data.map((el: any) => (
@@ -597,34 +535,20 @@ const CustomerReviews = ({ data }: { data: any }) => {
                 borderRadius={'full'}
                 my=".75rem"
               />
-              <Text fontWeight={'600'} fontSize="1.2rem" textTransform={'uppercase'}>
+              <Text fontSize=".9rem" textTransform={'uppercase'}>
                 {' '}
                 {el.name}{' '}
               </Text>
             </Flex>
           ))}
       </Flex>
-    </Flex>
+    </SectionWrapper>
   )
 }
 
 const AppStore = () => {
   return (
-    <Flex flexDir={'column'}>
-      <Box textAlign={'center'}>
-        <Heading fontSize="24px" mb="1rem">
-          Watch Your Delivery <br /> At Any Time
-        </Heading>
-        <Divider
-          w="10rem"
-          borderColor="green.500"
-          borderWidth="2px"
-          bg="green.500"
-          borderRadius={'10px'}
-          m="0 auto 1rem auto"
-        />
-      </Box>
-
+    <SectionWrapper title="Watch Your Delivery At Any Time">
       <Flex
         flexDir={['column', '', 'row-reverse', '']}
         justifyContent={['center', '', 'space-evenly', '']}
@@ -651,6 +575,42 @@ const AppStore = () => {
 
         <Image src={heroImage.src} boxSize={['180px', '', '', '']} mx={['auto', '', '0', '0']} />
       </Flex>
+    </SectionWrapper>
+  )
+}
+
+const SectionWrapper = ({
+  children,
+  title,
+  rest
+}: {
+  children: React.ReactNode
+  title: string
+  rest?: any
+}) => {
+  return (
+    <Flex flexDir="column" p="2.5rem 1.5rem" {...rest}>
+      <Box textAlign={'center'}>
+        <Heading
+          fontSize="24px"
+          mb="1rem"
+          textTransform="uppercase"
+          w="20rem"
+          mx="auto"
+          wordBreak={'keep-all'}
+        >
+          {title}
+        </Heading>
+        <Divider
+          w="10rem"
+          borderColor="green.500"
+          borderWidth="2px"
+          bg="green.500"
+          borderRadius={'10px'}
+          m="0 auto 1rem auto"
+        />
+      </Box>
+      {children}
     </Flex>
   )
 }

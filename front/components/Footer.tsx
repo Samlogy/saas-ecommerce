@@ -5,13 +5,23 @@ import {
   Flex,
   Stack,
   Text,
+  Input,
+  Button,
+  Heading,
+  Image,
   useColorModeValue,
   VisuallyHidden
 } from '@chakra-ui/react'
+import React from 'react'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 import { Logo } from '../public/icons'
+
+import card1 from '../public/images/card1.png'
+import card2 from '../public/images/card2.png'
+import card3 from '../public/images/card3.png'
+import card4 from '../public/images/card4.png'
 
 const SocialButton = ({
   children,
@@ -28,6 +38,7 @@ const SocialButton = ({
       rounded={'full'}
       w={8}
       h={8}
+      mb="1rem"
       cursor={'pointer'}
       as={'a'}
       href={href}
@@ -58,30 +69,22 @@ export default function Footer() {
         py={4}
         spacing={4}
         justify={['center', 'space-evenly', 'space-between', '']}
-        align={'center'}
+        align={'start'}
         flexWrap="wrap"
       >
-        <Logo />
+        <Flex flexDir={'column'}>
+          <Box mb="1rem">
+            {' '}
+            <Logo />{' '}
+          </Box>
+          <Subscribe />
+        </Flex>
 
-        <Stack direction={'row'} spacing={6} my=".5rem">
-          <Link href={'/'}> Home </Link>
-          <Link href={'/products'}> Products </Link>
-          <Link href={'/contact'}> Contact Us </Link>
-        </Stack>
+        <SocialMedia />
 
-        <Stack direction={'row'} spacing={6} my=".5rem">
-          <SocialButton label={'Twitter'} href={'#'}>
-            <FaTwitter />
-          </SocialButton>
+        <Links />
 
-          <SocialButton label={'YouTube'} href={'#'}>
-            <FaYoutube />
-          </SocialButton>
-
-          <SocialButton label={'Instagram'} href={'#'}>
-            <FaInstagram />
-          </SocialButton>
-        </Stack>
+        <PaymentAccpect />
       </Container>
 
       <Box borderTopWidth={1} borderStyle={'solid'} borderColor={borderColor}>
@@ -112,5 +115,110 @@ export default function Footer() {
         </Container>
       </Box>
     </Box>
+  )
+}
+
+const Subscribe = () => {
+  const [email, setEmail] = React.useState('')
+  const onSubscribe = () => {
+    console.log('subscribed !!')
+  }
+  return (
+    <Flex flexDir={'column'} w="15rem">
+      <Heading size="12rem" mb="1rem" color="green.700">
+        {' '}
+        Subscribe to our newsletter to stay update{' '}
+      </Heading>
+      <Flex
+        justifyContent={'space-between'}
+        bg="gray.200"
+        p=".75rem"
+        borderRadius={'10px'}
+        w="18rem"
+      >
+        <Input
+          type="text"
+          value={email}
+          size="md"
+          bg="transparent"
+          border="none"
+          w="10rem"
+          _focus={{ border: 'none' }}
+          onChange={(e: any) => setEmail(e.target.value)}
+          placeholder="Enter your email"
+        />
+        <Button
+          type="submit"
+          bg="green.500"
+          fontSize={'.9rem'}
+          color="white"
+          borderRadius={'10px'}
+          _hover={{ bg: 'green.600' }}
+          onClick={() => onSubscribe()}
+        >
+          Subscribe
+        </Button>
+      </Flex>
+    </Flex>
+  )
+}
+const PaymentAccpect = () => {
+  return (
+    <Flex flexDir={'column'}>
+      <Heading size="1rem" mb="1rem" color="green.700">
+        {' '}
+        We accept all credit cards{' '}
+      </Heading>
+      <Flex flexDir={'column'} justifyContent={'space-between'} alignItems="center">
+        <Image src={card1.src} boxSize="30px" borderRadius={'5px'} mb=".5rem" />
+        <Image src={card2.src} boxSize="30px" borderRadius={'5px'} mb=".5rem" />
+        <Image src={card3.src} boxSize="30px" borderRadius={'5px'} mb=".5rem" />
+        <Image src={card4.src} boxSize="30px" borderRadius={'5px'} mb=".5rem" />
+      </Flex>
+    </Flex>
+  )
+}
+const SocialMedia = () => {
+  return (
+    <Flex flexDir={'column'}>
+      <Heading size="12rem" mb="1rem" color="green.700">
+        {' '}
+        Follow us on{' '}
+      </Heading>
+      <Flex flexDir={'column'} my=".5rem" justifyContent={'center'} alignItems="center">
+        <SocialButton label={'Twitter'} href={'#'}>
+          <FaTwitter />
+        </SocialButton>
+
+        <SocialButton label={'YouTube'} href={'#'}>
+          <FaYoutube />
+        </SocialButton>
+
+        <SocialButton label={'Instagram'} href={'#'}>
+          <FaInstagram />
+        </SocialButton>
+      </Flex>
+    </Flex>
+  )
+}
+const Links = () => {
+  return (
+    <Flex flexDir={'column'} mb="1rem">
+      <Heading size="12rem" mb="1rem" color="green.700">
+        {' '}
+        Site Map{' '}
+      </Heading>
+      <Flex flexDir={'column'} my=".5rem">
+        <Link href={'/'}>
+          <Box mb="1rem"> Home </Box>
+        </Link>
+        <Link href={'/products'}>
+          <Box mb="1rem"> Products </Box>
+        </Link>
+        <Link href={'/contact'}>
+          <Box mb="1rem"> Contact </Box>
+        </Link>
+      </Flex>
+    </Flex>
   )
 }

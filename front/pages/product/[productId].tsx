@@ -53,10 +53,12 @@ export default function Product({ product, comments }: { product: any; comments:
             w={'100%'}
             h={{ base: '100%', sm: '400px', lg: '500px' }}
           />
+          <MiniCarousel images={product.img} />
         </View>
 
         <View cond={product.img.length > 1}>
           <Carousel slides={product.img} />
+          <MiniCarousel images={product.img} />
         </View>
         {/* </Flex> */}
 
@@ -114,9 +116,10 @@ export default function Product({ product, comments }: { product: any; comments:
               w="200px"
               mt={8}
               size={'lg'}
-              py={'7'}
-              bg={'blue.500'}
+              bg={'green.500'}
               color={'white'}
+              borderRadius="20px"
+              fontSize={'1rem'}
               textTransform={'uppercase'}
               _hover={{ transform: 'translateY(2px)', boxShadow: 'lg' }}
               onClick={() => addToCart(product)}
@@ -134,6 +137,35 @@ export default function Product({ product, comments }: { product: any; comments:
 
       <ListingComments comments={comments} />
     </Layout>
+  )
+}
+
+const MiniCarousel = ({ images }: { images: string[] }) => {
+  return (
+    <Flex
+      flexWrap={'wrap'}
+      justifyContent="space-evenly"
+      p={['.25rem', '', '1rem', '']}
+      bg="green.100"
+      borderRadius={'10px'}
+      my="1.5rem"
+      w={['15rem', '', '100%', '']}
+      mx={['auto', '', '', '']}
+    >
+      {images.map(image => (
+        <Image
+          rounded={'md'}
+          alt={'product image'}
+          src={image}
+          border="1px solid white"
+          bg="white"
+          borderRadius={'10px'}
+          boxSize={['50px', '', '100px', '']}
+          boxShadow="md"
+          _hover={{ cursor: 'pointer' }}
+        />
+      ))}
+    </Flex>
   )
 }
 

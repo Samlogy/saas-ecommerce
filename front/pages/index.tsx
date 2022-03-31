@@ -489,22 +489,31 @@ const About = () => {
 const QuestionsAnswers = ({ data }: { data: any }) => {
   return (
     <Flex flexDir="column">
-      <Heading fontSize="24px" mb="1rem">
-        {' '}
-        Questions and Answers{' '}
-      </Heading>
-      <Divider w="10rem" borderColor="blue.500" borderWidth="1px" mb="1rem" />
+      <Box textAlign={'center'}>
+        <Heading fontSize="24px" mb="1rem">
+          Some common questions <br /> were often asked
+        </Heading>
+        <Divider
+          w="10rem"
+          borderColor="green.500"
+          borderWidth="2px"
+          bg="green.500"
+          borderRadius={'10px'}
+          m="0 auto 1rem auto"
+        />
+      </Box>
 
       <Box p="1.5rem 1rem">
-        <Accordion defaultIndex={[0]} allowMultiple>
+        <Accordion defaultIndex={[0]} allowMultiple border="none">
           {data.map((item: any) => (
-            <AccordionItem>
+            <AccordionItem mb="1rem" border="none" boxShadow={'md'} borderRadius="5px">
               {({ isExpanded }) => (
                 <>
                   <h2>
                     <AccordionButton
-                      _expanded={{ bg: 'blue.500', color: 'white' }}
+                      _expanded={{ bg: '#3e6553', color: 'white' }}
                       borderRadius="5px"
+                      fontSize={'.9rem'}
                     >
                       <Box flex="1" textAlign="left" fontWeight="500">
                         {item.question}
@@ -512,7 +521,15 @@ const QuestionsAnswers = ({ data }: { data: any }) => {
                       {isExpanded ? <FiMinus size={18} /> : <FiPlus size={18} />}
                     </AccordionButton>
                   </h2>
-                  <AccordionPanel pb={4}>{item.answer}</AccordionPanel>
+                  <AccordionPanel
+                    pb={4}
+                    fontSize={'.9rem'}
+                    bg={isExpanded ? '#3e6553' : 'white'}
+                    color={isExpanded ? 'white' : 'black'}
+                    borderRadius="5px"
+                  >
+                    {item.answer}
+                  </AccordionPanel>
                 </>
               )}
             </AccordionItem>

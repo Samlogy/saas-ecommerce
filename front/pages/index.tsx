@@ -87,17 +87,6 @@ import heroImage from '../public/images/home.png'
 import productImage from '../public/images/product.png'
 
 export default function Home() {
-  const text =
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo'
-
-  const slides = [
-    'https://images.pexels.com/photos/2599537/pexels-photo-2599537.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    ,
-    'https://images.pexels.com/photos/2714581/pexels-photo-2714581.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    'https://images.pexels.com/photos/2878019/pexels-photo-2878019.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-    'https://images.pexels.com/photos/1142950/pexels-photo-1142950.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    'https://images.pexels.com/photos/3124111/pexels-photo-3124111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-  ]
   const questionsanswersdata = [
     {
       question: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
@@ -118,7 +107,7 @@ export default function Home() {
   const productsData = [
     {
       isNew: true,
-      image: 'https://bit.ly/dan-abramov',
+      image: productImage.src,
       name: 'Wayfarer Classic',
       price: 45,
       rate: 4.2,
@@ -127,7 +116,7 @@ export default function Home() {
     },
     {
       isNew: true,
-      image: 'https://bit.ly/dan-abramov',
+      image: productImage.src,
       name: 'Wayfarer Classic',
       price: 45,
       rate: 4.2,
@@ -136,7 +125,7 @@ export default function Home() {
     },
     {
       isNew: true,
-      image: 'https://bit.ly/dan-abramov',
+      image: productImage.src,
       name: 'Wayfarer Classic',
       price: 45,
       rate: 4.2,
@@ -145,7 +134,7 @@ export default function Home() {
     },
     {
       isNew: true,
-      image: 'https://bit.ly/dan-abramov',
+      image: productImage.src,
       name: 'Wayfarer Classic',
       price: 45,
       rate: 4.2,
@@ -346,14 +335,12 @@ export default function Home() {
         <ModalPopUp open={show} close={setShow} text={text} mode="warning" /> */}
 
       <Hero />
+      {/* <About /> */}
       <Services data={servicesData} />
-      <AppStore />
+      <ProductsOnTrend data={productsData} />
       <CustomerReviews data={reviewsData} />
       <QuestionsAnswers data={questionsanswersdata} />
-      {/* <About />
-      <ProductsOnTrend data={productsData} />
-      
-      <QuestionsAnswers data={questionsanswersdata} /> */}
+      <AppStore />
     </Layout>
   )
 }
@@ -543,11 +530,19 @@ const QuestionsAnswers = ({ data }: { data: any }) => {
 const ProductsOnTrend = ({ data }: { data: any }) => {
   return (
     <Flex flexDir="column">
-      <Heading fontSize="24px" mb="1rem">
-        {' '}
-        Products On Trends{' '}
-      </Heading>
-      <Divider w="10rem" borderColor="blue.500" borderWidth="1px" mb="1rem" />
+      <Box textAlign={'center'}>
+        <Heading fontSize="24px" mb="1rem">
+          Check out our <br /> products
+        </Heading>
+        <Divider
+          w="10rem"
+          borderColor="green.500"
+          borderWidth="2px"
+          bg="green.500"
+          borderRadius={'10px'}
+          m="0 auto 1rem auto"
+        />
+      </Box>
 
       <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly" p="2.5rem 1.5rem">
         {data.length > 0 && data.map((el: any) => <ProductCard data={el} />)}
@@ -630,7 +625,11 @@ const AppStore = () => {
         />
       </Box>
 
-      <Flex flexDir={['column', '', 'row-reverse', '']} mt="1.5rem">
+      <Flex
+        flexDir={['column', '', 'row-reverse', '']}
+        justifyContent={['center', '', 'space-evenly', '']}
+        mt="1.5rem"
+      >
         <Flex flexDir={'column'} justifyContent="center" alignItems="center">
           <Text mb="1rem" textAlign={'center'} maxW="24rem" fontSize={'.9rem'}>
             {' '}
@@ -650,7 +649,7 @@ const AppStore = () => {
           </Flex>
         </Flex>
 
-        <Image src={heroImage.src} boxSize={['180px', '', '', '']} mx="auto" />
+        <Image src={heroImage.src} boxSize={['180px', '', '', '']} mx={['auto', '', '0', '0']} />
       </Flex>
     </Flex>
   )

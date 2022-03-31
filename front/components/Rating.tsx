@@ -4,10 +4,9 @@ import { BsStarFill } from 'react-icons/bs'
 
 interface IRating {
   initRate?: number
-  reviews?: number
 }
 
-const Rating = ({ initRate, reviews }: IRating) => {
+const Rating = ({ initRate }: IRating) => {
   const [rate, setRate] = useState(initRate || null)
   const [hover, setHover] = useState(null)
 
@@ -36,14 +35,6 @@ const Rating = ({ initRate, reviews }: IRating) => {
           )
         })}
       </Flex>
-      <Box as="span" ml=".5rem">
-        {' '}
-        {reviews}{' '}
-      </Box>
-      <Box as="span" ml=".1rem">
-        {' '}
-        Reviews{' '}
-      </Box>
     </Flex>
   )
 }

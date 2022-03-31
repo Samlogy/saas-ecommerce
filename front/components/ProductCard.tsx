@@ -15,21 +15,26 @@ const ProductCard = ({ data }: { data: any }) => {
   }
 
   return (
-    <Flex key={data.id} p={50} w="400px" alignItems="center" justifyContent="center">
+    <Flex key={data.id} m=".5rem" w="18rem" alignItems="center" justifyContent="center">
       <Box
         bg={useColorModeValue('white', 'gray.800')}
-        maxW="sm"
-        borderWidth="1px"
+        w="full"
         rounded="lg"
         shadow="lg"
         position="relative"
       >
         {data.isNew && <Circle size="10px" position="absolute" top={2} right={2} bg="red.200" />}
 
-        <Image src={data.image} alt={`Picture of ${data.name}`} roundedTop="lg" />
+        <Image
+          src={data.image}
+          alt={`Picture of ${data.name}`}
+          roundedTop="lg"
+          boxSize={'154px'}
+          m="1.5rem auto 0 auto"
+        />
 
-        <Box p="6" mb=".3rem">
-          <Box d="flex" alignItems="baseline">
+        <Box p="6">
+          <Box d="flex" alignItems="baseline" mb="1rem">
             {data.isNew && (
               <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="red">
                 New
@@ -37,16 +42,19 @@ const ProductCard = ({ data }: { data: any }) => {
             )}
           </Box>
 
-          <Flex mt="1" justifyContent="space-between" alignContent="center">
-            <Box fontSize="2xl" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
+          <Flex mb="1rem" justifyContent="space-between" alignContent="center">
+            <Box fontSize="1.2rem" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
               {data.name}
             </Box>
           </Flex>
 
           <Flex flexDir={'column'} justifyContent="space-between" alignContent="center">
-            <Rating initRate={data.rate} reviews={data.reviews} />
+            <Flex mb="1rem">
+              <Rating initRate={data.rate} />
+              <Reviews data={data?.reviews} />
+            </Flex>
 
-            <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
+            <Box mb="1rem" fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
               <Box as="span" color={'gray.600'} fontSize="lg">
                 {data.currency}
               </Box>
@@ -54,7 +62,12 @@ const ProductCard = ({ data }: { data: any }) => {
             </Box>
           </Flex>
 
-          <Button colorScheme="blue" w="full" mt="1.5rem" onClick={() => addToCart(newProduct)}>
+          <Button
+            colorScheme={'green'}
+            borderRadius="20px"
+            w="full"
+            onClick={() => addToCart(newProduct)}
+          >
             Add to Cart
           </Button>
         </Box>
@@ -64,3 +77,18 @@ const ProductCard = ({ data }: { data: any }) => {
 }
 
 export default ProductCard
+
+const Reviews = ({ data }: { data: number }) => {
+  return (
+    <Flex mt=".2rem" fontSize=".85rem" fontStyle={'italic'} textTransform={'lowercase'}>
+      <Box as="span" ml=".5rem">
+        {' '}
+        {data}{' '}
+      </Box>
+      <Box as="span" ml=".2rem">
+        {' '}
+        reviews{' '}
+      </Box>
+    </Flex>
+  )
+}

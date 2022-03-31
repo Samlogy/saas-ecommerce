@@ -51,7 +51,7 @@ const NavLink = ({ children, link }: { children: ReactNode; link: string }) => {
         px={2}
         py={1}
         rounded={'md'}
-        color={isActive ? 'blue.600' : textColor}
+        color={isActive ? 'green.600' : textColor}
         _hover={{
           textDecoration: 'none',
           cursor: 'pointer',

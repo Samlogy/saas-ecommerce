@@ -121,9 +121,9 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
             <Button
               type="submit"
               isLoading={isSubmitting}
-              bg={'blue.400'}
-              color={'white'}
-              _hover={{ bg: 'blue.500' }}
+              bg="green.500"
+              color="white"
+              _hover={{ bg: 'green.600' }}
             >
               Post Comment
             </Button>

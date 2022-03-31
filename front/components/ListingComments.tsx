@@ -14,7 +14,14 @@ const ListingComments = ({ comments }: { comments: IComment[] }) => {
         Leave a Comment{' '}
       </Heading>
 
-      <Button w="10rem" display={'flex'} ml="auto" onClick={() => setShowAddComment(true)}>
+      <Button
+        bg="green.500"
+        color="white"
+        w="10rem"
+        display={'flex'}
+        ml="auto"
+        onClick={() => setShowAddComment(true)}
+      >
         {' '}
         Add Comment{' '}
       </Button>

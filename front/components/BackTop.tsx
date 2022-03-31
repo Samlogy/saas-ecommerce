@@ -28,13 +28,15 @@ const BackTop = () => {
       {showButton && (
         <IconButton
           aria-label="scroll-top"
-          icon={<FaArrowUp size={30} color="white" />}
+          icon={<FaArrowUp size={20} color="white" />}
           onClick={scrollToTop}
-          bg="gray.500"
-          _hover={{ bg: 'gray.600', cursor: 'pointer' }}
+          bg="#38a169"
+          _hover={{ bg: '#3e6553', cursor: 'pointer' }}
           position="fixed"
           right="20px"
           bottom="20px"
+          w="1rem"
+          borderRadius={'10px'}
         />
       )}
     </>

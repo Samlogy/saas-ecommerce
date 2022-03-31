@@ -325,7 +325,7 @@ export default function Home() {
                   endPage={() => setPage(data.info.pages)}
                   /> */}
 
-      {/* <BackTop /> */}
+      <BackTop />
 
       {/* <StepForm steps={steps} handleForm={handleSubmit(onTest)} /> */}
 

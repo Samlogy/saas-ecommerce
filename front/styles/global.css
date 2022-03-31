@@ -11,15 +11,6 @@ select.select-language {
 select.select-language:hover {
   cursor: pointer;
 }
-/* select .option {
-    color: #fff!important;
-    background-color: #2d3748;
-}
-select .option .active {
-    color: #2d3748!important;
-    text-transform: uppercase!important;
-    background-color: #fff;
-} */
 
 .star:hover {
   cursor: pointer;

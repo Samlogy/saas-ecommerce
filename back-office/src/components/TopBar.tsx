@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Image, Stack, Text, Avatar, IconButton, MenuItem } from '@chakra-ui/react'
 import { BiMenu } from 'react-icons/bi'
-import { useAuth0 } from '@auth0/auth0-react'
+// import { useAuth0 } from '@auth0/auth0-react'
 
 import {
   SideBar,
@@ -22,8 +22,7 @@ interface ITopBar {
 const TopBar = ({ isFixedNav }: ITopBar) => {
   const [isVisible, setIsVisible] = useState(false)
 
-  // load user data --> auth0 hook
-  const { isLoading, isAuthenticated, error, user } = useAuth0<{ name: string }>()
+  const user = { name: '' }
   const logo = ''
   const avatar = ''
 

@@ -39,6 +39,7 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
             placeholder="Search..."
             w={['80%', '', '20rem', '']}
             onChange={onFilter}
+            focusBorderColor="accent_5"
           />
           <InputRightElement
             children={<AiOutlineSearch size="18" />}
@@ -53,7 +54,12 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
           {' '}
           Sort:{' '}
         </Box>
-        <Select onChange={onSort} placeholder="Order" w={['80%', '', '6rem', '']}>
+        <Select
+          onChange={onSort}
+          focusBorderColor="accent_5"
+          placeholder="Order"
+          w={['80%', '', '6rem', '']}
+        >
           <option value="asc"> ASC </option>
           <option value="desc"> DESC </option>
         </Select>

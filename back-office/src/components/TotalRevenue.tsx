@@ -17,7 +17,7 @@ function TotalRevenue({ data }: { data: any }) {
       </Text>
 
       <Flex flexDir={'column'} justifyContent={'space-between'} alignItems="center">
-        <CircularProgress value={data?.percent} color="gray_5" size="5rem" thickness="10px">
+        <CircularProgress value={data?.percent} color="accent_5" size="5rem" thickness="10px">
           <CircularProgressLabel color={'gray_4'} fontSize=".9rem">
             {' '}
             {data?.percent}%{' '}

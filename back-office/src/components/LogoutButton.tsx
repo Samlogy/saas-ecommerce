@@ -23,7 +23,15 @@ function LogoutButton() {
   // }
 
   return (
-    <Button rightIcon={<FiLogOut />} onClick={() => onLogout()}>
+    <Button
+      rightIcon={<FiLogOut color="#2f855a" />}
+      color="accent_3"
+      bg="transparent"
+      border="1px solid"
+      borderColor={'accent_3'}
+      _hover={{ bg: 'transparent' }}
+      onClick={() => onLogout()}
+    >
       {' '}
       Log Out{' '}
     </Button>

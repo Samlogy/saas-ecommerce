@@ -32,7 +32,7 @@ const CustomTable = (props: any) => {
   return (
     <Box borderRadius={'8px'} boxShadow="md" p=".75rem 1rem">
       <div className="table-wrapper">
-        <Table variant="striped" colorScheme="blue">
+        <Table variant="striped" colorScheme="green">
           {props.headData && props.renderHead ? (
             <Thead>
               <Tr textAlign="left">
@@ -58,8 +58,9 @@ const CustomTable = (props: any) => {
               alignItems="center"
               justifyContent={'center'}
               borderRadius={'full'}
-              _hover={{ bg: 'gray.400', color: 'white' }}
-              bg={currPage === idx ? 'gray.400' : ''}
+              transition="all 0.35s"
+              _hover={{ bg: 'accent_4', color: 'white' }}
+              bg={currPage === idx ? 'accent_3' : ''}
               color={currPage === idx ? 'white' : 'black'}
               fontWeight={currPage === idx ? '600' : '400'}
               onClick={() => selectPage(idx)}

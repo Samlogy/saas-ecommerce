@@ -16,9 +16,8 @@ const Dropdown = ({ icon, label, children }: IDropdown) => {
         transition="all 0.2s"
         borderRadius="md"
         bg="transparent"
-        // _expanded={{ bg: 'blue.400' }}
-        // _hover={{ bg: 'gray.400' }}
         _focus={{ boxShadow: 'outline' }}
+        _hover={{ bg: 'transparent' }}
       >
         {label && (
           <Box as="span" textTransform="uppercase" color="#ccc">

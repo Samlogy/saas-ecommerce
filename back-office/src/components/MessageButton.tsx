@@ -46,24 +46,24 @@ function MessageButton() {
   return (
     <Dropdown icon={<CustomButton msgs={msgs} />}>
       <View cond={messages.length > 0}>
-        {messages?.map((el: any) => (
+        {messages?.map((item: any) => (
           <MenuItem
-            key={el.id}
+            key={item.id}
             flexDir={'row'}
             justifyContent="space-between"
-            onClick={() => handleClickMessage(el)}
+            onClick={() => handleClickMessage(item)}
           >
-            <Text isTruncated> {el.title} </Text>
-            <Text isTruncated> {el.text} </Text>
+            <Text isTruncated> {item.title} </Text>
+            <Text isTruncated> {item.text} </Text>
           </MenuItem>
         ))}
-        <Box textAlign="center" color="blue.500">
+        <Box textAlign="center" color="accent_4">
           <Link to="/messages"> View All </Link>
         </Box>
       </View>
 
       <View cond={messages.length === 0}>
-        <Text textAlign={'center'} color="gray.500">
+        <Text textAlign={'center'} color="gray_4">
           {' '}
           There's no new Message{' '}
         </Text>
@@ -75,7 +75,7 @@ function MessageButton() {
 const CustomButton = ({ msgs }: { msgs: number }) => {
   const btnRef = React.useRef(null)
   return (
-    <Button variant="ghost" ref={btnRef}>
+    <Button variant="ghost" _hover={{ bg: 'transparent' }} className="hover-icon" ref={btnRef}>
       {msgs > 0 ? (
         <Badge variant="solid" colorScheme="red" borderRadius="2xl">
           {msgs > 99 ? '99+' : msgs}

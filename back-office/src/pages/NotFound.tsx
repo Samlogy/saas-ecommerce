@@ -23,7 +23,7 @@ function NotFound() {
         Page not found
       </Text>
 
-      <Text color={'gray.500'} mb={6} fontSize="18px">
+      <Text color={'gray_4'} mb={6} fontSize="18px">
         Sorry this page is not available
       </Text>
 

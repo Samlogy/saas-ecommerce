@@ -39,7 +39,7 @@ const ActionsMenu = ({ productId, setAction, setProduct, product }: IActionMenu)
 
       <MenuList>
         <MenuItem
-          color={'yellow.500'}
+          color={'warning'}
           icon={<FiEdit color="warning" size="18" />}
           onClick={() => onEdit(productId)}
         >
@@ -47,7 +47,7 @@ const ActionsMenu = ({ productId, setAction, setProduct, product }: IActionMenu)
           Edit{' '}
         </MenuItem>
         <MenuItem
-          color={'red.500'}
+          color={'error'}
           icon={<FiTrash color="error" size="18" />}
           onClick={() => onDelete(productId)}
         >
@@ -55,7 +55,7 @@ const ActionsMenu = ({ productId, setAction, setProduct, product }: IActionMenu)
           Delete{' '}
         </MenuItem>
         <MenuItem
-          color={'gray.500'}
+          color={'gray_4'}
           icon={<AiOutlineClose color="disable" size="18" />}
           onClick={() => onDisable(productId)}
         >
@@ -63,7 +63,7 @@ const ActionsMenu = ({ productId, setAction, setProduct, product }: IActionMenu)
           Disable{' '}
         </MenuItem>
         <MenuItem
-          color={'blue.500'}
+          color={'info'}
           icon={<BiDetail color={'info'} size="18" />}
           onClick={() => onDetails(productId)}
         >

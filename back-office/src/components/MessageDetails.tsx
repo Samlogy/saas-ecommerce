@@ -40,11 +40,11 @@ const MessageDetails = () => {
               {' '}
               {message.title}{' '}
             </Text>
-            <Text mb=".5rem" color="gray.700">
+            <Text mb=".5rem" color="gray_2">
               {' '}
               {message.text}{' '}
             </Text>
-            <Text fontSize=".8rem" fontStyle="italic" textAlign={'right'} color="gray.500">
+            <Text fontSize=".8rem" fontStyle="italic" textAlign={'right'} color="gray_4">
               {' '}
               {message.createdAt}{' '}
             </Text>
@@ -53,9 +53,9 @@ const MessageDetails = () => {
         <ModalFooter>
           {' '}
           <Button
-            bg={'gray.500'}
+            bg={'gray_4'}
             color="white"
-            _hover={{ bg: 'gray.600' }}
+            _hover={{ bg: 'gray_3' }}
             onClick={() => handleMessageVisibility(false)}
           >
             {' '}

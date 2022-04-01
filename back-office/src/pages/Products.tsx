@@ -161,7 +161,10 @@ export default function Products() {
       </Heading>
 
       <Button
-        colorScheme="blue"
+        bg={'transparent'}
+        color={'accent_3'}
+        border="1px solid"
+        borderColor={'accent_3'}
         variant="outline"
         ml="auto"
         display={'flex'}

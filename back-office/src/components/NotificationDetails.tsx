@@ -32,7 +32,7 @@ const NotificationDetails = () => {
           <Flex flexDir="column">
             <Image
               src={notification?.img}
-              alt="notification iamge"
+              alt="notification image"
               borderRadius={'5px'}
               w="5rem"
               h="5rem"
@@ -41,8 +41,6 @@ const NotificationDetails = () => {
             <Text> {notification.title} </Text>
             <Text> {notification.text} </Text>
             <Text> {notification.createdAt} </Text>
-            {/* <Display label="Name" data={notification.title} />
-            <Display label="Quantity" data={notification.text} /> */}
           </Flex>
         </ModalBody>
         <ModalFooter>
@@ -50,7 +48,7 @@ const NotificationDetails = () => {
           <Button
             bg={'disable'}
             color="white"
-            _hover={{ bg: 'gray.600' }}
+            _hover={{ bg: 'gray_3' }}
             onClick={() => handleNotificationVisibility(false)}
           >
             {' '}

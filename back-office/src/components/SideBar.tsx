@@ -37,8 +37,8 @@ const SideBar = ({ onClose, isOpen }: ISideBar) => {
         <DrawerHeader borderBottomWidth="1px"> Dashboard </DrawerHeader>
 
         <DrawerBody display="flex" flexDirection="column" justifyContent="left">
-          {sideBarData.map((el: any, idx: number) => (
-            <SideBarItem key={el.id} data={el} active={idx === activeItem} />
+          {sideBarData.map((item: any) => (
+            <SideBarItem key={item.id} data={item} active={item.id === activeItem} />
           ))}
         </DrawerBody>
 
@@ -63,9 +63,14 @@ const SideBarItem = ({ key, data, active }: ISideBarItem) => {
         mb=".5rem"
         p=".75rem 1rem"
         borderRadius="md"
-        bg={active ? 'blue.500' : ''}
-        color={active ? 'white' : ''}
-        _hover={{ bg: 'bgClrHover', fontWeight: 'medium', textDecor: 'none' }}
+        bg={active ? 'accent_4' : 'transparent'}
+        color={active ? 'white' : 'black'}
+        _hover={{
+          bg: active ? 'accent_4' : 'accent_6',
+          color: 'white',
+          fontWeight: 'medium',
+          textDecor: 'none'
+        }}
       >
         {data.icon}
         <Text ml="1.5rem"> {data.label} </Text>

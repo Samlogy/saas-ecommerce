@@ -78,8 +78,9 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 px="0"
                 isInvalid={errors.image ? true : false}
                 errorBorderColor="error"
-                borderColor="gray.300"
+                borderColor="gray_6"
                 borderRadius="4px"
+                focusBorderColor={errors.image ? 'error' : 'accent_5'}
                 {...register('image')}
               />
               {errors.image && <ErrorMessage error={errors.image.message} />}
@@ -90,10 +91,11 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
               <Input
                 type="text"
                 placeholder="Product Name"
-                _placeholder={{ color: 'gray.500' }}
+                _placeholder={{ color: 'gray_4' }}
                 isInvalid={errors.name ? true : false}
+                focusBorderColor={errors.name ? 'error' : 'accent_5'}
                 errorBorderColor="error"
-                borderColor="gray.300"
+                borderColor="gray_6"
                 borderRadius="4px"
                 {...register('name')}
               />
@@ -104,10 +106,11 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
               <FormLabel> Description </FormLabel>
               <Textarea
                 placeholder="Product Description"
-                _placeholder={{ color: 'gray.500' }}
+                _placeholder={{ color: 'gray_4' }}
                 isInvalid={errors.description ? true : false}
+                focusBorderColor={errors.description ? 'error' : 'accent_5'}
                 errorBorderColor="error"
-                borderColor="gray.300"
+                borderColor="gray_6"
                 borderRadius="4px"
                 {...register('description')}
               />
@@ -119,10 +122,11 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
               <Input
                 type="number"
                 placeholder="Product Price"
-                _placeholder={{ color: 'gray.500' }}
+                _placeholder={{ color: 'gray_4' }}
                 isInvalid={errors.price ? true : false}
+                focusBorderColor={errors.price ? 'error' : 'accent_5'}
                 errorBorderColor="error"
-                borderColor="gray.300"
+                borderColor="gray_6"
                 borderRadius="4px"
                 {...register('price')}
               />
@@ -134,10 +138,11 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
               <Input
                 type="number"
                 placeholder="Product Discount"
-                _placeholder={{ color: 'gray.500' }}
+                _placeholder={{ color: 'gray_4' }}
                 isInvalid={errors.discount ? true : false}
+                focusBorderColor={errors.discount ? 'error' : 'accent_5'}
                 errorBorderColor="error"
-                borderColor="gray.300"
+                borderColor="gray_6"
                 borderRadius="4px"
                 {...register('discount')}
               />
@@ -148,26 +153,26 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
               <Button
                 type="submit"
                 isLoading={isSubmitting}
-                bg="blue.600"
+                bg="accent_3"
                 color="white"
                 mt="1rem"
                 ml="auto"
                 display={'flex'}
                 justifyContent="flex-end"
-                _hover={{ bg: 'blue.700' }}
+                _hover={{ bg: 'accent_2' }}
               >
                 {' '}
                 {mode === 'add' ? 'Create' : 'Edit'}{' '}
               </Button>
               <Button
                 type="reset"
-                bg="gray.600"
+                bg="gray_4"
                 color="white"
                 mt="1rem"
                 ml="1rem"
                 display={'flex'}
                 justifyContent="flex-end"
-                _hover={{ bg: 'gray.700' }}
+                _hover={{ bg: 'gray_3' }}
                 onClick={() => (mode === 'edit' ? {} : reset(formOptions.defaultValues))}
               >
                 {' '}

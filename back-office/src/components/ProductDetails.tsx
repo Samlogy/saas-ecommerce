@@ -47,7 +47,7 @@ const ProductDetails = ({ isOpen, onClose, product }: IProductDetails) => {
         </ModalBody>
         <ModalFooter>
           {' '}
-          <Button bg={'disable'} color="white" _hover={{ bg: 'gray.600' }} onClick={onClose}>
+          <Button bg={'disable'} color="white" _hover={{ bg: 'gray_3' }} onClick={onClose}>
             {' '}
             Close{' '}
           </Button>{' '}

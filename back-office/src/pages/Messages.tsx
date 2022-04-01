@@ -32,11 +32,11 @@ function Messages() {
                 {' '}
                 {message.title}{' '}
               </Text>
-              <Text mb=".5rem" color="gray.700">
+              <Text mb=".5rem" color="gray_2">
                 {' '}
                 {message.text}{' '}
               </Text>
-              <Text fontSize=".8rem" fontStyle="italic" textAlign={'right'} color="gray.500">
+              <Text fontSize=".8rem" fontStyle="italic" textAlign={'right'} color="gray_4">
                 {' '}
                 {message.createdAt}{' '}
               </Text>
@@ -45,7 +45,7 @@ function Messages() {
         </View>
 
         <View cond={messages.length === 0}>
-          <Text color="gray.500"> There's no Messages </Text>
+          <Text color="gray_4"> There's no Messages </Text>
         </View>
       </Flex>
     </Layout>

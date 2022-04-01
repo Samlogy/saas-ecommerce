@@ -109,7 +109,14 @@ export default function Analytics() {
         <TotalRevenue data={totalRevenueData} />
 
         <Flex flexDir="column">
-          <Select onChange={handleClick} defaultValue={sorted} w="6.5rem" p="0" ml="auto">
+          <Select
+            onChange={handleClick}
+            defaultValue={sorted}
+            w="6.5rem"
+            p="0"
+            ml="auto"
+            focusBorderColor="accent_6"
+          >
             <option value="daily"> Daily </option>
             <option value="weekly"> Weekly </option>
             <option value="monthly"> Monthly </option>

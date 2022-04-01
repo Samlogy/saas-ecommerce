@@ -34,11 +34,11 @@ function Notifications() {
                 {' '}
                 {notification.title}{' '}
               </Text>
-              <Text mb=".5rem" color="gray.700">
+              <Text mb=".5rem" color="gray_2">
                 {' '}
                 {notification.text}{' '}
               </Text>
-              <Text fontSize=".8rem" fontStyle="italic" textAlign={'right'} color="gray.500">
+              <Text fontSize=".8rem" fontStyle="italic" textAlign={'right'} color="gray_4">
                 {' '}
                 {notification.createdAt}{' '}
               </Text>
@@ -47,7 +47,7 @@ function Notifications() {
         </View>
 
         <View cond={notifications.length === 0}>
-          <Text color="gray.500"> There's no Notifications </Text>
+          <Text color="gray_4"> There's no Notifications </Text>
         </View>
       </Flex>
     </Layout>

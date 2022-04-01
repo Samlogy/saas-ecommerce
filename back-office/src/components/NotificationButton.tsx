@@ -48,24 +48,24 @@ const NotificationButton = () => {
   return (
     <Dropdown icon={<CustomButton notifs={notifs} />}>
       <View cond={notifications.length > 0}>
-        {notifications?.map((el: any) => (
+        {notifications?.map((item: any) => (
           <MenuItem
-            key={el.id}
+            key={item.id}
             flexDir={'row'}
             justifyContent="space-between"
-            onClick={() => handleClickNotification(el)}
+            onClick={() => handleClickNotification(item)}
           >
-            <Text> {el.title} </Text>
-            <Text> {el.text} </Text>
+            <Text> {item.title} </Text>
+            <Text> {item.text} </Text>
           </MenuItem>
         ))}
-        <Box textAlign="center" color="blue.500">
+        <Box textAlign="center" color="accent_4">
           <Link to="/notifications"> View All </Link>
         </Box>
       </View>
 
       <View cond={notifications.length === 0}>
-        <Text textAlign={'center'} color="gray.500">
+        <Text textAlign={'center'} color="gray_4">
           {' '}
           There's no new Notification{' '}
         </Text>
@@ -77,7 +77,7 @@ const NotificationButton = () => {
 const CustomButton = ({ notifs }: { notifs: number }) => {
   const btnRef = React.useRef(null)
   return (
-    <Button variant="ghost" ref={btnRef}>
+    <Button variant="ghost" _hover={{ bg: 'transparent' }} className="hover-icon" ref={btnRef}>
       {notifs > 0 ? (
         <Badge variant="solid" colorScheme="red" borderRadius="2xl">
           {notifs > 99 ? '99+' : notifs}

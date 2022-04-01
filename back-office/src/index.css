@@ -72,3 +72,13 @@
 .select-language {
   text-transform: uppercase;
 }
+
+/* Hover icon on nav bar */
+.hover-icon:hover > svg {
+  transition: 0.35s all;
+  color: #2f855a !important;
+}
+.hover-icon:hover {
+  /* transition: 0.5s all; */
+  border: 1px solid #2f855a;
+}

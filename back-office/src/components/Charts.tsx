@@ -13,7 +13,6 @@ interface IChart {
 }
 function Charts({ type = 'area', options, series, sorted, setOptions }: IChart) {
   const { colorMode: mode } = useColorMode()
-  // console.log(options)
 
   const Chart =
     type === 'area' ? (

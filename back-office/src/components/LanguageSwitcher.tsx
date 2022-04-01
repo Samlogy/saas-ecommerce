@@ -1,8 +1,7 @@
-import { useTranslation } from 'react-i18next'
-import { MenuItem } from '@chakra-ui/react'
-import { AiOutlineGlobal } from 'react-icons/ai'
-
+import { Button, MenuItem } from '@chakra-ui/react'
 import { Dropdown } from 'components'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 function LanguageSwitcher() {
   const { i18n } = useTranslation()
@@ -13,7 +12,7 @@ function LanguageSwitcher() {
   }
 
   return (
-    <Dropdown icon={<AiOutlineGlobal size="18" color="#ccc" />} label={i18n.language}>
+    <Dropdown icon={<CustomButton lang={i18n.language} />} label={i18n.language}>
       {i18n.options.supportedLngs &&
         i18n.options.supportedLngs.map(
           (lang: string) =>
@@ -31,6 +30,24 @@ function LanguageSwitcher() {
             )
         )}
     </Dropdown>
+  )
+}
+
+const CustomButton = ({ lang }: { lang: string }) => {
+  const btnRef = React.useRef(null)
+  return (
+    <Button
+      variant="ghost"
+      _hover={{
+        bg: 'transparent',
+        color: 'accent_3',
+        border: '1px solid',
+        borderColor: 'accent_3'
+      }}
+      ref={btnRef}
+    >
+      {lang && lang}
+    </Button>
   )
 }
 

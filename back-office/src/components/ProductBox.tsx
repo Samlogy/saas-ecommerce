@@ -64,9 +64,9 @@ const ProductBox = ({ isOpen, onClose, productId, setAction, mode }: IProductBox
           <Button
             ref={cancelRef}
             onClick={onClose}
-            bg="gray.600"
+            bg="gray_3"
             color="white"
-            _hover={{ bg: 'gray.700' }}
+            _hover={{ bg: 'gray_2' }}
             ml={3}
           >
             No

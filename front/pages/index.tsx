@@ -370,7 +370,9 @@ const Hero = () => {
           w="120px"
           mr={['0', '', 'auto', '']}
           mx={['auto', '', '0', '']}
-          colorScheme={'green'}
+          bg={'accent_3'}
+          _hover={{ bg: 'accent_2' }}
+          color={'white'}
         >
           {' '}
           Explore{' '}
@@ -424,17 +426,17 @@ const About = ({ data }: { data: any }) => {
         <Image src={data?.image} alt="about image" boxSize="250px" borderRadius={'5px'} />
 
         <Flex flexDir="column" w={['80%', '', '40%', '']} mt={['1.5rem', '', '0rem', '']}>
-          <Heading fontSize="1.8rem" fontWeight="700" mb="1rem" color="#38a169">
+          <Heading fontSize="1.8rem" fontWeight="700" mb="1rem" color="accent_4">
             {data?.title}
           </Heading>
           <Text fontSize=".9rem" color="gray.500">
             {data?.text}
           </Text>
           <Button
-            color="#38a169"
+            color="accent_4"
             bg="transparent"
             border="1px solid"
-            borderColor={'#38a169'}
+            borderColor={'accent_4'}
             w="100px"
             borderRadius={'10px'}
             mt="1rem"
@@ -460,7 +462,7 @@ const QuestionsAnswers = ({ data }: { data: any }) => {
                 <>
                   <h2>
                     <AccordionButton
-                      _expanded={{ bg: '#3e6553', color: 'white' }}
+                      _expanded={{ bg: 'accent_2', color: 'white' }}
                       borderRadius="5px"
                       fontSize={'.9rem'}
                     >
@@ -473,7 +475,7 @@ const QuestionsAnswers = ({ data }: { data: any }) => {
                   <AccordionPanel
                     pb={4}
                     fontSize={'.9rem'}
-                    bg={isExpanded ? '#3e6553' : 'white'}
+                    bg={isExpanded ? 'accent_2' : 'white'}
                     color={isExpanded ? 'white' : 'black'}
                     borderRadius="5px"
                   >
@@ -558,11 +560,25 @@ const AppStore = () => {
           </Text>
 
           <Flex mb="2rem">
-            <Button colorScheme={'green'} borderRadius="20px" mx=".5rem" fontSize=".9rem">
+            <Button
+              bg={'accent_3'}
+              _hover={{ bg: 'accent_2' }}
+              color={'white'}
+              borderRadius="20px"
+              mx=".5rem"
+              fontSize=".9rem"
+            >
               {' '}
               App Store{' '}
             </Button>
-            <Button colorScheme={'green'} borderRadius="20px" mx=".5rem" fontSize=".9rem">
+            <Button
+              bg={'accent_3'}
+              _hover={{ bg: 'accent_2' }}
+              color={'white'}
+              borderRadius="20px"
+              mx=".5rem"
+              fontSize=".9rem"
+            >
               {' '}
               Google Play{' '}
             </Button>
@@ -599,9 +615,9 @@ const SectionWrapper = ({
         </Heading>
         <Divider
           w="10rem"
-          borderColor="green.500"
+          borderColor="accent_4"
           borderWidth="2px"
-          bg="green.500"
+          bg="accent_4"
           borderRadius={'10px'}
           m="0 auto 1rem auto"
         />

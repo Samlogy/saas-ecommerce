@@ -66,7 +66,7 @@ export default function Footer() {
         >
           <Text fontSize=".8rem"> © 2022 Ecommerce. All rights reserved </Text>
           <Flex>
-            <Box color="blue.500" fontSize=".8rem">
+            <Box color="accent_4" fontSize=".8rem">
               {' '}
               <Link href="/conditions"> Conditions and terms </Link>{' '}
             </Box>
@@ -74,7 +74,7 @@ export default function Footer() {
               {' '}
               |{' '}
             </Text>
-            <Box color="blue.500" fontSize=".8rem">
+            <Box color="accent_4" fontSize=".8rem">
               {' '}
               <Link href="/privacy"> Privacy </Link>{' '}
             </Box>
@@ -92,7 +92,7 @@ const Subscribe = () => {
   }
   return (
     <Flex flexDir={'column'} w="15rem">
-      <Heading size="12rem" mb="1rem" color="green.700">
+      <Heading size="12rem" mb="1rem" color="accent_2">
         {' '}
         Subscribe to our newsletter to stay update{' '}
       </Heading>
@@ -116,11 +116,11 @@ const Subscribe = () => {
         />
         <Button
           type="submit"
-          bg="green.500"
+          bg="accent_4"
           fontSize={'.9rem'}
           color="white"
           borderRadius={'10px'}
-          _hover={{ bg: 'green.600' }}
+          _hover={{ bg: 'accent_3' }}
           onClick={() => onSubscribe()}
         >
           Subscribe
@@ -132,7 +132,7 @@ const Subscribe = () => {
 const PaymentAccpect = () => {
   return (
     <Flex flexDir={'column'}>
-      <Heading size="1rem" mb="1rem" color="green.700">
+      <Heading size="1rem" mb="1rem" color="accent_2">
         {' '}
         We accept all credit cards{' '}
       </Heading>
@@ -148,7 +148,7 @@ const PaymentAccpect = () => {
 const SocialMedia = () => {
   return (
     <Flex flexDir={'column'}>
-      <Heading size="12rem" mb="1rem" color="green.700">
+      <Heading size="12rem" mb="1rem" color="accent_2">
         {' '}
         Follow us on{' '}
       </Heading>
@@ -171,25 +171,25 @@ const SocialMedia = () => {
 const Links = () => {
   return (
     <Flex flexDir={'column'} mb="1rem">
-      <Heading size="12rem" mb="1rem" color="green.700">
+      <Heading size="12rem" mb="1rem" color="accent_2">
         {' '}
         Site Map{' '}
       </Heading>
       <Flex flexDir={'column'} my=".5rem">
         <Link href={'/'}>
-          <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'green.600' }}>
+          <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'accent_3' }}>
             {' '}
             Home{' '}
           </Box>
         </Link>
         <Link href={'/products'}>
-          <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'green.600' }}>
+          <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'accent_3' }}>
             {' '}
             Products{' '}
           </Box>
         </Link>
         <Link href={'/contact'}>
-          <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'green.600' }}>
+          <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'accent_3' }}>
             {' '}
             Contact{' '}
           </Box>

@@ -68,7 +68,8 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
                 isInvalid={errors.fullName ? true : false}
                 errorBorderColor="error"
                 borderColor="gray.300"
-                borderRadius="4px"
+                focusBorderColor={errors.fullName ? 'error' : 'accent_6'}
+                borderRadius="5px"
                 {...register('fullName')}
               />
               {errors.fullName && <ErrorMessage error={errors.fullName.message} />}
@@ -83,7 +84,8 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
                 isInvalid={errors.email ? true : false}
                 errorBorderColor="error"
                 borderColor="gray.300"
-                borderRadius="4px"
+                focusBorderColor={errors.email ? 'error' : 'accent_6'}
+                borderRadius="5px"
                 {...register('email')}
               />
               {errors.email && <ErrorMessage error={errors.email.message} />}
@@ -97,7 +99,8 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
                 isInvalid={errors.comment ? true : false}
                 errorBorderColor="error"
                 borderColor="gray.300"
-                borderRadius="4px"
+                focusBorderColor={errors.comment ? 'error' : 'accent_6'}
+                borderRadius="5px"
                 {...register('comment')}
               />
               {errors.comment && <ErrorMessage error={errors.comment.message} />}
@@ -121,9 +124,9 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
             <Button
               type="submit"
               isLoading={isSubmitting}
-              bg="green.500"
+              bg="accent_4"
               color="white"
-              _hover={{ bg: 'green.600' }}
+              _hover={{ bg: 'accent_6' }}
             >
               Post Comment
             </Button>

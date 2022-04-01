@@ -6,10 +6,11 @@ import './index.css'
 import App from './App'
 import { CustomPreLoader } from 'components'
 import './lib/lang/i18'
+import theme from './theme'
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Suspense fallback={<CustomPreLoader />}>
         <App />
       </Suspense>

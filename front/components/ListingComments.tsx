@@ -15,8 +15,9 @@ const ListingComments = ({ comments }: { comments: IComment[] }) => {
       </Heading>
 
       <Button
-        bg="green.500"
-        color="white"
+        bg={'accent_3'}
+        _hover={{ bg: 'accent_2' }}
+        color={'white'}
         w="10rem"
         display={'flex'}
         ml="auto"

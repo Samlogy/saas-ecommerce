@@ -46,7 +46,7 @@ const ShoppingCart = () => {
           <View cond={products.length > 0}>
             <Text
               textAlign={'right'}
-              color="green.500"
+              color="accent_4"
               fontSize=".9rem"
               mb="1rem"
               _hover={{ cursor: 'pointer', textDecor: 'underline' }}
@@ -80,14 +80,14 @@ const ShoppingCart = () => {
             {' '}
             Shipping and taxes calculated at checkout.{' '}
           </Text>
-          <Button w="full" colorScheme="green">
+          <Button w="full" bg={'accent_3'} _hover={{ bg: 'accent_2' }} color={'white'}>
             {' '}
             Checkout{' '}
           </Button>
           <Text display="flex" mt="1rem">
             {' '}
             or
-            <Text textColor="green.600" ml="1rem" fontSize=".9rem" _hover={{ cursor: 'pointer' }}>
+            <Text textColor="accent_3" ml="1rem" fontSize=".9rem" _hover={{ cursor: 'pointer' }}>
               {' '}
               Continue Shopping →{' '}
             </Text>

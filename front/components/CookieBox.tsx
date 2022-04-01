@@ -19,10 +19,13 @@ export default function CookieBox() {
         </Text>
 
         <Stack direction={{ base: 'column', md: 'row' }}>
-          <Button variant="outline" colorScheme="green">
+          <Button border="1px solid" borderColor={'accent_3'} color={'accent_2'}>
             Cookie Preferences
           </Button>
-          <Button colorScheme="green"> OK </Button>
+          <Button bg={'accent_3'} _hover={{ bg: 'accent_2' }} color={'white'}>
+            {' '}
+            OK{' '}
+          </Button>
         </Stack>
       </Stack>
     </Stack>

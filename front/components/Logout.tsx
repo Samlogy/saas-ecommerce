@@ -33,7 +33,7 @@ const Logout = () => {
       _hover={{ border: 'none', color: textHoverColor }}
       // onClick={() => setLoggedOut(true)}
     >
-      <a href="/api/auth/logout"> Logout </a>
+      Logout
     </Button>
   )
 }

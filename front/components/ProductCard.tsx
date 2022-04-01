@@ -63,7 +63,9 @@ const ProductCard = ({ data }: { data: any }) => {
           </Flex>
 
           <Button
-            colorScheme={'green'}
+            bg={'accent_3'}
+            _hover={{ bg: 'accent_2' }}
+            color={'white'}
             borderRadius="20px"
             w="full"
             onClick={() => addToCart(newProduct)}

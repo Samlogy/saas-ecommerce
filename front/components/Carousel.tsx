@@ -15,9 +15,9 @@ const Carousel = ({ slides }: { slides: any }) => {
     transition: '0.6s ease',
     borderRadius: '0 3px 3px 0',
     userSelect: 'none',
-    bg: 'green.300',
+    bg: 'accent_6',
     _hover: {
-      bg: 'green.400'
+      bg: 'accent_5'
     }
   }
 
@@ -52,7 +52,7 @@ const Carousel = ({ slides }: { slides: any }) => {
                 pos="absolute"
                 top="0"
                 left="0"
-                bg="green.300"
+                bg="accent_6"
                 borderRadius={'5px'}
               >
                 {sid + 1} / {slidesCount}
@@ -83,11 +83,11 @@ const Carousel = ({ slides }: { slides: any }) => {
               cursor="pointer"
               boxSize={['7px', , '15px']}
               m="0 2px"
-              bg={currentSlide === slide ? 'green.600' : 'green.300'}
+              bg={currentSlide === slide ? 'accent_3' : 'accent_6'}
               rounded="50%"
               display="inline-block"
               transition="background-color 0.6s ease"
-              _hover={{ bg: 'green.600' }}
+              _hover={{ bg: 'accent_3' }}
               onClick={() => setSlide(slide)}
             ></Box>
           ))}

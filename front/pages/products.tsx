@@ -18,7 +18,7 @@ export default function Products({ products }: { products: IProduct[] }) {
 
         <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
           {products?.map((product: IProduct) => (
-            <ProductCard data={product} />
+            <ProductCard id={product.id} data={product} />
           ))}
         </Flex>
       </View>
@@ -35,6 +35,7 @@ export default function Products({ products }: { products: IProduct[] }) {
         prevPage={() => setPage(prev => prev - 1)}
         startPage={() => setPage(1)}
         endPage={() => setPage(data.info.pages)}
+        lastPage={data.info.pages}
       />
     </Layout>
   )

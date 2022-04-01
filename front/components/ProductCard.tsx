@@ -2,7 +2,7 @@ import { Badge, Box, Button, Circle, Flex, Image, useColorModeValue } from '@cha
 import { Rating } from '../components'
 import { useShoppingCart } from '../store'
 
-const ProductCard = ({ data }: { data: any }) => {
+const ProductCard = ({ id, data }: { id: string | number; data: any }) => {
   const addToCart = useShoppingCart((state: any) => state.addToCart)
 
   const newProduct = {
@@ -15,7 +15,7 @@ const ProductCard = ({ data }: { data: any }) => {
   }
 
   return (
-    <Flex key={data.id} m=".5rem" w="18rem" alignItems="center" justifyContent="center">
+    <Flex key={id} m=".5rem" w="18rem" alignItems="center" justifyContent="center">
       <Box
         bg={useColorModeValue('white', 'gray.800')}
         w="full"

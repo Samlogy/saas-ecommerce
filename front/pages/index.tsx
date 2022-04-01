@@ -57,7 +57,6 @@ import {
   Layout,
   CookieBox,
   ModalPopUp,
-  SocialMediaButton,
   ErrorMessage,
   Carousel,
   ProductCard,
@@ -317,22 +316,22 @@ export default function Home() {
     { label: 'Form 3', content: form_3, icon: IoSearchSharp, description: 'desc 3' }
   ]
 
+  // const [show, setShow] = useState(false)
+  // const text =
+  //   ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab officiis delectus nobis sint iure, enim'
+
   return (
     <Layout isHeaderVisible isFooterVisible>
       <BackTop />
-
       <StepForm steps={steps} handleForm={handleSubmit(onTest)} />
 
-      {/* <Button onClick={() => setShow(true)}> show </Button>
-        <ModalPopUp open={show} close={setShow} text={text} mode="warning" /> */}
-
-      <Hero />
+      {/* <Hero />
       <About data={aboutData} />
       <Services data={servicesData} />
       <ProductsOnTrend data={productsData} />
       <CustomerReviews data={reviewsData} />
       <QuestionsAnswers data={questionsanswersdata} />
-      <AppStore />
+      <AppStore /> */}
     </Layout>
   )
 }

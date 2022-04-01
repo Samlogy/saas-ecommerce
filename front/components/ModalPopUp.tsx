@@ -8,8 +8,8 @@ import {
 
 interface IModalPopUp {
   open: boolean
-  close: () => void
-  text: string
+  close: (boolean) => void
+  text?: string
   mode: string
 }
 

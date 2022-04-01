@@ -3,12 +3,13 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 
 interface IPagination {
   page: number
-  changePage: (nbr: number) => void
+  changePage: any
   pages: number[]
   nextPage: any
   prevPage: any
   startPage: any
   endPage: any
+  lastPage: number
 }
 
 const Pagination = ({
@@ -18,7 +19,8 @@ const Pagination = ({
   nextPage,
   prevPage,
   startPage,
-  endPage
+  endPage,
+  lastPage
 }: IPagination) => {
   return (
     <Flex flexDir="row" justifyContent={'space-between'} w="60%" m="1.5rem auto">
@@ -45,6 +47,7 @@ const Pagination = ({
       <Flex flexDir="row" justifyContent={'center'}>
         {pages.map((page: number) => (
           <Button
+            key={page}
             color="gray.600"
             fontSize=".9rem"
             mx=".25rem"
@@ -61,7 +64,7 @@ const Pagination = ({
         aria-label="arrow right"
         icon={<RiArrowRightSLine size={22} color="gray" />}
         _hover={{ bg: 'gray.300', color: 'white' }}
-        disabled={page === 42}
+        disabled={page === lastPage}
         onClick={nextPage}
       />
 
@@ -70,7 +73,7 @@ const Pagination = ({
         fontSize=".9rem"
         mx=".25rem"
         _hover={{ bg: 'gray.400', color: 'white' }}
-        disabled={page === 42}
+        disabled={page === lastPage}
         onClick={endPage}
       >
         {' '}

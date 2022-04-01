@@ -319,18 +319,9 @@ export default function Home() {
 
   return (
     <Layout isHeaderVisible isFooterVisible>
-      {/* <Pagination page={page} 
-                  pages={[page, page+1, page+2, page+3]} 
-                  changePage={setPage}
-                  nextPage={() => setPage((prev) => prev + 1)} 
-                  prevPage={() => setPage((prev) => prev - 1)} 
-                  startPage={() => setPage(1)}
-                  endPage={() => setPage(data.info.pages)}
-                  /> */}
-
       <BackTop />
 
-      {/* <StepForm steps={steps} handleForm={handleSubmit(onTest)} /> */}
+      <StepForm steps={steps} handleForm={handleSubmit(onTest)} />
 
       {/* <Button onClick={() => setShow(true)}> show </Button>
         <ModalPopUp open={show} close={setShow} text={text} mode="warning" /> */}

@@ -1,10 +1,12 @@
-import { Heading, Text, Flex } from '@chakra-ui/react'
-
-import { Layout, ProductCard, View, Filter, Pagination } from '../components'
+import { Flex, Heading, Text } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { Filter, Layout, Pagination, ProductCard, View } from '../components'
 import { IProduct } from '../lib/interfaces'
 import productImage from '../public/images/product.png'
 
 export default function Products({ products }: { products: IProduct[] }) {
+  const [page, setPage] = useState<number>(1)
+  const data = { info: { pages: 10 } }
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Heading as="h2"> Products </Heading>
@@ -15,13 +17,25 @@ export default function Products({ products }: { products: IProduct[] }) {
         <Text> Product result are: {products?.length} </Text>
 
         <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
-          {products?.length > 0 && products?.map((product: any) => <ProductCard data={product} />)}
+          {products?.map((product: IProduct) => (
+            <ProductCard data={product} />
+          ))}
         </Flex>
       </View>
 
       <View cond={products?.length === 0}>
         <Text> There is no product with thoes filters </Text>
       </View>
+
+      <Pagination
+        page={page}
+        pages={[page, page + 1, page + 2, page + 3]}
+        changePage={setPage}
+        nextPage={() => setPage(prev => prev + 1)}
+        prevPage={() => setPage(prev => prev - 1)}
+        startPage={() => setPage(1)}
+        endPage={() => setPage(data.info.pages)}
+      />
     </Layout>
   )
 }

@@ -323,7 +323,7 @@ export default function Home() {
   return (
     <Layout isHeaderVisible isFooterVisible>
       <BackTop />
-      <StepForm steps={steps} handleForm={handleSubmit(onTest)} />
+      {/* <StepForm steps={steps} handleForm={handleSubmit(onTest)} /> */}
 
       {/* <Hero />
       <About data={aboutData} />

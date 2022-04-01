@@ -23,24 +23,24 @@ import { useForm } from 'react-hook-form'
 import { Layout, ErrorMessage } from '../components'
 import { contactSchema } from '../lib/validation'
 
-const data = [
+const contacts = [
   {
     data: '+91-988888888',
-    icon: <MdPhone color="#1970F1" size="20px" />
+    icon: <MdPhone color="#38a169" size="20px" />
   },
   {
     data: 'email@example.com',
-    icon: <MdEmail color="#1970F1" size="20px" />
+    icon: <MdEmail color="#38a169" size="20px" />
   },
   {
     data: 'Bali, Indonesia',
-    icon: <MdLocationOn color="#1970F1" size="20px" />
+    icon: <MdLocationOn color="#38a169" size="20px" />
   }
 ]
 const socialMedia = [
-  <MdFacebook size="28px" />,
-  <BsGithub size="28px" />,
-  <BsDiscord size="28px" />
+  <MdFacebook size="28px" color="#38a169" />,
+  <BsGithub size="28px" color="#38a169" />,
+  <BsDiscord size="28px" color="#38a169" />
 ]
 
 export default function contact() {
@@ -52,143 +52,127 @@ export default function contact() {
     resolver: yupResolver(contactSchema)
   })
 
-  const onContact = async (data: any) => {
+  const onContact = async (contact: any) => {
     console.log('contact')
     // api call
   }
 
   return (
     <Layout isHeaderVisible isFooterVisible>
-      <Box
-        boxShadow={'md'}
-        color="white"
-        borderRadius="lg"
-        m={{ sm: 4, md: 16, lg: 10 }}
-        p={{ sm: 5, md: 5 }}
-      >
-        <Box p={4}>
-          <Heading textAlign="center" mb="1.5rem">
-            {' '}
-            Contact{' '}
-          </Heading>
+      <Flex flexDir="column" justifyContent={'center'} alignItems="center" flexWrap={'wrap'}>
+        <Heading fontSize="1.5rem" mr="auto" mb="2rem">
+          {' '}
+          Contact Us{' '}
+        </Heading>
+        <Flex
+          flexDir={'row'}
+          justifyContent="space-between"
+          borderRadius={'10px'}
+          boxShadow="md"
+          p="1.5rem 2rem"
+        >
+          <Flex flexDir="column" justifyContent={'space-between'} p="1.5rem 2rem">
+            <Text color="gray.500" fontSize={'1rem'} mb="1.5rem" w="20rem">
+              Reach out to us today via any of the given information
+            </Text>
 
-          <Flex justifyContent="space-evenly" flexWrap="wrap-reverse">
-            <WrapItem>
-              <Box>
-                <Text mt={{ sm: 3, md: 3, lg: 5 }} color="gray.500" fontSize={'1.2rem'}>
-                  Reach out to us today via any of the given information
-                </Text>
+            <Flex flexDir={'column'} alignItems="flex-start">
+              {contacts.map(contact => (
+                <Flex justifyContent={'space-between'} w="15rem">
+                  <Box as="span"> {contact.icon} </Box>
+                  <Text fontSize="1rem" color="black" w="10rem">
+                    {' '}
+                    {contact.data}{' '}
+                  </Text>
+                </Flex>
+              ))}
+            </Flex>
 
-                <Box py={{ base: 5, sm: 5, md: 8, lg: 10 }}>
-                  <VStack pl={0} spacing={3} alignItems="flex-start">
-                    {data.map(el => (
-                      <Flex justifyContent={'space-between'} w="15rem">
-                        <Box as="span"> {el.icon} </Box>
-                        <Text fontSize="1rem" color="black" w="10rem">
-                          {' '}
-                          {el.data}{' '}
-                        </Text>
-                      </Flex>
-                    ))}
-                  </VStack>
-                </Box>
-                <HStack mt={{ lg: 10, md: 10 }} spacing={5} px={5} alignItems="flex-start">
-                  {socialMedia.map(icon => (
-                    <IconButton
-                      aria-label="facebook"
-                      variant="ghost"
-                      size="lg"
-                      isRound={true}
-                      icon={icon}
-                    />
-                  ))}
-                </HStack>
-              </Box>
-            </WrapItem>
-
-            <WrapItem mb="1rem">
-              <Box bg="white" borderRadius="lg">
-                <Box m={8} color="#0B0E3F">
-                  <VStack spacing={5}>
-                    <form onSubmit={handleSubmit(onContact)}>
-                      <FormControl id="name" mb=".5rem">
-                        <FormLabel>
-                          Your Name
-                          <Box as="span" color="gray.500" fontSize=".85rem" fontStyle={'italic'}>
-                            {' '}
-                            (Optional){' '}
-                          </Box>
-                        </FormLabel>
-                        <InputGroup borderColor="#E0E1E7">
-                          <InputLeftElement
-                            pointerEvents="none"
-                            children={<BsPerson color="gray.800" />}
-                          />
-                          <Input
-                            type="text"
-                            size="md"
-                            isInvalid={errors.name ? true : false}
-                            errorBorderColor="error"
-                            borderColor="gray.300"
-                            borderRadius="4px"
-                            {...register('name')}
-                          />
-                        </InputGroup>
-                        {errors.name && <ErrorMessage error={errors.name.message} />}
-                      </FormControl>
-
-                      <FormControl id="name" mb=".5rem">
-                        <FormLabel> Email </FormLabel>
-                        <InputGroup borderColor="#E0E1E7">
-                          <InputLeftElement
-                            pointerEvents="none"
-                            children={<MdOutlineEmail color="gray.800" />}
-                          />
-                          <Input
-                            type="email"
-                            size="md"
-                            isInvalid={errors.email ? true : false}
-                            errorBorderColor="error"
-                            borderColor="gray.300"
-                            borderRadius="4px"
-                            {...register('email')}
-                          />
-                        </InputGroup>
-                        {errors.email && <ErrorMessage error={errors.email.message} />}
-                      </FormControl>
-
-                      <FormControl id="name" mb=".5rem">
-                        <FormLabel> Message </FormLabel>
-                        <Textarea
-                          _hover={{ borderRadius: 'gray.300' }}
-                          placeholder="message"
-                          isInvalid={errors.email ? true : false}
-                          errorBorderColor="error"
-                          borderColor="gray.300"
-                          borderRadius="4px"
-                          {...register('message')}
-                        />
-                        {errors.message && <ErrorMessage error={errors.message.message} />}
-                      </FormControl>
-
-                      <FormControl id="name" float="right" mb=".5rem">
-                        <Button
-                          type="submit"
-                          bg="green.500"
-                          color="white"
-                          _hover={{ color: 'green.600' }}
-                        >
-                          Send Message
-                        </Button>
-                      </FormControl>
-                    </form>
-                  </VStack>
-                </Box>
-              </Box>
-            </WrapItem>
+            <Flex flexDir="row" pl={0} alignItems="flex-end">
+              {socialMedia.map(icon => (
+                <IconButton
+                  aria-label="facebook"
+                  variant="ghost"
+                  size="lg"
+                  py=".5rem"
+                  isRound={true}
+                  icon={icon}
+                />
+              ))}
+            </Flex>
           </Flex>
-        </Box>
-      </Box>
+
+          <Box p="1.5rem 2rem">
+            <form onSubmit={handleSubmit(onContact)}>
+              <FormControl id="name" mb=".5rem">
+                <FormLabel>
+                  Your Name
+                  <Box as="span" color="gray.500" fontSize=".85rem" fontStyle={'italic'}>
+                    {' '}
+                    (Optional){' '}
+                  </Box>
+                </FormLabel>
+                <InputGroup borderColor="#E0E1E7">
+                  <InputLeftElement pointerEvents="none" children={<BsPerson color="gray.800" />} />
+                  <Input
+                    type="text"
+                    size="md"
+                    isInvalid={errors.name ? true : false}
+                    focusBorderColor={errors.name ? 'error' : 'accent_6'}
+                    errorBorderColor="error"
+                    borderColor="gray.300"
+                    borderRadius="4px"
+                    {...register('name')}
+                  />
+                </InputGroup>
+                {errors.name && <ErrorMessage error={errors.name.message} />}
+              </FormControl>
+
+              <FormControl id="name" mb=".5rem">
+                <FormLabel> Email </FormLabel>
+                <InputGroup borderColor="#E0E1E7">
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<MdOutlineEmail color="gray.800" />}
+                  />
+                  <Input
+                    type="email"
+                    size="md"
+                    isInvalid={errors.email ? true : false}
+                    focusBorderColor={errors.email ? 'error' : 'accent_6'}
+                    errorBorderColor="error"
+                    borderColor="gray.300"
+                    borderRadius="4px"
+                    {...register('email')}
+                  />
+                </InputGroup>
+                {errors.email && <ErrorMessage error={errors.email.message} />}
+              </FormControl>
+
+              <FormControl id="name" mb=".5rem">
+                <FormLabel> Message </FormLabel>
+                <Textarea
+                  _hover={{ borderRadius: 'gray.300' }}
+                  placeholder="message"
+                  isInvalid={errors.message ? true : false}
+                  focusBorderColor={errors.message ? 'error' : 'accent_6'}
+                  errorBorderColor="error"
+                  borderColor="gray.300"
+                  borderRadius="4px"
+                  {...register('message')}
+                />
+                {errors.message && <ErrorMessage error={errors.message.message} />}
+              </FormControl>
+
+              <FormControl id="name" float="right" mb=".5rem">
+                <Button type="submit" bg="accent_4" color="white" _hover={{ bg: 'accent_3' }}>
+                  Send Message
+                </Button>
+              </FormControl>
+            </form>
+          </Box>
+        </Flex>
+      </Flex>
     </Layout>
   )
 }

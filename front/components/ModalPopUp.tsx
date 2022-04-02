@@ -8,7 +8,7 @@ import {
 
 interface IModalPopUp {
   open: boolean
-  close: (boolean) => void
+  close: any
   text?: string
   mode: string
 }

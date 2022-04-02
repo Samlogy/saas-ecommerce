@@ -1,87 +1,26 @@
-import Head from 'next/head'
-import Link from 'next/link'
 import {
-  Box,
-  Heading,
-  chakra,
-  Container,
-  Radio,
-  Text,
-  Button,
-  Stack,
-  Icon,
-  useColorModeValue,
-  createIcon,
-  SimpleGrid,
-  Image,
-  Flex,
-  StackDivider,
-  Select,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  IconButton,
   Accordion,
-  AccordionItem,
   AccordionButton,
+  AccordionItem,
   AccordionPanel,
-  AccordionIcon,
+  Box,
+  Button,
   Divider,
-  Avatar,
+  Flex,
   FormControl,
   FormLabel,
+  Heading,
+  Image,
   Input,
-  useColorMode
+  Text
 } from '@chakra-ui/react'
-
-import { IoAnalyticsSharp, IoLogoBitcoin, IoSearchSharp } from 'react-icons/io5'
-import {
-  ReactElement,
-  useRef,
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-  createContext,
-  useContext,
-  useReducer
-} from 'react'
-
-import {
-  ShoppingCart,
-  Layout,
-  CookieBox,
-  ModalPopUp,
-  ErrorMessage,
-  Carousel,
-  ProductCard,
-  Rating,
-  BackTop,
-  DarkModeToggle,
-  Pagination,
-  StepForm,
-  Comment,
-  AddComment,
-  ListingComments,
-  Filter
-} from '../components'
-import { useLocale } from '../lib/hooks'
-import { useShoppingCart } from '../store'
-import { IconReview } from '../public/icons'
-
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import { useQuery, useMutation, useQueryClient } from 'react-query'
-import { FiPlus, FiMinus } from 'react-icons/fi'
-
-import { getAllUsers, getOneUser, createUser, updateUser, deleteUser } from '../services'
+import { FiMinus, FiPlus } from 'react-icons/fi'
+import { IoAnalyticsSharp, IoLogoBitcoin, IoSearchSharp } from 'react-icons/io5'
+import { BackTop, ErrorMessage, Layout, ProductCard, Rating } from '../components'
 import { testSchema } from '../lib/validation'
-
+import { IconReview } from '../public/icons'
 import heroImage from '../public/images/home.png'
 import productImage from '../public/images/product.png'
 
@@ -316,22 +255,18 @@ export default function Home() {
     { label: 'Form 3', content: form_3, icon: IoSearchSharp, description: 'desc 3' }
   ]
 
-  // const [show, setShow] = useState(false)
-  // const text =
-  //   ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab officiis delectus nobis sint iure, enim'
-
   return (
     <Layout isHeaderVisible isFooterVisible>
       <BackTop />
       {/* <StepForm steps={steps} handleForm={handleSubmit(onTest)} /> */}
 
-      {/* <Hero />
+      <Hero />
       <About data={aboutData} />
       <Services data={servicesData} />
       <ProductsOnTrend data={productsData} />
       <CustomerReviews data={reviewsData} />
       <QuestionsAnswers data={questionsanswersdata} />
-      <AppStore /> */}
+      <AppStore />
     </Layout>
   )
 }

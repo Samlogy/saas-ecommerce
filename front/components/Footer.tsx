@@ -1,23 +1,21 @@
 import {
   Box,
+  Button,
   chakra,
   Container,
   Flex,
-  Stack,
-  Text,
-  Input,
-  Button,
   Heading,
   Image,
+  Input,
+  Stack,
+  Text,
   useColorModeValue,
   VisuallyHidden
 } from '@chakra-ui/react'
-import React from 'react'
 import Link from 'next/link'
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 import { Logo } from '../public/icons'
-
 import card1 from '../public/images/card1.png'
 import card2 from '../public/images/card2.png'
 import card3 from '../public/images/card3.png'
@@ -30,15 +28,7 @@ export default function Footer() {
 
   return (
     <Box bg={bgColor} color={textColor}>
-      <Container
-        as={Flex}
-        maxW={'6xl'}
-        py={4}
-        spacing={4}
-        justify={['center', 'space-evenly', 'space-between', '']}
-        align={'start'}
-        flexWrap="wrap"
-      >
+      <Flex justify={['flex-start', '', 'space-around', '']} align={'center'} flexWrap="wrap">
         <Flex flexDir={'column'}>
           <Box mb="1rem">
             {' '}
@@ -52,9 +42,9 @@ export default function Footer() {
         <Links />
 
         <PaymentAccpect />
-      </Container>
+      </Flex>
 
-      <Box borderTopWidth={1} borderStyle={'solid'} borderColor={borderColor}>
+      <Box border="1px solid" borderColor={borderColor}>
         <Container
           as={Stack}
           maxW={'6xl'}
@@ -91,7 +81,7 @@ const Subscribe = () => {
     console.log('subscribed !!')
   }
   return (
-    <Flex flexDir={'column'} w="15rem">
+    <Flex flexDir={'column'} w="15rem" m=".5rem">
       <Heading size="12rem" mb="1rem" color="accent_2">
         {' '}
         Subscribe to our newsletter to stay update{' '}
@@ -99,7 +89,7 @@ const Subscribe = () => {
       <Flex
         justifyContent={'space-between'}
         bg="gray.200"
-        p=".75rem"
+        p=".5rem"
         borderRadius={'10px'}
         w="18rem"
       >
@@ -109,7 +99,6 @@ const Subscribe = () => {
           size="md"
           bg="transparent"
           border="none"
-          w="10rem"
           _focus={{ border: 'none' }}
           onChange={(e: any) => setEmail(e.target.value)}
           placeholder="Enter your email"
@@ -131,7 +120,7 @@ const Subscribe = () => {
 }
 const PaymentAccpect = () => {
   return (
-    <Flex flexDir={'column'}>
+    <Flex flexDir={'column'} m=".5rem" w="10rem">
       <Heading size="1rem" mb="1rem" color="accent_2">
         {' '}
         We accept all credit cards{' '}
@@ -147,7 +136,7 @@ const PaymentAccpect = () => {
 }
 const SocialMedia = () => {
   return (
-    <Flex flexDir={'column'}>
+    <Flex flexDir={'column'} m=".5rem">
       <Heading size="12rem" mb="1rem" color="accent_2">
         {' '}
         Follow us on{' '}
@@ -170,7 +159,7 @@ const SocialMedia = () => {
 }
 const Links = () => {
   return (
-    <Flex flexDir={'column'} mb="1rem">
+    <Flex flexDir={'column'} mb="1rem" m=".5rem">
       <Heading size="12rem" mb="1rem" color="accent_2">
         {' '}
         Site Map{' '}

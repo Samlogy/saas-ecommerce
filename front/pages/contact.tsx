@@ -58,7 +58,7 @@ export default function contact() {
   }
 
   return (
-    <Layout>
+    <Layout isHeaderVisible isFooterVisible>
       <Flex flexDir="column" justifyContent={'center'} alignItems="center">
         <Heading fontSize="1.5rem" mr="auto" mb="2rem">
           {' '}

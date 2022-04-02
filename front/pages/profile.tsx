@@ -1,37 +1,35 @@
 import { Box, Button, Flex, Heading, Image } from '@chakra-ui/react'
 import Link from 'next/link'
-import { AiOutlineMail, AiOutlineUser } from 'react-icons/ai'
+import { AiOutlineMail } from 'react-icons/ai'
 import { BsCalendarDate } from 'react-icons/bs'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
-// import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0'
 import { Layout, View } from '../components'
 import profileImage from '../public/images/profile.jpg'
 
 function Profile(props: any) {
-  const user = { avatar: profileImage.src }
-
-  const userData = {
-    ...user,
-    ...props.userExtend
-  }
+  const user = { avatar: profileImage.src } // super tokens
+  const userExtends = props.userExtends // our db
+  const shipping = props.shipping // our db
 
   return (
     <Layout isHeaderVisible isFooterVisible>
       <View cond={user}>
-        <Heading as="h1" fontSize="30px">
+        <Heading as="h1" fontSize="1.5rem">
           Profile
         </Heading>
 
-        <DisplayUserData data={userData} />
-        <DisplayBillingData data={props.shipping} />
+        <DisplayUserData data={user} />
+        <DisplayBillingData data={shipping} />
 
-        <Button bg={'green.400'} color={'white'} w="11rem" _hover={{ bg: 'green.500' }}>
+        <Button bg={'accent_3'} color={'white'} w="10rem" _hover={{ bg: 'accent_4' }}>
           <Link href="/edit-profile"> Edit My Profile </Link>
         </Button>
       </View>
     </Layout>
   )
 }
+
+export default Profile
 
 const DisplayUserData = ({ data }: { data: any }) => {
   return (
@@ -44,46 +42,14 @@ const DisplayUserData = ({ data }: { data: any }) => {
         borderRadius="full"
         boxSize="150px"
         src={data?.avatar}
-        alt="Dan Abramov"
+        alt="avatar image"
         fallbackSrc="https://via.placeholder.com/150"
       />
 
       <Flex flexDir="column" mb="1.5rem" mt=".5rem">
-        <Flex alignItems={'center'} mb=".5rem">
-          <AiOutlineUser size={24} />
-          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
-            {' '}
-            Full Name:{' '}
-          </Box>
-          <BoxData data={data.name} />
-        </Flex>
-
-        <Flex alignItems={'center'} mb=".5rem">
-          <AiOutlineMail size={24} />
-          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
-            {' '}
-            Email Address:{' '}
-          </Box>
-          <BoxData data={data.email} />
-        </Flex>
-
-        <Flex alignItems={'center'} mb=".5rem">
-          <HiOutlineLocationMarker size={24} />
-          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
-            {' '}
-            Address:{' '}
-          </Box>
-          <BoxData data={data?.address} />
-        </Flex>
-
-        <Flex alignItems={'center'} mb=".5rem">
-          <BsCalendarDate size={24} />
-          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
-            {' '}
-            Date creation:{' '}
-          </Box>
-          <BoxData data={data.createdAt} />
-        </Flex>
+        <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} />
+        <BoxData data={data?.address} icon={<HiOutlineLocationMarker size={24} />} />
+        <BoxData data={data?.createdAt} icon={<BsCalendarDate size={24} />} />
       </Flex>
     </>
   )
@@ -92,62 +58,41 @@ const DisplayUserData = ({ data }: { data: any }) => {
 const DisplayBillingData = ({ data }: { data: any }) => {
   return (
     <>
-      <Heading as="h2" fontSize="1.5rem">
+      <Heading as="h2" fontSize="1.5rem" mb="1rem">
         {' '}
         My Billing Informations{' '}
       </Heading>
-      <Flex flexDir="column" my="1.5rem">
-        <Flex alignItems={'center'} mb=".5rem">
-          <AiOutlineUser size={24} />
-          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
-            {' '}
-            Full Name:{' '}
-          </Box>
-          <BoxData data={data.fullName} />
-        </Flex>
 
-        <Flex alignItems={'center'} mb=".5rem">
-          <AiOutlineMail size={24} />
-          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
-            {' '}
-            Email Address:{' '}
-          </Box>
-          <BoxData data={data.email} />
-        </Flex>
-
-        <Flex alignItems={'center'} mb=".5rem">
-          <HiOutlineLocationMarker size={24} />
-          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
-            {' '}
-            Address:{' '}
-          </Box>
-          <BoxData data={data.address} />
-        </Flex>
-
-        <Flex alignItems={'center'} mb=".5rem">
-          <BsCalendarDate size={24} />
-          <Box as="span" fontSize="16px" fontWeight="500" ml=".25rem">
-            {' '}
-            Date creation:{' '}
-          </Box>
-          <BoxData data={data.createdAt} />
-        </Flex>
+      <Flex flexDir="column" mb="1.5rem" mt=".5rem">
+        <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} />
+        <BoxData data={data?.address} icon={<HiOutlineLocationMarker size={24} />} />
+        <BoxData data={data?.createdAt} icon={<BsCalendarDate size={24} />} />
       </Flex>
     </>
   )
 }
 
-const BoxData = ({ data }: { data: any }) => {
-  return data ? (
-    <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem">
-      {' '}
-      {data}{' '}
-    </Box>
-  ) : (
-    <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem" color="gray.500">
-      {' '}
-      ---{' '}
-    </Box>
+const BoxData = ({ data, icon }: { data: any; icon: any }) => {
+  return (
+    <Flex alignItems={'center'} mb=".5rem">
+      {/* <AiOutlineMail size={24} /> */}
+      {icon}
+      <Box as="span" fontSize="1rem" fontWeight="500" ml=".25rem">
+        {' '}
+        Email Address:{' '}
+      </Box>
+      {data ? (
+        <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem">
+          {' '}
+          {data}{' '}
+        </Box>
+      ) : (
+        <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem" color="gray.500">
+          {' '}
+          ---{' '}
+        </Box>
+      )}
+    </Flex>
   )
 }
 
@@ -164,9 +109,3 @@ export async function getStaticProps() {
     revalidate: 10
   }
 }
-
-export default Profile
-// export default withPageAuthRequired(Profile, {
-//   onRedirecting: () => <Spinner thickness="4px" speed="0.65s" size="xl" />,
-//   onError: error => <Text> {error.message} </Text>
-// })

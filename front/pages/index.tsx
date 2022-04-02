@@ -82,18 +82,18 @@ export default function Home() {
   ]
   const servicesData = [
     {
-      icon: <IoAnalyticsSharp size={24} />,
+      image: heroImage.src,
       title: 'Fiability',
       text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
     },
     {
-      icon: <IoAnalyticsSharp size={24} />,
-      title: 'Fiability',
+      image: heroImage.src,
+      title: 'Speed',
       text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
     },
     {
-      icon: <IoAnalyticsSharp size={24} />,
-      title: 'Fiability',
+      image: heroImage.src,
+      title: 'Quality',
       text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
     }
   ]
@@ -317,8 +317,9 @@ const Services = ({ data }: { data: any }) => {
     <SectionWrapper title="Some Services We Offer">
       <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
         {data.length > 0 &&
-          data.map((el: any) => (
+          data.map((service: any) => (
             <Flex
+              key={service.title}
               flexDir={'column'}
               justifyContent="center"
               alignItems={'center'}
@@ -330,12 +331,12 @@ const Services = ({ data }: { data: any }) => {
             >
               <Text fontWeight={'600'} fontSize="1.3rem" textAlign="center" mb=".75rem">
                 {' '}
-                {el.title}{' '}
+                {service.title}{' '}
               </Text>
-              <Image src={heroImage.src} boxSize={['135px', '', '', '']} />
+              <Image src={service.image} boxSize={['135px', '', '', '']} />
               <Text fontSize=".9rem" mb=".75rem">
                 {' '}
-                {el.text}{' '}
+                {service.text}{' '}
               </Text>
               <Text fontWeight={'bold'}> Learn More </Text>
             </Flex>

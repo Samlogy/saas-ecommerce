@@ -53,34 +53,38 @@ export default function contact() {
   })
 
   const onContact = async (contact: any) => {
-    console.log('contact')
+    console.log(contact)
     // api call
   }
 
   return (
-    <Layout isHeaderVisible isFooterVisible>
-      <Flex flexDir="column" justifyContent={'center'} alignItems="center" flexWrap={'wrap'}>
+    <Layout>
+      <Flex flexDir="column" justifyContent={'center'} alignItems="center">
         <Heading fontSize="1.5rem" mr="auto" mb="2rem">
           {' '}
           Contact Us{' '}
         </Heading>
         <Flex
           flexDir={'row'}
-          justifyContent="space-between"
+          flexWrap={'wrap'}
+          justifyContent={['center', '', 'space-between', '']}
           borderRadius={'10px'}
           boxShadow="md"
           p="1.5rem 2rem"
         >
           <Flex flexDir="column" justifyContent={'space-between'} p="1.5rem 2rem">
-            <Text color="gray.500" fontSize={'1rem'} mb="1.5rem" w="20rem">
+            <Text color="gray.500" fontSize={'1rem'} mb="1.5rem" maxW="20rem" minW="15rem">
               Reach out to us today via any of the given information
             </Text>
 
-            <Flex flexDir={'column'} alignItems="flex-start">
+            <Flex flexDir={'column'} alignItems="flex-start" mb="1rem">
               {contacts.map(contact => (
-                <Flex justifyContent={'space-between'} w="15rem">
-                  <Box as="span"> {contact.icon} </Box>
-                  <Text fontSize="1rem" color="black" w="10rem">
+                <Flex justifyContent={'space-between'} maxW="15rem">
+                  <Box as="span" mr="1rem">
+                    {' '}
+                    {contact.icon}{' '}
+                  </Box>
+                  <Text fontSize="1rem" color="black" maxW="10rem">
                     {' '}
                     {contact.data}{' '}
                   </Text>
@@ -88,13 +92,19 @@ export default function contact() {
               ))}
             </Flex>
 
-            <Flex flexDir="row" pl={0} alignItems="flex-end">
+            <Flex
+              flexDir="row"
+              pl={0}
+              alignItems={'center'}
+              justifyContent={['center', '', 'start', '']}
+            >
               {socialMedia.map(icon => (
                 <IconButton
-                  aria-label="facebook"
+                  aria-label="social media icon"
                   variant="ghost"
                   size="lg"
                   py=".5rem"
+                  mr={['1rem', '', '0', '']}
                   isRound={true}
                   icon={icon}
                 />

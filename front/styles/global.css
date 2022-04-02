@@ -3,6 +3,7 @@ body {
   font-family: 'Poppins', sans-serif !important;
 }
 
+/*=============== Language Switcher ===============*/
 select.select-language {
   background-color: transparent;
   border-radius: 5px;
@@ -12,6 +13,18 @@ select.select-language:hover {
   cursor: pointer;
 }
 
+/*=============== STAR ===============*/
 .star:hover {
   cursor: pointer;
+}
+
+/*=============== SCROLL BAR ===============*/
+::-webkit-scrollbar {
+  width: 0.6rem;
+  background: hsl(152, 4%, 53%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(152, 4%, 29%);
+  border-radius: 0.5rem;
 }

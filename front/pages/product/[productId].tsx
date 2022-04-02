@@ -14,12 +14,14 @@ import {
 } from '@chakra-ui/react'
 import { MdLocalShipping } from 'react-icons/md'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
+import { useEffect, useState } from 'react'
 
 import { Layout, Carousel, View, ListingComments } from '../../components'
 import { useShoppingCart } from '../../store'
 import { IComment, IProduct } from '../../lib/interfaces'
 
 import productImage from '../../public/images/product.png'
+import heroImage from '../../public/images/home.png'
 
 export default function Product({ product, comments }: { product: any; comments: IComment[] }) {
   const increment = useShoppingCart((state: any) => state.increment)
@@ -31,6 +33,19 @@ export default function Product({ product, comments }: { product: any; comments:
     else increment(product.id)
   }
 
+  const [image, setImage] = useState<string>('')
+  const [images, setImages] = useState<string[]>(product.image)
+
+  // useEffect(() => {
+  //   if (image !== '') {
+  //     console.log(image)
+  //     setImages((prev: any) => {
+  //       let newList = prev.filter(img => img !== img)
+  //       return newList.push(image)
+  //     })
+  //   }
+  // }, [image])
+
   return (
     <Layout isHeaderVisible isFooterVisible>
       <SimpleGrid
@@ -38,29 +53,27 @@ export default function Product({ product, comments }: { product: any; comments:
         spacing={{ base: 8, md: 10 }}
         py={{ base: 18, md: 24 }}
       >
-        {/* <Flex> */}
-        <View cond={product.img.length === 0}>
+        <View cond={product.image.length === 0}>
           <Text> No Images </Text>
         </View>
 
-        <View cond={product.img.length === 1}>
+        <View cond={product.image.length === 1}>
           <Image
             rounded={'md'}
             alt={'product image'}
-            src={product.img[0]}
+            src={image || product.image[0]}
             fit={'cover'}
             align={'center'}
             w={'100%'}
             h={{ base: '100%', sm: '400px', lg: '500px' }}
           />
-          <MiniCarousel images={product.img} />
+          <CarouselPreview images={product.image} setImage={setImage} />
         </View>
 
-        <View cond={product.img.length > 1}>
-          <Carousel slides={product.img} />
-          <MiniCarousel images={product.img} />
+        <View cond={product.image.length > 1}>
+          <Carousel slides={product.image} />
+          <CarouselPreview images={product.image} setImage={setImage} />
         </View>
-        {/* </Flex> */}
 
         <Stack spacing={{ base: 6, md: 10 }}>
           <Box as={'header'}>
@@ -140,29 +153,35 @@ export default function Product({ product, comments }: { product: any; comments:
   )
 }
 
-const MiniCarousel = ({ images }: { images: string[] }) => {
+const CarouselPreview = ({ images, setImage }: { images: string[]; setImage: any }) => {
   return (
     <Flex
       flexWrap={'wrap'}
       justifyContent="space-evenly"
-      p={['.25rem', '', '1rem', '']}
+      p={['.25rem', '', '.5rem', '']}
       bg="green.100"
       borderRadius={'10px'}
       my="1.5rem"
-      w={['15rem', '', '100%', '']}
+      w={['15rem', '', '70%', '']}
       mx={['auto', '', '', '']}
     >
-      {images.map(image => (
+      {images.map(img => (
         <Image
           rounded={'md'}
           alt={'product image'}
-          src={image}
+          src={img}
           border="1px solid white"
           bg="white"
           borderRadius={'10px'}
-          boxSize={['50px', '', '100px', '']}
+          boxSize={['50px', '', '75px', '']}
           boxShadow="md"
-          _hover={{ cursor: 'pointer' }}
+          _hover={{
+            cursor: 'pointer',
+            border: '2px solid',
+            borderColor: 'accent_3',
+            transition: 'border .25s'
+          }}
+          onClick={() => setImage(img)}
         />
       ))}
     </Flex>
@@ -174,7 +193,7 @@ export const getServerSideProps = async context => {
   const product = {
     id: 1,
     name: 'Automatic Watch',
-    img: [productImage.src, productImage.src, productImage.src],
+    image: [productImage.src, heroImage.src, productImage.src],
     quantity: 1,
     price: 350,
     description:

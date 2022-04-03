@@ -7,19 +7,12 @@ import {
   Button,
   Divider,
   Flex,
-  FormControl,
-  FormLabel,
   Heading,
   Image,
-  Input,
   Text
 } from '@chakra-ui/react'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
 import { FiMinus, FiPlus } from 'react-icons/fi'
-import { IoAnalyticsSharp, IoLogoBitcoin, IoSearchSharp } from 'react-icons/io5'
-import { BackTop, ErrorMessage, Layout, ProductCard, Rating } from '../components'
-import { testSchema } from '../lib/validation'
+import { BackTop, Layout, ProductCard, Rating } from '../components'
 import { IconReview } from '../public/icons'
 import heroImage from '../public/images/home.png'
 import productImage from '../public/images/product.png'
@@ -126,139 +119,9 @@ export default function Home() {
     text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi facilis, minus earum labore vero animi necessitatibus tempora? Assumenda, itaque ad eveniet explicabo quia vero porro quos voluptatum ipsum velit.'
   }
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({
-    resolver: yupResolver(testSchema)
-  })
-
-  const onTest = data => {
-    console.log('step form: ', data)
-  }
-
-  const form_1 = (
-    <Flex
-      flexDir="column"
-      alignItems={'center'}
-      m="2rem auto"
-      p={4}
-      w="400px"
-      rounded={'xl'}
-      boxShadow={'lg'}
-    >
-      <FormControl id="username" mb=".5rem">
-        <FormLabel> username </FormLabel>
-        <Input
-          type="text"
-          placeholder=""
-          _placeholder={{ color: 'gray.500' }}
-          isInvalid={errors.username ? true : false}
-          errorBorderColor="error"
-          borderColor="gray.300"
-          borderRadius="4px"
-          {...register('username')}
-        />
-        {errors.username && <ErrorMessage error={errors.username.message} />}
-      </FormControl>
-
-      <FormControl id="email" mb=".5rem">
-        <FormLabel> Email Address </FormLabel>
-        <Input
-          type="email"
-          placeholder="your-email@example.com"
-          _placeholder={{ color: 'gray.500' }}
-          isInvalid={errors.email ? true : false}
-          errorBorderColor="error"
-          borderColor="gray.300"
-          borderRadius="4px"
-          {...register('email')}
-        />
-        {errors.email && <ErrorMessage error={errors.email.message} />}
-      </FormControl>
-    </Flex>
-  )
-
-  const form_2 = (
-    <Flex
-      flexDir="column"
-      alignItems={'center'}
-      m="2rem auto"
-      p={4}
-      w="400px"
-      rounded={'xl'}
-      boxShadow={'lg'}
-    >
-      <FormControl id="fullName" mb=".5rem">
-        <FormLabel> fullName </FormLabel>
-        <Input
-          type="text"
-          placeholder=""
-          _placeholder={{ color: 'gray.500' }}
-          isInvalid={errors.fullName ? true : false}
-          errorBorderColor="error"
-          borderColor="gray.300"
-          borderRadius="4px"
-          {...register('fullName')}
-        />
-        {errors.fullName && <ErrorMessage error={errors.fullName.message} />}
-      </FormControl>
-
-      <FormControl id="email" mb=".5rem">
-        <FormLabel> address </FormLabel>
-        <Input
-          type="text"
-          placeholder=""
-          _placeholder={{ color: 'gray.500' }}
-          isInvalid={errors.address ? true : false}
-          errorBorderColor="error"
-          borderColor="gray.300"
-          borderRadius="4px"
-          {...register('address')}
-        />
-        {errors.address && <ErrorMessage error={errors.address.message} />}
-      </FormControl>
-    </Flex>
-  )
-
-  const form_3 = (
-    <Flex
-      flexDir="column"
-      alignItems={'center'}
-      m="2rem auto"
-      p={4}
-      w="400px"
-      rounded={'xl'}
-      boxShadow={'lg'}
-    >
-      <FormControl id="age" mb=".5rem">
-        <FormLabel> age </FormLabel>
-        <Input
-          type="text"
-          placeholder=""
-          _placeholder={{ color: 'gray.500' }}
-          isInvalid={errors.age ? true : false}
-          errorBorderColor="error"
-          borderColor="gray.300"
-          borderRadius="4px"
-          {...register('age')}
-        />
-        {errors.age && <ErrorMessage error={errors.age.message} />}
-      </FormControl>
-    </Flex>
-  )
-
-  const steps = [
-    { label: 'Form 1', content: form_1, icon: IoAnalyticsSharp, description: 'desc 1' },
-    { label: 'Form 2', content: form_2, icon: IoLogoBitcoin, description: 'desc 2' },
-    { label: 'Form 3', content: form_3, icon: IoSearchSharp, description: 'desc 3' }
-  ]
-
   return (
     <Layout isHeaderVisible isFooterVisible>
       <BackTop />
-      {/* <StepForm steps={steps} handleForm={handleSubmit(onTest)} /> */}
 
       <Hero />
       <About data={aboutData} />

@@ -1,14 +1,13 @@
 import {
   Box,
   Heading,
-  Text,
   Button,
-  Image,
   FormControl,
   FormLabel,
   Input,
   Textarea,
-  useDisclosure,
+  Radio,
+  RadioGroup,
   Flex,
   Stack,
   Avatar,
@@ -16,12 +15,13 @@ import {
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { AiFillPlusCircle } from 'react-icons/ai'
 
-import { Layout, FormTemplate, ErrorMessage } from '../components'
+import { Layout, FormTemplate, ErrorMessage, View } from '../components'
 import { profileSchema } from '../lib/validation'
 
 export default function EditProfile({ profileData }) {
@@ -45,6 +45,8 @@ export default function EditProfile({ profileData }) {
   const onUploadImage = () => {}
   const picture = ''
   const isLoading = false
+
+  const [isVendor, setIsVendor] = useState<string>('none')
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -93,7 +95,7 @@ export default function EditProfile({ profileData }) {
               {errors.email && <ErrorMessage error={errors.email.message} />}
             </FormControl>
 
-            <FormControl id="price" mb="1rem">
+            <FormControl id="mobile" mb="1rem">
               <FormLabel> Mobile </FormLabel>
               <Input
                 type="number"
@@ -109,25 +111,23 @@ export default function EditProfile({ profileData }) {
               {errors.mobile && <ErrorMessage error={errors.mobile.message} />}
             </FormControl>
 
-            <Heading as="h2" fontSize="1.25rem" my="1.5rem">
-              My Billing Informations
+            <Heading as="h2" fontSize="1rem" my="1.5rem" display={'flex'} alignItems="center">
+              Are a Customer or a Vendor ?
+              <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
+                {' '}
+                (Optional){' '}
+              </Box>{' '}
             </Heading>
 
-            <FormControl id="address" mb="1rem">
-              <FormLabel> Billing Address </FormLabel>
-              <Input
-                type="text"
-                placeholder="My Billing Address"
-                _placeholder={{ color: 'gray.500' }}
-                isInvalid={errors.address ? true : false}
-                focusBorderColor={errors.address ? 'error' : 'accent_6'}
-                errorBorderColor="error"
-                borderColor="gray.300"
-                borderRadius="4px"
-                {...register('address')}
-              />
-              {errors.address && <ErrorMessage error={errors.address.message} />}
-            </FormControl>
+            <RadioGroup onChange={setIsVendor} value={isVendor} my="1rem" colorScheme="green">
+              <Stack direction="row" spacing={4}>
+                <Radio value={'false'}>Customer</Radio>
+                <Radio value={'true'}>Vendor</Radio>
+              </Stack>
+            </RadioGroup>
+
+            <CustomerForm isVendor={isVendor} />
+            <VendorForm isVendor={isVendor} />
 
             <Stack>
               <Button
@@ -203,5 +203,169 @@ const EditPicture = ({ data, upload, loading }: { data: any; upload?: any; loadi
         </FormControl>
       </FormLabel>
     </Box>
+  )
+}
+
+const VendorForm = ({ isVendor }: { isVendor: string }) => {
+  return (
+    <View cond={isVendor === 'true'} display="flex" flexDir={'column'}>
+      <Heading as="h2" fontSize="1.25rem" my="1.5rem" display={'flex'} alignItems="center">
+        My Company Informations{' '}
+        {/* <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
+          {' '}
+          (Optional){' '}
+        </Box>{' '} */}
+      </Heading>
+      <FormControl id="company_code" mb="1rem">
+        <FormLabel> Company Code </FormLabel>
+        <Textarea
+          placeholder="Company's Code"
+          _placeholder={{ color: 'gray.500' }}
+          // isInvalid={errors.company_code ? true : false}
+          // focusBorderColor={errors.company_code ? 'error' : 'accent_6'}
+          errorBorderColor="error"
+          borderColor="gray.300"
+          borderRadius="4px"
+          // {...register('company_code')}
+        />
+        {/* {errors.company_code && <ErrorMessage error={errors.company_code.message} />} */}
+      </FormControl>
+
+      <FormControl id="company_address" mb="1rem">
+        <FormLabel> Shipping Address 2 </FormLabel>
+        <Textarea
+          placeholder="Company Address"
+          _placeholder={{ color: 'gray.500' }}
+          // isInvalid={errors.company_address ? true : false}
+          // focusBorderColor={errors.company_address ? 'error' : 'accent_6'}
+          errorBorderColor="error"
+          borderColor="gray.300"
+          borderRadius="4px"
+          // {...register('company_address')}
+        />
+        {/* {errors.company_address && <ErrorMessage error={errors.company_address.message} />} */}
+      </FormControl>
+
+      <FormControl id="country_code" mb="1rem">
+        <FormLabel> My Country </FormLabel>
+        <Input
+          type="number"
+          placeholder="My Country"
+          _placeholder={{ color: 'gray.500' }}
+          // isInvalid={errors.country_code ? true : false}
+          // focusBorderColor={errors.country_code ? 'error' : 'accent_6'}
+          errorBorderColor="error"
+          borderColor="gray.300"
+          borderRadius="4px"
+          // {...register('country_code')}
+        />
+        {/* {errors.country_code && <ErrorMessage error={errors.country_code.message} />} */}
+      </FormControl>
+
+      <FormControl id="postal_code" mb="1rem">
+        <FormLabel> Postal Code </FormLabel>
+        <Input
+          type="number"
+          placeholder="My Postal Code"
+          _placeholder={{ color: 'gray.500' }}
+          // isInvalid={errors.company_postal_code ? true : false}
+          // focusBorderColor={errors.company_postal_code ? 'error' : 'accent_6'}
+          errorBorderColor="error"
+          borderColor="gray.300"
+          borderRadius="4px"
+          // {...register('company_postal_code')}
+        />
+        {/* {errors.company_postal_code && <ErrorMessage error={errors.company_postal_code.message} />} */}
+      </FormControl>
+
+      <FormControl id="company_description" mb="1rem">
+        <FormLabel> Company Description </FormLabel>
+        <Textarea
+          placeholder="Company's Description"
+          _placeholder={{ color: 'gray.500' }}
+          // isInvalid={errors.company_description ? true : false}
+          // focusBorderColor={errors.company_description ? 'error' : 'accent_6'}
+          errorBorderColor="error"
+          borderColor="gray.300"
+          borderRadius="4px"
+          // {...register('company_description')}
+        />
+        {/* {errors.company_description && <ErrorMessage error={errors.company_description.message} />} */}
+      </FormControl>
+    </View>
+  )
+}
+const CustomerForm = ({ isVendor }: { isVendor: string }) => {
+  return (
+    <View cond={isVendor === 'false'} display="flex" flexDir={'column'}>
+      <Heading as="h2" fontSize="1.25rem" my="1.5rem" display={'flex'} alignItems="center">
+        My Shipping Informations{' '}
+        <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
+          {' '}
+          (Optional){' '}
+        </Box>{' '}
+      </Heading>
+      <FormControl id="address_1" mb="1rem">
+        <FormLabel> Shipping Address 1 </FormLabel>
+        <Textarea
+          placeholder="Address 1"
+          _placeholder={{ color: 'gray.500' }}
+          // isInvalid={errors.address_1 ? true : false}
+          // focusBorderColor={errors.address_1 ? 'error' : 'accent_6'}
+          errorBorderColor="error"
+          borderColor="gray.300"
+          borderRadius="4px"
+          // {...register('address_1')}
+        />
+        {/* {errors.address_1 && <ErrorMessage error={errors.address_1.message} />} */}
+      </FormControl>
+
+      <FormControl id="address_2" mb="1rem">
+        <FormLabel> Shipping Address 2 </FormLabel>
+        <Textarea
+          placeholder="Address 2"
+          _placeholder={{ color: 'gray.500' }}
+          // isInvalid={errors.address_2 ? true : false}
+          // focusBorderColor={errors.address_2 ? 'error' : 'accent_6'}
+          errorBorderColor="error"
+          borderColor="gray.300"
+          borderRadius="4px"
+          // {...register('address_2')}
+        />
+        {/* {errors.address_2 && <ErrorMessage error={errors.address_2.message} />} */}
+      </FormControl>
+
+      <FormControl id="country_code" mb="1rem">
+        <FormLabel> My Country </FormLabel>
+        <Input
+          type="number"
+          placeholder="My Country"
+          _placeholder={{ color: 'gray.500' }}
+          // isInvalid={errors.country_code ? true : false}
+          // focusBorderColor={errors.country_code ? 'error' : 'accent_6'}
+          errorBorderColor="error"
+          borderColor="gray.300"
+          borderRadius="4px"
+          // {...register('country_code')}
+        />
+        {/* {errors.country_code && <ErrorMessage error={errors.country_code.message} />} */}
+      </FormControl>
+
+      <FormControl id="postal_code" mb="1rem">
+        <FormLabel> Postal Code </FormLabel>
+        <Input
+          type="number"
+          placeholder="My Postal Code"
+          _placeholder={{ color: 'gray.500' }}
+          // isInvalid={errors.postal_code ? true : false}
+          // focusBorderColor={errors.postal_code ? 'error' : 'accent_6'}
+          errorBorderColor="error"
+          borderColor="gray.300"
+          borderRadius="4px"
+          // {...register('postal_code')}
+        />
+        {/* {errors.postal_code && <ErrorMessage error={errors.postal_code.message} />} */}
+      </FormControl>
+    </View>
   )
 }

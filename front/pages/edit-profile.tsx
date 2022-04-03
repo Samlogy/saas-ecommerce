@@ -34,7 +34,6 @@ export default function EditProfile({ profileData }) {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors, isSubmitting }
   } = useForm(formOptions)
 
@@ -216,9 +215,39 @@ const VendorForm = ({ isVendor }: { isVendor: string }) => {
           (Optional){' '}
         </Box>{' '} */}
       </Heading>
+      <FormControl id="company_name" mb="1rem">
+        <FormLabel> Company Name </FormLabel>
+        <Input
+          type={'text'}
+          placeholder="Company's Name"
+          _placeholder={{ color: 'gray.500' }}
+          // isInvalid={errors.company_name ? true : false}
+          // focusBorderColor={errors.company_name ? 'error' : 'accent_6'}
+          errorBorderColor="error"
+          borderColor="gray.300"
+          borderRadius="4px"
+          // {...register('company_name')}
+        />
+        {/* {errors.company_name && <ErrorMessage error={errors.company_name.message} />} */}
+      </FormControl>
+      <FormControl id="company_description" mb="1rem">
+        <FormLabel> Company Description </FormLabel>
+        <Textarea
+          placeholder="Company's Description"
+          _placeholder={{ color: 'gray.500' }}
+          // isInvalid={errors.company_description ? true : false}
+          // focusBorderColor={errors.company_description ? 'error' : 'accent_6'}
+          errorBorderColor="error"
+          borderColor="gray.300"
+          borderRadius="4px"
+          // {...register('company_description')}
+        />
+        {/* {errors.company_description && <ErrorMessage error={errors.company_description.message} />} */}
+      </FormControl>
       <FormControl id="company_code" mb="1rem">
         <FormLabel> Company Code </FormLabel>
-        <Textarea
+        <Input
+          type={'number'}
           placeholder="Company's Code"
           _placeholder={{ color: 'gray.500' }}
           // isInvalid={errors.company_code ? true : false}
@@ -232,7 +261,7 @@ const VendorForm = ({ isVendor }: { isVendor: string }) => {
       </FormControl>
 
       <FormControl id="company_address" mb="1rem">
-        <FormLabel> Shipping Address 2 </FormLabel>
+        <FormLabel> Company Address </FormLabel>
         <Textarea
           placeholder="Company Address"
           _placeholder={{ color: 'gray.500' }}
@@ -247,7 +276,7 @@ const VendorForm = ({ isVendor }: { isVendor: string }) => {
       </FormControl>
 
       <FormControl id="country_code" mb="1rem">
-        <FormLabel> My Country </FormLabel>
+        <FormLabel> Company Country Code </FormLabel>
         <Input
           type="number"
           placeholder="My Country"
@@ -263,7 +292,7 @@ const VendorForm = ({ isVendor }: { isVendor: string }) => {
       </FormControl>
 
       <FormControl id="postal_code" mb="1rem">
-        <FormLabel> Postal Code </FormLabel>
+        <FormLabel> Company Postal Code </FormLabel>
         <Input
           type="number"
           placeholder="My Postal Code"
@@ -276,21 +305,6 @@ const VendorForm = ({ isVendor }: { isVendor: string }) => {
           // {...register('company_postal_code')}
         />
         {/* {errors.company_postal_code && <ErrorMessage error={errors.company_postal_code.message} />} */}
-      </FormControl>
-
-      <FormControl id="company_description" mb="1rem">
-        <FormLabel> Company Description </FormLabel>
-        <Textarea
-          placeholder="Company's Description"
-          _placeholder={{ color: 'gray.500' }}
-          // isInvalid={errors.company_description ? true : false}
-          // focusBorderColor={errors.company_description ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor="gray.300"
-          borderRadius="4px"
-          // {...register('company_description')}
-        />
-        {/* {errors.company_description && <ErrorMessage error={errors.company_description.message} />} */}
       </FormControl>
     </View>
   )

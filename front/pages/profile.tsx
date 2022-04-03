@@ -75,7 +75,6 @@ const DisplayBillingData = ({ data }: { data: any }) => {
 const BoxData = ({ data, icon }: { data: any; icon: any }) => {
   return (
     <Flex alignItems={'center'} mb=".5rem">
-      {/* <AiOutlineMail size={24} /> */}
       {icon}
       <Box as="span" fontSize="1rem" fontWeight="500" ml=".25rem">
         {' '}

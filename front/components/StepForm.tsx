@@ -18,7 +18,12 @@ const StepForm = ({ initialStep = 0, steps, handleForm }: IStepFrom) => {
     console.log('form submitted !')
   }
 
-  const [show, setShow] = useState(false)
+  const handleSubmit = () => {
+    btnRef?.current?.click()
+    setShow({ state: true, status: 'success' })
+  }
+
+  const [show, setShow] = useState({ state: false, status: '' })
   const btnRef = useRef(null)
 
   return (
@@ -52,14 +57,7 @@ const StepForm = ({ initialStep = 0, steps, handleForm }: IStepFrom) => {
 
         {activeStep === steps.length ? (
           <Flex p={4}>
-            <Button
-              mx="auto"
-              size="sm"
-              onClick={() => {
-                btnRef?.current?.click()
-                setShow(true)
-              }}
-            >
+            <Button mx="auto" size="sm" onClick={() => handleSubmit()}>
               Submit
             </Button>
           </Flex>
@@ -80,7 +78,11 @@ const StepForm = ({ initialStep = 0, steps, handleForm }: IStepFrom) => {
           </Flex>
         )}
       </Box>
-      <ModalPopUp open={show} close={setShow} mode="success" />
+      <ModalPopUp
+        open={show.state}
+        close={() => setShow({ ...show, state: false })}
+        mode={show.status}
+      />
     </>
   )
 }

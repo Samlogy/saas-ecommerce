@@ -10,13 +10,16 @@ import {
   Textarea,
   useDisclosure,
   Flex,
-  Stack
+  Stack,
+  Avatar,
+  Spinner
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
+import { AiFillPlusCircle } from 'react-icons/ai'
 
 import { Layout, FormTemplate, ErrorMessage } from '../components'
 import { profileSchema } from '../lib/validation'
@@ -35,10 +38,13 @@ export default function EditProfile({ profileData }) {
     formState: { errors, isSubmitting }
   } = useForm(formOptions)
 
-  const onEdit = async (data: any) => {
-    console.log('edit profile: ', data)
+  const onEdit = async (profile: any) => {
+    console.log('edit profile: ', profile)
     router.push('/profile')
   }
+  const onUploadImage = () => {}
+  const picture = ''
+  const isLoading = false
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -53,30 +59,7 @@ export default function EditProfile({ profileData }) {
               My Personal Information
             </Heading>
 
-            <Image
-              boxSize="100px"
-              objectFit="cover"
-              src={'https://bit.ly/dan-abramov'}
-              fallbackSrc="https://via.placeholder.com/150"
-              alt="Product Image"
-              mb="1rem"
-              borderRadius="5px"
-            />
-            <FormControl id="image" mb="1rem">
-              <FormLabel> Choose Profile Picture </FormLabel>
-              <Input
-                type="file"
-                placeholder=""
-                border="none"
-                px="0"
-                isInvalid={errors.img ? true : false}
-                errorBorderColor="error"
-                borderColor="gray.300"
-                borderRadius="4px"
-                {...register('img')}
-              />
-              {errors.img && <ErrorMessage error={errors.img.message} />}
-            </FormControl>
+            <EditPicture data={picture} upload={onUploadImage} loading={isLoading} />
 
             <FormControl id="fullName" mb="1rem">
               <FormLabel> Full Name </FormLabel>
@@ -85,6 +68,7 @@ export default function EditProfile({ profileData }) {
                 placeholder=""
                 _placeholder={{ color: 'gray.500' }}
                 isInvalid={errors.fullName ? true : false}
+                focusBorderColor={errors.fullName ? 'error' : 'accent_6'}
                 errorBorderColor="error"
                 borderColor="gray.300"
                 borderRadius="4px"
@@ -100,6 +84,7 @@ export default function EditProfile({ profileData }) {
                 placeholder="example@mail.com"
                 _placeholder={{ color: 'gray.500' }}
                 isInvalid={errors.email ? true : false}
+                focusBorderColor={errors.email ? 'error' : 'accent_6'}
                 errorBorderColor="error"
                 borderColor="gray.300"
                 borderRadius="4px"
@@ -115,6 +100,7 @@ export default function EditProfile({ profileData }) {
                 placeholder="Phone Number"
                 _placeholder={{ color: 'gray.500' }}
                 isInvalid={errors.mobile ? true : false}
+                focusBorderColor={errors.mobile ? 'error' : 'accent_6'}
                 errorBorderColor="error"
                 borderColor="gray.300"
                 borderRadius="4px"
@@ -134,6 +120,7 @@ export default function EditProfile({ profileData }) {
                 placeholder="My Billing Address"
                 _placeholder={{ color: 'gray.500' }}
                 isInvalid={errors.address ? true : false}
+                focusBorderColor={errors.address ? 'error' : 'accent_6'}
                 errorBorderColor="error"
                 borderColor="gray.300"
                 borderRadius="4px"
@@ -146,9 +133,9 @@ export default function EditProfile({ profileData }) {
               <Button
                 type="submit"
                 isLoading={isSubmitting}
-                bg={'blue.400'}
-                color={'white'}
-                _hover={{ bg: 'blue.500' }}
+                bg="accent_4"
+                color="white"
+                _hover={{ bg: 'accent_3' }}
               >
                 {' '}
                 Edit Profile{' '}
@@ -166,4 +153,55 @@ export async function getStaticProps() {
   return {
     props: { profileData: {} }
   }
+}
+
+const EditPicture = ({ data, upload, loading }: { data: any; upload?: any; loading?: any }) => {
+  return (
+    <Box pos="relative" mx="auto" w="fit-content">
+      <Avatar src={data ? data : 'IconAvatar'} name="avatar" size="xl" />
+      <FormLabel
+        m="0"
+        border="1px solid"
+        borderColor="white"
+        w="1.5rem"
+        h="1.5rem"
+        p="5px"
+        borderRadius="50%"
+        bg="white"
+        boxShadow="md"
+        pos="absolute"
+        bottom="0"
+        transform="translate(280%, -5px)"
+        _hover={{ cursor: 'pointer' }}
+        htmlFor="profile-image"
+        display={'flex'}
+        justifyContent={'center'}
+        alignItems="center"
+      >
+        {loading ? (
+          <Box>
+            <Spinner size="sm" display="flex" thickness="3px" color="accent_6" />
+          </Box>
+        ) : (
+          <Box>
+            <AiFillPlusCircle color="#48bb78" size="20" />
+          </Box>
+        )}
+        <FormControl id="image" mb="1rem">
+          <Input
+            type="file"
+            id="profile-image"
+            // isInvalid={errors.img ? true : false}
+            // errorBorderColor="error"
+            disabled={loading}
+            borderColor="gray.300"
+            borderRadius="4px"
+            onChange={upload}
+            display="none"
+          />
+          {/* {errors.img && <ErrorMessage error={errors.img.message} />} */}
+        </FormControl>
+      </FormLabel>
+    </Box>
+  )
 }

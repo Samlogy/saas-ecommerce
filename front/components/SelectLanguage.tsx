@@ -13,14 +13,18 @@ const SelectLanguage = () => {
     const locale = e.target.value
     router.push(router.pathname, router.asPath, { locale })
   }
-  const style = mode === 'dark' ? 'option' : 'option active'
+  // const style = mode === 'dark' ? 'option' : 'option active'
 
   return (
-    <select onChange={changeLanguage} defaultValue={locale} className="select-language">
-      {languages.map((el: string) => (
-        <option key={el} className={style} value={el}>
+    <select
+      onChange={changeLanguage}
+      defaultValue={locale}
+      className={mode === 'light' ? 'select-language' : 'select-language dark'}
+    >
+      {languages.map((lang: string) => (
+        <option key={lang} value={lang}>
           {' '}
-          {el}{' '}
+          {lang}{' '}
         </option>
       ))}
     </select>

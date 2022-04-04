@@ -72,16 +72,27 @@ export default function NavBar() {
 
   const products = useShoppingCart((state: any) => state.products)
 
-  const bgColor = useColorModeValue('gray.100', 'gray.700')
+  // const bgColor = useColorModeValue('gray.100', 'gray.700')
+  const bgColor = useColorModeValue('white', 'gray_3')
 
   const user = {}
 
   return (
-    <Box bg={bgColor} px={4}>
+    <Box bg={bgColor} px={4} pos="fixed" w="full" boxShadow={'md'}>
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
         <IconButton
           size={'md'}
-          icon={isOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
+          icon={
+            isOpen ? (
+              <Flex justifyContent={'center'} alignItems="center">
+                <AiOutlineClose />
+              </Flex>
+            ) : (
+              <Flex justifyContent={'center'} alignItems="center">
+                <AiOutlineMenu />
+              </Flex>
+            )
+          }
           aria-label={'Toggle Menu'}
           display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}

@@ -4,8 +4,8 @@ import { FiMoon, FiSun } from 'react-icons/fi'
 const DarkModeToggle = () => {
   const { colorMode: mode, toggleColorMode } = useColorMode()
 
-  const bgColor = useColorModeValue('gray.100', 'gray.700')
-  const bgHoverColor = useColorModeValue('gray.300', 'gray.600')
+  const bgColor = useColorModeValue('transparent', 'gray_3')
+  const bgHoverColor = useColorModeValue('gray_8', 'gray_2')
 
   return (
     <IconButton

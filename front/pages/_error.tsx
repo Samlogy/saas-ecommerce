@@ -8,15 +8,7 @@ function Error({ statusCode }: { statusCode: number }) {
   const { t } = useLocale()
 
   return (
-    <Layout
-      textAlign="center"
-      py={10}
-      px={6}
-      h="100vh"
-      display="flex"
-      justifyContent="center"
-      mt="4rem"
-    >
+    <Layout textAlign="center" py={10} px={6} h="100vh" display="flex" justifyContent="center">
       <Heading
         display="inline-block"
         as="h1"

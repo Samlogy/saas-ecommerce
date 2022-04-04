@@ -8,9 +8,9 @@ export default function Privacy({ data }: { data: any }) {
   const url = ''
 
   return (
-    <Layout isHeaderVisible isFooterVisible textAlign="left">
+    <Layout isHeaderVisible isFooterVisible>
       <Box py={10} px={0}>
-        <Heading as="h2" fontSize="2rem">
+        <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full">
           Privacy
         </Heading>
 
@@ -33,9 +33,7 @@ export default function Privacy({ data }: { data: any }) {
           {data &&
             data.content.map(el => (
               <Box key={el.title} my="2rem">
-                <Heading as="h2" fontSize="1.5rem">
-                  {el.title}
-                </Heading>
+                <Heading fontSize="1.5rem">{el.title}</Heading>
 
                 <Text fontSize="1rem" mt=".5rem">
                   {el.text}

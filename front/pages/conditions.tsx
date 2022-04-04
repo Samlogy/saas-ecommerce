@@ -4,9 +4,9 @@ import { Layout, View } from '../components'
 
 export default function Conditions({ data }: { data: any }) {
   return (
-    <Layout isHeaderVisible isFooterVisible textAlign="left">
+    <Layout isHeaderVisible isFooterVisible>
       <Box py={10} px={0}>
-        <Heading as="h2" fontSize="2rem">
+        <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full">
           Conditions of Use
         </Heading>
 
@@ -18,9 +18,7 @@ export default function Conditions({ data }: { data: any }) {
           {data &&
             data?.content?.map(el => (
               <Box key={el?.content?.title} my="2rem">
-                <Heading as="h2" fontSize="1.5rem">
-                  {el.title}
-                </Heading>
+                <Heading fontSize="1.5rem">{el.title}</Heading>
 
                 <Text fontSize="1rem" mt=".5rem">
                   {el.text}

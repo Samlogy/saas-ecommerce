@@ -272,7 +272,7 @@ export const getServerSideProps = async context => {
 
 const RelatedProducts = ({ data }: { data: IProduct[] }) => {
   return (
-    <Flex flexDir={'column'} px="1.5rem">
+    <Flex flexDir={'column'} px="1.5rem" mt="5rem" mb="4rem">
       <Flex justifyContent={'space-between'} alignItems="center" mb="1.5rem">
         {' '}
         <Heading fontSize="1.2rem" textTransform={'uppercase'} fontWeight={'700'}>

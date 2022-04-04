@@ -78,7 +78,7 @@ export default function NavBar() {
   const user = {}
 
   return (
-    <Box bg={bgColor} px={4} pos="fixed" w="full" boxShadow={'md'}>
+    <Box bg={bgColor} px={4} pos="fixed" w="full" boxShadow={'md'} zIndex="100">
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
         <IconButton
           size={'md'}

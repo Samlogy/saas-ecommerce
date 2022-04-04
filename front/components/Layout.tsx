@@ -33,8 +33,9 @@ export default function Layout({ children, isHeaderVisible, isFooterVisible, ...
           maxW="1024px"
           bg="#FFFC"
           minHeight="calc(100vh - 100px)"
-          py="36px"
-          px={['16px', '', '', '50px', '100px']}
+          // py="36px"
+          // px={['16px', '', '', '50px', '100px']}
+          p="6rem 1.5rem 2rem 1.5rem"
           borderRadius="4px"
         >
           <ProtectedPage isProtected={isProtected}>{children}</ProtectedPage>

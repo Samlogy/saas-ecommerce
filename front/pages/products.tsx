@@ -9,12 +9,15 @@ export default function Products({ products }: { products: IProduct[] }) {
   const data = { info: { pages: 10 } }
   return (
     <Layout isHeaderVisible isFooterVisible>
-      <Heading as="h2"> Products </Heading>
+      <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'}>
+        {' '}
+        Products{' '}
+      </Heading>
 
       <Filter />
 
       <View cond={products?.length > 0}>
-        <Text> Product result are: {products?.length} </Text>
+        <Text mb="1rem"> Products result: {products?.length} </Text>
 
         <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
           {products?.map((product: IProduct) => (

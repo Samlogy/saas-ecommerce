@@ -60,7 +60,7 @@ export default function contact() {
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Flex flexDir="column" justifyContent={'center'} alignItems="center">
-        <Heading fontSize="1.5rem" mr="auto" mb="2rem">
+        <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'} mr="auto" w="full">
           {' '}
           Contact Us{' '}
         </Heading>

@@ -154,7 +154,7 @@ function Profile(props: any) {
   return (
     <Layout isHeaderVisible isFooterVisible>
       <View cond={user}>
-        <Heading as="h1" fontSize="1.5rem" mb="2rem" textTransform={'uppercase'}>
+        <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'}>
           Profile
         </Heading>
 

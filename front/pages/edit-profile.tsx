@@ -19,10 +19,24 @@ import { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import { AiFillPlusCircle } from 'react-icons/ai'
+import { AiFillPlusCircle, AiOutlineUser } from 'react-icons/ai'
 
 import { Layout, FormTemplate, ErrorMessage, View } from '../components'
 import { profileSchema } from '../lib/validation'
+import avatarImage from '../public/images/avatar.png'
+
+interface IForm {
+  isVendor: string
+  register: any
+  errors: any
+}
+interface IEditAvatar {
+  data: any
+  upload?: any
+  isLoading?: any
+  register: any
+  errors: any
+}
 
 export default function EditProfile({ profileData }) {
   const router = useRouter()
@@ -51,7 +65,10 @@ export default function EditProfile({ profileData }) {
     <Layout isHeaderVisible isFooterVisible>
       <Flex flexDir="column" justifyContent={'center'} alignItems={'center'}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}> Edit Profile </Heading>
+          <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'} mr="auto" w="full">
+            {' '}
+            Edit Profile{' '}
+          </Heading>
         </Stack>
 
         <FormTemplate>
@@ -60,7 +77,13 @@ export default function EditProfile({ profileData }) {
               My Personal Information
             </Heading>
 
-            <EditPicture data={picture} upload={onUploadImage} loading={isLoading} />
+            <EditAvatar
+              data={picture}
+              upload={onUploadImage}
+              isLoading={isLoading}
+              register={register}
+              errors={errors}
+            />
 
             <FormControl id="fullName" mb="1rem">
               <FormLabel> Full Name </FormLabel>
@@ -125,8 +148,8 @@ export default function EditProfile({ profileData }) {
               </Stack>
             </RadioGroup>
 
-            <CustomerForm isVendor={isVendor} />
-            <VendorForm isVendor={isVendor} />
+            <CustomerForm isVendor={isVendor} register={register} errors={errors} />
+            <VendorForm isVendor={isVendor} register={register} errors={errors} />
 
             <Stack>
               <Button
@@ -154,10 +177,10 @@ export async function getStaticProps() {
   }
 }
 
-const EditPicture = ({ data, upload, loading }: { data: any; upload?: any; loading?: any }) => {
+const EditAvatar = ({ data, upload, isLoading, register, errors }: IEditAvatar) => {
   return (
     <Box pos="relative" mx="auto" w="fit-content">
-      <Avatar src={data ? data : 'IconAvatar'} name="avatar" size="xl" />
+      <Avatar src={data ? data : avatarImage.src} name="avatar" size="xl" />
       <FormLabel
         m="0"
         border="1px solid"
@@ -177,7 +200,7 @@ const EditPicture = ({ data, upload, loading }: { data: any; upload?: any; loadi
         justifyContent={'center'}
         alignItems="center"
       >
-        {loading ? (
+        {isLoading ? (
           <Box>
             <Spinner size="sm" display="flex" thickness="3px" color="accent_6" />
           </Box>
@@ -186,34 +209,36 @@ const EditPicture = ({ data, upload, loading }: { data: any; upload?: any; loadi
             <AiFillPlusCircle color="#48bb78" size="20" />
           </Box>
         )}
-        <FormControl id="image" mb="1rem">
+        <FormControl id="avatar" mb="1rem">
           <Input
             type="file"
             id="profile-image"
-            // isInvalid={errors.img ? true : false}
+            // isInvalid={errors.avatar ? true : false}
+            // focusBorderColor={errors.avatar ? 'error' : 'accent_6'}
             // errorBorderColor="error"
-            disabled={loading}
+            disabled={isLoading}
             borderColor="gray.300"
             borderRadius="4px"
             onChange={upload}
             display="none"
+            // {...register('avatar')}
           />
-          {/* {errors.img && <ErrorMessage error={errors.img.message} />} */}
+          {/* {errors.avatar && <ErrorMessage error={errors.avatar.message} />} */}
         </FormControl>
       </FormLabel>
     </Box>
   )
 }
 
-const VendorForm = ({ isVendor }: { isVendor: string }) => {
+const VendorForm = ({ isVendor, register, errors }: IForm) => {
   return (
     <View cond={isVendor === 'true'} display="flex" flexDir={'column'}>
       <Heading as="h2" fontSize="1.25rem" my="1.5rem" display={'flex'} alignItems="center">
         My Company Informations{' '}
-        {/* <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
+        <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
           {' '}
           (Optional){' '}
-        </Box>{' '} */}
+        </Box>{' '}
       </Heading>
       <FormControl id="company_name" mb="1rem">
         <FormLabel> Company Name </FormLabel>
@@ -221,28 +246,28 @@ const VendorForm = ({ isVendor }: { isVendor: string }) => {
           type={'text'}
           placeholder="Company's Name"
           _placeholder={{ color: 'gray.500' }}
-          // isInvalid={errors.company_name ? true : false}
-          // focusBorderColor={errors.company_name ? 'error' : 'accent_6'}
+          isInvalid={errors.company_name ? true : false}
+          focusBorderColor={errors.company_name ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray.300"
           borderRadius="4px"
-          // {...register('company_name')}
+          {...register('company_name')}
         />
-        {/* {errors.company_name && <ErrorMessage error={errors.company_name.message} />} */}
+        {errors.company_name && <ErrorMessage error={errors.company_name.message} />}
       </FormControl>
       <FormControl id="company_description" mb="1rem">
         <FormLabel> Company Description </FormLabel>
         <Textarea
           placeholder="Company's Description"
           _placeholder={{ color: 'gray.500' }}
-          // isInvalid={errors.company_description ? true : false}
-          // focusBorderColor={errors.company_description ? 'error' : 'accent_6'}
+          isInvalid={errors.company_description ? true : false}
+          focusBorderColor={errors.company_description ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray.300"
           borderRadius="4px"
-          // {...register('company_description')}
+          {...register('company_description')}
         />
-        {/* {errors.company_description && <ErrorMessage error={errors.company_description.message} />} */}
+        {errors.company_description && <ErrorMessage error={errors.company_description.message} />}
       </FormControl>
       <FormControl id="company_code" mb="1rem">
         <FormLabel> Company Code </FormLabel>
@@ -250,14 +275,14 @@ const VendorForm = ({ isVendor }: { isVendor: string }) => {
           type={'number'}
           placeholder="Company's Code"
           _placeholder={{ color: 'gray.500' }}
-          // isInvalid={errors.company_code ? true : false}
-          // focusBorderColor={errors.company_code ? 'error' : 'accent_6'}
+          isInvalid={errors.company_code ? true : false}
+          focusBorderColor={errors.company_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray.300"
           borderRadius="4px"
-          // {...register('company_code')}
+          {...register('company_code')}
         />
-        {/* {errors.company_code && <ErrorMessage error={errors.company_code.message} />} */}
+        {errors.company_code && <ErrorMessage error={errors.company_code.message} />}
       </FormControl>
 
       <FormControl id="company_address" mb="1rem">
@@ -265,14 +290,14 @@ const VendorForm = ({ isVendor }: { isVendor: string }) => {
         <Textarea
           placeholder="Company Address"
           _placeholder={{ color: 'gray.500' }}
-          // isInvalid={errors.company_address ? true : false}
-          // focusBorderColor={errors.company_address ? 'error' : 'accent_6'}
+          isInvalid={errors.company_address ? true : false}
+          focusBorderColor={errors.company_address ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray.300"
           borderRadius="4px"
-          // {...register('company_address')}
+          {...register('company_address')}
         />
-        {/* {errors.company_address && <ErrorMessage error={errors.company_address.message} />} */}
+        {errors.company_address && <ErrorMessage error={errors.company_address.message} />}
       </FormControl>
 
       <FormControl id="country_code" mb="1rem">
@@ -281,14 +306,14 @@ const VendorForm = ({ isVendor }: { isVendor: string }) => {
           type="number"
           placeholder="My Country"
           _placeholder={{ color: 'gray.500' }}
-          // isInvalid={errors.country_code ? true : false}
-          // focusBorderColor={errors.country_code ? 'error' : 'accent_6'}
+          isInvalid={errors.country_code ? true : false}
+          focusBorderColor={errors.country_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray.300"
           borderRadius="4px"
-          // {...register('country_code')}
+          {...register('country_code')}
         />
-        {/* {errors.country_code && <ErrorMessage error={errors.country_code.message} />} */}
+        {errors.country_code && <ErrorMessage error={errors.country_code.message} />}
       </FormControl>
 
       <FormControl id="postal_code" mb="1rem">
@@ -297,19 +322,19 @@ const VendorForm = ({ isVendor }: { isVendor: string }) => {
           type="number"
           placeholder="My Postal Code"
           _placeholder={{ color: 'gray.500' }}
-          // isInvalid={errors.company_postal_code ? true : false}
-          // focusBorderColor={errors.company_postal_code ? 'error' : 'accent_6'}
+          isInvalid={errors.company_postal_code ? true : false}
+          focusBorderColor={errors.company_postal_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray.300"
           borderRadius="4px"
-          // {...register('company_postal_code')}
+          {...register('company_postal_code')}
         />
-        {/* {errors.company_postal_code && <ErrorMessage error={errors.company_postal_code.message} />} */}
+        {errors.company_postal_code && <ErrorMessage error={errors.company_postal_code.message} />}
       </FormControl>
     </View>
   )
 }
-const CustomerForm = ({ isVendor }: { isVendor: string }) => {
+const CustomerForm = ({ isVendor, register, errors }: IForm) => {
   return (
     <View cond={isVendor === 'false'} display="flex" flexDir={'column'}>
       <Heading as="h2" fontSize="1.25rem" my="1.5rem" display={'flex'} alignItems="center">
@@ -324,14 +349,14 @@ const CustomerForm = ({ isVendor }: { isVendor: string }) => {
         <Textarea
           placeholder="Address 1"
           _placeholder={{ color: 'gray.500' }}
-          // isInvalid={errors.address_1 ? true : false}
-          // focusBorderColor={errors.address_1 ? 'error' : 'accent_6'}
+          isInvalid={errors.address_1 ? true : false}
+          focusBorderColor={errors.address_1 ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray.300"
           borderRadius="4px"
-          // {...register('address_1')}
+          {...register('address_1')}
         />
-        {/* {errors.address_1 && <ErrorMessage error={errors.address_1.message} />} */}
+        {errors.address_1 && <ErrorMessage error={errors.address_1.message} />}
       </FormControl>
 
       <FormControl id="address_2" mb="1rem">
@@ -339,14 +364,14 @@ const CustomerForm = ({ isVendor }: { isVendor: string }) => {
         <Textarea
           placeholder="Address 2"
           _placeholder={{ color: 'gray.500' }}
-          // isInvalid={errors.address_2 ? true : false}
-          // focusBorderColor={errors.address_2 ? 'error' : 'accent_6'}
+          isInvalid={errors.address_2 ? true : false}
+          focusBorderColor={errors.address_2 ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray.300"
           borderRadius="4px"
-          // {...register('address_2')}
+          {...register('address_2')}
         />
-        {/* {errors.address_2 && <ErrorMessage error={errors.address_2.message} />} */}
+        {errors.address_2 && <ErrorMessage error={errors.address_2.message} />}
       </FormControl>
 
       <FormControl id="country_code" mb="1rem">
@@ -355,14 +380,14 @@ const CustomerForm = ({ isVendor }: { isVendor: string }) => {
           type="number"
           placeholder="My Country"
           _placeholder={{ color: 'gray.500' }}
-          // isInvalid={errors.country_code ? true : false}
-          // focusBorderColor={errors.country_code ? 'error' : 'accent_6'}
+          isInvalid={errors.country_code ? true : false}
+          focusBorderColor={errors.country_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray.300"
           borderRadius="4px"
-          // {...register('country_code')}
+          {...register('country_code')}
         />
-        {/* {errors.country_code && <ErrorMessage error={errors.country_code.message} />} */}
+        {errors.country_code && <ErrorMessage error={errors.country_code.message} />}
       </FormControl>
 
       <FormControl id="postal_code" mb="1rem">
@@ -371,14 +396,14 @@ const CustomerForm = ({ isVendor }: { isVendor: string }) => {
           type="number"
           placeholder="My Postal Code"
           _placeholder={{ color: 'gray.500' }}
-          // isInvalid={errors.postal_code ? true : false}
-          // focusBorderColor={errors.postal_code ? 'error' : 'accent_6'}
+          isInvalid={errors.postal_code ? true : false}
+          focusBorderColor={errors.postal_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray.300"
           borderRadius="4px"
-          // {...register('postal_code')}
+          {...register('postal_code')}
         />
-        {/* {errors.postal_code && <ErrorMessage error={errors.postal_code.message} />} */}
+        {errors.postal_code && <ErrorMessage error={errors.postal_code.message} />}
       </FormControl>
     </View>
   )

@@ -38,7 +38,7 @@ export const addProductSchema = yup.object().shape({
 });
 
 export const profileSchema = yup.object().shape({
-    avatar: yup.string(),
+    // avatar: yup.string().required('Avatar required'),
     fullName: yup.string().required("Full Name required"),
     email: yup.string().email('Enter a valid Email Address').required("Email required"),
     mobile: yup.string(),

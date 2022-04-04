@@ -143,6 +143,13 @@ function Profile(props: any) {
   const user = { avatar: profileImage.src } // super tokens
   const userExtends = props.userExtends // our db
   const shipping = props.shipping // our db
+  const vendor = props.vendor // our db
+
+  const labelData = {
+    email: 'Email Address',
+    createdAt: 'Creation Date',
+    address: 'Localition'
+  }
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -154,7 +161,7 @@ function Profile(props: any) {
         {/* <StepForm steps={steps} /> */}
 
         <Flex flexDir={'column'} w={['20rem', '', '40rem', '']} mx="auto">
-          <DisplayUserData data={user} />
+          <DisplayUserData data={user} labelData={labelData} />
 
           <Button
             bg={'accent_3'}
@@ -167,7 +174,13 @@ function Profile(props: any) {
             <Link href="/edit-profile"> Edit My Profile </Link>
           </Button>
 
-          <DisplayMoreData data={shipping} />
+          <View cond={userExtends?.type === 'customer'}>
+            <DisplayShippingData data={shipping} labelData={labelData} />
+          </View>
+
+          <View cond={userExtends?.type === 'vendor'}>
+            <DisplayVendorData data={vendor} labelData={labelData} />
+          </View>
         </Flex>
       </View>
     </Layout>
@@ -176,70 +189,64 @@ function Profile(props: any) {
 
 export default Profile
 
-const DisplayUserData = ({ data }: { data: any }) => {
+const DisplayUserData = ({ data, labelData }: { data: any; labelData: any }) => {
   return (
-    <Flex
-      flexDir={'column'}
-      boxShadow="md"
-      p="1rem"
-      borderRadius={'10px'}
-      alignItems="flex-start"
-      justifyContent={'center'}
-      mb="2rem"
-    >
-      <Heading fontSize="1.2rem" mb="1rem" textTransform={'uppercase'}>
-        {' '}
-        My Personal Informations{' '}
-      </Heading>
-      <Image
-        borderRadius="full"
-        boxSize="150px"
-        src={data?.avatar}
-        alt="avatar image"
-        fallbackSrc="https://via.placeholder.com/150"
+    <TemplateDataDisplay title="My Personal Informations">
+      <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} label={labelData?.email} />
+      <BoxData
+        data={data?.address}
+        icon={<HiOutlineLocationMarker size={24} />}
+        label={labelData?.address}
       />
-
-      <Flex flexDir="column" mt=".5rem">
-        <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} />
-        <BoxData data={data?.address} icon={<HiOutlineLocationMarker size={24} />} />
-        <BoxData data={data?.createdAt} icon={<BsCalendarDate size={24} />} />
-      </Flex>
-    </Flex>
+      <BoxData
+        data={data?.createdAt}
+        icon={<BsCalendarDate size={24} />}
+        label={labelData?.createdAt}
+      />
+    </TemplateDataDisplay>
   )
 }
-
-const DisplayMoreData = ({ data }: { data: any }) => {
+const DisplayShippingData = ({ data, labelData }: { data: any; labelData: any }) => {
   return (
-    <Flex
-      flexDir={'column'}
-      boxShadow="md"
-      p="1rem"
-      borderRadius={'10px'}
-      alignItems="flex-start"
-      justifyContent={'center'}
-      mb="2rem"
-    >
-      <Heading fontSize="1.2rem" mb="1rem" textTransform={'uppercase'}>
-        {' '}
-        My Shipping Informations{' '}
-      </Heading>
-
-      <Flex flexDir="column" mt=".5rem">
-        <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} />
-        <BoxData data={data?.address} icon={<HiOutlineLocationMarker size={24} />} />
-        <BoxData data={data?.createdAt} icon={<BsCalendarDate size={24} />} />
-      </Flex>
-    </Flex>
+    <TemplateDataDisplay title="My Shipping Informations">
+      <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} label={labelData?.email} />
+      <BoxData
+        data={data?.address}
+        icon={<HiOutlineLocationMarker size={24} />}
+        label={labelData?.address}
+      />
+      <BoxData
+        data={data?.createdAt}
+        icon={<BsCalendarDate size={24} />}
+        label={labelData?.createdAt}
+      />
+    </TemplateDataDisplay>
+  )
+}
+const DisplayVendorData = ({ data, labelData }: { data: any; labelData: any }) => {
+  return (
+    <TemplateDataDisplay title="My Vendor Informations">
+      <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} label={labelData?.email} />
+      <BoxData
+        data={data?.address}
+        icon={<HiOutlineLocationMarker size={24} />}
+        label={labelData?.address}
+      />
+      <BoxData
+        data={data?.createdAt}
+        icon={<BsCalendarDate size={24} />}
+        label={labelData?.createdAt}
+      />
+    </TemplateDataDisplay>
   )
 }
 
-const BoxData = ({ data, icon }: { data: any; icon: any }) => {
+const BoxData = ({ data, label, icon }: { data: any; label: string; icon: any }) => {
   return (
     <Flex alignItems={'center'} mb=".5rem">
       {icon}
       <Box as="span" fontSize="1rem" fontWeight="500" ml=".25rem">
-        {' '}
-        Email Address:{' '}
+        {label}
       </Box>
       {data ? (
         <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem">
@@ -256,15 +263,41 @@ const BoxData = ({ data, icon }: { data: any; icon: any }) => {
   )
 }
 
+const TemplateDataDisplay = ({ title, children }: { title: string; children: React.ReactNode }) => {
+  return (
+    <Flex
+      flexDir={'column'}
+      boxShadow="md"
+      p="1rem"
+      borderRadius={'10px'}
+      alignItems="flex-start"
+      justifyContent={'center'}
+      mb="2rem"
+    >
+      <Heading fontSize="1.2rem" mb="1rem" textTransform={'uppercase'}>
+        {title}
+      </Heading>
+
+      <Flex flexDir="column" mt=".5rem">
+        {children}
+      </Flex>
+    </Flex>
+  )
+}
+
 export async function getStaticProps() {
   // api call
-  const userExtend = {}
+  const userExtends = {
+    type: 'vendor'
+  }
   const shipping = {}
+  const vendor = {}
 
   return {
     props: {
-      userExtend,
-      shipping
+      userExtends,
+      shipping,
+      vendor
     },
     revalidate: 10
   }

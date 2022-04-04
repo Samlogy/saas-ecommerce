@@ -33,8 +33,8 @@ const ProductCard = ({ id, data }: { id: string | number; data: any }) => {
           m="1.5rem auto 0 auto"
         />
 
-        <Box p="6">
-          <Box d="flex" alignItems="baseline" mb="1rem">
+        <Box p="1rem">
+          <Box d="flex" alignItems="baseline">
             {data.isNew && (
               <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="red">
                 New
@@ -42,21 +42,21 @@ const ProductCard = ({ id, data }: { id: string | number; data: any }) => {
             )}
           </Box>
 
-          <Flex mb="1rem" justifyContent="space-between" alignContent="center">
+          <Flex justifyContent="space-between" alignContent="center">
             <Box fontSize="1.2rem" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
               {data.name}
             </Box>
           </Flex>
 
           <Flex flexDir={'column'} justifyContent="space-between" alignContent="center">
-            <Flex mb="1rem">
+            <Flex>
               <Rating initRate={data.rate} />
               <Reviews data={data?.reviews} />
             </Flex>
 
-            <Box mb="1rem" fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
+            <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
               <Box as="span" color={'gray.600'} fontSize="lg">
-                {data.currency}
+                {data?.currency}
               </Box>
               {data.price.toFixed(2)}
             </Box>
@@ -68,6 +68,7 @@ const ProductCard = ({ id, data }: { id: string | number; data: any }) => {
             color={'white'}
             borderRadius="20px"
             w="full"
+            mt=".75rem"
             onClick={() => addToCart(newProduct)}
           >
             Add to Cart

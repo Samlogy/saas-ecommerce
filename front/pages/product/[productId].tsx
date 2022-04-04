@@ -24,7 +24,15 @@ import { IComment, IProduct } from '../../lib/interfaces'
 import productImage from '../../public/images/product.png'
 import heroImage from '../../public/images/home.png'
 
-export default function Product({ product, comments }: { product: any; comments: IComment[] }) {
+export default function Product({
+  product,
+  comments,
+  relatedProducts
+}: {
+  product: IProduct[]
+  comments: IComment[]
+  relatedProducts: IProduct[]
+}) {
   const increment = useShoppingCart((state: any) => state.increment)
   const decrement = useShoppingCart((state: any) => state.decrement)
   const addToCart = useShoppingCart((state: any) => state.addToCart)
@@ -36,16 +44,6 @@ export default function Product({ product, comments }: { product: any; comments:
 
   const [image, setImage] = useState<string>('')
   const [images, setImages] = useState<string[]>(product.image)
-
-  // useEffect(() => {
-  //   if (image !== '') {
-  //     console.log(image)
-  //     setImages((prev: any) => {
-  //       let newList = prev.filter(img => img !== img)
-  //       return newList.push(image)
-  //     })
-  //   }
-  // }, [image])
 
   return (
     <Layout isHeaderVisible isFooterVisible px="1.5rem">
@@ -118,7 +116,6 @@ export default function Product({ product, comments }: { product: any; comments:
                 onClick={() => handleQuantity('dec')}
               />
               <Text my="auto"> {product.quantity} </Text>
-              {console.log('quantity: ', product.id)}
               <IconButton
                 icon={<AiOutlinePlus />}
                 aria-label="increment"
@@ -148,7 +145,7 @@ export default function Product({ product, comments }: { product: any; comments:
           </Stack>
         </Stack>
       </SimpleGrid>
-      <RelatedProducts />
+      <RelatedProducts data={relatedProducts} />
 
       <ListingComments comments={comments} />
     </Layout>
@@ -225,16 +222,7 @@ export const getServerSideProps = async context => {
       createdAt: '15/03/2022'
     }
   ]
-  return {
-    props: {
-      product,
-      comments
-    }
-  }
-}
-
-const RelatedProducts = () => {
-  const products = [
+  const relatedProducts = [
     {
       id: 1,
       isNew: true,
@@ -272,17 +260,30 @@ const RelatedProducts = () => {
       discount: 0.2
     }
   ]
+  return {
+    props: {
+      product,
+      relatedProducts,
+      comments
+    }
+  }
+}
+
+const RelatedProducts = ({ data }: { data: IProduct[] }) => {
   return (
     <Flex flexDir={'column'}>
       <Flex justifyContent={'space-between'} alignItems="center" mb="1.5rem">
         {' '}
-        <Heading> Related Products </Heading>
+        <Heading fontSize="1.2rem" textTransform={'uppercase'} fontWeight={'700'}>
+          {' '}
+          Related Products{' '}
+        </Heading>
         <Link href="/">View All</Link>
       </Flex>
 
-      <View cond={products?.length > 0}>
+      <View cond={data?.length > 0}>
         <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
-          {products?.map(product => (
+          {data?.map(product => (
             <ProductCard id={product.id} data={product} />
           ))}
         </Flex>

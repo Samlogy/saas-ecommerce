@@ -15,8 +15,9 @@ import {
 import { MdLocalShipping } from 'react-icons/md'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
-import { Layout, Carousel, View, ListingComments } from '../../components'
+import { Layout, Carousel, View, ListingComments, ProductCard } from '../../components'
 import { useShoppingCart } from '../../store'
 import { IComment, IProduct } from '../../lib/interfaces'
 
@@ -47,7 +48,7 @@ export default function Product({ product, comments }: { product: any; comments:
   // }, [image])
 
   return (
-    <Layout isHeaderVisible isFooterVisible>
+    <Layout isHeaderVisible isFooterVisible px="1.5rem">
       <SimpleGrid
         columns={{ base: 1, lg: 2 }}
         spacing={{ base: 8, md: 10 }}
@@ -147,6 +148,7 @@ export default function Product({ product, comments }: { product: any; comments:
           </Stack>
         </Stack>
       </SimpleGrid>
+      <RelatedProducts />
 
       <ListingComments comments={comments} />
     </Layout>
@@ -229,4 +231,62 @@ export const getServerSideProps = async context => {
       comments
     }
   }
+}
+
+const RelatedProducts = () => {
+  const products = [
+    {
+      id: 1,
+      isNew: true,
+      image: productImage.src,
+      name: 'Wayfarer Classic',
+      price: 6,
+      rating: 4.2,
+      quantity: 11,
+      reviews: 34,
+      currency: '£',
+      discount: 0.2
+    },
+    {
+      id: 2,
+      isNew: true,
+      image: productImage.src,
+      name: 'Wayfarer Classic',
+      price: 4,
+      rating: 4.2,
+      quantity: 11,
+      reviews: 34,
+      currency: '£',
+      discount: 0.2
+    },
+    {
+      id: 3,
+      isNew: true,
+      image: productImage.src,
+      name: 'Wayfarer Classic',
+      price: 2,
+      rating: 4.2,
+      quantity: 11,
+      reviews: 34,
+      currency: '£',
+      discount: 0.2
+    }
+  ]
+  return (
+    <Flex flexDir={'column'}>
+      <Flex justifyContent={'space-between'} alignItems="center" mb="1.5rem">
+        {' '}
+        <Heading> Related Products </Heading>
+        <Link href="/">View All</Link>
+      </Flex>
+
+      <View cond={products?.length > 0}>
+        <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
+          {products?.map(product => (
+            <ProductCard id={product.id} data={product} />
+          ))}
+        </Flex>
+      </View>
+    </Flex>
+  )
 }

@@ -37,8 +37,8 @@ function Error({ statusCode }: { statusCode: number }) {
 
       <Link href="/">
         <Button
-          colorScheme="teal"
-          bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
+          colorScheme="green"
+          bgGradient="linear(to-r, green.400, green.500, green.600)"
           color="white"
           variant="solid"
         >

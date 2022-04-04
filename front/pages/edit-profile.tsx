@@ -38,7 +38,7 @@ export default function EditProfile({ profileData }) {
   } = useForm(formOptions)
 
   const onEdit = async (profile: any) => {
-    console.log('edit profile: ', profile)
+    console.log(profile)
     router.push('/profile')
   }
   const onUploadImage = () => {}

@@ -46,11 +46,12 @@ export default function Product({
   const [images, setImages] = useState<string[]>(product.image)
 
   return (
-    <Layout isHeaderVisible isFooterVisible px="1.5rem">
+    <Layout isHeaderVisible isFooterVisible>
       <SimpleGrid
         columns={{ base: 1, lg: 2 }}
         spacing={{ base: 8, md: 10 }}
         py={{ base: 18, md: 24 }}
+        px="1.5rem"
       >
         <View cond={product.image.length === 0}>
           <Text> No Images </Text>
@@ -271,7 +272,7 @@ export const getServerSideProps = async context => {
 
 const RelatedProducts = ({ data }: { data: IProduct[] }) => {
   return (
-    <Flex flexDir={'column'}>
+    <Flex flexDir={'column'} px="1.5rem">
       <Flex justifyContent={'space-between'} alignItems="center" mb="1.5rem">
         {' '}
         <Heading fontSize="1.2rem" textTransform={'uppercase'} fontWeight={'700'}>

@@ -7,7 +7,7 @@ const ListingComments = ({ comments }: { comments: IComment[] }) => {
   const [showAddComment, setShowAddComment] = useState(false)
 
   return (
-    <Flex flexDir="column">
+    <Flex flexDir="column" px="1.5rem">
       <AddComment isOpen={showAddComment} onClose={() => setShowAddComment(false)} />
       <Heading size="lg" textAlign={'center'} my="1.5rem">
         {' '}

@@ -1,4 +1,5 @@
 import { Flex, Stack, useColorModeValue } from '@chakra-ui/react'
+import React from 'react'
 
 export default function FormTemplate({ children }: { children: React.ReactNode }) {
   return (

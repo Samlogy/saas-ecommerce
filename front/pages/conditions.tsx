@@ -11,13 +11,13 @@ export default function Conditions({ data }: { data: any }) {
         </Heading>
 
         <Text color={'gray.500'} mt=".25rem" fontSize="12px">
-          Last updated: {data?.createdAt || data?.editedAt}
+          Last updated: {data?.editedAt || data?.createdAt}
         </Text>
 
-        <View cond={data?.content?.length > 0}>
+        <View cond={data.content.length > 0}>
           {data &&
-            data?.content?.map(el => (
-              <Box key={el?.content?.title} my="2rem">
+            data.content.map(el => (
+              <Box key={el.content.title} my="2rem">
                 <Heading fontSize="1.5rem">{el.title}</Heading>
 
                 <Text fontSize="1rem" mt=".5rem">

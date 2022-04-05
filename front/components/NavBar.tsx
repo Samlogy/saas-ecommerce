@@ -72,7 +72,6 @@ export default function NavBar() {
 
   const products = useShoppingCart((state: any) => state.products)
 
-  // const bgColor = useColorModeValue('gray.100', 'gray.700')
   const bgColor = useColorModeValue('white', 'gray_3')
 
   const user = {}

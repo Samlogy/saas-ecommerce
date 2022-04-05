@@ -15,7 +15,7 @@ export default function Privacy({ data }: { data: any }) {
         </Heading>
 
         <Text color={'gray.500'} fontSize="12px" mt=".25rem" mb="1rem">
-          Last updated: {data.createdAt || data.editedAt}
+          Last updated: {data?.editedAt || data?.createdAt}
         </Text>
 
         <View cond={data.content.length > 0}>

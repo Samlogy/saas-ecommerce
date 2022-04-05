@@ -5,7 +5,7 @@ import { HiOutlineLogout } from 'react-icons/hi'
 
 // import { useAuth } from "../store";
 
-const Logout = () => {
+const Logout = ({ children }: { children?: React.ReactNode }) => {
   // const [loggedOut, setLoggedOut] = useState(false);
 
   // const notLogged = useAuth((state: any) => state.notLogged);
@@ -30,6 +30,7 @@ const Logout = () => {
       px="0px"
       fontWeight="400"
       mr="0rem"
+      w="full"
       _hover={{ border: 'none', color: textHoverColor }}
       // onClick={() => setLoggedOut(true)}
     >

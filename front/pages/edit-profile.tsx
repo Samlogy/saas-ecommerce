@@ -1,27 +1,25 @@
 import {
+  Avatar,
   Box,
-  Heading,
   Button,
+  Flex,
   FormControl,
   FormLabel,
+  Heading,
   Input,
-  Textarea,
   Radio,
   RadioGroup,
-  Flex,
+  Spinner,
   Stack,
-  Avatar,
-  Spinner
+  Textarea
 } from '@chakra-ui/react'
-import Link from 'next/link'
+import { yupResolver } from '@hookform/resolvers/yup'
+// import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-
-import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import { AiFillPlusCircle, AiOutlineUser } from 'react-icons/ai'
-
-import { Layout, FormTemplate, ErrorMessage, View } from '../components'
+import { AiFillPlusCircle } from 'react-icons/ai'
+import { ErrorMessage, FormTemplate, Layout, View } from '../components'
 import { profileSchema } from '../lib/validation'
 import avatarImage from '../public/images/avatar.png'
 
@@ -90,11 +88,11 @@ export default function EditProfile({ profileData }) {
               <Input
                 type="text"
                 placeholder=""
-                _placeholder={{ color: 'gray.500' }}
+                _placeholder={{ color: 'gray_4' }}
                 isInvalid={errors.fullName ? true : false}
                 focusBorderColor={errors.fullName ? 'error' : 'accent_6'}
                 errorBorderColor="error"
-                borderColor="gray.300"
+                borderColor="gray_6"
                 borderRadius="4px"
                 {...register('fullName')}
               />
@@ -106,11 +104,11 @@ export default function EditProfile({ profileData }) {
               <Input
                 type="email"
                 placeholder="example@mail.com"
-                _placeholder={{ color: 'gray.500' }}
+                _placeholder={{ color: 'gray_4' }}
                 isInvalid={errors.email ? true : false}
                 focusBorderColor={errors.email ? 'error' : 'accent_6'}
                 errorBorderColor="error"
-                borderColor="gray.300"
+                borderColor="gray_6"
                 borderRadius="4px"
                 {...register('email')}
               />
@@ -122,11 +120,11 @@ export default function EditProfile({ profileData }) {
               <Input
                 type="number"
                 placeholder="Phone Number"
-                _placeholder={{ color: 'gray.500' }}
+                _placeholder={{ color: 'gray_4' }}
                 isInvalid={errors.mobile ? true : false}
                 focusBorderColor={errors.mobile ? 'error' : 'accent_6'}
                 errorBorderColor="error"
-                borderColor="gray.300"
+                borderColor="gray_6"
                 borderRadius="4px"
                 {...register('mobile')}
               />
@@ -217,7 +215,7 @@ const EditAvatar = ({ data, upload, isLoading, register, errors }: IEditAvatar) 
             // focusBorderColor={errors.avatar ? 'error' : 'accent_6'}
             // errorBorderColor="error"
             disabled={isLoading}
-            borderColor="gray.300"
+            borderColor="gray_6"
             borderRadius="4px"
             onChange={upload}
             display="none"
@@ -245,11 +243,11 @@ const VendorForm = ({ isVendor, register, errors }: IForm) => {
         <Input
           type={'text'}
           placeholder="Company's Name"
-          _placeholder={{ color: 'gray.500' }}
+          _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.company_name ? true : false}
           focusBorderColor={errors.company_name ? 'error' : 'accent_6'}
           errorBorderColor="error"
-          borderColor="gray.300"
+          borderColor="gray_6"
           borderRadius="4px"
           {...register('company_name')}
         />
@@ -259,11 +257,11 @@ const VendorForm = ({ isVendor, register, errors }: IForm) => {
         <FormLabel> Company Description </FormLabel>
         <Textarea
           placeholder="Company's Description"
-          _placeholder={{ color: 'gray.500' }}
+          _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.company_description ? true : false}
           focusBorderColor={errors.company_description ? 'error' : 'accent_6'}
           errorBorderColor="error"
-          borderColor="gray.300"
+          borderColor="gray_6"
           borderRadius="4px"
           {...register('company_description')}
         />
@@ -274,11 +272,11 @@ const VendorForm = ({ isVendor, register, errors }: IForm) => {
         <Input
           type={'number'}
           placeholder="Company's Code"
-          _placeholder={{ color: 'gray.500' }}
+          _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.company_code ? true : false}
           focusBorderColor={errors.company_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
-          borderColor="gray.300"
+          borderColor="gray_6"
           borderRadius="4px"
           {...register('company_code')}
         />
@@ -289,11 +287,11 @@ const VendorForm = ({ isVendor, register, errors }: IForm) => {
         <FormLabel> Company Address </FormLabel>
         <Textarea
           placeholder="Company Address"
-          _placeholder={{ color: 'gray.500' }}
+          _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.company_address ? true : false}
           focusBorderColor={errors.company_address ? 'error' : 'accent_6'}
           errorBorderColor="error"
-          borderColor="gray.300"
+          borderColor="gray_6"
           borderRadius="4px"
           {...register('company_address')}
         />
@@ -305,11 +303,11 @@ const VendorForm = ({ isVendor, register, errors }: IForm) => {
         <Input
           type="number"
           placeholder="My Country"
-          _placeholder={{ color: 'gray.500' }}
+          _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.country_code ? true : false}
           focusBorderColor={errors.country_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
-          borderColor="gray.300"
+          borderColor="gray_6"
           borderRadius="4px"
           {...register('country_code')}
         />
@@ -321,11 +319,11 @@ const VendorForm = ({ isVendor, register, errors }: IForm) => {
         <Input
           type="number"
           placeholder="My Postal Code"
-          _placeholder={{ color: 'gray.500' }}
+          _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.company_postal_code ? true : false}
           focusBorderColor={errors.company_postal_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
-          borderColor="gray.300"
+          borderColor="gray_6"
           borderRadius="4px"
           {...register('company_postal_code')}
         />
@@ -348,11 +346,11 @@ const CustomerForm = ({ isVendor, register, errors }: IForm) => {
         <FormLabel> Shipping Address 1 </FormLabel>
         <Textarea
           placeholder="Address 1"
-          _placeholder={{ color: 'gray.500' }}
+          _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.address_1 ? true : false}
           focusBorderColor={errors.address_1 ? 'error' : 'accent_6'}
           errorBorderColor="error"
-          borderColor="gray.300"
+          borderColor="gray_6"
           borderRadius="4px"
           {...register('address_1')}
         />
@@ -363,11 +361,11 @@ const CustomerForm = ({ isVendor, register, errors }: IForm) => {
         <FormLabel> Shipping Address 2 </FormLabel>
         <Textarea
           placeholder="Address 2"
-          _placeholder={{ color: 'gray.500' }}
+          _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.address_2 ? true : false}
           focusBorderColor={errors.address_2 ? 'error' : 'accent_6'}
           errorBorderColor="error"
-          borderColor="gray.300"
+          borderColor="gray_6"
           borderRadius="4px"
           {...register('address_2')}
         />
@@ -379,11 +377,11 @@ const CustomerForm = ({ isVendor, register, errors }: IForm) => {
         <Input
           type="number"
           placeholder="My Country"
-          _placeholder={{ color: 'gray.500' }}
+          _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.country_code ? true : false}
           focusBorderColor={errors.country_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
-          borderColor="gray.300"
+          borderColor="gray_6"
           borderRadius="4px"
           {...register('country_code')}
         />
@@ -395,11 +393,11 @@ const CustomerForm = ({ isVendor, register, errors }: IForm) => {
         <Input
           type="number"
           placeholder="My Postal Code"
-          _placeholder={{ color: 'gray.500' }}
+          _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.postal_code ? true : false}
           focusBorderColor={errors.postal_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
-          borderColor="gray.300"
+          borderColor="gray_6"
           borderRadius="4px"
           {...register('postal_code')}
         />

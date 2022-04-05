@@ -32,30 +32,30 @@ const form_1 = (
     rounded={'xl'}
     boxShadow={'lg'}
   >
-    <FormControl id="username" mb=".5rem">
+    <FormControl id="username" mb="1rem">
       <FormLabel> username </FormLabel>
       <Input
         type="text"
         placeholder=""
-        _placeholder={{ color: 'gray.500' }}
+        _placeholder={{ color: 'gray_4' }}
         // isInvalid={errors.username ? true : false}
         errorBorderColor="error"
-        borderColor="gray.300"
+        borderColor="gray_6"
         borderRadius="4px"
         // {...register('username')}
       />
       {/* {errors.username && <ErrorMessage error={errors.username.message} />} */}
     </FormControl>
 
-    <FormControl id="email" mb=".5rem">
+    <FormControl id="email" mb="1rem">
       <FormLabel> Email Address </FormLabel>
       <Input
         type="email"
         placeholder="your-email@example.com"
-        _placeholder={{ color: 'gray.500' }}
+        _placeholder={{ color: 'gray_4' }}
         // isInvalid={errors.email ? true : false}
         errorBorderColor="error"
-        borderColor="gray.300"
+        borderColor="gray_6"
         borderRadius="4px"
         // {...register('email')}
       />
@@ -74,30 +74,30 @@ const form_2 = (
     rounded={'xl'}
     boxShadow={'lg'}
   >
-    <FormControl id="fullName" mb=".5rem">
+    <FormControl id="fullName" mb="1rem">
       <FormLabel> fullName </FormLabel>
       <Input
         type="text"
         placeholder=""
-        _placeholder={{ color: 'gray.500' }}
+        _placeholder={{ color: 'gray_4' }}
         // isInvalid={errors.fullName ? true : false}
         errorBorderColor="error"
-        borderColor="gray.300"
+        borderColor="gray_6"
         borderRadius="4px"
         // {...register('fullName')}
       />
       {/* {errors.fullName && <ErrorMessage error={errors.fullName.message} />} */}
     </FormControl>
 
-    <FormControl id="email" mb=".5rem">
+    <FormControl id="email" mb="1rem">
       <FormLabel> address </FormLabel>
       <Input
         type="text"
         placeholder=""
-        _placeholder={{ color: 'gray.500' }}
+        _placeholder={{ color: 'gray_4' }}
         // isInvalid={errors.address ? true : false}
         errorBorderColor="error"
-        borderColor="gray.300"
+        borderColor="gray_6"
         borderRadius="4px"
         // {...register('address')}
       />
@@ -116,15 +116,15 @@ const form_3 = (
     rounded={'xl'}
     boxShadow={'lg'}
   >
-    <FormControl id="age" mb=".5rem">
+    <FormControl id="age" mb="1rem">
       <FormLabel> age </FormLabel>
       <Input
         type="text"
         placeholder=""
-        _placeholder={{ color: 'gray.500' }}
+        _placeholder={{ color: 'gray_4' }}
         // isInvalid={errors.age ? true : false}
         errorBorderColor="error"
-        borderColor="gray.300"
+        borderColor="gray_6"
         borderRadius="4px"
         // {...register('age')}
       />
@@ -140,7 +140,7 @@ const steps = [
 ]
 
 function Profile(props: any) {
-  const user = { avatar: profileImage.src } // super tokens
+  const user = {} // super tokens
   const userExtends = props.userExtends // our db
   const shipping = props.shipping // our db
   const vendor = props.vendor // our db
@@ -243,18 +243,18 @@ const DisplayVendorData = ({ data, labelData }: { data: any; labelData: any }) =
 
 const BoxData = ({ data, label, icon }: { data: any; label: string; icon: any }) => {
   return (
-    <Flex alignItems={'center'} mb=".5rem">
+    <Flex alignItems={'center'} mb="1rem">
       {icon}
-      <Box as="span" fontSize="1rem" fontWeight="500" ml=".25rem">
+      <Box as="span" fontSize="1rem" fontWeight="500" ml=".5rem" w="10rem">
         {label}
       </Box>
       {data ? (
-        <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem">
+        <Box as="span" fontSize="1rem" fontWeight="400" ml=".5rem" color="gray_4">
           {' '}
           {data}{' '}
         </Box>
       ) : (
-        <Box as="span" fontSize="16px" fontWeight="400" ml=".5rem" color="gray.500">
+        <Box as="span" fontSize="1rem" fontWeight="400" ml=".5rem" color="gray_4">
           {' '}
           ---{' '}
         </Box>
@@ -288,7 +288,9 @@ const TemplateDataDisplay = ({ title, children }: { title: string; children: Rea
 export async function getStaticProps() {
   // api call
   const userExtends = {
-    type: 'vendor'
+    type: 'vendor',
+    avatar: profileImage.src,
+    email: 'sam@gmail.com'
   }
   const shipping = {}
   const vendor = {}

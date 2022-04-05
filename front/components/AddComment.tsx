@@ -112,7 +112,12 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
               justify={'space-between'}
               mb="1rem"
             >
-              <Checkbox value={'true'} checked={isChecked} onChange={handleChange}>
+              <Checkbox
+                value={'true'}
+                colorScheme="green"
+                checked={isChecked}
+                onChange={handleChange}
+              >
                 {' '}
                 <Box as="span" fontWeight={'300'} fontSize=".8rem">
                   {' '}

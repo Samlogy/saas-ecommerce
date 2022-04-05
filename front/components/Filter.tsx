@@ -1,7 +1,7 @@
 import { Box, Flex, Input, Select } from '@chakra-ui/react'
-import React, { FC, useState } from 'react'
+import React, { useState } from 'react'
 
-const Filter: FC = () => {
+const Filter = () => {
   const [query, setQuery] = useState('')
   const keys = ['image', 'name', 'description', 'qunatity', 'price']
 

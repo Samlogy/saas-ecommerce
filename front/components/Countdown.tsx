@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, useColorModeValue } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 
 const calculateTimeLeft = (dueDay: any) => {
@@ -47,6 +47,7 @@ function Countdown({ initYear, dueDay }: ICountdown) {
 export default Countdown
 
 const CountBox = ({ data, type }: { data: any; type: any }) => {
+  const bgColor = useColorModeValue('white', 'gray_2')
   const dataType =
     type === 'days'
       ? 'Days'
@@ -66,6 +67,7 @@ const CountBox = ({ data, type }: { data: any; type: any }) => {
       w="4rem"
       borderRadius={'10px'}
       m="0.5rem"
+      bg={bgColor}
     >
       <Box as="span" fontWeight={'600'} fontSize="1rem">
         {' '}

@@ -11,7 +11,8 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea
+  Textarea,
+  useColorModeValue
 } from '@chakra-ui/react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -51,6 +52,8 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
     console.log('edit product: ', data, id)
   }
 
+  const borderColor = useColorModeValue('gray_6', 'gray_4')
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -78,8 +81,8 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 px="0"
                 isInvalid={errors.image ? true : false}
                 errorBorderColor="error"
-                borderColor="gray_6"
-                borderRadius="4px"
+                borderColor={borderColor}
+                borderRadius="5px"
                 focusBorderColor={errors.image ? 'error' : 'accent_5'}
                 {...register('image')}
               />
@@ -95,8 +98,8 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 isInvalid={errors.name ? true : false}
                 focusBorderColor={errors.name ? 'error' : 'accent_5'}
                 errorBorderColor="error"
-                borderColor="gray_6"
-                borderRadius="4px"
+                borderColor={borderColor}
+                borderRadius="5px"
                 {...register('name')}
               />
               {errors.name && <ErrorMessage error={errors.name.message} />}
@@ -110,8 +113,8 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 isInvalid={errors.description ? true : false}
                 focusBorderColor={errors.description ? 'error' : 'accent_5'}
                 errorBorderColor="error"
-                borderColor="gray_6"
-                borderRadius="4px"
+                borderColor={borderColor}
+                borderRadius="5px"
                 {...register('description')}
               />
               {errors.description && <ErrorMessage error={errors.description.message} />}
@@ -126,8 +129,8 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 isInvalid={errors.price ? true : false}
                 focusBorderColor={errors.price ? 'error' : 'accent_5'}
                 errorBorderColor="error"
-                borderColor="gray_6"
-                borderRadius="4px"
+                borderColor={borderColor}
+                borderRadius="5px"
                 {...register('price')}
               />
               {errors.price && <ErrorMessage error={errors.price.message} />}
@@ -142,8 +145,8 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 isInvalid={errors.discount ? true : false}
                 focusBorderColor={errors.discount ? 'error' : 'accent_5'}
                 errorBorderColor="error"
-                borderColor="gray_6"
-                borderRadius="4px"
+                borderColor={borderColor}
+                borderRadius="5px"
                 {...register('discount')}
               />
               {errors.discount && <ErrorMessage error={errors.discount.message} />}

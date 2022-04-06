@@ -1,4 +1,4 @@
-import { Button, Flex, IconButton } from '@chakra-ui/react'
+import { Button, Flex, IconButton, useColorModeValue, useColorMode } from '@chakra-ui/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 
 interface IPagination {
@@ -22,13 +22,19 @@ const Pagination = ({
   endPage,
   lastPage
 }: IPagination) => {
+  const { colorMode: mode } = useColorMode()
+
+  const bgColor = useColorModeValue('gray_8', 'gray_2')
+  const textColor = useColorModeValue('accent_4', 'white')
+
   return (
     <Flex flexDir="row" justifyContent={'space-between'} w="60%" m="1.5rem auto">
       <Button
-        color="gray.600"
         fontSize=".9rem"
         mx=".25rem"
-        _hover={{ bg: 'gray.400', color: 'white' }}
+        bg={bgColor}
+        color={textColor}
+        _hover={{ bg: mode === 'light' ? 'gray_7' : 'gray_4', color: 'white' }}
         disabled={page === 1}
         onClick={startPage}
       >
@@ -39,7 +45,9 @@ const Pagination = ({
       <IconButton
         aria-label="arrow left"
         icon={<RiArrowLeftSLine size={22} color="gray" />}
-        _hover={{ bg: 'gray.300', color: 'white' }}
+        bg={bgColor}
+        color={textColor}
+        _hover={{ bg: mode === 'light' ? 'gray_7' : 'gray_4', color: 'white' }}
         disabled={page === 1}
         onClick={prevPage}
       />
@@ -48,10 +56,11 @@ const Pagination = ({
         {pages.map((page: number) => (
           <Button
             key={page}
-            color="gray.600"
+            bg={bgColor}
+            color={textColor}
             fontSize=".9rem"
             mx=".25rem"
-            _hover={{ bg: 'gray.400', color: 'white' }}
+            _hover={{ bg: mode === 'light' ? 'gray_7' : 'gray_4', color: 'white' }}
             onClick={() => changePage(page)}
           >
             {' '}
@@ -63,16 +72,19 @@ const Pagination = ({
       <IconButton
         aria-label="arrow right"
         icon={<RiArrowRightSLine size={22} color="gray" />}
-        _hover={{ bg: 'gray.300', color: 'white' }}
+        _hover={{ bg: mode === 'light' ? 'gray_7' : 'gray_4', color: 'white' }}
+        bg={bgColor}
+        color={textColor}
         disabled={page === lastPage}
         onClick={nextPage}
       />
 
       <Button
-        color="gray.600"
+        bg={bgColor}
+        color={textColor}
         fontSize=".9rem"
         mx=".25rem"
-        _hover={{ bg: 'gray.400', color: 'white' }}
+        _hover={{ bg: mode === 'light' ? 'gray_7' : 'gray_4', color: 'white' }}
         disabled={page === lastPage}
         onClick={endPage}
       >

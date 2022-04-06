@@ -6,6 +6,7 @@ import { useShoppingCart } from '../store'
 const ProductCard = ({ id, data }: { id: string | number; data: any }) => {
   const addToCart = useShoppingCart((state: any) => state.addToCart)
 
+  const bgColor = useColorModeValue('white', 'gray_2')
   return (
     <Link href={`http://localhost:3000/product/${id}`}>
       <Flex
@@ -16,13 +17,7 @@ const ProductCard = ({ id, data }: { id: string | number; data: any }) => {
         justifyContent="center"
         cursor={'pointer'}
       >
-        <Box
-          bg={useColorModeValue('white', 'gray.800')}
-          w="full"
-          rounded="lg"
-          shadow="lg"
-          position="relative"
-        >
+        <Box bg={bgColor} w="full" rounded="lg" shadow="lg" position="relative">
           {data.isNew && <Circle size="10px" position="absolute" top={2} right={2} bg="red.200" />}
 
           <Image

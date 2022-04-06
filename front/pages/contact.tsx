@@ -5,15 +5,13 @@ import {
   Text,
   IconButton,
   Button,
-  VStack,
-  HStack,
-  WrapItem,
   FormControl,
   FormLabel,
   Input,
   InputGroup,
   InputLeftElement,
-  Textarea
+  Textarea,
+  useColorModeValue
 } from '@chakra-ui/react'
 import { MdPhone, MdEmail, MdLocationOn, MdFacebook, MdOutlineEmail } from 'react-icons/md'
 import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs'
@@ -57,6 +55,11 @@ export default function contact() {
     // api call
   }
 
+  const bgColor = useColorModeValue('white', 'gray_2')
+  const textColor = useColorModeValue('balck', 'white')
+  const borderColor = useColorModeValue('gray_6', 'gray_4')
+  const inputColor = useColorModeValue('gray_3', 'gray_2')
+
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Flex flexDir="column" justifyContent={'center'} alignItems="center">
@@ -71,20 +74,21 @@ export default function contact() {
           borderRadius={'10px'}
           boxShadow="md"
           p="1.5rem 2rem"
+          bg={bgColor}
         >
           <Flex flexDir="column" justifyContent={'space-between'} p="1.5rem 2rem">
-            <Text color="gray.500" fontSize={'1rem'} mb="1.5rem" maxW="20rem" minW="15rem">
+            <Text color={textColor} fontSize={'1rem'} mb="1.5rem" maxW="20rem" minW="15rem">
               Reach out to us today via any of the given information
             </Text>
 
             <Flex flexDir={'column'} alignItems="flex-start" mb="1rem">
               {contacts.map(contact => (
-                <Flex justifyContent={'space-between'} maxW="15rem">
-                  <Box as="span" mr="1rem">
+                <Flex justifyContent={'space-between'} w="15rem">
+                  <Box as="span" mr="1rem" color={'gray_9'}>
                     {' '}
                     {contact.icon}{' '}
                   </Box>
-                  <Text fontSize="1rem" color="black" maxW="10rem">
+                  <Text fontSize="1rem" color={textColor} w="12rem">
                     {' '}
                     {contact.data}{' '}
                   </Text>
@@ -117,21 +121,22 @@ export default function contact() {
               <FormControl id="name" mb=".5rem">
                 <FormLabel>
                   Your Name
-                  <Box as="span" color="gray.500" fontSize=".85rem" fontStyle={'italic'}>
+                  <Box as="span" color="gray_4" fontSize=".85rem" fontStyle={'italic'}>
                     {' '}
                     (Optional){' '}
                   </Box>
                 </FormLabel>
-                <InputGroup borderColor="#E0E1E7">
-                  <InputLeftElement pointerEvents="none" children={<BsPerson color="gray.800" />} />
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none" children={<BsPerson color="gray_1" />} />
                   <Input
                     type="text"
                     size="md"
                     isInvalid={errors.name ? true : false}
                     focusBorderColor={errors.name ? 'error' : 'accent_6'}
                     errorBorderColor="error"
-                    borderColor="gray.300"
-                    borderRadius="4px"
+                    borderColor={borderColor}
+                    borderRadius="5px"
+                    bg={inputColor}
                     {...register('name')}
                   />
                 </InputGroup>
@@ -140,10 +145,10 @@ export default function contact() {
 
               <FormControl id="name" mb=".5rem">
                 <FormLabel> Email </FormLabel>
-                <InputGroup borderColor="#E0E1E7">
+                <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<MdOutlineEmail color="gray.800" />}
+                    children={<MdOutlineEmail color="gray_1" />}
                   />
                   <Input
                     type="email"
@@ -151,8 +156,9 @@ export default function contact() {
                     isInvalid={errors.email ? true : false}
                     focusBorderColor={errors.email ? 'error' : 'accent_6'}
                     errorBorderColor="error"
-                    borderColor="gray.300"
-                    borderRadius="4px"
+                    borderColor={borderColor}
+                    borderRadius="5px"
+                    bg={inputColor}
                     {...register('email')}
                   />
                 </InputGroup>
@@ -162,13 +168,14 @@ export default function contact() {
               <FormControl id="name" mb=".5rem">
                 <FormLabel> Message </FormLabel>
                 <Textarea
-                  _hover={{ borderRadius: 'gray.300' }}
+                  _hover={{ borderRadius: 'gray_6' }}
                   placeholder="message"
                   isInvalid={errors.message ? true : false}
                   focusBorderColor={errors.message ? 'error' : 'accent_6'}
                   errorBorderColor="error"
-                  borderColor="gray.300"
-                  borderRadius="4px"
+                  borderColor={borderColor}
+                  bg={inputColor}
+                  borderRadius="5px"
                   {...register('message')}
                 />
                 {errors.message && <ErrorMessage error={errors.message.message} />}

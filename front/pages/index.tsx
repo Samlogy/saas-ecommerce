@@ -9,7 +9,8 @@ import {
   Flex,
   Heading,
   Image,
-  Text
+  Text,
+  useColorModeValue
 } from '@chakra-ui/react'
 import { FiMinus, FiPlus } from 'react-icons/fi'
 import { BackTop, Layout, ProductCard, Rating, Countdown } from '../components'
@@ -177,6 +178,7 @@ const Hero = () => {
   )
 }
 const Services = ({ data }: { data: any }) => {
+  const bgColor = useColorModeValue('white', 'gray_2')
   return (
     <SectionWrapper title="Some Services We Offer">
       <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
@@ -192,6 +194,7 @@ const Services = ({ data }: { data: any }) => {
               borderRadius={'10px'}
               p="2rem 1.5rem"
               m={'.5rem'}
+              bg={bgColor}
             >
               <Text fontWeight={'600'} fontSize="1.3rem" textAlign="center" mb=".75rem">
                 {' '}
@@ -202,7 +205,10 @@ const Services = ({ data }: { data: any }) => {
                 {' '}
                 {service.text}{' '}
               </Text>
-              <Text fontWeight={'bold'}> Learn More </Text>
+              <Text fontWeight={'bold'} color={'accent_4'}>
+                {' '}
+                Learn More{' '}
+              </Text>
             </Flex>
           ))}
       </Flex>
@@ -242,12 +248,13 @@ const About = ({ data }: { data: any }) => {
 }
 
 const QuestionsAnswers = ({ data }: { data: any }) => {
+  const bgColor = useColorModeValue('white', 'gray_2')
   return (
     <SectionWrapper title="Some common questions were often asked">
       <Box p="1.5rem 1rem">
         <Accordion defaultIndex={[0]} allowMultiple border="none">
           {data.map((item: any) => (
-            <AccordionItem mb="1rem" border="none" boxShadow={'md'} borderRadius="5px">
+            <AccordionItem mb="1rem" border="none" boxShadow={'md'} borderRadius="5px" bg={bgColor}>
               {({ isExpanded }) => (
                 <>
                   <h2>
@@ -292,6 +299,7 @@ const ProductsOnTrend = ({ data }: { data: any }) => {
 }
 
 const CustomerReviews = ({ data }: { data: any }) => {
+  const bgColor = useColorModeValue('white', 'gray_2')
   return (
     <SectionWrapper title="Customer Reviews">
       <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
@@ -306,6 +314,7 @@ const CustomerReviews = ({ data }: { data: any }) => {
               borderRadius={'10px'}
               p="1.5rem"
               m={'1rem .5rem'}
+              bg={bgColor}
             >
               <Box mr="auto">
                 <IconReview color="#38a169" />

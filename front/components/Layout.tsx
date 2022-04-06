@@ -1,4 +1,4 @@
-import { Container, Flex } from '@chakra-ui/react'
+import { Container, Flex, useColorModeValue } from '@chakra-ui/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Footer, NavBar, ProtectedPage, ShoppingCart } from '../components'
@@ -16,6 +16,8 @@ export default function Layout({ children, isHeaderVisible, isFooterVisible, ...
     pathname === '/profile' || pathname === '/edit-profile' || pathname === '/admin'
   // console.log('protected: ', pathname, isProtected)
 
+  const bgColor = useColorModeValue('white', 'gray_3')
+
   return (
     <>
       <Head>
@@ -26,15 +28,13 @@ export default function Layout({ children, isHeaderVisible, isFooterVisible, ...
         <title> Ecommerce Web App </title>
       </Head>
 
-      <Flex flexDir="column" {...rest}>
+      <Flex flexDir="column" {...rest} bg={bgColor}>
         {isHeaderVisible && <NavBar />}
 
         <Container
           maxW="1024px"
-          bg="#FFFC"
+          bg={bgColor}
           minHeight="calc(100vh - 100px)"
-          // py="36px"
-          // px={['16px', '', '', '50px', '100px']}
           p="6rem 1.5rem 2rem 1.5rem"
           borderRadius="4px"
         >

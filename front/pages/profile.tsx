@@ -13,7 +13,8 @@ import {
   Heading,
   Image,
   Input,
-  Text
+  Text,
+  useColorModeValue
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { AiOutlineMail } from 'react-icons/ai'
@@ -264,6 +265,7 @@ const BoxData = ({ data, label, icon }: { data: any; label: string; icon: any })
 }
 
 const TemplateDataDisplay = ({ title, children }: { title: string; children: React.ReactNode }) => {
+  const bgColor = useColorModeValue('white', 'gray_2')
   return (
     <Flex
       flexDir={'column'}
@@ -273,6 +275,7 @@ const TemplateDataDisplay = ({ title, children }: { title: string; children: Rea
       alignItems="flex-start"
       justifyContent={'center'}
       mb="2rem"
+      bg={bgColor}
     >
       <Heading fontSize="1.2rem" mb="1rem" textTransform={'uppercase'}>
         {title}

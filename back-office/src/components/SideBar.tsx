@@ -8,7 +8,8 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Text,
-  Box
+  Box,
+  useColorModeValue
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { AiFillHome } from 'react-icons/ai'
@@ -26,12 +27,13 @@ interface ISideBarItem {
 }
 const SideBar = ({ onClose, isOpen }: ISideBar) => {
   const activeItem = sideBarData.findIndex(item => item.url === window.location.pathname)
+  const bgColor = useColorModeValue('white', 'gray_3')
 
   return (
     <Drawer placement="left" onClose={onClose} isOpen={isOpen} size="xs">
       <DrawerOverlay />
 
-      <DrawerContent>
+      <DrawerContent bg={bgColor}>
         <DrawerCloseButton />
 
         <DrawerHeader borderBottomWidth="1px"> Dashboard </DrawerHeader>

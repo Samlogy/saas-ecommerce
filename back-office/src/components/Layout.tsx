@@ -1,4 +1,4 @@
-import { Container, Flex } from '@chakra-ui/react'
+import { Container, Flex, useColorModeValue } from '@chakra-ui/react'
 
 import { TopBar } from 'components'
 
@@ -9,13 +9,13 @@ interface ILayout {
 }
 
 export default function Layout({ children, isHeaderVisible, ...rest }: ILayout) {
-  // console.log({ ...rest })
+  const bgColor = useColorModeValue('white', 'gray_3')
   return (
-    <Flex flexDir="column" {...rest}>
+    <Flex flexDir="column" {...rest} bg={bgColor}>
       {isHeaderVisible && <TopBar />}
       <Container
         maxW="1024px"
-        bg="#FFFC"
+        bg={bgColor}
         minHeight="calc(100vh - 100px)"
         p="1.5rem 1.5rem 2rem 1.5rem"
         borderRadius="4px"

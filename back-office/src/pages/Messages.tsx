@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Heading, Flex, Box, Text } from '@chakra-ui/react'
+import { Heading, Flex, Box, Text, useColorModeValue } from '@chakra-ui/react'
 
 import { Layout, View } from 'components'
 import { useMessageStore } from 'store'
@@ -11,6 +11,7 @@ function Messages() {
     // setNotification({})
   }, [])
   const messages = useMessageStore((state: any) => state.messages)
+  const bgColor = useColorModeValue('white', 'gray_2')
   return (
     <Layout isHeaderVisible>
       <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full" mb="2rem">
@@ -26,8 +27,8 @@ function Messages() {
               mb="1.5rem"
               borderRadius={'10px'}
               p=".75rem 1rem"
-              maxW="30rem"
-              minW="20rem"
+              w={['17rem', '20rem', '30rem', '35rem']}
+              bg={bgColor}
             >
               <Text mb=".5rem" fontSize="1.3rem">
                 {' '}

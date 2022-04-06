@@ -20,5 +20,8 @@ export const colors = {
   gray_3: '#4A5568', /// 600
   gray_4: '#718096', // 500
   gray_5: '#A0AEC0', // 400
-  gray_6: '#A0AEC0' // 300
+  gray_6: '#A0AEC0', // 300
+  gray_7: '#e2e8f0', // 200
+  gray_8: '#edf2f7', // 100
+  gray_9: '#f7fafc' // 50
 }

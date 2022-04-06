@@ -43,7 +43,7 @@ const NavLink = ({ children, link }: { children: ReactNode; link: string }) => {
   const { pathname } = useRouter()
   const isActive = pathname === `${link}`
 
-  const textColor = useColorModeValue('black', 'gray.100')
+  const textColor = useColorModeValue('black', '#edf2f7')
 
   return (
     <Link href={`${link}`}>
@@ -55,7 +55,7 @@ const NavLink = ({ children, link }: { children: ReactNode; link: string }) => {
         _hover={{
           textDecoration: 'none',
           cursor: 'pointer',
-          bg: useColorModeValue('gray.200', 'gray.700')
+          bg: useColorModeValue('gray.200', '#2D3748')
         }}
       >
         {children}
@@ -116,7 +116,7 @@ export default function NavBar() {
           <SelectLanguage />
           <DarkModeToggle />
           <ShoppingCartIcon value={products.length} />
-          {user ? <NavMenuConnected avatar={user?.picture} /> : <NavMenuUnConnected />}
+          {user ? <NavMenuConnected avatar={user?.avatar} /> : <NavMenuUnConnected />}
         </Flex>
       </Flex>
 
@@ -137,10 +137,10 @@ export default function NavBar() {
 }
 
 const NavMenuConnected = ({ avatar }: { avatar: string }) => {
-  const textColor = useColorModeValue('black', 'gray.100')
-  const textHoverColor = useColorModeValue('gray.100', 'white')
-  const bgColor = useColorModeValue('gray.100', 'gray.700')
-  const bgHoverColor = useColorModeValue('gray.700', 'gray.500')
+  // const textColor = useColorModeValue('black', '#edf2f7')
+  const textHoverColor = useColorModeValue('#edf2f7', 'white')
+  const bgColor = useColorModeValue('#edf2f7', '#2D3748')
+  const bgHoverColor = useColorModeValue('#2D3748', '#718096')
 
   return (
     <Menu>
@@ -166,7 +166,7 @@ const NavMenuConnected = ({ avatar }: { avatar: string }) => {
 }
 
 const NavMenuUnConnected = () => {
-  const textColor = useColorModeValue('black', 'gray.100')
+  const textColor = useColorModeValue('black', '#edf2f7')
 
   return (
     <Flex>

@@ -29,35 +29,46 @@ interface IForm {
   errors: any
 }
 interface IEditAvatar {
-  data: any
-  upload?: any
-  isLoading?: any
-  register: any
-  errors: any
+  avatar: any
+  upload: any
+  isLoading: any
+  error: any
 }
 
-export default function EditProfile({ profileData }) {
+interface IAvatar {
+  isLoading: boolean
+  error: string
+}
+
+export default function EditProfile({ profile }) {
   const router = useRouter()
 
   const formOptions = {
     resolver: yupResolver(profileSchema),
-    defaultValues: profileData
+    defaultValues: profile
   }
+  // console.log(profile)
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting }
   } = useForm(formOptions)
 
+  const [avatar, setAvatar] = useState<IAvatar>({
+    isLoading: false,
+    error: ''
+  })
+  const [isVendor, setIsVendor] = useState<string>('none')
+
   const onEdit = async (profile: any) => {
     console.log(profile)
-    router.push('/profile')
+    // router.push('/profile')
   }
-  const onUploadImage = () => {}
-  const picture = ''
-  const isLoading = false
-
-  const [isVendor, setIsVendor] = useState<string>('none')
+  const onUploadImage = () => {
+    setAvatar({ ...avatar, isLoading: true })
+    // call api when done --> error / success
+    setAvatar({ ...avatar, isLoading: false })
+  }
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -76,11 +87,10 @@ export default function EditProfile({ profileData }) {
             </Heading>
 
             <EditAvatar
-              data={picture}
+              avatar={profile.avatar}
               upload={onUploadImage}
-              isLoading={isLoading}
-              register={register}
-              errors={errors}
+              isLoading={avatar.isLoading}
+              error={avatar.error}
             />
 
             <FormControl id="fullName" mb="1rem">
@@ -171,60 +181,65 @@ export default function EditProfile({ profileData }) {
 export async function getStaticProps() {
   // const data = (await getProducts()) || {};
   return {
-    props: { profileData: {} }
+    props: {
+      profile: {
+        company_country_code: null,
+        company_postale_code: null,
+        country_code: null,
+        postale_code: null
+      }
+    }
   }
 }
 
-const EditAvatar = ({ data, upload, isLoading, register, errors }: IEditAvatar) => {
+const EditAvatar = ({ avatar, upload, isLoading, error }: IEditAvatar) => {
   return (
-    <Box pos="relative" mx="auto" w="fit-content">
-      <Avatar src={data ? data : avatarImage.src} name="avatar" size="xl" />
-      <FormLabel
-        m="0"
-        border="1px solid"
-        borderColor="white"
-        w="1.5rem"
-        h="1.5rem"
-        p="5px"
-        borderRadius="50%"
-        bg="white"
-        boxShadow="md"
-        pos="absolute"
-        bottom="0"
-        transform="translate(280%, -5px)"
-        _hover={{ cursor: 'pointer' }}
-        htmlFor="profile-image"
-        display={'flex'}
-        justifyContent={'center'}
-        alignItems="center"
-      >
-        {isLoading ? (
-          <Box>
-            <Spinner size="sm" display="flex" thickness="3px" color="accent_6" />
-          </Box>
-        ) : (
-          <Box>
-            <AiFillPlusCircle color="#48bb78" size="20" />
-          </Box>
-        )}
-        <FormControl id="avatar" mb="1rem">
-          <Input
-            type="file"
-            id="profile-image"
-            // isInvalid={errors.avatar ? true : false}
-            // focusBorderColor={errors.avatar ? 'error' : 'accent_6'}
-            // errorBorderColor="error"
-            disabled={isLoading}
-            borderColor="gray_6"
-            borderRadius="4px"
-            onChange={upload}
-            display="none"
-            // {...register('avatar')}
-          />
-          {/* {errors.avatar && <ErrorMessage error={errors.avatar.message} />} */}
-        </FormControl>
-      </FormLabel>
-    </Box>
+    <>
+      <Box pos="relative" mx="auto" w="fit-content">
+        <Avatar src={avatar ? avatar : avatarImage.src} name="avatar" size="xl" />
+        <FormLabel
+          m="0"
+          border="1px solid"
+          borderColor="white"
+          w="1.5rem"
+          h="1.5rem"
+          p="5px"
+          borderRadius="50%"
+          bg="white"
+          boxShadow="md"
+          pos="absolute"
+          bottom="0"
+          transform="translate(280%, -5px)"
+          _hover={{ cursor: 'pointer' }}
+          htmlFor="profile-image"
+          display={'flex'}
+          justifyContent={'center'}
+          alignItems="center"
+        >
+          {isLoading ? (
+            <Box>
+              <Spinner size="sm" display="flex" thickness="3px" color="accent_6" />
+            </Box>
+          ) : (
+            <Box>
+              <AiFillPlusCircle color="#48bb78" size="20" />
+            </Box>
+          )}
+          <FormControl id="avatar" mb="1rem">
+            <Input
+              type="file"
+              id="profile-image"
+              disabled={isLoading}
+              borderColor="gray_6"
+              borderRadius="4px"
+              onChange={upload}
+              display="none"
+            />
+          </FormControl>
+        </FormLabel>
+      </Box>
+      <Flex mb=".5rem"> {error && <ErrorMessage error={error} />} </Flex>
+    </>
   )
 }
 
@@ -238,6 +253,7 @@ const VendorForm = ({ isVendor, register, errors }: IForm) => {
           (Optional){' '}
         </Box>{' '}
       </Heading>
+
       <FormControl id="company_name" mb="1rem">
         <FormLabel> Company Name </FormLabel>
         <Input
@@ -253,6 +269,7 @@ const VendorForm = ({ isVendor, register, errors }: IForm) => {
         />
         {errors.company_name && <ErrorMessage error={errors.company_name.message} />}
       </FormControl>
+
       <FormControl id="company_description" mb="1rem">
         <FormLabel> Company Description </FormLabel>
         <Textarea
@@ -267,6 +284,7 @@ const VendorForm = ({ isVendor, register, errors }: IForm) => {
         />
         {errors.company_description && <ErrorMessage error={errors.company_description.message} />}
       </FormControl>
+
       <FormControl id="company_code" mb="1rem">
         <FormLabel> Company Code </FormLabel>
         <Input
@@ -298,36 +316,40 @@ const VendorForm = ({ isVendor, register, errors }: IForm) => {
         {errors.company_address && <ErrorMessage error={errors.company_address.message} />}
       </FormControl>
 
-      <FormControl id="country_code" mb="1rem">
+      <FormControl id="company_country_code" mb="1rem">
         <FormLabel> Company Country Code </FormLabel>
         <Input
           type="number"
           placeholder="My Country"
           _placeholder={{ color: 'gray_4' }}
-          isInvalid={errors.country_code ? true : false}
-          focusBorderColor={errors.country_code ? 'error' : 'accent_6'}
+          isInvalid={errors.company_country_code ? true : false}
+          focusBorderColor={errors.company_country_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray_6"
           borderRadius="4px"
-          {...register('country_code')}
+          {...register('company_country_code')}
         />
-        {errors.country_code && <ErrorMessage error={errors.country_code.message} />}
+        {errors.company_country_code && (
+          <ErrorMessage error={errors.company_country_code.message} />
+        )}
       </FormControl>
 
-      <FormControl id="postal_code" mb="1rem">
+      <FormControl id="company_postale_code" mb="1rem">
         <FormLabel> Company Postal Code </FormLabel>
         <Input
           type="number"
           placeholder="My Postal Code"
           _placeholder={{ color: 'gray_4' }}
-          isInvalid={errors.company_postal_code ? true : false}
-          focusBorderColor={errors.company_postal_code ? 'error' : 'accent_6'}
+          isInvalid={errors.company_postale_code ? true : false}
+          focusBorderColor={errors.company_postale_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray_6"
           borderRadius="4px"
-          {...register('company_postal_code')}
+          {...register('company_postale_code')}
         />
-        {errors.company_postal_code && <ErrorMessage error={errors.company_postal_code.message} />}
+        {errors.company_postale_code && (
+          <ErrorMessage error={errors.company_postale_code.message} />
+        )}
       </FormControl>
     </View>
   )
@@ -342,6 +364,7 @@ const CustomerForm = ({ isVendor, register, errors }: IForm) => {
           (Optional){' '}
         </Box>{' '}
       </Heading>
+
       <FormControl id="address_1" mb="1rem">
         <FormLabel> Shipping Address 1 </FormLabel>
         <Textarea
@@ -388,20 +411,20 @@ const CustomerForm = ({ isVendor, register, errors }: IForm) => {
         {errors.country_code && <ErrorMessage error={errors.country_code.message} />}
       </FormControl>
 
-      <FormControl id="postal_code" mb="1rem">
+      <FormControl id="postale_code" mb="1rem">
         <FormLabel> Postal Code </FormLabel>
         <Input
           type="number"
           placeholder="My Postal Code"
           _placeholder={{ color: 'gray_4' }}
-          isInvalid={errors.postal_code ? true : false}
-          focusBorderColor={errors.postal_code ? 'error' : 'accent_6'}
+          isInvalid={errors.postale_code ? true : false}
+          focusBorderColor={errors.postale_code ? 'error' : 'accent_6'}
           errorBorderColor="error"
           borderColor="gray_6"
           borderRadius="4px"
-          {...register('postal_code')}
+          {...register('postale_code')}
         />
-        {errors.postal_code && <ErrorMessage error={errors.postal_code.message} />}
+        {errors.postale_code && <ErrorMessage error={errors.postale_code.message} />}
       </FormControl>
     </View>
   )

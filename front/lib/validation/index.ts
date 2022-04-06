@@ -47,10 +47,12 @@ export const profileSchema = yup.object().shape({
     address_2: yup.string(),
     country_code: yup.number()
                     .positive('Country Code must be a positive number')
-                    .typeError('Country Code must be a number'),
+                    .typeError('Country Code must be a number')
+                    .nullable(),
     postale_code: yup.number()
                     .positive('Postale Code must be a positive number')
-                    .typeError('Postale Code must be a number'),
+                    .typeError('Postale Code must be a number')
+                    .nullable(),
     // vendor
     company_name: yup.string(),
     company_description: yup.string(),
@@ -58,10 +60,12 @@ export const profileSchema = yup.object().shape({
     company_code: yup.string(),
     company_country_code: yup.number()
                             .positive('Company Country Code must be a positive number')
-                            .typeError('Company Country Code must be a number'),
+                            .typeError('Company Country Code must be a number')
+                            .nullable(),
     company_postale_code: yup.number()
                             .positive('Company Postale Code must be a positive number')
-                            .typeError('Company Postale Code must be a number'),
+                            .typeError('Company Postale Code must be a number')
+                            .nullable(),
     });
 
 export const commentSchema = yup.object().shape({

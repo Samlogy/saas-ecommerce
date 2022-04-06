@@ -79,6 +79,7 @@
   color: #2f855a !important;
 }
 .hover-icon:hover {
-  /* transition: 0.5s all; */
   border: 1px solid #2f855a;
 }
+
+/* Framer motion */

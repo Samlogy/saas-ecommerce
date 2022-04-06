@@ -11,7 +11,6 @@ import {
   Image,
   Text
 } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
 import { FiMinus, FiPlus } from 'react-icons/fi'
 import { BackTop, Layout, ProductCard, Rating, Countdown } from '../components'
 import { IconReview } from '../public/icons'

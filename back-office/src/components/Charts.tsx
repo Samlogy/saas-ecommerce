@@ -44,11 +44,11 @@ function Charts({ type = 'area', options, series, sorted, setOptions }: IChart) 
       flexDir="column"
       borderColor="gray.400"
       p=".5rem 1rem"
-      maxW="30em"
       borderRadius={'25px'}
       boxShadow="md"
       mb="1.5rem"
-      minW="20rem"
+      w={['18rem', '20rem', '', '25rem']}
+      mx=".75rem"
     >
       <Box mb="1rem" ml="auto" color={'gray.400'}>
         sorted:{' '}

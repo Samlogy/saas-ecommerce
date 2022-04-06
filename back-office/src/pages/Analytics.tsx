@@ -108,13 +108,13 @@ export default function Analytics() {
 
         <TotalRevenue data={totalRevenueData} />
 
-        <Flex flexDir="column">
+        <Flex flexDir="column" justifyContent={'center'}>
           <Select
             onChange={handleClick}
             defaultValue={sorted}
             w="6.5rem"
             p="0"
-            ml="auto"
+            m={['0 auto 1rem auto', '0 0 0 36.5rem', '', '0 0 0 50rem']}
             focusBorderColor="accent_6"
           >
             <option value="daily"> Daily </option>
@@ -123,7 +123,7 @@ export default function Analytics() {
             <option value="yearly"> yearly </option>
           </Select>
 
-          <Flex justifyContent={'space-evenly'} flexWrap="wrap">
+          <Flex justifyContent={'center'} flexWrap="wrap">
             <Charts
               type={'line'}
               options={options}

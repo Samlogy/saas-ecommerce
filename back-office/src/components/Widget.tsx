@@ -14,7 +14,7 @@ function Widget({ data }: IWidget) {
       alignItems="center"
       borderColor="gray_5"
       p=".75rem 1rem"
-      w="15em"
+      w={['30rem', '15rem', '', '']}
       borderRadius={'25px'}
       boxShadow="md"
       mb="1.5rem"

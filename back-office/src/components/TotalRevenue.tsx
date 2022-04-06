@@ -7,7 +7,7 @@ function TotalRevenue({ data }: { data: any }) {
       flexDir={'column'}
       borderColor="gray_5"
       p=".75rem 1rem"
-      w="30rem"
+      w={['30rem', '', '', '']}
       borderRadius={'25px'}
       boxShadow="md"
       mb="1.5rem"

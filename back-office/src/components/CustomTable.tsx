@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Table, Thead, Tbody, Tr, Flex, Box } from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tr, Flex, Box, useColorModeValue } from '@chakra-ui/react'
 
 const CustomTable = (props: any) => {
   const initDataShow =
@@ -29,8 +29,11 @@ const CustomTable = (props: any) => {
     setCurrPage(page)
   }
 
+  const bgColor = useColorModeValue('white', 'gray_2')
+  const textColor = useColorModeValue('black', 'white')
+
   return (
-    <Box borderRadius={'8px'} boxShadow="md" p=".75rem 1rem">
+    <Box borderRadius={'8px'} boxShadow="md" p=".75rem 1rem" bg={bgColor}>
       <div className="table-wrapper">
         <Table variant="striped" colorScheme="green">
           {props.headData && props.renderHead ? (
@@ -61,8 +64,8 @@ const CustomTable = (props: any) => {
               transition="all 0.35s"
               _hover={{ bg: 'accent_4', color: 'white' }}
               bg={currPage === idx ? 'accent_3' : ''}
-              color={currPage === idx ? 'white' : 'black'}
-              fontWeight={currPage === idx ? '600' : '400'}
+              color={currPage === idx ? 'white' : textColor}
+              fontWeight={currPage === idx ? '600' : '300'}
               onClick={() => selectPage(idx)}
             >
               {item + 1}

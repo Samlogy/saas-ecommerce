@@ -1,4 +1,13 @@
-import { Heading, Button, Tr, Th, Td, Image } from '@chakra-ui/react'
+import {
+  Heading,
+  Button,
+  Tr,
+  Th,
+  Td,
+  Image,
+  useColorModeValue,
+  useColorMode
+} from '@chakra-ui/react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import React, { useEffect, useState } from 'react'
 
@@ -154,6 +163,8 @@ export default function Products() {
     </Tr>
   )
 
+  const { colorMode: mode } = useColorMode()
+
   return (
     <Layout isHeaderVisible>
       <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full" mb="2rem">
@@ -161,14 +172,16 @@ export default function Products() {
       </Heading>
 
       <Button
-        bg={'transparent'}
-        color={'accent_3'}
+        bg={mode === 'light' ? 'white' : 'accent_3'}
+        color={mode === 'light' ? 'accent_3' : 'white'}
+        _hover={{
+          bg: mode === 'light' ? 'white' : 'accent_4'
+        }}
         border="1px solid"
         borderColor={'accent_3'}
-        variant="outline"
         ml="auto"
         display={'flex'}
-        leftIcon={<AiOutlinePlus />}
+        leftIcon={<AiOutlinePlus size={16} />}
         onClick={() => setAction({ ...action, add: true })}
       >
         {' '}

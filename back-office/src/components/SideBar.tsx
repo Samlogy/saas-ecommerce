@@ -9,7 +9,8 @@ import {
   DrawerCloseButton,
   Text,
   Box,
-  useColorModeValue
+  useColorModeValue,
+  useColorMode
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { AiFillHome } from 'react-icons/ai'
@@ -55,6 +56,7 @@ const SideBar = ({ onClose, isOpen }: ISideBar) => {
 export default SideBar
 
 const SideBarItem = ({ key, data, active }: ISideBarItem) => {
+  const textColor = useColorModeValue('black', 'white')
   return (
     <Link key={key} to={data.url}>
       <Box
@@ -65,10 +67,11 @@ const SideBarItem = ({ key, data, active }: ISideBarItem) => {
         mb=".5rem"
         p=".75rem 1rem"
         borderRadius="md"
-        bg={active ? 'accent_4' : 'transparent'}
-        color={active ? 'white' : 'black'}
+        transition={'all .5s'}
+        bg={active ? 'accent_3' : 'transparent'}
+        color={active ? 'white' : textColor}
         _hover={{
-          bg: active ? 'accent_4' : 'accent_6',
+          bg: active ? 'accent_3' : 'accent_4',
           color: 'white',
           fontWeight: 'medium',
           textDecor: 'none'

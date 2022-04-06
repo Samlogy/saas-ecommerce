@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react'
+import { Button, useColorMode } from '@chakra-ui/react'
 import { FiLogOut } from 'react-icons/fi'
 // import { useNavigate } from 'react-router-dom'
 import { redirectToAuth, signOut } from 'supertokens-auth-react/recipe/thirdpartyemailpassword'
@@ -6,6 +6,8 @@ import { redirectToAuth, signOut } from 'supertokens-auth-react/recipe/thirdpart
 function LogoutButton() {
   // const { isLoading, isAuthenticated, error, logout } = useAuth0<{ name: string }>()
   // const navigate = useNavigate()
+
+  const { colorMode: mode } = useColorMode()
 
   const onLogout = async () => {
     // isAuthenticated && removeState('auth-admin')
@@ -24,12 +26,14 @@ function LogoutButton() {
 
   return (
     <Button
-      rightIcon={<FiLogOut color="#2f855a" />}
-      color="accent_3"
-      bg="transparent"
+      rightIcon={<FiLogOut size={16} />}
       border="1px solid"
       borderColor={'accent_3'}
-      _hover={{ bg: 'transparent' }}
+      _hover={{
+        bg: mode === 'light' ? 'white' : 'accent_4'
+      }}
+      bg={mode === 'light' ? 'white' : 'accent_3'}
+      color={mode === 'light' ? 'accent_3' : 'white'}
       onClick={() => onLogout()}
     >
       {' '}

@@ -44,21 +44,11 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
           icon={<BiMenu size="24" onClick={() => setIsVisible(true)} />}
         />
 
-        <Stack display="flex" flexDirection="row" alignItems="center">
-          <Image
-            boxSize="45px"
-            borderRadius="md"
-            mr=".5rem"
-            src={logo}
-            fallbackSrc="https://via.placeholder.com/150"
-          />
+        <Text fontSize="lg" fontWeight="500" display={['none', '', 'flex', '']}>
+          ADMIN Dashboard
+        </Text>
 
-          <Text fontSize="lg" fontWeight="500">
-            ADMIN Panel
-          </Text>
-        </Stack>
-
-        <Stack direction={['column', 'row']} alignItems={['flex-end', 'center']}>
+        <Stack direction={['row']} alignItems={['flex-end', 'center']}>
           <LanguageSwitcher />
           <DarkModeToggle />
           <NotificationButton />

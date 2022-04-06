@@ -47,7 +47,7 @@ export default function EditProfile({ profile }) {
     resolver: yupResolver(profileSchema),
     defaultValues: profile
   }
-  // console.log(profile)
+
   const {
     register,
     handleSubmit,
@@ -62,7 +62,7 @@ export default function EditProfile({ profile }) {
 
   const onEdit = async (profile: any) => {
     console.log(profile)
-    // router.push('/profile')
+    router.push('/profile')
   }
   const onUploadImage = () => {
     setAvatar({ ...avatar, isLoading: true })

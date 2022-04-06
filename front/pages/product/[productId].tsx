@@ -101,7 +101,7 @@ export default function Product({
             <VStack spacing={{ base: 4, sm: 6 }}>
               <Text
                 color={useColorModeValue('gray.500', 'gray.400')}
-                fontSize={'2xl'}
+                fontSize={'1rem'}
                 fontWeight={'300'}
               >
                 {product.description}

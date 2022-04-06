@@ -79,7 +79,7 @@ const SideBarItem = ({ key, data, active }: ISideBarItem) => {
   )
 }
 
-export const sideBarData = [
+const sideBarData = [
   {
     url: '/',
     icon: <AiFillHome size="24" />,

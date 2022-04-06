@@ -66,7 +66,7 @@ const ProductBox = ({ isOpen, onClose, productId, setAction, mode }: IProductBox
             onClick={onClose}
             bg="gray_3"
             color="white"
-            _hover={{ bg: 'gray_2' }}
+            _hover={{ bg: 'gray_4' }}
             ml={3}
           >
             No

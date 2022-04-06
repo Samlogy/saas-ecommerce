@@ -136,7 +136,7 @@ export default function contact() {
                     errorBorderColor="error"
                     borderColor={borderColor}
                     borderRadius="5px"
-                    bg={inputColor}
+                    // bg={inputColor}
                     {...register('name')}
                   />
                 </InputGroup>
@@ -158,7 +158,7 @@ export default function contact() {
                     errorBorderColor="error"
                     borderColor={borderColor}
                     borderRadius="5px"
-                    bg={inputColor}
+                    // bg={inputColor}
                     {...register('email')}
                   />
                 </InputGroup>
@@ -174,7 +174,7 @@ export default function contact() {
                   focusBorderColor={errors.message ? 'error' : 'accent_6'}
                   errorBorderColor="error"
                   borderColor={borderColor}
-                  bg={inputColor}
+                  // bg={inputColor}
                   borderRadius="5px"
                   {...register('message')}
                 />

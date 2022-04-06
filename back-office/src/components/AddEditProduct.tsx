@@ -53,6 +53,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
   }
 
   const borderColor = useColorModeValue('gray_6', 'gray_4')
+  const inputColor = useColorModeValue('gray_3', 'gray_2')
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -82,6 +83,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 isInvalid={errors.image ? true : false}
                 errorBorderColor="error"
                 borderColor={borderColor}
+                bg={inputColor}
                 borderRadius="5px"
                 focusBorderColor={errors.image ? 'error' : 'accent_5'}
                 {...register('image')}
@@ -99,6 +101,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 focusBorderColor={errors.name ? 'error' : 'accent_5'}
                 errorBorderColor="error"
                 borderColor={borderColor}
+                bg={inputColor}
                 borderRadius="5px"
                 {...register('name')}
               />
@@ -114,6 +117,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 focusBorderColor={errors.description ? 'error' : 'accent_5'}
                 errorBorderColor="error"
                 borderColor={borderColor}
+                bg={inputColor}
                 borderRadius="5px"
                 {...register('description')}
               />
@@ -130,6 +134,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 focusBorderColor={errors.price ? 'error' : 'accent_5'}
                 errorBorderColor="error"
                 borderColor={borderColor}
+                bg={inputColor}
                 borderRadius="5px"
                 {...register('price')}
               />
@@ -146,6 +151,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 focusBorderColor={errors.discount ? 'error' : 'accent_5'}
                 errorBorderColor="error"
                 borderColor={borderColor}
+                bg={inputColor}
                 borderRadius="5px"
                 {...register('discount')}
               />
@@ -169,13 +175,13 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
               </Button>
               <Button
                 type="reset"
-                bg="gray_4"
+                bg="gray_3"
                 color="white"
                 mt="1rem"
                 ml="1rem"
                 display={'flex'}
                 justifyContent="flex-end"
-                _hover={{ bg: 'gray_3' }}
+                _hover={{ bg: 'gray_4' }}
                 onClick={() => (mode === 'edit' ? {} : reset(formOptions.defaultValues))}
               >
                 {' '}

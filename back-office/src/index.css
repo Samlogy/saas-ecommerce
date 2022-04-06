@@ -82,4 +82,13 @@
   border: 1px solid #2f855a;
 }
 
-/* Framer motion */
+/*=============== SCROLL BAR ===============*/
+::-webkit-scrollbar {
+  width: 0.6rem;
+  background: hsl(152, 4%, 53%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(152, 4%, 29%);
+  border-radius: 0.5rem;
+}

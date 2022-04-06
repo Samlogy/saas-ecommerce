@@ -1,7 +1,14 @@
-import React from 'react'
-import { Flex, Text, CircularProgress, CircularProgressLabel, Box } from '@chakra-ui/react'
+import {
+  Flex,
+  Text,
+  CircularProgress,
+  CircularProgressLabel,
+  Box,
+  useColorModeValue
+} from '@chakra-ui/react'
 
 function TotalRevenue({ data }: { data: any }) {
+  const bgColor = useColorModeValue('white', 'gray_2')
   return (
     <Flex
       flexDir={'column'}
@@ -11,6 +18,7 @@ function TotalRevenue({ data }: { data: any }) {
       borderRadius={'25px'}
       boxShadow="md"
       mb="1.5rem"
+      bg={bgColor}
     >
       <Text textAlign={'left'} fontWeight="600" color={'gray_4'}>
         Total Revenue

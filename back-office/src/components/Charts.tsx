@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Flex, useColorMode, Box } from '@chakra-ui/react'
+import { Flex, useColorMode, useColorModeValue, Box } from '@chakra-ui/react'
 import ReactApexChart from 'react-apexcharts'
 
 import { IOptions } from 'lib/interfaces'
@@ -13,6 +13,8 @@ interface IChart {
 }
 function Charts({ type = 'area', options, series, sorted, setOptions }: IChart) {
   const { colorMode: mode } = useColorMode()
+
+  const bgColor = useColorModeValue('white', 'gray_2')
 
   const Chart =
     type === 'area' ? (
@@ -49,6 +51,7 @@ function Charts({ type = 'area', options, series, sorted, setOptions }: IChart) 
       mb="1.5rem"
       w={['18rem', '20rem', '', '25rem']}
       mx=".75rem"
+      bg={bgColor}
     >
       <Box mb="1rem" ml="auto" color={'gray.400'}>
         sorted:{' '}

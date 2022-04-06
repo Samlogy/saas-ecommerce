@@ -1,4 +1,4 @@
-import { Heading, Flex, Select } from '@chakra-ui/react'
+import { Heading, Flex, Select, useColorModeValue } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 
@@ -95,6 +95,8 @@ export default function Analytics() {
     )
   }
 
+  const bgColor = useColorModeValue('white', 'gray_2')
+
   return (
     <Layout isHeaderVisible>
       <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full" mb="2rem">
@@ -114,8 +116,9 @@ export default function Analytics() {
             defaultValue={sorted}
             w="6.5rem"
             p="0"
-            m={['0 auto 1rem auto', '0 0 0 36.5rem', '', '0 0 0 50rem']}
+            m={['0 auto 1rem auto', '0 0 1rem 36.5rem', '', '0 0 1rem 50rem']}
             focusBorderColor="accent_6"
+            bg={bgColor}
           >
             <option value="daily"> Daily </option>
             <option value="weekly"> Weekly </option>
@@ -148,8 +151,6 @@ export default function Analytics() {
           </Flex>
         </Flex>
       </Flex>
-
-      {t('greeting')}
     </Layout>
   )
 }

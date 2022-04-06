@@ -1,11 +1,17 @@
-import React from 'react'
-import { Text, Flex, CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
+import {
+  Text,
+  Flex,
+  CircularProgress,
+  CircularProgressLabel,
+  useColorModeValue
+} from '@chakra-ui/react'
 
 interface IWidget {
   data?: any
 }
 
 function Widget({ data }: IWidget) {
+  const bgColor = useColorModeValue('white', 'gray_2')
   return (
     <Flex
       key={data.name}
@@ -18,6 +24,7 @@ function Widget({ data }: IWidget) {
       borderRadius={'25px'}
       boxShadow="md"
       mb="1.5rem"
+      bg={bgColor}
     >
       <Flex flexDir="column">
         <Text> {data.name} </Text>

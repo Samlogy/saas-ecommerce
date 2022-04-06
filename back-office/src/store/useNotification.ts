@@ -1,5 +1,5 @@
 import create, { SetState } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { devtools } from 'zustand/middleware'
 
 // Auth Store
 type INotification = {

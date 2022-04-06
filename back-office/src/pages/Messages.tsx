@@ -13,9 +13,10 @@ function Messages() {
   const messages = useMessageStore((state: any) => state.messages)
   return (
     <Layout isHeaderVisible>
-      <Heading as="h2" fontSize="24px">
+      <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full" mb="2rem">
         Messages
       </Heading>
+
       <Flex flexDir="column" justifyContent={'center'} mt="2rem">
         <View cond={messages.length > 0}>
           {messages?.map((message: IMessage) => (

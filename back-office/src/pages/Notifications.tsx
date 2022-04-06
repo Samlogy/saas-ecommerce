@@ -15,10 +15,11 @@ function Notifications() {
 
   return (
     <Layout isHeaderVisible>
-      <Heading as="h2" fontSize="24px">
+      <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full">
         Notifications
       </Heading>
-      <Flex flexDir="column" justifyContent={'center'} mt="2rem">
+
+      <Flex flexDir="column" justifyContent={'center'} mt="2rem" mb="2rem">
         <View cond={notifications.length > 0}>
           {notifications?.map((notification: INotification) => (
             <Box

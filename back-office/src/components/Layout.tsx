@@ -3,12 +3,13 @@ import { Container, Flex } from '@chakra-ui/react'
 import { TopBar } from 'components'
 
 interface ILayout {
-  children?: React.ReactNode
+  children: React.ReactNode
   isHeaderVisible?: boolean
   rest?: any
 }
 
 export default function Layout({ children, isHeaderVisible, ...rest }: ILayout) {
+  // console.log({ ...rest })
   return (
     <Flex flexDir="column" {...rest}>
       {isHeaderVisible && <TopBar />}
@@ -16,8 +17,7 @@ export default function Layout({ children, isHeaderVisible, ...rest }: ILayout) 
         maxW="1024px"
         bg="#FFFC"
         minHeight="calc(100vh - 100px)"
-        py="36px"
-        px={['16px', '', '', '50px', '100px']}
+        p="1.5rem 1.5rem 2rem 1.5rem"
         borderRadius="4px"
       >
         {children}

@@ -97,7 +97,7 @@ export default function Analytics() {
 
   return (
     <Layout isHeaderVisible>
-      <Heading as="h2" fontSize="24px">
+      <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full" mb="2rem">
         Analytics
       </Heading>
 

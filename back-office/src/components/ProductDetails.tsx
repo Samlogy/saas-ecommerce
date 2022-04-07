@@ -50,7 +50,7 @@ const ProductDetails = ({ isOpen, onClose, product }: IProductDetails) => {
           </Flex>
         </ModalBody>
         <ModalFooter>
-          <Button bg={'disable'} color="white" _hover={{ bg: 'gray_3' }} onClick={onClose}>
+          <Button bg="gray_3" color="white" _hover={{ bg: 'gray_4' }} onClick={onClose}>
             Close
           </Button>
         </ModalFooter>
@@ -62,20 +62,40 @@ const ProductDetails = ({ isOpen, onClose, product }: IProductDetails) => {
 export default ProductDetails
 
 const Display = ({ label, data }: { label: string; data: any }) => {
+  const isDataExist = (data: any) => {
+    if (Array.isArray(data) && data.length === 0) return false
+    if (Object.keys(data).length === 0) return false
+    if (!data) return false
+    return true
+  }
+
   return (
     <Flex mb=".5rem">
       <Box as="span" w="6.25rem" textAlign={'left'} fontWeight={'600'}>
         {label}:
       </Box>
 
-      {Array.isArray(data) ? (
+      {!isDataExist(data) ? (
+        <Box as="span" fontSize="1rem" fontWeight="400" ml=".5rem" color="gray_4">
+          ---
+        </Box>
+      ) : Array.isArray(data) ? (
         <UnorderedList textAlign={'left'}>
           {data.map((item, idx) => (
-            <ListItem key={idx}> {item} </ListItem>
+            <ListItem key={idx} fontSize="1rem" fontWeight="400" ml=".5rem" color="gray_4">
+              {item}
+            </ListItem>
           ))}
         </UnorderedList>
       ) : (
-        <Text ml=".5rem" textAlign={'left'} w="auto">
+        <Text
+          textAlign={'left'}
+          w="auto"
+          fontSize="1rem"
+          fontWeight="400"
+          ml=".5rem"
+          color="gray_4"
+        >
           {data}
         </Text>
       )}

@@ -1,4 +1,12 @@
-import { Box, Flex, Select, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Select,
+  Input,
+  InputGroup,
+  InputRightElement,
+  useColorModeValue
+} from '@chakra-ui/react'
 import React from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 
@@ -20,6 +28,7 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
     setQuery(filters)
     // call api --> filtering according to (name, description)
   }
+  const bgColor = useColorModeValue('white', 'gray_2')
   return (
     <Flex
       flexDir="row"
@@ -28,10 +37,10 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
       my="3rem"
     >
       <Flex alignItems={'center'} mb={['1rem', '0', '', '']}>
-        <Box as="span" fontSize="1rem" mr=".5rem" w="3rem">
+        {/* <Box as="span" fontSize="1rem" mr=".5rem" w="3rem">
           {' '}
           Filter:{' '}
-        </Box>
+        </Box> */}
 
         <InputGroup>
           <Input
@@ -40,6 +49,7 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
             w={['80%', '', '20rem', '']}
             onChange={onFilter}
             focusBorderColor="accent_5"
+            bg={bgColor}
           />
           <InputRightElement
             children={<AiOutlineSearch size="18" />}
@@ -50,15 +60,16 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
       </Flex>
 
       <Flex alignItems={'center'}>
-        <Box as="span" fontSize="1rem" mr=".5rem" w="3rem">
+        {/* <Box as="span" fontSize="1rem" mr=".5rem" w="3rem">
           {' '}
           Sort:{' '}
-        </Box>
+        </Box> */}
         <Select
           onChange={onSort}
           focusBorderColor="accent_5"
           placeholder="Order"
           w={['80%', '', '6rem', '']}
+          bg={bgColor}
         >
           <option value="asc"> ASC </option>
           <option value="desc"> DESC </option>

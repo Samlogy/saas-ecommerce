@@ -1,5 +1,4 @@
 import { Box, Heading, Text } from '@chakra-ui/react'
-
 import { Layout, View } from '../components'
 
 export default function Conditions({ data }: { data: any }) {
@@ -17,7 +16,7 @@ export default function Conditions({ data }: { data: any }) {
         <View cond={data.content.length > 0}>
           {data &&
             data.content.map(el => (
-              <Box key={el.content.title} my="2rem">
+              <Box key={el.title} my="2rem">
                 <Heading fontSize="1.5rem">{el.title}</Heading>
 
                 <Text fontSize="1rem" mt=".5rem">

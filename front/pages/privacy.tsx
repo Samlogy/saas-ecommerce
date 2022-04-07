@@ -1,10 +1,8 @@
 import { Box, Heading, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import { Layout, View } from '../components'
-// import { getURL } from '../utils/fonctions'
 
 export default function Privacy({ data }: { data: any }) {
-  // const url = getURL('origin') + '#'
   const url = ''
 
   return (

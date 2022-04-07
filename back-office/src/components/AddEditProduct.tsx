@@ -1,6 +1,7 @@
 import {
   Button,
   Image,
+  Box,
   Flex,
   Modal,
   ModalOverlay,
@@ -14,7 +15,7 @@ import {
   Textarea,
   useColorModeValue
 } from '@chakra-ui/react'
-
+import { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
@@ -27,8 +28,16 @@ interface IAddEditProduct {
   product?: any
   mode: string
 }
+interface IEditImage {
+  data: any
+  upload: any
+  avatar: IAvatar
+}
+interface IAvatar {
+  isLoading: boolean
+  error: string
+}
 const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => {
-  console.log(product)
   const formOptions = {
     resolver: yupResolver(addProductSchema),
     defaultValues: mode === 'add' ? {} : product
@@ -52,8 +61,20 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
     console.log('edit product: ', data, id)
   }
 
+  const [avatar, setAvatar] = useState<IAvatar>({
+    isLoading: false,
+    error: ''
+  })
+
+  // image
+  const onUploadImage = () => {
+    setAvatar({ ...avatar, isLoading: true })
+    // call api when done --> error / success
+    setAvatar({ ...avatar, isLoading: false })
+  }
+
   const borderColor = useColorModeValue('gray_6', 'gray_4')
-  const inputColor = useColorModeValue('gray_3', 'gray_2')
+  const bgColor = useColorModeValue('white', 'gray_2')
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -64,32 +85,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
 
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Image
-              boxSize="100px"
-              objectFit="cover"
-              src={product?.img}
-              fallbackSrc="https://via.placeholder.com/150"
-              alt="Product Image"
-              mb="1rem"
-              borderRadius="5px"
-            />
-            <FormControl id="image" mb=".5rem">
-              <FormLabel> Choose Image </FormLabel>
-              <Input
-                type="file"
-                placeholder="Product Image"
-                border="none"
-                px="0"
-                isInvalid={errors.image ? true : false}
-                errorBorderColor="error"
-                borderColor={borderColor}
-                bg={inputColor}
-                borderRadius="5px"
-                focusBorderColor={errors.image ? 'error' : 'accent_5'}
-                {...register('image')}
-              />
-              {errors.image && <ErrorMessage error={errors.image.message} />}
-            </FormControl>
+            <EditImage data={product?.image} upload={onUploadImage} avatar={avatar} />
 
             <FormControl id="name" mb=".5rem">
               <FormLabel> Name </FormLabel>
@@ -101,7 +97,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 focusBorderColor={errors.name ? 'error' : 'accent_5'}
                 errorBorderColor="error"
                 borderColor={borderColor}
-                bg={inputColor}
+                bg={bgColor}
                 borderRadius="5px"
                 {...register('name')}
               />
@@ -117,7 +113,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 focusBorderColor={errors.description ? 'error' : 'accent_5'}
                 errorBorderColor="error"
                 borderColor={borderColor}
-                bg={inputColor}
+                bg={bgColor}
                 borderRadius="5px"
                 {...register('description')}
               />
@@ -134,7 +130,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 focusBorderColor={errors.price ? 'error' : 'accent_5'}
                 errorBorderColor="error"
                 borderColor={borderColor}
-                bg={inputColor}
+                bg={bgColor}
                 borderRadius="5px"
                 {...register('price')}
               />
@@ -151,7 +147,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 focusBorderColor={errors.discount ? 'error' : 'accent_5'}
                 errorBorderColor="error"
                 borderColor={borderColor}
-                bg={inputColor}
+                bg={bgColor}
                 borderRadius="5px"
                 {...register('discount')}
               />
@@ -195,3 +191,45 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
   )
 }
 export default AddEditProduct
+
+const EditImage = ({ data, upload, avatar }: IEditImage) => {
+  return (
+    <>
+      <Box pos="relative" w="fit-content">
+        <Flex justifyContent={'space-between'} alignItems="center">
+          <Image
+            boxSize="50px"
+            objectFit="cover"
+            src={data ? data : ''}
+            fallbackSrc="https://via.placeholder.com/100"
+            // fallback="https://via.placeholder.com/50"
+            alt="Product Image"
+            mb="1rem"
+            borderRadius="5px"
+          />
+        </Flex>
+        {/* {avatar.isLoading ? (
+            <Box>
+              <Spinner size="sm" display="flex" thickness="3px" color="accent_6" />
+            </Box>
+          ) : (
+            <Box>
+              <AiFillPlusCircle color="#48bb78" size="20" />
+            </Box>
+          )} */}
+        <FormControl id="avatar">
+          <Input
+            type="file"
+            id="profile-image"
+            border="none"
+            disabled={avatar.isLoading}
+            borderRadius="5px"
+            onChange={upload}
+            px="0"
+          />
+        </FormControl>
+      </Box>
+      <Flex mb=".5rem"> {avatar.error && <ErrorMessage error={avatar.error} />} </Flex>
+    </>
+  )
+}

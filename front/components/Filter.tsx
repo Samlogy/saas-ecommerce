@@ -1,4 +1,4 @@
-import { Box, Flex, Input, Select } from '@chakra-ui/react'
+import { Box, Flex, Input, Select, useColorModeValue } from '@chakra-ui/react'
 import React, { useState } from 'react'
 
 const Filter = () => {
@@ -15,6 +15,8 @@ const Filter = () => {
     setQuery(filters)
     // call api --> filtering according to (name, description)
   }
+
+  const inputColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <Flex
       flexDir="row"
@@ -23,26 +25,22 @@ const Filter = () => {
       my="3rem"
     >
       <Flex alignItems={'center'} mb={['1rem', '0', '', '']}>
-        {/* <Box as="span" fontSize="1rem" mr=".5rem" w="3rem"> Filter: </Box>  */}
         <Input
           type="search"
           placeholder="Search..."
           w={['80%', '', '20rem', '']}
           onChange={onFilter}
           value={query}
+          bg={inputColor}
         />
       </Flex>
 
       <Flex alignItems={'center'}>
-        <Box as="span" fontSize="1rem" mr=".5rem" w="3rem">
-          {' '}
-          Sort:{' '}
-        </Box>
-        <Select onChange={onSort} placeholder="Order" w={['80%', '', '6rem', '']}>
+        <Select onChange={onSort} placeholder="Order" w={['80%', '', '6rem', '']} bg={inputColor}>
           <option value="asc"> ASC </option>
           <option value="desc"> DESC </option>
         </Select>
-        <Select onChange={onSort} placeholder="Price" w={['80%', '', '6rem', '']}>
+        <Select onChange={onSort} placeholder="Price" w={['80%', '', '6rem', '']} bg={inputColor}>
           <option value="asc"> Plus chere </option>
           <option value="desc"> Moin chere </option>
         </Select>

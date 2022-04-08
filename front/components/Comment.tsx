@@ -1,19 +1,20 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import { IComment } from '../lib/interfaces'
 
 const Comment = ({ data }: { data: IComment }) => {
+  const bgColor = useColorModeValue('white', 'gray_2')
   return (
     <Flex
       key={data.id}
-      flexDir="row"
-      flexWrap="wrap"
+      flexDir="column"
       alignItems="flex-start"
       my="1.5rem"
       p="1rem"
       boxShadow="md"
       borderRadius={'5px'}
+      bg={bgColor}
     >
-      <Flex alignItems="center">
+      <Flex alignItems="center" mb=".5rem">
         <Box as="span" fontWeight="600">
           {' '}
           {data.name}{' '}
@@ -27,7 +28,7 @@ const Comment = ({ data }: { data: IComment }) => {
           {data.createdAt}{' '}
         </Box>
       </Flex>
-      <Text fontSize={'1rem'} fontWeight="300">
+      <Text fontSize={'.9rem'} fontWeight="300">
         {' '}
         {data.comment}{' '}
       </Text>

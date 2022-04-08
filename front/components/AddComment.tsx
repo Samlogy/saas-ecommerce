@@ -11,7 +11,8 @@ import {
   ModalContent,
   ModalOverlay,
   Stack,
-  Textarea
+  Textarea,
+  useColorModeValue
 } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import React, { useState } from 'react'
@@ -46,6 +47,8 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
     setIsChecked(e.target.checked)
   }
 
+  const inputColor = useColorModeValue('gray_9', 'gray_3')
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -67,7 +70,7 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
                 _placeholder={{ color: 'gray.500' }}
                 isInvalid={errors.fullName ? true : false}
                 errorBorderColor="error"
-                borderColor="gray.300"
+                bg={inputColor}
                 focusBorderColor={errors.fullName ? 'error' : 'accent_6'}
                 borderRadius="5px"
                 {...register('fullName')}
@@ -83,7 +86,7 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
                 _placeholder={{ color: 'gray.500' }}
                 isInvalid={errors.email ? true : false}
                 errorBorderColor="error"
-                borderColor="gray.300"
+                bg={inputColor}
                 focusBorderColor={errors.email ? 'error' : 'accent_6'}
                 borderRadius="5px"
                 {...register('email')}
@@ -98,7 +101,7 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
                 _placeholder={{ color: 'gray.500' }}
                 isInvalid={errors.comment ? true : false}
                 errorBorderColor="error"
-                borderColor="gray.300"
+                bg={inputColor}
                 focusBorderColor={errors.comment ? 'error' : 'accent_6'}
                 borderRadius="5px"
                 {...register('comment')}

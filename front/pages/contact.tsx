@@ -57,8 +57,8 @@ export default function contact() {
 
   const bgColor = useColorModeValue('white', 'gray_2')
   const textColor = useColorModeValue('balck', 'white')
-  const borderColor = useColorModeValue('gray_6', 'gray_4')
-  const inputColor = useColorModeValue('gray_3', 'gray_2')
+  // const borderColor = useColorModeValue('gray_6', 'gray_4')
+  const inputColor = useColorModeValue('gray_9', 'gray_3')
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -134,9 +134,9 @@ export default function contact() {
                     isInvalid={errors.name ? true : false}
                     focusBorderColor={errors.name ? 'error' : 'accent_6'}
                     errorBorderColor="error"
-                    borderColor={borderColor}
+                    // borderColor={borderColor}
                     borderRadius="5px"
-                    // bg={inputColor}
+                    bg={inputColor}
                     {...register('name')}
                   />
                 </InputGroup>
@@ -156,9 +156,9 @@ export default function contact() {
                     isInvalid={errors.email ? true : false}
                     focusBorderColor={errors.email ? 'error' : 'accent_6'}
                     errorBorderColor="error"
-                    borderColor={borderColor}
+                    // borderColor={borderColor}
                     borderRadius="5px"
-                    // bg={inputColor}
+                    bg={inputColor}
                     {...register('email')}
                   />
                 </InputGroup>
@@ -168,13 +168,12 @@ export default function contact() {
               <FormControl id="name" mb=".5rem">
                 <FormLabel> Message </FormLabel>
                 <Textarea
-                  _hover={{ borderRadius: 'gray_6' }}
                   placeholder="message"
                   isInvalid={errors.message ? true : false}
                   focusBorderColor={errors.message ? 'error' : 'accent_6'}
                   errorBorderColor="error"
-                  borderColor={borderColor}
-                  // bg={inputColor}
+                  // borderColor={borderColor}
+                  bg={inputColor}
                   borderRadius="5px"
                   {...register('message')}
                 />

@@ -82,8 +82,7 @@ export default function EditProfile({ profile }) {
       <Flex flexDir="column" justifyContent={'center'} alignItems={'center'}>
         <Stack align={'center'}>
           <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'} mr="auto" w="full">
-            {' '}
-            Edit Profile{' '}
+            Edit Profile
           </Heading>
         </Stack>
 
@@ -153,8 +152,7 @@ export default function EditProfile({ profile }) {
                 color="white"
                 _hover={{ bg: 'accent_3' }}
               >
-                {' '}
-                Edit Profile{' '}
+                Edit Profile
               </Button>
             </Stack>
           </form>
@@ -229,7 +227,8 @@ const EditAvatar = ({ data, upload, avatar }: IEditAvatar) => {
 }
 
 const VendorForm = ({ question, register, errors }: IForm) => {
-  const borderColor = useColorModeValue('gray_6', 'gray_4')
+  // const borderColor = useColorModeValue('gray_6', 'gray_4')
+  const inputColor = useColorModeValue('gray_9', 'gray_3')
   return (
     <View cond={question === 'yes'} display="flex" flexDir={'column'}>
       <Heading as="h2" fontSize="1.25rem" my="1.5rem" display={'flex'} alignItems="center">
@@ -248,8 +247,8 @@ const VendorForm = ({ question, register, errors }: IForm) => {
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.company_name ? true : false}
           focusBorderColor={errors.company_name ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // // borderColor={borderColor}
           borderRadius="5px"
           {...register('company_name')}
         />
@@ -263,8 +262,8 @@ const VendorForm = ({ question, register, errors }: IForm) => {
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.company_description ? true : false}
           focusBorderColor={errors.company_description ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // // borderColor={borderColor}
           borderRadius="5px"
           {...register('company_description')}
         />
@@ -279,8 +278,8 @@ const VendorForm = ({ question, register, errors }: IForm) => {
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.company_code ? true : false}
           focusBorderColor={errors.company_code ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // // borderColor={borderColor}
           borderRadius="5px"
           {...register('company_code')}
         />
@@ -294,8 +293,8 @@ const VendorForm = ({ question, register, errors }: IForm) => {
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.company_address ? true : false}
           focusBorderColor={errors.company_address ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // // borderColor={borderColor}
           borderRadius="5px"
           {...register('company_address')}
         />
@@ -310,8 +309,8 @@ const VendorForm = ({ question, register, errors }: IForm) => {
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.company_country_code ? true : false}
           focusBorderColor={errors.company_country_code ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // borderColor={borderColor}
           borderRadius="5px"
           {...register('company_country_code')}
         />
@@ -328,8 +327,8 @@ const VendorForm = ({ question, register, errors }: IForm) => {
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.company_postale_code ? true : false}
           focusBorderColor={errors.company_postale_code ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // borderColor={borderColor}
           borderRadius="5px"
           {...register('company_postale_code')}
         />
@@ -341,7 +340,8 @@ const VendorForm = ({ question, register, errors }: IForm) => {
   )
 }
 const CustomerForm = ({ question, register, errors }: IForm) => {
-  const borderColor = useColorModeValue('gray_6', 'gray_4')
+  const inputColor = useColorModeValue('gray_9', 'gray_3')
+  // const borderColor = useColorModeValue('gray_6', 'gray_4')
   return (
     <View cond={question === 'yes'} display="flex" flexDir={'column'}>
       <Heading as="h2" fontSize="1.25rem" my="1.5rem" display={'flex'} alignItems="center">
@@ -359,8 +359,8 @@ const CustomerForm = ({ question, register, errors }: IForm) => {
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.address_1 ? true : false}
           focusBorderColor={errors.address_1 ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // borderColor={borderColor}
           borderRadius="5px"
           {...register('address_1')}
         />
@@ -374,8 +374,8 @@ const CustomerForm = ({ question, register, errors }: IForm) => {
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.address_2 ? true : false}
           focusBorderColor={errors.address_2 ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // borderColor={borderColor}
           borderRadius="5px"
           {...register('address_2')}
         />
@@ -390,8 +390,8 @@ const CustomerForm = ({ question, register, errors }: IForm) => {
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.country_code ? true : false}
           focusBorderColor={errors.country_code ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // borderColor={borderColor}
           borderRadius="5px"
           {...register('country_code')}
         />
@@ -406,8 +406,8 @@ const CustomerForm = ({ question, register, errors }: IForm) => {
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.postale_code ? true : false}
           focusBorderColor={errors.postale_code ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // borderColor={borderColor}
           borderRadius="5px"
           {...register('postale_code')}
         />
@@ -418,7 +418,8 @@ const CustomerForm = ({ question, register, errors }: IForm) => {
 }
 
 const DefaultForm = ({ data, upload, avatar, register, errors }: IDefaultForm) => {
-  const borderColor = useColorModeValue('gray_6', 'gray_4')
+  // const borderColor = useColorModeValue('gray_6', 'gray_4')
+  const inputColor = useColorModeValue('gray_9', 'gray_3')
   return (
     <>
       <EditAvatar data={data} upload={upload} avatar={avatar} />
@@ -431,8 +432,8 @@ const DefaultForm = ({ data, upload, avatar, register, errors }: IDefaultForm) =
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.fullName ? true : false}
           focusBorderColor={errors.fullName ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // borderColor={borderColor}
           borderRadius="5px"
           {...register('fullName')}
         />
@@ -447,8 +448,8 @@ const DefaultForm = ({ data, upload, avatar, register, errors }: IDefaultForm) =
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.email ? true : false}
           focusBorderColor={errors.email ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // borderColor={borderColor}
           borderRadius="5px"
           {...register('email')}
         />
@@ -463,8 +464,8 @@ const DefaultForm = ({ data, upload, avatar, register, errors }: IDefaultForm) =
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors.mobile ? true : false}
           focusBorderColor={errors.mobile ? 'error' : 'accent_6'}
-          errorBorderColor="error"
-          borderColor={borderColor}
+          bg={inputColor}
+          // borderColor={borderColor}
           borderRadius="5px"
           {...register('mobile')}
         />

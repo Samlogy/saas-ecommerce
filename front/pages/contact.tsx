@@ -64,8 +64,7 @@ export default function contact() {
     <Layout isHeaderVisible isFooterVisible>
       <Flex flexDir="column" justifyContent={'center'} alignItems="center">
         <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'} mr="auto" w="full">
-          {' '}
-          Contact Us{' '}
+          Contact Us
         </Heading>
         <Flex
           flexDir={'row'}
@@ -122,8 +121,7 @@ export default function contact() {
                 <FormLabel>
                   Your Name
                   <Box as="span" color="gray_4" fontSize=".85rem" fontStyle={'italic'}>
-                    {' '}
-                    (Optional){' '}
+                    (Optional)
                   </Box>
                 </FormLabel>
                 <InputGroup>

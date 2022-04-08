@@ -20,7 +20,7 @@ import Link from 'next/link'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BsCalendarDate } from 'react-icons/bs'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
-import { Layout, View, StepForm } from '../components'
+import { Layout, View, StepForm, ModalPopUp } from '../components'
 import profileImage from '../public/images/profile.jpg'
 
 const form_1 = (

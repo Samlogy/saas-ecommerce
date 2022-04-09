@@ -9,6 +9,12 @@ export const addProductSchema = yup.object().shape({
     .positive('Price must be a positive number')
     .typeError('Price must be a number')
     .required('Price required'),
+  quantity: yup
+    .number()
+    .positive('Quantity must be a positive number')
+    .typeError('Quantity must be a number')
+    .required('Quantity required'),
+  categories: yup.array(yup.string().required('Category required').oneOf([''])),
   discount: yup
     .number()
     .positive('Discount must be a positive number')

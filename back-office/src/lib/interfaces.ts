@@ -14,6 +14,7 @@ export interface IProduct {
   discount: number // ]0,1[
   image: string
   quantity: number | string
+  categories: string[]
 }
 
 export interface IOptions {

@@ -12,7 +12,6 @@ import { AiOutlineSearch } from 'react-icons/ai'
 
 interface IProductFilter {
   setQuery: any
-  // Dispatch<React.SetStateAction<string>>,
   query: string
 }
 const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
@@ -29,6 +28,7 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
     // call api --> filtering according to (name, description)
   }
   const bgColor = useColorModeValue('white', 'gray_2')
+  const inputColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <Flex
       flexDir="row"
@@ -37,11 +37,6 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
       my="3rem"
     >
       <Flex alignItems={'center'} mb={['1rem', '0', '', '']}>
-        {/* <Box as="span" fontSize="1rem" mr=".5rem" w="3rem">
-          {' '}
-          Filter:{' '}
-        </Box> */}
-
         <InputGroup>
           <Input
             type="search"
@@ -49,7 +44,7 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
             w={['80%', '', '20rem', '']}
             onChange={onFilter}
             focusBorderColor="accent_5"
-            bg={bgColor}
+            bg={inputColor}
           />
           <InputRightElement
             children={<AiOutlineSearch size="18" />}
@@ -60,16 +55,12 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
       </Flex>
 
       <Flex alignItems={'center'}>
-        {/* <Box as="span" fontSize="1rem" mr=".5rem" w="3rem">
-          {' '}
-          Sort:{' '}
-        </Box> */}
         <Select
           onChange={onSort}
           focusBorderColor="accent_5"
           placeholder="Order"
           w={['80%', '', '6rem', '']}
-          bg={bgColor}
+          bg={inputColor}
         >
           <option value="asc"> ASC </option>
           <option value="desc"> DESC </option>

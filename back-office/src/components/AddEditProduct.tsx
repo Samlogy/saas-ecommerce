@@ -17,10 +17,12 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
+import { MultiSelect } from 'react-multi-select-component'
 
 import { ErrorMessage } from 'components'
 import { addProductSchema } from '../lib/validation'
+import { setValues } from 'framer-motion/types/render/utils/setters'
 
 interface IAddEditProduct {
   isOpen: boolean
@@ -46,19 +48,31 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
     register,
     handleSubmit,
     reset,
+    setValue,
+    getValues,
+    control,
     formState: { errors, isSubmitting }
   } = useForm(formOptions)
 
   function onSubmit(data: any) {
+    console.log(data)
     return mode === 'add' ? createProduct(data) : updateProduct(product.id, data)
   }
 
   function createProduct(data: any) {
-    console.log('create product: ', data)
+    const new_data = {
+      ...data,
+      categories: category
+    }
+    console.log('create product: ', new_data)
   }
 
   function updateProduct(id: string, data: any) {
-    console.log('edit product: ', data, id)
+    const new_data = {
+      ...data,
+      categories: category
+    }
+    console.log('update product: ', id, new_data)
   }
 
   const [avatar, setAvatar] = useState<IAvatar>({
@@ -73,8 +87,15 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
     setAvatar({ ...avatar, isLoading: false })
   }
 
-  const borderColor = useColorModeValue('gray_6', 'gray_4')
-  const bgColor = useColorModeValue('white', 'gray_2')
+  const inputColor = useColorModeValue('gray_9', 'gray_3')
+  const [category, setCategory] = useState([])
+  const categoryList = [
+    { label: 'Grapes 🍇', value: 'grapes' },
+    { label: 'Mango 🥭', value: 'mango' },
+    { label: 'Banane', value: 'banane' },
+    { label: 'Kiwi', value: 'kiwi' },
+    { label: 'Strawberry 🍓', value: 'strawberry', disabled: true }
+  ]
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -95,9 +116,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 _placeholder={{ color: 'gray_4' }}
                 isInvalid={errors.name ? true : false}
                 focusBorderColor={errors.name ? 'error' : 'accent_5'}
-                errorBorderColor="error"
-                borderColor={borderColor}
-                bg={bgColor}
+                bg={inputColor}
                 borderRadius="5px"
                 {...register('name')}
               />
@@ -111,9 +130,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 _placeholder={{ color: 'gray_4' }}
                 isInvalid={errors.description ? true : false}
                 focusBorderColor={errors.description ? 'error' : 'accent_5'}
-                errorBorderColor="error"
-                borderColor={borderColor}
-                bg={bgColor}
+                bg={inputColor}
                 borderRadius="5px"
                 {...register('description')}
               />
@@ -128,13 +145,51 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 _placeholder={{ color: 'gray_4' }}
                 isInvalid={errors.price ? true : false}
                 focusBorderColor={errors.price ? 'error' : 'accent_5'}
-                errorBorderColor="error"
-                borderColor={borderColor}
-                bg={bgColor}
+                bg={inputColor}
                 borderRadius="5px"
                 {...register('price')}
               />
               {errors.price && <ErrorMessage error={errors.price.message} />}
+            </FormControl>
+
+            <FormControl id="quantity" mb=".5rem">
+              <FormLabel> Quantity </FormLabel>
+              <Input
+                type="number"
+                placeholder="Product Quantity"
+                _placeholder={{ color: 'gray_4' }}
+                isInvalid={errors.quantity ? true : false}
+                focusBorderColor={errors.quantity ? 'error' : 'accent_5'}
+                bg={inputColor}
+                borderRadius="5px"
+                {...register('quantity')}
+              />
+              {errors.quantity && <ErrorMessage error={errors.quantity.message} />}
+            </FormControl>
+
+            <FormControl id="categories" mb=".5rem">
+              <FormLabel> Category </FormLabel>
+              <Controller
+                name="categories"
+                render={({ field }) => (
+                  <MultiSelect
+                    {...field}
+                    options={categoryList}
+                    value={category}
+                    onChange={(val: any) => {
+                      setCategory(val)
+                      setValue('categories', val)
+                    }}
+                    valueRenderer={val => (!val.length ? 'Category' : null)}
+                    className={errors.categories ? 'mutli-select error' : 'multi-select'}
+                    // overrideStrings={multiselect_strings}
+                    labelledBy="categories"
+                  />
+                )}
+                control={control}
+                defaultValue=""
+              />
+              {errors.categories && <ErrorMessage error={errors.categories.message} />}
             </FormControl>
 
             <FormControl id="discount" mb=".5rem">
@@ -145,9 +200,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 _placeholder={{ color: 'gray_4' }}
                 isInvalid={errors.discount ? true : false}
                 focusBorderColor={errors.discount ? 'error' : 'accent_5'}
-                errorBorderColor="error"
-                borderColor={borderColor}
-                bg={bgColor}
+                bg={inputColor}
                 borderRadius="5px"
                 {...register('discount')}
               />
@@ -166,8 +219,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 justifyContent="flex-end"
                 _hover={{ bg: 'accent_2' }}
               >
-                {' '}
-                {mode === 'add' ? 'Create' : 'Edit'}{' '}
+                {mode === 'add' ? 'Create' : 'Edit'}
               </Button>
               <Button
                 type="reset"
@@ -180,8 +232,7 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
                 _hover={{ bg: 'gray_4' }}
                 onClick={() => (mode === 'edit' ? {} : reset(formOptions.defaultValues))}
               >
-                {' '}
-                Reset{' '}
+                Reset
               </Button>
             </Flex>
           </form>
@@ -208,15 +259,6 @@ const EditImage = ({ data, upload, avatar }: IEditImage) => {
             borderRadius="5px"
           />
         </Flex>
-        {/* {avatar.isLoading ? (
-            <Box>
-              <Spinner size="sm" display="flex" thickness="3px" color="accent_6" />
-            </Box>
-          ) : (
-            <Box>
-              <AiFillPlusCircle color="#48bb78" size="20" />
-            </Box>
-          )} */}
         <FormControl id="avatar">
           <Input
             type="file"

@@ -57,7 +57,6 @@ export default function contact() {
 
   const bgColor = useColorModeValue('white', 'gray_2')
   const textColor = useColorModeValue('balck', 'white')
-  // const borderColor = useColorModeValue('gray_6', 'gray_4')
   const inputColor = useColorModeValue('gray_9', 'gray_3')
 
   return (

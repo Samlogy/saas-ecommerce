@@ -93,7 +93,8 @@ export default function Products() {
     discount: 0,
     description: '',
     quantity: 0,
-    price: ''
+    price: '',
+    categories: []
   })
 
   useEffect(() => {

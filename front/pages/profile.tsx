@@ -39,74 +39,74 @@ function Profile(props: any) {
     address: 'Localition'
   }
   // const { t } = useLocale()
-  const products = [
-    {
-      id: 1,
-      isNew: true,
-      name: 'Automatic Watch',
-      image: productImage.src,
-      rate: 2,
-      quantity: 1,
-      price: 350,
-      reviews: 25,
-      currency: '$',
-      description:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-      delivery: '2-3 business days'
-    },
-    {
-      id: 2,
-      isNew: true,
-      name: 'Automatic Watch',
-      image: 'productImage.src',
-      rate: 2,
-      quantity: 1,
-      price: 350,
-      reviews: 25,
-      currency: '$',
-      description:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-      delivery: '2-3 business days'
-    },
-    {
-      id: 21,
-      isNew: true,
-      name: 'Automatic Watch',
-      image: 'productImage.src',
-      rate: 2,
-      quantity: 1,
-      price: 350,
-      reviews: 25,
-      currency: '$',
-      description:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-      delivery: '2-3 business days'
-    },
-    {
-      id: 13,
-      isNew: true,
-      name: 'Automatic Watch',
-      image: 'productImage.src',
-      rate: 2,
-      quantity: 1,
-      price: 350,
-      reviews: 25,
-      currency: '$',
-      description:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-      delivery: '2-3 business days'
-    }
-  ]
+  // const products = [
+  //   {
+  //     id: 1,
+  //     isNew: true,
+  //     name: 'Automatic Watch',
+  //     image: productImage.src,
+  //     rate: 2,
+  //     quantity: 1,
+  //     price: 350,
+  //     reviews: 25,
+  //     currency: '$',
+  //     description:
+  //       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+  //     delivery: '2-3 business days'
+  //   },
+  //   {
+  //     id: 2,
+  //     isNew: true,
+  //     name: 'Automatic Watch',
+  //     image: 'productImage.src',
+  //     rate: 2,
+  //     quantity: 1,
+  //     price: 350,
+  //     reviews: 25,
+  //     currency: '$',
+  //     description:
+  //       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+  //     delivery: '2-3 business days'
+  //   },
+  //   {
+  //     id: 21,
+  //     isNew: true,
+  //     name: 'Automatic Watch',
+  //     image: 'productImage.src',
+  //     rate: 2,
+  //     quantity: 1,
+  //     price: 350,
+  //     reviews: 25,
+  //     currency: '$',
+  //     description:
+  //       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+  //     delivery: '2-3 business days'
+  //   },
+  //   {
+  //     id: 13,
+  //     isNew: true,
+  //     name: 'Automatic Watch',
+  //     image: 'productImage.src',
+  //     rate: 2,
+  //     quantity: 1,
+  //     price: 350,
+  //     reviews: 25,
+  //     currency: '$',
+  //     description:
+  //       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+  //     delivery: '2-3 business days'
+  //   }
+  // ]
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    lazyLoad: true,
-    initialSlide: 2,
-    slidesToShow: 2, // multi
-    slidesToScroll: 2 // multi
-  }
+  // const settings = {
+  //   dots: true,
+  //   infinite: true,
+  //   speed: 500,
+  //   lazyLoad: true,
+  //   initialSlide: 2,
+  //   slidesToShow: 2, // multi
+  //   slidesToScroll: 2 // multi
+  // }
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -115,7 +115,7 @@ function Profile(props: any) {
           Profile
         </Heading>
 
-        {/* <Flex flexDir={'column'} w={['20rem', '', '40rem', '']} mx="auto">
+        <Flex flexDir={'column'} w={['20rem', '', '40rem', '']} mx="auto">
           <DisplayUserData data={user} labelData={labelData} />
 
           <Button
@@ -136,7 +136,7 @@ function Profile(props: any) {
           <View cond={userExtends?.type === 'vendor'}>
             <DisplayVendorData data={vendor} labelData={labelData} />
           </View>
-        </Flex> */}
+        </Flex>
       </View>
     </Layout>
   )

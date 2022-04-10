@@ -59,7 +59,8 @@ const Filter = () => {
     // call api --> filtering according to (name, description)
   }
 
-  const inputColor = useColorModeValue('gray_9', 'gray_2')
+  const inputColor = useColorModeValue('white', 'gray_3')
+  const itemBgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <Flex flexDir="column" justifyContent={['center', 'space-between', 'flex-start', '']} my="3rem">
       <Input
@@ -68,7 +69,7 @@ const Filter = () => {
         w="15rem"
         onChange={e => onFilter({ ...filters, product: e.target.value })}
         value={query}
-        bg={inputColor}
+        bg={itemBgColor}
         focusBorderColor="accent_6"
       />
 
@@ -95,11 +96,11 @@ const Filter = () => {
           w="full"
           my="1rem"
           borderRadius={'10px'}
-          // bg={itemBgColor}
+          bg={itemBgColor}
           p="1rem"
         >
           <Box as="span" color="gray_5" mb=".3rem" mr="auto">
-            {'category'}
+            {'Category'}
           </Box>
           <Select
             onChange={e =>
@@ -149,6 +150,8 @@ const TemplateSortSlider = ({
 }: ITamplateSortSlider) => {
   const inputColor = useColorModeValue('white', 'gray_3')
   const itemBgColor = useColorModeValue('gray_9', 'gray_2')
+  const [range, setRange] = useState([])
+  // console.log(range)
   return (
     <Flex
       flexDir={'column'}
@@ -175,11 +178,20 @@ const TemplateSortSlider = ({
         ))}
       </Select>
 
+      <Box fontSize=".9rem" color="gray_5">
+        <Box as="span" mx=".2rem">
+          min: {range[0]}
+        </Box>
+        <Box as="span" mx=".2rem">
+          max: {range[1]}
+        </Box>
+      </Box>
+
       <RangeSlider
         colorScheme="green"
         aria-label={['min', 'max']}
         defaultValue={defaultValue}
-        onChangeEnd={onRange}
+        onChange={val => setRange(val)}
       >
         <RangeSliderTrack bg="white">
           <RangeSliderFilledTrack />

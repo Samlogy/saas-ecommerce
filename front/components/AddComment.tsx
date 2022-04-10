@@ -60,8 +60,7 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
               <FormLabel>
                 Full Name
                 <Box as="span" color="gray.500" fontSize=".85rem" fontStyle={'italic'}>
-                  {' '}
-                  (Optional){' '}
+                  (Optional)
                 </Box>
               </FormLabel>
               <Input
@@ -121,11 +120,9 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
                 checked={isChecked}
                 onChange={handleChange}
               >
-                {' '}
                 <Box as="span" fontWeight={'300'} fontSize=".8rem">
-                  {' '}
-                  Save my name, email in this browser for the next time I comment.{' '}
-                </Box>{' '}
+                  Save my name, email in this browser for the next time I comment.
+                </Box>
               </Checkbox>
             </Stack>
 

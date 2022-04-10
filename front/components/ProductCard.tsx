@@ -6,7 +6,7 @@ import { useShoppingCart } from '../store'
 const ProductCard = ({ id, data }: { id: string | number; data: any }) => {
   const addToCart = useShoppingCart((state: any) => state.addToCart)
 
-  const bgColor = useColorModeValue('white', 'gray_2')
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <Link href={`http://localhost:3000/product/${id}`}>
       <Flex

@@ -1,13 +1,6 @@
 const withPWA = require('next-pwa')
 const runtimeCaching = require('next-pwa/cache')
 
-// module.exports = {
-//     i18n: {
-//       locales: ['en', 'fr'],
-//       defaultLocale: 'en',
-//     },
-//   };
-
   module.exports = withPWA({
   pwa: {
     dest: 'public',

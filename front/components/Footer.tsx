@@ -28,19 +28,21 @@ export default function Footer() {
 
   return (
     <Box bg={bgColor} color={textColor}>
-      <Flex justify={['flex-start', '', 'space-around', '']} align={'center'} flexWrap="wrap">
+      <Flex
+        justify={['flex-start', '', 'space-between', '']}
+        align={'center'}
+        flexWrap="wrap"
+        p=".5rem 1rem"
+      >
         <Flex flexDir={'column'}>
           <Box mb="1rem">
-            {' '}
-            <Logo />{' '}
+            <Logo />
           </Box>
           <Subscribe />
         </Flex>
 
         <SocialMedia />
-
         <Links />
-
         <PaymentAccpect />
       </Flex>
 
@@ -76,6 +78,7 @@ export default function Footer() {
 }
 
 const Subscribe = () => {
+  const inputColor = useColorModeValue('gray.200', 'gray.600')
   const [email, setEmail] = React.useState('')
   const onSubscribe = () => {
     console.log('subscribed !!')
@@ -88,10 +91,10 @@ const Subscribe = () => {
       </Heading>
       <Flex
         justifyContent={'space-between'}
-        bg="gray.200"
+        bg={inputColor}
         p=".5rem"
         borderRadius={'10px'}
-        w="18rem"
+        w="15rem"
       >
         <Input
           type="text"
@@ -99,6 +102,7 @@ const Subscribe = () => {
           size="md"
           bg="transparent"
           border="none"
+          p="0"
           _focus={{ border: 'none' }}
           onChange={(e: any) => setEmail(e.target.value)}
           placeholder="Enter your email"
@@ -120,7 +124,7 @@ const Subscribe = () => {
 }
 const PaymentAccpect = () => {
   return (
-    <Flex flexDir={'column'} m=".5rem" w="10rem">
+    <Flex flexDir={'column'} m=".5rem" w="7rem">
       <Heading size="1rem" mb="1rem" color="accent_2">
         {' '}
         We accept all credit cards{' '}
@@ -136,7 +140,7 @@ const PaymentAccpect = () => {
 }
 const SocialMedia = () => {
   return (
-    <Flex flexDir={'column'} m=".5rem">
+    <Flex flexDir={'column'} m=".5rem" w="6.5rem">
       <Heading size="12rem" mb="1rem" color="accent_2">
         {' '}
         Follow us on{' '}
@@ -159,7 +163,7 @@ const SocialMedia = () => {
 }
 const Links = () => {
   return (
-    <Flex flexDir={'column'} mb="1rem" m=".5rem">
+    <Flex flexDir={'column'} mb="1rem" m=".5rem" w="6.5rem">
       <Heading size="12rem" mb="1rem" color="accent_2">
         {' '}
         Site Map{' '}

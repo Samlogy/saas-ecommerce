@@ -55,9 +55,9 @@ export default function contact() {
     // api call
   }
 
-  const bgColor = useColorModeValue('white', 'gray_2')
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   const textColor = useColorModeValue('balck', 'white')
-  const inputColor = useColorModeValue('gray_9', 'gray_3')
+  const inputColor = useColorModeValue('white', 'gray_3')
 
   return (
     <Layout isHeaderVisible isFooterVisible>

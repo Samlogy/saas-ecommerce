@@ -47,7 +47,7 @@ function Countdown({ initYear, dueDay }: ICountdown) {
 export default Countdown
 
 const CountBox = ({ data, type }: { data: any; type: any }) => {
-  const bgColor = useColorModeValue('white', 'gray_2')
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   const dataType =
     type === 'days'
       ? 'Days'

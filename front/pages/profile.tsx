@@ -22,6 +22,7 @@ import { BsCalendarDate } from 'react-icons/bs'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { Layout, View, StepForm, ModalPopUp } from '../components'
 import profileImage from '../public/images/profile.jpg'
+import { useLocale } from '../lib/hooks'
 
 const form_1 = (
   <Flex
@@ -151,6 +152,7 @@ function Profile(props: any) {
     createdAt: 'Creation Date',
     address: 'Localition'
   }
+  const { t } = useLocale()
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -158,6 +160,8 @@ function Profile(props: any) {
         <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'}>
           Profile
         </Heading>
+
+        {t.greeting}
 
         {/* <StepForm steps={steps} /> */}
 
@@ -265,7 +269,7 @@ const BoxData = ({ data, label, icon }: { data: any; label: string; icon: any })
 }
 
 const TemplateDataDisplay = ({ title, children }: { title: string; children: React.ReactNode }) => {
-  const bgColor = useColorModeValue('white', 'gray_2')
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <Flex
       flexDir={'column'}

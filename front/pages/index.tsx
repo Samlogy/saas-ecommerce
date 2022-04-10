@@ -178,7 +178,7 @@ const Hero = () => {
   )
 }
 const Services = ({ data }: { data: any }) => {
-  const bgColor = useColorModeValue('white', 'gray_2')
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <SectionWrapper title="Some Services We Offer">
       <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
@@ -231,13 +231,12 @@ const About = ({ data }: { data: any }) => {
           <Button
             color="accent_4"
             bg="transparent"
-            border="1px solid"
-            borderColor={'accent_4'}
             w="100px"
             borderRadius={'10px'}
             mt="1rem"
             fontSize=".9rem"
-            _hover={{ bg: 'transparent' }}
+            transition={'.25s'}
+            _hover={{ bg: 'transparent', border: '2px solid', borerColor: 'accent_4' }}
           >
             Shop Now
           </Button>
@@ -248,7 +247,7 @@ const About = ({ data }: { data: any }) => {
 }
 
 const QuestionsAnswers = ({ data }: { data: any }) => {
-  const bgColor = useColorModeValue('white', 'gray_2')
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <SectionWrapper title="Some common questions were often asked">
       <Box p="1.5rem 1rem">
@@ -299,7 +298,7 @@ const ProductsOnTrend = ({ data }: { data: any }) => {
 }
 
 const CustomerReviews = ({ data }: { data: any }) => {
-  const bgColor = useColorModeValue('white', 'gray_2')
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <SectionWrapper title="Customer Reviews">
       <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">

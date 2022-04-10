@@ -2,7 +2,7 @@ import { Box, Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import { IComment } from '../lib/interfaces'
 
 const Comment = ({ data }: { data: IComment }) => {
-  const bgColor = useColorModeValue('white', 'gray_2')
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <Flex
       key={data.id}

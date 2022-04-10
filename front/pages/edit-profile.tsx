@@ -228,7 +228,7 @@ const EditAvatar = ({ data, upload, avatar }: IEditAvatar) => {
 
 const VendorForm = ({ question, register, errors }: IForm) => {
   // const borderColor = useColorModeValue('gray_6', 'gray_4')
-  const inputColor = useColorModeValue('gray_9', 'gray_3')
+  const inputColor = useColorModeValue('white', 'gray_3')
   return (
     <View cond={question === 'yes'} display="flex" flexDir={'column'}>
       <Heading as="h2" fontSize="1.25rem" my="1.5rem" display={'flex'} alignItems="center">
@@ -340,7 +340,7 @@ const VendorForm = ({ question, register, errors }: IForm) => {
   )
 }
 const CustomerForm = ({ question, register, errors }: IForm) => {
-  const inputColor = useColorModeValue('gray_9', 'gray_3')
+  const inputColor = useColorModeValue('white', 'gray_3')
   // const borderColor = useColorModeValue('gray_6', 'gray_4')
   return (
     <View cond={question === 'yes'} display="flex" flexDir={'column'}>
@@ -419,7 +419,7 @@ const CustomerForm = ({ question, register, errors }: IForm) => {
 
 const DefaultForm = ({ data, upload, avatar, register, errors }: IDefaultForm) => {
   // const borderColor = useColorModeValue('gray_6', 'gray_4')
-  const inputColor = useColorModeValue('gray_9', 'gray_3')
+  const inputColor = useColorModeValue('white', 'gray_3')
   return (
     <>
       <EditAvatar data={data} upload={upload} avatar={avatar} />

@@ -21,7 +21,7 @@ import Link from 'next/link'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BsCalendarDate } from 'react-icons/bs'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
-import { Layout, View } from '../components'
+import { Layout, View, PreviewImage } from '../components'
 import profileImage from '../public/images/profile.jpg'
 import { useLocale } from '../lib/hooks'
 import productImage from '../public/images/product.png'
@@ -116,6 +116,7 @@ function Profile(props: any) {
         </Heading>
 
         <Flex flexDir={'column'} w={['20rem', '', '40rem', '']} mx="auto">
+          <PreviewImage />
           <DisplayUserData data={user} labelData={labelData} />
 
           <Button

@@ -32,9 +32,7 @@ interface ITamplateSortSlider {
 const Filter = () => {
   const [query, setQuery] = useState('')
   const [sorts, setSorts] = useState([])
-  const [filters, setFilters] = useState([])
-
-  // const keys = ['image', 'name', 'description', 'qunatity', 'price']
+  const [filters, setFilters] = useState({ product: '', category: [] })
 
   const onSort = (vals: any) => {
     const new_sorts = vals.map((val: string) => val.toLowerCase())
@@ -42,10 +40,22 @@ const Filter = () => {
     // setSorts(prev => [...prev, selected])
     console.log('sorts: ', sorts)
   }
-  const onFilter = (e: any) => {
-    const filters = e.target.value.toLowerCase()
-    // console.log('filters: ', filters)
-    setQuery(filters)
+  const onFilter = (val: any) => {
+    // product
+    setFilters({ ...filters, product: val })
+    // category
+    setFilters({ ...filters, category: [...filters.category, val] })
+
+    // if (Array.isArray(vals)) {
+    //   const new_filters = vals.map((val: string) => val.toLowerCase())
+    //   setFilters(new_filters)
+    //   console.log(new_filters)
+    // } else {
+    //   const new_filters = [...filters, vals]
+    //   setFilters(new_filters)
+    //   console.log(new_filters)
+    // }
+    // setQuery(new_filters)
     // call api --> filtering according to (name, description)
   }
 
@@ -56,9 +66,10 @@ const Filter = () => {
         type="search"
         placeholder="Search..."
         w="15rem"
-        onChange={onFilter}
+        onChange={e => onFilter({ ...filters, product: e.target.value })}
         value={query}
         bg={inputColor}
+        focusBorderColor="accent_6"
       />
 
       <Flex
@@ -76,7 +87,33 @@ const Filter = () => {
           label="Creation Date"
           selectList={['new', 'old']}
         />
-        <TemplateSort onSort={onSort} sorts={sorts} label="Category" selectList={CATEGORY_LIST} />
+
+        <Flex
+          flexDir={'column'}
+          justifyContent="center"
+          alignItems={'center'}
+          w="full"
+          my="1rem"
+          borderRadius={'10px'}
+          // bg={itemBgColor}
+          p="1rem"
+        >
+          <Box as="span" color="gray_5" mb=".3rem" mr="auto">
+            {'category'}
+          </Box>
+          <Select
+            onChange={e =>
+              onFilter({ ...filters, category: [...filters.category, e.target.value] })
+            }
+            bg={inputColor}
+            maxW="10rem"
+            focusBorderColor="accent_6"
+          >
+            {CATEGORY_LIST?.map(el => (
+              <option value={el}> {el} </option>
+            ))}
+          </Select>
+        </Flex>
 
         <TemplateSortSlider
           onSort={onSort}
@@ -131,6 +168,7 @@ const TemplateSortSlider = ({
         bg={inputColor}
         maxW="10rem"
         mb=".75rem"
+        focusBorderColor="accent_6"
       >
         {selectList?.map(item => (
           <option value={item}> {item} </option>
@@ -170,7 +208,12 @@ const TemplateSort = ({ label, onSort, sorts, selectList }: ITemplateSort) => {
       <Box as="span" color="gray_5" mb=".3rem" mr="auto">
         {label}
       </Box>
-      <Select onChange={e => onSort([...sorts, e.target.value])} bg={inputColor} maxW="10rem">
+      <Select
+        onChange={e => onSort([...sorts, e.target.value])}
+        bg={inputColor}
+        maxW="10rem"
+        focusBorderColor="accent_6"
+      >
         {selectList?.map(el => (
           <option value={el}> {el} </option>
         ))}

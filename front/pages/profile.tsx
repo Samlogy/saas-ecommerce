@@ -14,132 +14,18 @@ import {
   Image,
   Input,
   Text,
+  VStack,
   useColorModeValue
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BsCalendarDate } from 'react-icons/bs'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
-import { Layout, View, StepForm, ModalPopUp } from '../components'
+import { Layout, View } from '../components'
 import profileImage from '../public/images/profile.jpg'
 import { useLocale } from '../lib/hooks'
-
-const form_1 = (
-  <Flex
-    flexDir="column"
-    alignItems={'center'}
-    m="2rem auto"
-    p={4}
-    w="400px"
-    rounded={'xl'}
-    boxShadow={'lg'}
-  >
-    <FormControl id="username" mb="1rem">
-      <FormLabel> username </FormLabel>
-      <Input
-        type="text"
-        placeholder=""
-        _placeholder={{ color: 'gray_4' }}
-        // isInvalid={errors.username ? true : false}
-        errorBorderColor="error"
-        borderColor="gray_6"
-        borderRadius="4px"
-        // {...register('username')}
-      />
-      {/* {errors.username && <ErrorMessage error={errors.username.message} />} */}
-    </FormControl>
-
-    <FormControl id="email" mb="1rem">
-      <FormLabel> Email Address </FormLabel>
-      <Input
-        type="email"
-        placeholder="your-email@example.com"
-        _placeholder={{ color: 'gray_4' }}
-        // isInvalid={errors.email ? true : false}
-        errorBorderColor="error"
-        borderColor="gray_6"
-        borderRadius="4px"
-        // {...register('email')}
-      />
-      {/* {errors.email && <ErrorMessage error={errors.email.message} />} */}
-    </FormControl>
-  </Flex>
-)
-
-const form_2 = (
-  <Flex
-    flexDir="column"
-    alignItems={'center'}
-    m="2rem auto"
-    p={4}
-    w="400px"
-    rounded={'xl'}
-    boxShadow={'lg'}
-  >
-    <FormControl id="fullName" mb="1rem">
-      <FormLabel> fullName </FormLabel>
-      <Input
-        type="text"
-        placeholder=""
-        _placeholder={{ color: 'gray_4' }}
-        // isInvalid={errors.fullName ? true : false}
-        errorBorderColor="error"
-        borderColor="gray_6"
-        borderRadius="4px"
-        // {...register('fullName')}
-      />
-      {/* {errors.fullName && <ErrorMessage error={errors.fullName.message} />} */}
-    </FormControl>
-
-    <FormControl id="email" mb="1rem">
-      <FormLabel> address </FormLabel>
-      <Input
-        type="text"
-        placeholder=""
-        _placeholder={{ color: 'gray_4' }}
-        // isInvalid={errors.address ? true : false}
-        errorBorderColor="error"
-        borderColor="gray_6"
-        borderRadius="4px"
-        // {...register('address')}
-      />
-      {/* {errors.address && <ErrorMessage error={errors.address.message} />} */}
-    </FormControl>
-  </Flex>
-)
-
-const form_3 = (
-  <Flex
-    flexDir="column"
-    alignItems={'center'}
-    m="2rem auto"
-    p={4}
-    w="400px"
-    rounded={'xl'}
-    boxShadow={'lg'}
-  >
-    <FormControl id="age" mb="1rem">
-      <FormLabel> age </FormLabel>
-      <Input
-        type="text"
-        placeholder=""
-        _placeholder={{ color: 'gray_4' }}
-        // isInvalid={errors.age ? true : false}
-        errorBorderColor="error"
-        borderColor="gray_6"
-        borderRadius="4px"
-        // {...register('age')}
-      />
-      {/* {errors.age && <ErrorMessage error={errors.age.message} />} */}
-    </FormControl>
-  </Flex>
-)
-
-const steps = [
-  { label: 'Form 1', content: form_1, icon: AiOutlineMail, description: 'desc 1' },
-  { label: 'Form 2', content: form_2, icon: BsCalendarDate, description: 'desc 2' },
-  { label: 'Form 3', content: form_3, icon: HiOutlineLocationMarker, description: 'desc 3' }
-]
+import productImage from '../public/images/product.png'
+import Slider from 'react-slick'
 
 function Profile(props: any) {
   const user = {} // super tokens
@@ -152,7 +38,75 @@ function Profile(props: any) {
     createdAt: 'Creation Date',
     address: 'Localition'
   }
-  const { t } = useLocale()
+  // const { t } = useLocale()
+  const products = [
+    {
+      id: 1,
+      isNew: true,
+      name: 'Automatic Watch',
+      image: productImage.src,
+      rate: 2,
+      quantity: 1,
+      price: 350,
+      reviews: 25,
+      currency: '$',
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days'
+    },
+    {
+      id: 2,
+      isNew: true,
+      name: 'Automatic Watch',
+      image: 'productImage.src',
+      rate: 2,
+      quantity: 1,
+      price: 350,
+      reviews: 25,
+      currency: '$',
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days'
+    },
+    {
+      id: 21,
+      isNew: true,
+      name: 'Automatic Watch',
+      image: 'productImage.src',
+      rate: 2,
+      quantity: 1,
+      price: 350,
+      reviews: 25,
+      currency: '$',
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days'
+    },
+    {
+      id: 13,
+      isNew: true,
+      name: 'Automatic Watch',
+      image: 'productImage.src',
+      rate: 2,
+      quantity: 1,
+      price: 350,
+      reviews: 25,
+      currency: '$',
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days'
+    }
+  ]
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    lazyLoad: true,
+    initialSlide: 2,
+    slidesToShow: 2, // multi
+    slidesToScroll: 2 // multi
+  }
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -161,11 +115,7 @@ function Profile(props: any) {
           Profile
         </Heading>
 
-        {t.greeting}
-
-        {/* <StepForm steps={steps} /> */}
-
-        <Flex flexDir={'column'} w={['20rem', '', '40rem', '']} mx="auto">
+        {/* <Flex flexDir={'column'} w={['20rem', '', '40rem', '']} mx="auto">
           <DisplayUserData data={user} labelData={labelData} />
 
           <Button
@@ -186,7 +136,7 @@ function Profile(props: any) {
           <View cond={userExtends?.type === 'vendor'}>
             <DisplayVendorData data={vendor} labelData={labelData} />
           </View>
-        </Flex>
+        </Flex> */}
       </View>
     </Layout>
   )

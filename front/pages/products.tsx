@@ -10,25 +10,29 @@ export default function Products({ products }: { products: IProduct[] }) {
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'}>
-        {' '}
         Products{' '}
       </Heading>
 
-      <Filter />
+      <Flex flexDir={'row'} justifyContent="space-between">
+        <Filter />
+        <Flex flexDir={'column'}>
+          <View cond={products?.length > 0}>
+            <Text mb="1rem" ml="3rem">
+              Products result: {products?.length}{' '}
+            </Text>
 
-      <View cond={products?.length > 0}>
-        <Text mb="1rem"> Products result: {products?.length} </Text>
+            <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
+              {products?.map((product: IProduct) => (
+                <ProductCard id={product.id} data={product} />
+              ))}
+            </Flex>
+          </View>
 
-        <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
-          {products?.map((product: IProduct) => (
-            <ProductCard id={product.id} data={product} />
-          ))}
+          <View cond={products?.length === 0}>
+            <Text> There is no product with thoes filters </Text>
+          </View>
         </Flex>
-      </View>
-
-      <View cond={products?.length === 0}>
-        <Text> There is no product with thoes filters </Text>
-      </View>
+      </Flex>
 
       <Pagination
         page={page}

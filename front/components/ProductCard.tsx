@@ -12,6 +12,11 @@ interface IProduct {
 const ProductCard = ({ id, data, readOnly = false }: IProduct) => {
   const addToCart = useShoppingCart((state: any) => state.addToCart)
 
+  const handleClick = (e, data) => {
+    e.preventDefault()
+    addToCart(data)
+  }
+
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <Link href={`http://localhost:3000/product/${id}`}>
@@ -70,7 +75,7 @@ const ProductCard = ({ id, data, readOnly = false }: IProduct) => {
               borderRadius="20px"
               w="full"
               mt=".75rem"
-              onClick={() => addToCart(data)}
+              onClick={e => handleClick(e, data)}
             >
               Add to Cart
             </Button>

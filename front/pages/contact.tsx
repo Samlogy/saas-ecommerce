@@ -61,7 +61,12 @@ export default function contact() {
 
   return (
     <Layout isHeaderVisible isFooterVisible>
-      <Flex flexDir="column" justifyContent={'center'} alignItems="center">
+      <Flex
+        flexDir="column"
+        justifyContent={'center'}
+        alignItems="center"
+        w={['18rem', '', '50rem']}
+      >
         <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'} mr="auto" w="full">
           Contact Us
         </Heading>
@@ -75,7 +80,7 @@ export default function contact() {
           bg={bgColor}
         >
           <Flex flexDir="column" justifyContent={'space-between'} p="1.5rem 2rem">
-            <Text color={textColor} fontSize={'1rem'} mb="1.5rem" maxW="20rem" minW="15rem">
+            <Text color={textColor} fontSize={'1rem'} mb="1.5rem" w={['18rem', '', '50rem']}>
               Reach out to us today via any of the given information
             </Text>
 

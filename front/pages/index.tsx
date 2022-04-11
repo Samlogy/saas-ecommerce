@@ -402,14 +402,13 @@ const Promotion = () => {
           fontSize="24px"
           mb="1rem"
           textTransform="uppercase"
-          w="20rem"
+          w={['15rem', '', '24rem', '']}
           wordBreak={'keep-all'}
           textAlign={'left'}
         >
           Deal of The Day
         </Heading>
-        <Text mb="1rem" textAlign={'left'} maxW="24rem" fontSize={'.9rem'}>
-          {' '}
+        <Text mb="1rem" textAlign={'left'} w={['15rem', '', '24rem', '']} fontSize={'.9rem'}>
           With our app you can view the route of your order, from our local headquarters to the
           place where you are. Look for the app now!{' '}
         </Text>
@@ -453,7 +452,7 @@ const SectionWrapper = ({
           fontSize="24px"
           mb="1rem"
           textTransform="uppercase"
-          w="20rem"
+          w={['15rem', '20rem', '', '']}
           mx="auto"
           wordBreak={'keep-all'}
         >

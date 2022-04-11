@@ -35,7 +35,7 @@ function Countdown({ initYear, dueDay }: ICountdown) {
   })
 
   return (
-    <Flex m="0rem 0 1rem 0">
+    <Flex flexWrap="wrap" m="0rem 0 1rem 0">
       <CountBox data={timeLeft.days} type="days" />
       <CountBox data={timeLeft.hours} type="hours" />
       <CountBox data={timeLeft.minutes} type="minutes" />

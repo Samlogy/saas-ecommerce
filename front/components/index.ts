@@ -24,3 +24,4 @@ export { default as ShoppingCartIcon } from "./ShoppingCartIcon"
 export { default as StepForm } from "./StepForm"
 export { default as View } from "./View"
 
+export {default as PreviewImages} from "./PreviewImages"

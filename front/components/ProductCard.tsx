@@ -3,7 +3,13 @@ import Link from 'next/link'
 import { Rating } from '../components'
 import { useShoppingCart } from '../store'
 
-const ProductCard = ({ id, data }: { id: string | number; data: any }) => {
+interface IProduct {
+  id: string | number
+  data: any
+  readOnly?: boolean
+}
+
+const ProductCard = ({ id, data, readOnly = false }: IProduct) => {
   const addToCart = useShoppingCart((state: any) => state.addToCart)
 
   const bgColor = useColorModeValue('gray_9', 'gray_2')
@@ -45,7 +51,7 @@ const ProductCard = ({ id, data }: { id: string | number; data: any }) => {
 
             <Flex flexDir={'column'} justifyContent="space-between" alignContent="center">
               <Flex>
-                <Rating initRate={data.rate} />
+                <Rating initRate={data.rate} readOnly={readOnly} />
                 <Reviews data={data?.reviews} />
               </Flex>
 

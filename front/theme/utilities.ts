@@ -30,17 +30,12 @@ export const colors = {
 
 
 export const breakpoints = createBreakpoints({
-    // sm: '40em',
-    // md: '52em',
-    // lg: '64em',
-    // xl: '80em',
-    // "2xl": "135em"
-    xs: "30em",
-    sm: "36em",
-    md: "46.25em",
-    lg: "62.5em",
-    xl: "78.125em",
-    '2xl': "95em"
+    xs: "20em",
+    sm: '40em',
+    md: '52em',
+    lg: '64em',
+    xl: '80em',
+    "2xl": "90em"
 })
 
 export const fonts = { body: `'Poppins', sans-serif`, heading: `'Poppins', sans-serif` }

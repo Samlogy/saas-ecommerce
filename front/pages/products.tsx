@@ -23,7 +23,7 @@ export default function Products({ products }: { products: IProduct[] }) {
 
             <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
               {products?.map((product: IProduct) => (
-                <ProductCard id={product.id} data={product} />
+                <ProductCard id={product.id} data={product} readOnly />
               ))}
             </Flex>
           </View>
@@ -56,7 +56,7 @@ export const getServerSideProps = async () => {
       image: productImage.src,
       name: 'Wayfarer Classic',
       price: 6,
-      rating: 4.2,
+      rate: 4.2,
       quantity: 11,
       reviews: 34,
       currency: '£',
@@ -68,7 +68,7 @@ export const getServerSideProps = async () => {
       image: productImage.src,
       name: 'Wayfarer Classic',
       price: 4,
-      rating: 4.2,
+      rate: 4.2,
       quantity: 11,
       reviews: 34,
       currency: '£',
@@ -80,7 +80,7 @@ export const getServerSideProps = async () => {
       image: productImage.src,
       name: 'Wayfarer Classic',
       price: 2,
-      rating: 4.2,
+      rate: 4.2,
       quantity: 11,
       reviews: 34,
       currency: '£',
@@ -92,7 +92,7 @@ export const getServerSideProps = async () => {
       img: productImage.src,
       name: 'Wayfarer Classic',
       price: 20,
-      rating: 4.2,
+      rate: 4.2,
       quantity: 11,
       reviews: 34,
       currency: '£',

@@ -291,7 +291,8 @@ const ProductsOnTrend = ({ data }: { data: any }) => {
   return (
     <SectionWrapper title="Check out our products">
       <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
-        {data.length > 0 && data.map((el: any) => <ProductCard data={el} />)}
+        {data.length > 0 &&
+          data.map((product: any) => <ProductCard data={product} id={product.id} readOnly />)}
       </Flex>
     </SectionWrapper>
   )

@@ -66,11 +66,6 @@ const Routing = () => {
           }
         />
 
-        {/* <Route path="/" element={<Analytics />} /> */}
-        {/* <Route path="products" element={<Products />} />
-        <Route path="notifications" element={<Notifications />} />
-        <Route path="messages" element={<Messages />} /> */}
-
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

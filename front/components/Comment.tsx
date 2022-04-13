@@ -16,20 +16,16 @@ const Comment = ({ data }: { data: IComment }) => {
     >
       <Flex alignItems="center" mb=".5rem">
         <Box as="span" fontWeight="600">
-          {' '}
           {data.name}{' '}
         </Box>
         <Box as="span" fontWeight="300" fontSize=".8rem" ml=".25rem">
-          {' '}
           on{' '}
         </Box>
         <Box as="span" fontStyle={'italic'} fontSize=".8rem" ml=".5rem">
-          {' '}
           {data.createdAt}{' '}
         </Box>
       </Flex>
       <Text fontSize={'.9rem'} fontWeight="300">
-        {' '}
         {data.comment}{' '}
       </Text>
     </Flex>

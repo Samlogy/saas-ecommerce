@@ -1,31 +1,11 @@
-// import { Box, Button, Flex, Heading, Image } from '@chakra-ui/react'
-import {
-  Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Button,
-  Divider,
-  Flex,
-  FormControl,
-  FormLabel,
-  Heading,
-  Image,
-  Input,
-  Text,
-  VStack,
-  useColorModeValue
-} from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Image, useColorModeValue } from '@chakra-ui/react'
 import Link from 'next/link'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BsCalendarDate } from 'react-icons/bs'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
-import { Layout, View, PreviewImage } from '../components'
-import profileImage from '../public/images/profile.jpg'
+import { Layout, View } from '../components'
 import { useLocale } from '../lib/hooks'
-import productImage from '../public/images/product.png'
-import Slider from 'react-slick'
+import profileImage from '../public/images/profile.jpg'
 
 function Profile(props: any) {
   const user = {} // super tokens
@@ -38,75 +18,7 @@ function Profile(props: any) {
     createdAt: 'Creation Date',
     address: 'Localition'
   }
-  // const { t } = useLocale()
-  // const products = [
-  //   {
-  //     id: 1,
-  //     isNew: true,
-  //     name: 'Automatic Watch',
-  //     image: productImage.src,
-  //     rate: 2,
-  //     quantity: 1,
-  //     price: 350,
-  //     reviews: 25,
-  //     currency: '$',
-  //     description:
-  //       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-  //     delivery: '2-3 business days'
-  //   },
-  //   {
-  //     id: 2,
-  //     isNew: true,
-  //     name: 'Automatic Watch',
-  //     image: 'productImage.src',
-  //     rate: 2,
-  //     quantity: 1,
-  //     price: 350,
-  //     reviews: 25,
-  //     currency: '$',
-  //     description:
-  //       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-  //     delivery: '2-3 business days'
-  //   },
-  //   {
-  //     id: 21,
-  //     isNew: true,
-  //     name: 'Automatic Watch',
-  //     image: 'productImage.src',
-  //     rate: 2,
-  //     quantity: 1,
-  //     price: 350,
-  //     reviews: 25,
-  //     currency: '$',
-  //     description:
-  //       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-  //     delivery: '2-3 business days'
-  //   },
-  //   {
-  //     id: 13,
-  //     isNew: true,
-  //     name: 'Automatic Watch',
-  //     image: 'productImage.src',
-  //     rate: 2,
-  //     quantity: 1,
-  //     price: 350,
-  //     reviews: 25,
-  //     currency: '$',
-  //     description:
-  //       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-  //     delivery: '2-3 business days'
-  //   }
-  // ]
-
-  // const settings = {
-  //   dots: true,
-  //   infinite: true,
-  //   speed: 500,
-  //   lazyLoad: true,
-  //   initialSlide: 2,
-  //   slidesToShow: 2, // multi
-  //   slidesToScroll: 2 // multi
-  // }
+  const { t } = useLocale()
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -116,7 +28,6 @@ function Profile(props: any) {
         </Heading>
 
         <Flex flexDir={'column'} w={['20rem', '', '40rem', '']} mx="auto">
-          <PreviewImage />
           <DisplayUserData data={user} labelData={labelData} />
 
           <Button
@@ -148,6 +59,14 @@ export default Profile
 const DisplayUserData = ({ data, labelData }: { data: any; labelData: any }) => {
   return (
     <TemplateDataDisplay title="My Personal Informations">
+      <Image
+        src={data?.avatar}
+        boxSize="90px"
+        fallbackSrc="https://via.placeholder.com/100"
+        borderRadius={'10px'}
+        mb="1rem"
+        alt="avatar"
+      />
       <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} label={labelData?.email} />
       <BoxData
         data={data?.address}

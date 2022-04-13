@@ -10,6 +10,7 @@ interface IPagination {
   startPage: any
   endPage: any
   lastPage: number
+  isMobile?: boolean
 }
 
 const Pagination = ({
@@ -20,15 +21,22 @@ const Pagination = ({
   prevPage,
   startPage,
   endPage,
-  lastPage
+  lastPage,
+  isMobile
 }: IPagination) => {
   const { colorMode: mode } = useColorMode()
 
   const bgColor = useColorModeValue('gray_8', 'gray_2')
   const textColor = useColorModeValue('accent_4', 'white')
 
-  return (
-    <Flex flexDir="row" justifyContent={'space-between'} w="60%" m="1.5rem auto">
+  return isMobile ? (
+    <Flex>
+      <Button disabled={page === lastPage} onClick={nextPage} color={textColor} m="1.5rem auto">
+        Load More
+      </Button>
+    </Flex>
+  ) : (
+    <Flex flexDir="row" justifyContent={'space-between'} w={['', '30rem', '', '']} m="1.5rem auto">
       <Button
         fontSize=".9rem"
         mx=".25rem"
@@ -38,8 +46,7 @@ const Pagination = ({
         disabled={page === 1}
         onClick={startPage}
       >
-        {' '}
-        Start{' '}
+        Start
       </Button>
 
       <IconButton
@@ -63,7 +70,6 @@ const Pagination = ({
             _hover={{ bg: mode === 'light' ? 'gray_7' : 'gray_4', color: 'white' }}
             onClick={() => changePage(page)}
           >
-            {' '}
             {page}
           </Button>
         ))}
@@ -88,8 +94,7 @@ const Pagination = ({
         disabled={page === lastPage}
         onClick={endPage}
       >
-        {' '}
-        Last{' '}
+        Last
       </Button>
     </Flex>
   )

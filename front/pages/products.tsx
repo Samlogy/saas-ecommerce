@@ -1,12 +1,32 @@
-import { Flex, Heading, Text } from '@chakra-ui/react'
+import {
+  Flex,
+  Heading,
+  Text,
+  IconButton,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton
+} from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { BsFilterLeft } from 'react-icons/bs'
+
 import { Filter, Layout, Pagination, ProductCard, View } from '../components'
+import { useWindowDimensions } from '../lib/hooks'
 import { IProduct } from '../lib/interfaces'
 import productImage from '../public/images/product.png'
 
 export default function Products({ products }: { products: IProduct[] }) {
   const [page, setPage] = useState<number>(1)
   const data = { info: { pages: 10 } }
+
+  const { width } = useWindowDimensions()
+  console.log(width)
+
+  const [isVisible, setIsVisible] = useState(false)
+  const btnRef = React.useRef()
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'}>
@@ -14,7 +34,43 @@ export default function Products({ products }: { products: IProduct[] }) {
       </Heading>
 
       <Flex flexDir={'row'} justifyContent="space-between">
-        <Filter />
+        {width >= 700 ? (
+          <Filter
+            isOpen={isVisible}
+            close={() => setIsVisible(false)}
+            open={() => setIsVisible(true)}
+          />
+        ) : (
+          <>
+            <IconButton
+              aria-label="trigger filter"
+              icon={<BsFilterLeft size={18} />}
+              ref={btnRef}
+              onClick={() => setIsVisible(true)}
+            />
+            <Drawer
+              isOpen={isVisible}
+              placement="right"
+              onClose={() => setIsVisible(false)}
+              finalFocusRef={btnRef}
+            >
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader> Filter </DrawerHeader>
+
+                <DrawerBody>
+                  <Filter
+                    isOpen={isVisible}
+                    close={() => setIsVisible(false)}
+                    open={() => setIsVisible(true)}
+                  />
+                </DrawerBody>
+              </DrawerContent>
+            </Drawer>
+          </>
+        )}
+
         <Flex flexDir={'column'}>
           <View cond={products?.length > 0}>
             <Text mb="1rem" ml="3rem">
@@ -43,6 +99,7 @@ export default function Products({ products }: { products: IProduct[] }) {
         startPage={() => setPage(1)}
         endPage={() => setPage(data.info.pages)}
         lastPage={data.info.pages}
+        isMobile={width < 700 ? true : false}
       />
     </Layout>
   )

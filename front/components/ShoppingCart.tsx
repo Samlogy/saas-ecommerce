@@ -52,7 +52,6 @@ const ShoppingCart = () => {
               _hover={{ cursor: 'pointer', textDecor: 'underline' }}
               onClick={() => removeAll()}
             >
-              {' '}
               Remove all{' '}
             </Text>
             {products.map((product: any, idx: number) => (
@@ -68,7 +67,6 @@ const ShoppingCart = () => {
 
           <View cond={products.length === 0}>
             <Text fontSize="1rem" color="gray.500">
-              {' '}
               There is not product in your shopping cart{' '}
             </Text>
           </View>
@@ -77,18 +75,14 @@ const ShoppingCart = () => {
         <DrawerFooter display="flex" flexDir="column">
           <Divider my="1rem" />
           <Text mb="1rem" fontSize=".9rem" color="gray.500">
-            {' '}
             Shipping and taxes calculated at checkout.{' '}
           </Text>
           <Button w="full" bg={'accent_3'} _hover={{ bg: 'accent_2' }} color={'white'}>
-            {' '}
             Checkout{' '}
           </Button>
           <Text display="flex" mt="1rem">
-            {' '}
             or
             <Text textColor="accent_3" ml="1rem" fontSize=".9rem" _hover={{ cursor: 'pointer' }}>
-              {' '}
               Continue Shopping →{' '}
             </Text>
           </Text>
@@ -117,7 +111,6 @@ const CartItem = ({ key, data }: { key: any; data: any }) => {
 
         <Flex flexDir="column">
           <Text fontSize="1rem" fontWeight="600" textAlign={'center'} mb=".5rem">
-            {' '}
             {data.name}{' '}
           </Text>
 
@@ -137,11 +130,9 @@ const CartItem = ({ key, data }: { key: any; data: any }) => {
 
           <Flex justifyContent={'space-evenly'} alignItems="center">
             <Box as="span" fontStyle="italic" fontSize=".9rem">
-              {' '}
               Discount:{' '}
             </Box>
             <Box as="span" fontStyle="italic" fontSize=".9rem">
-              {' '}
               {data.discount * 100} %{' '}
             </Box>
           </Flex>
@@ -149,11 +140,9 @@ const CartItem = ({ key, data }: { key: any; data: any }) => {
 
         <Flex flexDir="column" justifyContent="space-between">
           <Text fontSize="1rem" fontWeight="600">
-            {' '}
             ${data.price}{' '}
           </Text>
           <Box as="span" _hover={{ cursor: 'pointer' }}>
-            {' '}
             <FaTrash size={16} color="#60666f" onClick={() => removeOne(data.id)} />{' '}
           </Box>
         </Flex>

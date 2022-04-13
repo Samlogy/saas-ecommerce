@@ -2,14 +2,15 @@ import {
   Box,
   Flex,
   Input,
-  Select,
-  useColorModeValue,
   RangeSlider,
-  RangeSliderTrack,
   RangeSliderFilledTrack,
-  RangeSliderThumb
+  RangeSliderThumb,
+  RangeSliderTrack,
+  Select,
+  useColorModeValue
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { useWindowDimensions } from '../lib/hooks'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
 
@@ -29,10 +30,19 @@ interface ITamplateSortSlider {
   onRange: any
 }
 
-const Filter = () => {
+interface IFilter {
+  isOpen: boolean
+  close: any
+  open: any
+}
+
+// { isVisible }: { isVisible: boolean }
+const Filter = ({ isOpen, close, open }: IFilter) => {
   const [query, setQuery] = useState('')
   const [sorts, setSorts] = useState([])
   const [filters, setFilters] = useState({ product: '', category: [] })
+
+  const { height, width } = useWindowDimensions()
 
   const onSort = (vals: any) => {
     const new_sorts = vals.map((val: string) => val.toLowerCase())
@@ -45,24 +55,19 @@ const Filter = () => {
     setFilters({ ...filters, product: val })
     // category
     setFilters({ ...filters, category: [...filters.category, val] })
-
-    // if (Array.isArray(vals)) {
-    //   const new_filters = vals.map((val: string) => val.toLowerCase())
-    //   setFilters(new_filters)
-    //   console.log(new_filters)
-    // } else {
-    //   const new_filters = [...filters, vals]
-    //   setFilters(new_filters)
-    //   console.log(new_filters)
-    // }
-    // setQuery(new_filters)
-    // call api --> filtering according to (name, description)
   }
 
-  const inputColor = useColorModeValue('white', 'gray_3')
-  const itemBgColor = useColorModeValue('gray_9', 'gray_2')
+  const inputColor = useColorModeValue('white', 'gray_2')
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+
   return (
-    <Flex flexDir="column" justifyContent={['center', 'space-between', 'flex-start', '']} my="3rem">
+    <Flex
+      flexDir={'column'}
+      justifyContent={'flex-start'}
+      alignItems={'center'}
+      borderRadius="10px"
+      p="1.5rem .5rem"
+    >
       <Input
         type="search"
         placeholder="Search..."
@@ -72,68 +77,56 @@ const Filter = () => {
         bg={itemBgColor}
         focusBorderColor="accent_6"
       />
+      <TemplateSort onSort={onSort} sorts={sorts} label="Rate" selectList={['most', 'less']} />
+      <TemplateSort
+        onSort={onSort}
+        sorts={sorts}
+        label="Creation Date"
+        selectList={['new', 'old']}
+      />
 
       <Flex
         flexDir={'column'}
-        justifyContent="space-between"
+        justifyContent="center"
         alignItems={'center'}
-        borderRadius="10px"
-        p="1.5rem .5rem"
-        w="12rem"
+        w="full"
+        my="1rem"
+        borderRadius={'10px'}
+        bg={itemBgColor}
+        p="1rem"
       >
-        <TemplateSort onSort={onSort} sorts={sorts} label="Rate" selectList={['most', 'less']} />
-        <TemplateSort
-          onSort={onSort}
-          sorts={sorts}
-          label="Creation Date"
-          selectList={['new', 'old']}
-        />
-
-        <Flex
-          flexDir={'column'}
-          justifyContent="center"
-          alignItems={'center'}
-          w="full"
-          my="1rem"
-          borderRadius={'10px'}
-          bg={itemBgColor}
-          p="1rem"
+        <Box as="span" color="gray_5" mb=".3rem" mr="auto">
+          {'Category'}
+        </Box>
+        <Select
+          onChange={e => onFilter({ ...filters, category: [...filters.category, e.target.value] })}
+          bg={inputColor}
+          maxW="10rem"
+          focusBorderColor="accent_6"
         >
-          <Box as="span" color="gray_5" mb=".3rem" mr="auto">
-            {'Category'}
-          </Box>
-          <Select
-            onChange={e =>
-              onFilter({ ...filters, category: [...filters.category, e.target.value] })
-            }
-            bg={inputColor}
-            maxW="10rem"
-            focusBorderColor="accent_6"
-          >
-            {CATEGORY_LIST?.map(el => (
-              <option value={el}> {el} </option>
-            ))}
-          </Select>
-        </Flex>
-
-        <TemplateSortSlider
-          onSort={onSort}
-          sorts={sorts}
-          label="Discount"
-          defaultValue={[10, 30]}
-          selectList={['with', 'without']}
-          onRange={val => console.log(val)}
-        />
-
-        <TemplateSortSlider
-          onSort={onSort}
-          sorts={sorts}
-          label="Price"
-          defaultValue={[10, 30]}
-          selectList={['cheap', 'expensive']}
-          onRange={val => console.log(val)}
-        />
+          {CATEGORY_LIST?.map(el => (
+            <option value={el}> {el} </option>
+          ))}
+        </Select>
       </Flex>
+
+      <TemplateSortSlider
+        onSort={onSort}
+        sorts={sorts}
+        label="Discount"
+        defaultValue={[10, 30]}
+        selectList={['with', 'without']}
+        onRange={val => console.log(val)}
+      />
+
+      <TemplateSortSlider
+        onSort={onSort}
+        sorts={sorts}
+        label="Price"
+        defaultValue={[10, 30]}
+        selectList={['cheap', 'expensive']}
+        onRange={val => console.log(val)}
+      />
     </Flex>
   )
 }
@@ -148,8 +141,8 @@ const TemplateSortSlider = ({
   selectList,
   onRange
 }: ITamplateSortSlider) => {
-  const inputColor = useColorModeValue('white', 'gray_3')
-  const itemBgColor = useColorModeValue('gray_9', 'gray_2')
+  const inputColor = useColorModeValue('white', 'gray_2')
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   const [range, setRange] = useState([])
   // console.log(range)
   return (
@@ -163,7 +156,7 @@ const TemplateSortSlider = ({
       bg={itemBgColor}
       p="1rem"
     >
-      <Box as="span" color="gray_5" mb=".3rem" mr="auto">
+      <Box as="span" color="gray_5" m="0 auto .3rem 2rem">
         {label}
       </Box>
       <Select
@@ -204,8 +197,8 @@ const TemplateSortSlider = ({
 }
 
 const TemplateSort = ({ label, onSort, sorts, selectList }: ITemplateSort) => {
-  const inputColor = useColorModeValue('white', 'gray_3')
-  const itemBgColor = useColorModeValue('gray_9', 'gray_2')
+  const inputColor = useColorModeValue('white', 'gray_2')
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   return (
     <Flex
       flexDir={'column'}
@@ -217,7 +210,7 @@ const TemplateSort = ({ label, onSort, sorts, selectList }: ITemplateSort) => {
       bg={itemBgColor}
       p="1rem"
     >
-      <Box as="span" color="gray_5" mb=".3rem" mr="auto">
+      <Box as="span" color="gray_5" m="0 auto .3rem 2rem">
         {label}
       </Box>
       <Select

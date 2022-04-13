@@ -65,7 +65,8 @@ export default function contact() {
         flexDir="column"
         justifyContent={'center'}
         alignItems="center"
-        w={['18rem', '', '50rem']}
+        w={['15rem', '30rem', '', '50rem']}
+        mx="auto"
       >
         <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'} mr="auto" w="full">
           Contact Us
@@ -73,27 +74,35 @@ export default function contact() {
         <Flex
           flexDir={'row'}
           flexWrap={'wrap'}
-          justifyContent={['center', '', 'space-between', '']}
+          justifyContent={['center', '', '', 'space-between']}
           borderRadius={'10px'}
           boxShadow="md"
-          p="1.5rem 2rem"
+          p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
           bg={bgColor}
         >
-          <Flex flexDir="column" justifyContent={'space-between'} p="1.5rem 2rem">
-            <Text color={textColor} fontSize={'1rem'} mb="1.5rem" w={['18rem', '', '50rem']}>
+          <Flex
+            flexDir="column"
+            justifyContent={'space-between'}
+            alignItems={['center', '', '', 'flex-start']}
+            mb={['2rem', '', '', '0']}
+          >
+            <Text color={textColor} fontSize={'1rem'} mb="1.5rem" maxW="20rem">
               Reach out to us today via any of the given information
             </Text>
 
-            <Flex flexDir={'column'} alignItems="flex-start" mb="1rem">
+            <Flex
+              flexDir={'column'}
+              justifyContent="center"
+              alignItems={['center', '', '', 'flex-start']}
+              mb="1rem"
+            >
               {contacts.map(contact => (
-                <Flex justifyContent={'space-between'} w="15rem">
+                <Flex justifyContent={'space-between'} w="15rem" mb="1rem">
                   <Box as="span" mr="1rem" color={'gray_9'}>
-                    {' '}
-                    {contact.icon}{' '}
+                    {contact.icon}
                   </Box>
                   <Text fontSize="1rem" color={textColor} w="12rem">
-                    {' '}
-                    {contact.data}{' '}
+                    {contact.data}
                   </Text>
                 </Flex>
               ))}
@@ -119,12 +128,12 @@ export default function contact() {
             </Flex>
           </Flex>
 
-          <Box p="1.5rem 2rem">
+          <Flex flexDir="column" justifyContent={'space-between'} mx={['auto', '', '0', '']}>
             <form onSubmit={handleSubmit(onContact)}>
-              <FormControl id="name" mb=".5rem">
+              <FormControl id="name" mb="1rem">
                 <FormLabel>
                   Your Name
-                  <Box as="span" color="gray_4" fontSize=".85rem" fontStyle={'italic'}>
+                  <Box as="span" color="gray_4" fontSize=".85rem" ml=".15rem" fontStyle={'italic'}>
                     (Optional)
                   </Box>
                 </FormLabel>
@@ -136,7 +145,6 @@ export default function contact() {
                     isInvalid={errors.name ? true : false}
                     focusBorderColor={errors.name ? 'error' : 'accent_6'}
                     errorBorderColor="error"
-                    // borderColor={borderColor}
                     borderRadius="5px"
                     bg={inputColor}
                     {...register('name')}
@@ -145,7 +153,7 @@ export default function contact() {
                 {errors.name && <ErrorMessage error={errors.name.message} />}
               </FormControl>
 
-              <FormControl id="name" mb=".5rem">
+              <FormControl id="name" mb="1rem">
                 <FormLabel> Email </FormLabel>
                 <InputGroup>
                   <InputLeftElement
@@ -158,7 +166,6 @@ export default function contact() {
                     isInvalid={errors.email ? true : false}
                     focusBorderColor={errors.email ? 'error' : 'accent_6'}
                     errorBorderColor="error"
-                    // borderColor={borderColor}
                     borderRadius="5px"
                     bg={inputColor}
                     {...register('email')}
@@ -167,14 +174,13 @@ export default function contact() {
                 {errors.email && <ErrorMessage error={errors.email.message} />}
               </FormControl>
 
-              <FormControl id="name" mb=".5rem">
+              <FormControl id="name" mb="1rem">
                 <FormLabel> Message </FormLabel>
                 <Textarea
                   placeholder="message"
                   isInvalid={errors.message ? true : false}
                   focusBorderColor={errors.message ? 'error' : 'accent_6'}
                   errorBorderColor="error"
-                  // borderColor={borderColor}
                   bg={inputColor}
                   borderRadius="5px"
                   {...register('message')}
@@ -188,7 +194,7 @@ export default function contact() {
                 </Button>
               </FormControl>
             </form>
-          </Box>
+          </Flex>
         </Flex>
       </Flex>
     </Layout>

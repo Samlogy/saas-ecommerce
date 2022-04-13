@@ -17,7 +17,7 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup'
 // import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiFillPlusCircle } from 'react-icons/ai'
 import { ErrorMessage, FormTemplate, Layout, View } from '../components'
@@ -61,8 +61,10 @@ export default function EditProfile({ profile }) {
     formState: { errors, isSubmitting }
   } = useForm(formOptions)
 
-  const [avatar, setAvatar] = useState<IAvatar>({
+  const [avatar, setAvatar] = useState<any>({
     isLoading: false,
+    image: '',
+    preview: '',
     error: ''
   })
   const [questions, setQuestions] = useState({ shipping: '', vendor: '' })
@@ -71,11 +73,21 @@ export default function EditProfile({ profile }) {
     console.log(profile)
     router.push('/profile')
   }
-  const onUploadImage = () => {
-    setAvatar({ ...avatar, isLoading: true })
-    // call api when done --> error / success
-    setAvatar({ ...avatar, isLoading: false })
+  const onUploadImage = (val: any) => {
+    const file = val
+    if (file && file.type.substr(0, 5) === 'image') {
+      setAvatar({ ...avatar, image: avatar.image })
+    } else {
+      setAvatar({ ...avatar, image: null })
+    }
   }
+
+  // useEffect(() => {
+  //   if (avatar.image) {
+  //     const img = URL.createObjectURL(avatar.image)
+  //     setAvatar({ ...avatar, preview: img as string })
+  //   } else setAvatar({ ...avatar, preview: null })
+  // }, [avatar.image])
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -95,7 +107,7 @@ export default function EditProfile({ profile }) {
             <DefaultForm
               register={register}
               errors={errors}
-              data={profile.avatar}
+              data={avatar.preview || profile.avatar}
               upload={onUploadImage}
               avatar={avatar}
             />

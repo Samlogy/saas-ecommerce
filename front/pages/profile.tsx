@@ -27,7 +27,7 @@ function Profile(props: any) {
           Profile
         </Heading>
 
-        <Flex flexDir={'column'} w={['20rem', '', '40rem', '']} mx="auto">
+        <Flex flexDir={'column'} justifyContent="center" alignItems={'center'}>
           <DisplayUserData data={user} labelData={labelData} />
 
           <Button
@@ -147,6 +147,7 @@ const TemplateDataDisplay = ({ title, children }: { title: string; children: Rea
       alignItems="flex-start"
       justifyContent={'center'}
       mb="2rem"
+      w={['20rem', '30rem', '', '40rem']}
       bg={bgColor}
     >
       <Heading fontSize="1.2rem" mb="1rem" textTransform={'uppercase'}>

@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import { ChakraProvider } from '@chakra-ui/react'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
@@ -15,7 +15,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-ReactDOM.render(
+const container = document.getElementById('root')
+// @ts-ignore
+const root = ReactDOM.createRoot(container)
+root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <ChakraProvider theme={theme}>
@@ -24,6 +27,5 @@ ReactDOM.render(
         </Suspense>
       </ChakraProvider>
     </ApolloProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 )

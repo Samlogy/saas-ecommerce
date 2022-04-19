@@ -38,6 +38,8 @@ interface IEditAvatar {
 interface IAvatar {
   isLoading: boolean
   error: string
+  image: any
+  preview: string
 }
 interface IDefaultForm {
   data: string
@@ -61,7 +63,7 @@ export default function EditProfile({ profile }) {
     formState: { errors, isSubmitting }
   } = useForm(formOptions)
 
-  const [avatar, setAvatar] = useState<any>({
+  const [avatar, setAvatar] = useState<IAvatar>({
     isLoading: false,
     image: '',
     preview: '',

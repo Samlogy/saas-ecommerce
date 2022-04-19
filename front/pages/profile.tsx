@@ -125,13 +125,11 @@ const BoxData = ({ data, label, icon }: { data: any; label: string; icon: any })
       </Box>
       {data ? (
         <Box as="span" fontSize="1rem" fontWeight="400" ml=".5rem" color="gray_4">
-          {' '}
-          {data}{' '}
+          {data}
         </Box>
       ) : (
         <Box as="span" fontSize="1rem" fontWeight="400" ml=".5rem" color="gray_4">
-          {' '}
-          ---{' '}
+          ---
         </Box>
       )}
     </Flex>

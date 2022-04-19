@@ -118,4 +118,26 @@ export const GET_MESSAGE_BY_ID = gql`
   }
 `
 
-// get data for charts / widgets
+export const PAGINATION_QUERY = gql`
+  query Query($page: Int) {
+    products(page: $page) {
+      name
+      description
+      quantity
+      id
+      price
+      image
+      discount
+      rate
+      createdAt
+      editedAt
+      userId
+      categoryId
+    }
+  }
+`
+
+export const GET_ANALYTICS_DATA = gql`
+query Query() {
+}
+`

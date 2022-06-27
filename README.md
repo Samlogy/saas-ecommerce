@@ -2,12 +2,8 @@
 
 ## Purpose: 
 create a web app that allows to sold products online
-
 ## Note:
 this app is only a template that can be used to create a customized ecommerce app
-
-# React Shopping Cart
-
 ### Features:
 #### Shopping cart
 1. add item to cart

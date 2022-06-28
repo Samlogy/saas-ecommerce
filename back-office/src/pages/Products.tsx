@@ -21,7 +21,7 @@ import {
   AddEditProduct,
   ActionsMenu
 } from 'components'
-import { IAction, IProduct } from '../lib/interfaces'
+import { IAction, IProduct } from 'lib/interfaces'
 
 const productList = [
   {

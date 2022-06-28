@@ -3,7 +3,7 @@ import { Heading, Flex, Box, Text, useColorModeValue } from '@chakra-ui/react'
 
 import { Layout, View } from 'components'
 import { useNotificationStore } from 'store'
-import { INotification } from 'lib/interfaces'
+import { INotification } from '../lib/interfaces'
 
 function Notifications() {
   // const [notifications, setNotifications] = useState<INotification[]>([])

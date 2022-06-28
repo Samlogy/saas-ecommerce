@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 
 import { Layout, Widget, TotalRevenue, Charts } from 'components'
-import { IOptions } from 'lib/interfaces'
+import { IOptions } from '../lib/interfaces'
 
 // chart options
 const chartOptions = {

@@ -3,7 +3,7 @@ import { Heading, Flex, Box, Text, useColorModeValue } from '@chakra-ui/react'
 
 import { Layout, View } from 'components'
 import { useMessageStore } from 'store'
-import { IMessage } from 'lib/interfaces'
+import { IMessage } from '../lib/interfaces'
 
 function Messages() {
   useEffect(() => {

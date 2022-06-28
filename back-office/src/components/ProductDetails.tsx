@@ -14,7 +14,7 @@ import {
   ListItem,
   UnorderedList
 } from '@chakra-ui/react'
-import { IProduct } from 'lib/interfaces'
+import { IProduct } from '../lib/interfaces'
 
 interface IProductDetails {
   isOpen: boolean

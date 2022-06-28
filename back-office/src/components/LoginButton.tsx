@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react'
 
-import { saveState } from '../utils/localStorage'
+import { saveState } from 'lib/utils/localStorage'
 
 function LoginButton() {
   const onLogin = () => {

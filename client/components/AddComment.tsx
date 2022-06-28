@@ -19,7 +19,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '../components'
 import { commentSchema } from '../lib/validation'
-import { removeState, saveState } from '../utils/localStorage'
+import { removeState, saveState } from '../lib/utils/localStorage'
 
 interface IAddComment {
   isOpen: boolean

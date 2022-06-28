@@ -1,4 +1,3 @@
-// import { useUser } from '@auth0/nextjs-auth0'
 import {
   Avatar,
   Box,
@@ -70,11 +69,11 @@ export default function NavBar() {
   // const isLogged = useAuth((state: any) => state.isLogged);
   // const user = useAuth((state: any) => state.user);
 
-  const products = useShoppingCart((state: any) => state.products)
+  const quantityTotal = useShoppingCart((state: any) => state.quantityTotal)
 
   const bgColor = useColorModeValue('white', 'gray_3')
 
-  const user = {}
+  const user = { avatar: '' }
 
   return (
     <Box bg={bgColor} px={4} pos="fixed" w="full" boxShadow={'md'} zIndex="100">
@@ -99,13 +98,11 @@ export default function NavBar() {
 
         <HStack spacing={8} alignItems={'center'}>
           <Box>
-            {' '}
-            <Logo />{' '}
+            <Logo />
           </Box>
           <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
             {Links.map((link: any) => (
               <NavLink key={link.link} link={link.link}>
-                {' '}
                 {link.name}{' '}
               </NavLink>
             ))}
@@ -115,7 +112,7 @@ export default function NavBar() {
         <Flex alignItems={'center'}>
           <SelectLanguage />
           <DarkModeToggle />
-          <ShoppingCartIcon value={products.length} />
+          <ShoppingCartIcon value={quantityTotal} />
           {user ? <NavMenuConnected avatar={user?.avatar} /> : <NavMenuUnConnected />}
         </Flex>
       </Flex>

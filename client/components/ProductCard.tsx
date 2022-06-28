@@ -1,5 +1,17 @@
-import { Badge, Box, Button, Circle, Flex, Image, useColorModeValue } from '@chakra-ui/react'
+import {
+  IconButton,
+  Badge,
+  Box,
+  Button,
+  Circle,
+  Flex,
+  Image,
+  useColorModeValue
+} from '@chakra-ui/react'
 import Link from 'next/link'
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
+import { FaTrash } from 'react-icons/fa'
+
 import { Rating } from '../components'
 import { useShoppingCart } from '../store'
 
@@ -10,11 +22,24 @@ interface IProduct {
 }
 
 const ProductCard = ({ id, data, readOnly = false }: IProduct) => {
-  const addToCart = useShoppingCart((state: any) => state.addToCart)
+  const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
+  const removeItem = useShoppingCart((state: any) => state.removeItem)
+  const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
+  const products = useShoppingCart((state: any) => state.products)
 
-  const handleClick = (e, data) => {
+  const quantity = products.find((item: any) => item.id === id)?.quantity || 0
+
+  const increase = (e, data) => {
     e.preventDefault()
-    addToCart(data)
+    increaseQuantity({ id, ...data })
+  }
+  const decrease = e => {
+    e.preventDefault()
+    decreaseQuantity(id)
+  }
+  const removeOne = e => {
+    e.preventDefault()
+    removeItem(id)
   }
 
   const bgColor = useColorModeValue('gray_9', 'gray_2')
@@ -68,17 +93,42 @@ const ProductCard = ({ id, data, readOnly = false }: IProduct) => {
               </Box>
             </Flex>
 
-            <Button
-              bg={'accent_3'}
-              _hover={{ bg: 'accent_2' }}
-              color={'white'}
-              borderRadius="20px"
-              w="full"
-              mt=".75rem"
-              onClick={e => handleClick(e, data)}
-            >
-              Add to Cart
-            </Button>
+            {quantity === 0 ? (
+              <Button
+                bg={'accent_3'}
+                _hover={{ bg: 'accent_2' }}
+                color={'white'}
+                borderRadius="20px"
+                w="full"
+                mt=".75rem"
+                onClick={e => increase(e, data)}
+              >
+                Add to Cart
+              </Button>
+            ) : (
+              <Flex flexDir={'column'} alignItems={'center'}>
+                <Flex alignItems={'center'} justify="center">
+                  <IconButton
+                    aria-label="decrease-quantity"
+                    onClick={decrease}
+                    icon={<AiOutlineMinus />}
+                  />
+                  <Box>
+                    <Box as="span" className="fs-3">
+                      {quantity}
+                    </Box>{' '}
+                    in cart
+                  </Box>
+
+                  <IconButton
+                    aria-label="increase-quantity"
+                    onClick={e => increase(e, data)}
+                    icon={<AiOutlinePlus />}
+                  />
+                </Flex>
+                <IconButton aria-label="increase-quantity" onClick={removeOne} icon={<FaTrash />} />
+              </Flex>
+            )}
           </Box>
         </Box>
       </Flex>

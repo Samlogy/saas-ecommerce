@@ -19,7 +19,7 @@ import Link from 'next/link'
 
 import { Layout, Carousel, View, ListingComments, ProductCard } from '../../components'
 import { useShoppingCart } from '../../store'
-import { IComment, IProduct } from '../../lib/interaces'
+import { IComment, IProduct } from '../../lib/interfaces'
 
 import productImage from '../../public/images/product.png'
 import heroImage from '../../public/images/home.png'

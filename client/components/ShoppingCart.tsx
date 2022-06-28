@@ -17,26 +17,17 @@ import {
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { FaTrash } from 'react-icons/fa'
 import { View } from '../components'
+import { formatCurrency } from '../lib/utils/fonctions'
 import { useShoppingCart } from '../store'
 
 const ShoppingCart = () => {
-  const isVisible = useShoppingCart((state: any) => state.isVisible)
-  const price = useShoppingCart((state: any) => state.price)
-  const handleCartVisibility = useShoppingCart((state: any) => state.handleCartVisibility)
-  const removeAll = useShoppingCart((state: any) => state.removeAll)
+  const isOpen = useShoppingCart((state: any) => state.isOpen)
+  const setOpen = useShoppingCart((state: any) => state.setOpen)
+  const removeItems = useShoppingCart((state: any) => state.removeItems)
   const products = useShoppingCart((state: any) => state.products)
 
-  const computeTotal = useShoppingCart((state: any) => state.computeTotal)
-
-  console.log('total: ', price)
-
   return (
-    <Drawer
-      isOpen={isVisible}
-      placement="right"
-      size="sm"
-      onClose={() => handleCartVisibility(isVisible)}
-    >
+    <Drawer isOpen={isOpen} placement="right" size="sm" onClose={() => setOpen(isOpen)}>
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
@@ -50,7 +41,7 @@ const ShoppingCart = () => {
               fontSize=".9rem"
               mb="1rem"
               _hover={{ cursor: 'pointer', textDecor: 'underline' }}
-              onClick={() => removeAll()}
+              onClick={() => removeItems()}
             >
               Remove all{' '}
             </Text>
@@ -61,7 +52,15 @@ const ShoppingCart = () => {
 
             <Flex justifyContent={'space-between'} mt="1rem">
               <Text fontWeight="600"> Total </Text>
-              <Text fontWeight="600"> ${price} </Text>
+
+              {products?.length > 0 &&
+                formatCurrency(
+                  products.reduce((total: any, product: any) => {
+                    //const item = storeItems.find(i => i.id === product.id)
+                    //return total + (item?.price || 0) * product.quantity
+                    return total + product?.price * product.quantity
+                  }, 0)
+                )}
             </Flex>
           </View>
 
@@ -94,24 +93,26 @@ const ShoppingCart = () => {
 
 export default ShoppingCart
 
-const CartItem = ({ key, data }: { key: any; data: any }) => {
-  const increment = useShoppingCart((state: any) => state.increment)
-  const decrement = useShoppingCart((state: any) => state.decrement)
-  const removeOne = useShoppingCart((state: any) => state.removeOne)
+const CartItem = ({ data }: { data: any }) => {
+  const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
+  const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
+  const removeItem = useShoppingCart((state: any) => state.removeItem)
+
+  console.log(data)
 
   const handleQuantity = (type: string) => {
-    if (type === 'dec') decrement(data.id)
-    else increment(data.id)
+    if (type === 'dec') decreaseQuantity(data.id)
+    else increaseQuantity(data)
   }
 
   return (
-    <Box key={key}>
+    <Box>
       <Flex justifyContent="space-between" mt="1rem">
         <Image boxSize="100px" src={data.img} borderRadius="5px" borderColor="gray" alt="Product" />
 
         <Flex flexDir="column">
           <Text fontSize="1rem" fontWeight="600" textAlign={'center'} mb=".5rem">
-            {data.name}{' '}
+            {data.name}
           </Text>
 
           <Flex justifyContent={'space-evenly'} alignItems="center" mb=".5rem">
@@ -120,7 +121,9 @@ const CartItem = ({ key, data }: { key: any; data: any }) => {
               aria-label="increment"
               onClick={() => handleQuantity('inc')}
             />
-            <Text my="auto"> {data.quantity} </Text>
+            <Text my="auto" p=".5rem">
+              {data.quantity}
+            </Text>
             <IconButton
               icon={<AiOutlineMinus />}
               aria-label="descrement"
@@ -128,14 +131,16 @@ const CartItem = ({ key, data }: { key: any; data: any }) => {
             />
           </Flex>
 
-          <Flex justifyContent={'space-evenly'} alignItems="center">
-            <Box as="span" fontStyle="italic" fontSize=".9rem">
-              Discount:{' '}
-            </Box>
-            <Box as="span" fontStyle="italic" fontSize=".9rem">
-              {data.discount * 100} %{' '}
-            </Box>
-          </Flex>
+          {data.discount && (
+            <Flex justifyContent={'space-evenly'} alignItems="center">
+              <Box as="span" fontStyle="italic" fontSize=".9rem">
+                Discount:{' '}
+              </Box>
+              <Box as="span" fontStyle="italic" fontSize=".9rem">
+                {data.discount * 100} %{' '}
+              </Box>
+            </Flex>
+          )}
         </Flex>
 
         <Flex flexDir="column" justifyContent="space-between">
@@ -143,7 +148,7 @@ const CartItem = ({ key, data }: { key: any; data: any }) => {
             ${data.price}{' '}
           </Text>
           <Box as="span" _hover={{ cursor: 'pointer' }}>
-            <FaTrash size={16} color="#60666f" onClick={() => removeOne(data.id)} />{' '}
+            <FaTrash size={16} color="#60666f" onClick={() => removeItem(data.id)} />{' '}
           </Box>
         </Flex>
       </Flex>

@@ -3,14 +3,14 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { useShoppingCart } from '../store'
 
 const ShoppingCartIcon = ({ value }: { value: number }) => {
-  const handleCartVisibility = useShoppingCart(state => state.handleCartVisibility)
-  const isVisible = useShoppingCart(state => state.isVisible)
+  const setOpen = useShoppingCart(state => state.setOpen)
+  const isOpen = useShoppingCart(state => state.isOpen)
 
   const bgColor = useColorModeValue('transparent', 'gray_3')
   const bgHoverColor = useColorModeValue('gray_8', 'gray_2')
 
   return (
-    <Box pos="relative" onClick={() => handleCartVisibility(isVisible)}>
+    <Box pos="relative" onClick={() => setOpen(isOpen)}>
       {value > 0 ? (
         <Box
           as="span"

@@ -1,7 +1,7 @@
 import { Button, Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { AddComment, Comment, View } from '../components'
-import { IComment } from '../lib/interaces'
+import { IComment } from 'lib/interfaces'
 
 const ListingComments = ({ comments }: { comments: IComment[] }) => {
   const [showAddComment, setShowAddComment] = useState(false)

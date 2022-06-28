@@ -1,114 +1,105 @@
-import create, { SetState } from 'zustand'
+import create from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
+import { IProduct } from '../lib/interfaces'
 
-const addProduct = (products: any, newProduct: any) => {
-    return products.length > 0 ? [...products, newProduct] : [newProduct]
-};
-const incrementProduct = (productId: number, products: any) => {
-    const isItemInCart = products.find((product: any) => product.id === productId);
+interface IShoppingCart {
+  isOpen: boolean
+  quantityTotal: number
+  products: IProduct[]
 
-    if (isItemInCart) {
-        return products.map((product: any) =>
-          product.id === productId
-            ? { ...product, quantity: product.quantity + 1 }
-            : product
-        );
+  setOpen: (isOpen: boolean) => void
+  removeItems: () => void
+  removeItem: (products: IProduct[], id: number) => void
+  increaseQuantity: (products: IProduct[], id: number) => void
+  decreaseQuantity: (products: IProduct[], id: number) => void
+}
+
+function increase(products: IProduct[], product: IProduct) {
+  if (products.find((item: IProduct) => item.id === product.id) == null) {
+    const items = [...products, { ...product, quantity: 1 }]
+    return {
+      products: items,
+      quantityTotal: getQuantity(items)
     }
+  } else {
+    const items = products.map((item: IProduct) => {
+      if (item.id === product.id) {
+        return { ...item, quantity: item.quantity + 1 }
+      } else {
+        return item
+      }
+    })
+    return {
+      products: items,
+      quantityTotal: getQuantity(items)
+    }
+  }
+}
+function decrease(products: IProduct[], id: number) {
+  if (products.find((item: IProduct) => item.id === id)?.quantity === 1) {
+    const items = products.filter((item: IProduct) => item.id !== id)
+    return {
+      products: items,
+      quantityTotal: getQuantity(items)
+    }
+  } else {
+    const items = products.map((item: IProduct) => {
+      if (item.id === id) {
+        return { ...item, quantity: item.quantity - 1 }
+      } else {
+        return item
+      }
+    })
+    return {
+      products: items,
+      quantityTotal: getQuantity(items)
+    }
+  }
+}
 
-    return products.map((product) => ({
-        ...product,
-        quantity: product.id == productId ? product.quantity + 1 : product.quantity
-    })) 
-};
-const decrementProduct = (productId: number, products) => {
-    const new_products = products.map((product) => ({
-        ...product,
-        quantity: (product.id === productId && product.quantity > 1) ? product.quantity - 1 : (product.id === productId) ? product.quantity : 'never shown'
-    })) 
-    // (product.id === productId && product.quantity === 1)
-    // console.log('products: ', new_products) product.quantity--
-    return new_products
-};
-const removeOneProduct = (productId: number, products) => {
-    return products.filter(({ id }) => productId !== id)
-};
-const removeAllProducts = () => {
-    return []
-};
-const calculateProductsTotal =  (products: any) => {
-    const productsPrices = products.map((product: any) => product.discount > 0 ? product.quantity * product.price * (1-product.discount) : product.quantity * product.price)
-    return productsPrices.reduce(
-        (prev, current) => prev + current,
-        0
-    );
-};
-
-
-// Shopping Cart Store
-type IShoppingCart = {
-    newProduct: any,
-    products: any,
-    total: number,
-    price: number,
-    isVisible: boolean,
-    handleCartVisibility: (visible: boolean) => void,
-    addToCart: (newProduct: any) => void,
-    increment: (id: any) => void,
-    decrement: (id: any) => void,
-    removeOne: (id: any) => void,
-    removeAll: () => void,
-    computeTotal: () => number
-};
-
-let shoppingCartStore = (set: SetState<IShoppingCart>) => ({
+function removeOne(products: IProduct[], id: number) {
+  const items = products.filter((item: IProduct) => item.id !== id)
+  return {
+    products: items,
+    quantityTotal: getQuantity(items)
+  }
+}
+function removeAll() {
+  return {
     products: [],
-    total: 0,
-    // price: 0,
-    isVisible: false,
-    handleCartVisibility: (isVisible: boolean) => {
-        set({ isVisible: !isVisible })
-    },
-    addToCart: (newProduct: any) => {
-        set((state) => ({
-            ...state,
-            products: addProduct(state.products, newProduct)
-        }))
-    },
-    increment: (productId) => {
-        set((state) => ({
-            ...state,
-            products: incrementProduct(productId, state.products)
-        }))
-    },
-    decrement: (productId) => {
-        set((state) => ({
-            ...state,
-            products: decrementProduct(productId, state.products)
-        }))
-    },
-    removeOne: (productId) => {
-        set((state) => ({
-            ...state,
-            products: removeOneProduct(productId, state.products)
-        }))
-    },
-    removeAll: () => {
-        set((state) => ({
-            ...state,
-            products: removeAllProducts()
-        }))
-    },
-    computeTotal: async () => {
-        set((state) => ({
-            ...state,
-            price: calculateProductsTotal(state.products)
-        }))
-    }
+    quantityTotal: 0
+  }
+}
+function getQuantity(products: IProduct[]) {
+  return products.reduce((quantity: number, proudct: IProduct) => proudct.quantity + quantity, 0)
+}
+
+let shoppingCartStore = (set: any) => ({
+  isOpen: false, // open / close --> shopping cart
+  products: [], // all proudctq inside the cart
+  quantityTotal: 0, // products qunatity
+
+  setOpen: (val: boolean) => set(() => ({ isOpen: !val })),
+  removeItems: () => set(() => ({ ...removeAll() })),
+  removeItem: (id: number) =>
+    set((state: any) => ({
+      ...removeOne(state.products, id)
+    })),
+  increaseQuantity: (product: IProduct) =>
+    set((state: any) => ({
+      ...increase(state.products, product)
+    })),
+  decreaseQuantity: (id: number) =>
+    set((state: any) => ({
+      ...decrease(state.products, id)
+    }))
 })
 
+// @ts-ignore
 shoppingCartStore = devtools(shoppingCartStore)
-shoppingCartStore = persist(shoppingCartStore, { name: "shopping_cart" })
-
+// @ts-ignore
+shoppingCartStore = persist(shoppingCartStore, { name: 'shopping_cart' })
+// @ts-ignore
 const useShoppingCart = create<IShoppingCart>(shoppingCartStore)
 
-export default useShoppingCart;
+export default useShoppingCart

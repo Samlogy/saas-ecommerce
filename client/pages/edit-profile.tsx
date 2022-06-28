@@ -15,7 +15,6 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
-// import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'

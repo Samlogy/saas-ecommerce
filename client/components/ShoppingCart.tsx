@@ -108,7 +108,13 @@ const CartItem = ({ data }: { data: any }) => {
   return (
     <Box>
       <Flex justifyContent="space-between" mt="1rem">
-        <Image boxSize="100px" src={data.img} borderRadius="5px" borderColor="gray" alt="Product" />
+        <Image
+          boxSize="100px"
+          src={data?.image}
+          borderRadius="5px"
+          borderColor="gray"
+          alt="Product"
+        />
 
         <Flex flexDir="column">
           <Text fontSize="1rem" fontWeight="600" textAlign={'center'} mb=".5rem">
@@ -122,7 +128,7 @@ const CartItem = ({ data }: { data: any }) => {
               onClick={() => handleQuantity('inc')}
             />
             <Text my="auto" p=".5rem">
-              {data.quantity}
+              {data?.quantity}
             </Text>
             <IconButton
               icon={<AiOutlineMinus />}
@@ -131,24 +137,22 @@ const CartItem = ({ data }: { data: any }) => {
             />
           </Flex>
 
-          {data.discount && (
-            <Flex justifyContent={'space-evenly'} alignItems="center">
-              <Box as="span" fontStyle="italic" fontSize=".9rem">
-                Discount:{' '}
-              </Box>
-              <Box as="span" fontStyle="italic" fontSize=".9rem">
-                {data.discount * 100} %{' '}
-              </Box>
-            </Flex>
-          )}
+          <Flex justifyContent={'space-evenly'} alignItems="center">
+            <Box as="span" fontStyle="italic" fontSize=".9rem">
+              Discount:{' '}
+            </Box>
+            <Box as="span" fontStyle="italic" fontSize=".9rem">
+              {data?.discount * 100} %{' '}
+            </Box>
+          </Flex>
         </Flex>
 
         <Flex flexDir="column" justifyContent="space-between">
           <Text fontSize="1rem" fontWeight="600">
-            ${data.price}{' '}
+            ${data?.price}{' '}
           </Text>
           <Box as="span" _hover={{ cursor: 'pointer' }}>
-            <FaTrash size={16} color="#60666f" onClick={() => removeItem(data.id)} />{' '}
+            <FaTrash size={16} color="#60666f" onClick={() => removeItem(data?.id)} />{' '}
           </Box>
         </Flex>
       </Flex>

@@ -16,8 +16,3 @@ export interface IProduct {
   createdAt?: Date
   editedAt?: Date
 }
-
-export interface ICartItem {
-  id: number
-  quantity: number
-}

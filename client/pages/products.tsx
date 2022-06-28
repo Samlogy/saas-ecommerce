@@ -23,7 +23,6 @@ export default function Products({ products }: { products: IProduct[] }) {
   const data = { info: { pages: 10 } }
 
   const { width } = useWindowDimensions()
-  console.log(width)
 
   const [isVisible, setIsVisible] = useState(false)
   const btnRef = React.useRef()
@@ -117,7 +116,7 @@ export const getServerSideProps = async () => {
       quantity: 11,
       reviews: 34,
       currency: '£',
-      discount: 0.2
+      discount: null
     },
     {
       id: 2,
@@ -146,7 +145,7 @@ export const getServerSideProps = async () => {
     {
       id: 4,
       isNew: true,
-      img: productImage.src,
+      image: productImage.src,
       name: 'Wayfarer Classic',
       price: 20,
       rate: 4.2,

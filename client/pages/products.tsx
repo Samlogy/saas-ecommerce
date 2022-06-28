@@ -15,7 +15,7 @@ import { BsFilterLeft } from 'react-icons/bs'
 
 import { Filter, Layout, Pagination, ProductCard, View } from '../components'
 import { useWindowDimensions } from '../lib/hooks'
-import { IProduct } from '../lib/interfaces'
+import { IProduct } from '../lib/interaces'
 import productImage from '../public/images/product.png'
 
 export default function Products({ products }: { products: IProduct[] }) {

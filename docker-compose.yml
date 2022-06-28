@@ -1,0 +1,39 @@
+version: "3"
+services:
+  api:
+    container_name: ecommerce-api
+    build:
+      context: ./api
+    depends_on:
+      - db
+    ports:
+      - 5001:5001
+
+  client:
+    build: ./client
+    container_name: ecommerce-client
+    depends_on:
+      - api
+    ports:
+      - "3001:3001"
+    volumes:
+      - client_volume:/app
+    stdin_open: true
+
+  db:
+    image: postgres:12-alpine
+    container_name: ecommerce-db
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "ecommerce_saas"
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  db_volume:
+  api_volume:
+  client_volume:

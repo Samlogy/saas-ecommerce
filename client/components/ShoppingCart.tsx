@@ -12,7 +12,8 @@ import {
   Flex,
   IconButton,
   Image,
-  Text
+  Text,
+  useColorModeValue
 } from '@chakra-ui/react'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { FaTrash } from 'react-icons/fa'
@@ -55,10 +56,12 @@ const ShoppingCart = () => {
 
               {products?.length > 0 &&
                 formatCurrency(
-                  products.reduce((total: any, product: any) => {
+                  products.reduce((total: number, product: any) => {
                     //const item = storeItems.find(i => i.id === product.id)
                     //return total + (item?.price || 0) * product.quantity
-                    return total + product?.price * product.quantity
+                    const price = total + product?.price * product.quantity
+                    const priceDiscount = product.discount ? price * product?.discount : price
+                    return priceDiscount
                   }, 0)
                 )}
             </Flex>
@@ -98,7 +101,15 @@ const CartItem = ({ data }: { data: any }) => {
   const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
   const removeItem = useShoppingCart((state: any) => state.removeItem)
 
-  console.log(data)
+  const price = data.quantity * data.price
+  const priceDiscount = data.quantity * data.price * data?.discount
+  const isDiscount = data.discount ? true : false
+
+  function toPrice(price: number) {
+    return (Math.round(price * 100) / 100).toFixed(2)
+  }
+
+  //console.log(data)
 
   const handleQuantity = (type: string) => {
     if (type === 'dec') decreaseQuantity(data.id)
@@ -121,7 +132,15 @@ const CartItem = ({ data }: { data: any }) => {
             {data.name}
           </Text>
 
-          <Flex justifyContent={'space-evenly'} alignItems="center" mb=".5rem">
+          <Flex
+            justifyContent={'space-evenly'}
+            p=".5rem"
+            borderRadius={'.5rem'}
+            border="1px solid"
+            borderColor={useColorModeValue('gray_3', 'gray_5')}
+            alignItems="center"
+            mb=".5rem"
+          >
             <IconButton
               icon={<AiOutlinePlus />}
               aria-label="increment"
@@ -139,7 +158,7 @@ const CartItem = ({ data }: { data: any }) => {
 
           <Flex justifyContent={'space-evenly'} alignItems="center">
             <Box as="span" fontStyle="italic" fontSize=".9rem">
-              Discount:{' '}
+              Discount:{''}
             </Box>
             <Box as="span" fontStyle="italic" fontSize=".9rem">
               {data?.discount * 100} %{' '}
@@ -147,12 +166,19 @@ const CartItem = ({ data }: { data: any }) => {
           </Flex>
         </Flex>
 
-        <Flex flexDir="column" justifyContent="space-between">
-          <Text fontSize="1rem" fontWeight="600">
-            ${data?.price}{' '}
-          </Text>
+        <Flex flexDir="column" justifyContent="space-between" align={'center'}>
           <Box as="span" _hover={{ cursor: 'pointer' }}>
             <FaTrash size={16} color="#60666f" onClick={() => removeItem(data?.id)} />{' '}
+          </Box>
+          <Box>
+            <Text fontSize=".9rem" textDecor={isDiscount ? 'line-through' : 'none'}>
+              ${toPrice(price)}
+            </Text>
+            {isDiscount && (
+              <Text fontSize="1rem" fontWeight="600">
+                ${toPrice(priceDiscount)}
+              </Text>
+            )}
           </Box>
         </Flex>
       </Flex>

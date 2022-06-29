@@ -232,11 +232,11 @@ const About = ({ data }: { data: any }) => {
           <Heading fontSize="1.8rem" fontWeight="700" mb="1rem" color="accent_4">
             {data?.title}
           </Heading>
-          <Text fontSize=".9rem" color="gray.500">
+          <Text fontSize=".9rem" color="gray_3">
             {data?.text}
           </Text>
           <Button
-            color="accent_4"
+            color="accent_3"
             bg="transparent"
             w="100px"
             borderRadius={'10px'}
@@ -316,10 +316,11 @@ const CustomerReviews = ({ data }: { data: any }) => {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <SectionWrapper title="Customer Reviews">
-      <Flex flexDir="row" flexWrap="wrap" justifyContent="space-between">
+      <Flex flexDir="row" flexWrap="wrap" justifyContent={['center', 'space-between']}>
         {data.length > 0 &&
-          data.map((el: any) => (
+          data.map((el: any, idx: number) => (
             <Flex
+              key={idx}
               flexDir={'column'}
               justifyContent="space-between"
               alignItems={'center'}

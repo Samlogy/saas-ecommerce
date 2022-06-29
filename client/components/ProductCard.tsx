@@ -26,6 +26,8 @@ const ProductCard = ({ data, readOnly = false }: IProduct) => {
 
   const quantity = products.find((item: any) => item.id === data?.id)?.quantity || 0
 
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
+
   const handleQuantity = (e, type: string) => {
     e.preventDefault()
     if (type === 'inc') {
@@ -34,8 +36,6 @@ const ProductCard = ({ data, readOnly = false }: IProduct) => {
     }
     decreaseQuantity(data?.id)
   }
-
-  const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <Link href={`http://localhost:3000/product/${data?.id}`}>
       <Flex

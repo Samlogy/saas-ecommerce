@@ -15,22 +15,21 @@ import { Rating, View } from '../components'
 import { useShoppingCart } from '../store'
 
 interface IProduct {
-  id: string | number
   data: any
   readOnly?: boolean
 }
 
-const ProductCard = ({ id, data, readOnly = false }: IProduct) => {
+const ProductCard = ({ data, readOnly = false }: IProduct) => {
   const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
   const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
   const products = useShoppingCart((state: any) => state.products)
 
-  const quantity = products.find((item: any) => item.id === id)?.quantity || 0
+  const quantity = products.find((item: any) => item.id === data?.id)?.quantity || 0
 
   const handleQuantity = (e, type: string) => {
     e.preventDefault()
     if (type === 'inc') {
-      increaseQuantity({ id, ...data })
+      increaseQuantity({ id: data?.id, ...data })
       return
     }
     decreaseQuantity(data?.id)
@@ -38,9 +37,9 @@ const ProductCard = ({ id, data, readOnly = false }: IProduct) => {
 
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
-    <Link href={`http://localhost:3000/product/${id}`}>
+    <Link href={`http://localhost:3000/product/${data?.id}`}>
       <Flex
-        key={id}
+        key={data?.id}
         m=".5rem"
         w="18rem"
         alignItems="center"

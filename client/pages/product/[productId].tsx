@@ -39,11 +39,6 @@ export default function Product({
 
   const quantity = products.find((item: any) => item.id === product?.id)?.quantity || 0
 
-  const handleQuantity = (type: string) => {
-    if (type === 'dec') decreaseQuantity(product.id)
-    else increaseQuantity(product)
-  }
-
   const [image, setImage] = useState<string>('')
   const [images, setImages] = useState<string[]>(product.image)
 
@@ -175,8 +170,8 @@ export default function Product({
           <DeliveryDetails data={product} />
         </Stack>
       </SimpleGrid>
-      <RelatedProducts data={relatedProducts} />
 
+      <RelatedProducts data={relatedProducts} />
       <ListingComments comments={comments} />
     </Layout>
   )
@@ -258,18 +253,16 @@ const RelatedProducts = ({ data }: { data: IProduct[] }) => {
   return (
     <Flex flexDir={'column'} px="1.5rem" mt="5rem" mb="4rem">
       <Flex justifyContent={'space-between'} alignItems="center" mb="1.5rem">
-        {' '}
         <Heading fontSize="1.2rem" textTransform={'uppercase'} fontWeight={'700'}>
-          {' '}
-          Related Products{' '}
+          Related Products
         </Heading>
         <Link href="/">View All</Link>
       </Flex>
 
       <View cond={data?.length > 0}>
-        <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
-          {data?.map(product => (
-            <ProductCard id={product.id} data={product} />
+        <Flex flexWrap="wrap" justifyContent="space-between">
+          {data?.map((product, idx) => (
+            <ProductCard key={idx} data={product} />
           ))}
         </Flex>
       </View>

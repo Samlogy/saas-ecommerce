@@ -18,6 +18,12 @@ import { IconReview } from '../public/icons'
 import heroImage from '../public/images/home.png'
 import productImage from '../public/images/product.png'
 
+interface ISectionWrapper {
+  children: React.ReactNode
+  title: string
+  [restProps: string]: any
+}
+
 export default function Home() {
   const questionsanswersdata = [
     {
@@ -38,6 +44,7 @@ export default function Home() {
   ]
   const productsData = [
     {
+      id: 1,
       isNew: true,
       image: productImage.src,
       name: 'Wayfarer Classic',
@@ -47,6 +54,7 @@ export default function Home() {
       currency: '£'
     },
     {
+      id: 2,
       isNew: true,
       image: productImage.src,
       name: 'Wayfarer Classic',
@@ -56,6 +64,7 @@ export default function Home() {
       currency: '£'
     },
     {
+      id: 3,
       isNew: true,
       image: productImage.src,
       name: 'Wayfarer Classic',
@@ -65,6 +74,7 @@ export default function Home() {
       currency: '£'
     },
     {
+      id: 4,
       isNew: true,
       image: productImage.src,
       name: 'Wayfarer Classic',
@@ -181,11 +191,11 @@ const Services = ({ data }: { data: any }) => {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <SectionWrapper title="Some Services We Offer">
-      <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
+      <Flex flexDir="row" flexWrap="wrap" justifyContent={['center', 'space-between']}>
         {data.length > 0 &&
-          data.map((service: any) => (
+          data.map((service: any, idx: number) => (
             <Flex
-              key={service.title}
+              key={idx}
               flexDir={'column'}
               justifyContent="center"
               alignItems={'center'}
@@ -197,16 +207,13 @@ const Services = ({ data }: { data: any }) => {
               bg={bgColor}
             >
               <Text fontWeight={'600'} fontSize="1.3rem" textAlign="center" mb=".75rem">
-                {' '}
                 {service.title}{' '}
               </Text>
               <Image src={service.image} boxSize={['135px', '', '', '']} />
               <Text fontSize=".9rem" mb=".75rem">
-                {' '}
                 {service.text}{' '}
               </Text>
               <Text fontWeight={'bold'} color={'accent_4'}>
-                {' '}
                 Learn More{' '}
               </Text>
             </Flex>
@@ -252,8 +259,15 @@ const QuestionsAnswers = ({ data }: { data: any }) => {
     <SectionWrapper title="Some common questions were often asked">
       <Box p="1.5rem 1rem">
         <Accordion defaultIndex={[0]} allowMultiple border="none">
-          {data.map((item: any) => (
-            <AccordionItem mb="1rem" border="none" boxShadow={'md'} borderRadius="5px" bg={bgColor}>
+          {data.map((item: any, idx: number) => (
+            <AccordionItem
+              key={idx}
+              mb="1rem"
+              border="none"
+              boxShadow={'md'}
+              borderRadius="5px"
+              bg={bgColor}
+            >
               {({ isExpanded }) => (
                 <>
                   <h2>
@@ -290,9 +304,9 @@ const QuestionsAnswers = ({ data }: { data: any }) => {
 const ProductsOnTrend = ({ data }: { data: any }) => {
   return (
     <SectionWrapper title="Check out our products">
-      <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
+      <Flex flexDir="row" flexWrap="wrap" justifyContent={['center', '', 'space-between']}>
         {data.length > 0 &&
-          data.map((product: any) => <ProductCard data={product} id={product.id} readOnly />)}
+          data.map((product: any) => <ProductCard key={product?.id} data={product} readOnly />)}
       </Flex>
     </SectionWrapper>
   )
@@ -302,12 +316,12 @@ const CustomerReviews = ({ data }: { data: any }) => {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <SectionWrapper title="Customer Reviews">
-      <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
+      <Flex flexDir="row" flexWrap="wrap" justifyContent="space-between">
         {data.length > 0 &&
           data.map((el: any) => (
             <Flex
               flexDir={'column'}
-              justifyContent="center"
+              justifyContent="space-between"
               alignItems={'center'}
               boxShadow={'md'}
               w="15rem"
@@ -320,7 +334,6 @@ const CustomerReviews = ({ data }: { data: any }) => {
                 <IconReview color="#38a169" />
               </Box>
               <Text my=".75rem" fontStyle={'italic'} textAlign="center" fontSize=".9rem">
-                {' '}
                 {el.review}{' '}
               </Text>
               <Rating initRate={el?.rate} />
@@ -333,7 +346,6 @@ const CustomerReviews = ({ data }: { data: any }) => {
                 my=".75rem"
               />
               <Text fontSize=".9rem" textTransform={'uppercase'}>
-                {' '}
                 {el.name}{' '}
               </Text>
             </Flex>
@@ -353,7 +365,6 @@ const AppStore = () => {
       >
         <Flex flexDir={'column'} justifyContent="center" alignItems="center">
           <Text mb="1rem" textAlign={'center'} maxW="24rem" fontSize={'.9rem'}>
-            {' '}
             With our app you can view the route of your order, from our local headquarters to the
             place where you are. Look for the app now!{' '}
           </Text>
@@ -367,7 +378,6 @@ const AppStore = () => {
               mx=".5rem"
               fontSize=".9rem"
             >
-              {' '}
               App Store{' '}
             </Button>
             <Button
@@ -378,7 +388,6 @@ const AppStore = () => {
               mx=".5rem"
               fontSize=".9rem"
             >
-              {' '}
               Google Play{' '}
             </Button>
           </Flex>
@@ -414,7 +423,7 @@ const Promotion = () => {
           place where you are. Look for the app now!{' '}
         </Text>
 
-        <Countdown initYear={new Date().getFullYear()} dueDay={new Date('2022-05-04')} />
+        <Countdown initYear={new Date().getFullYear()} dueDay={new Date('2022-07-10')} />
 
         <Button
           bg={'accent_3'}
@@ -437,17 +446,9 @@ const Promotion = () => {
   )
 }
 
-const SectionWrapper = ({
-  children,
-  title,
-  rest
-}: {
-  children: React.ReactNode
-  title: string
-  rest?: any
-}) => {
+const SectionWrapper = ({ children, title, restProps }: ISectionWrapper) => {
   return (
-    <Flex flexDir="column" p="2.5rem 1.5rem" {...rest}>
+    <Flex flexDir="column" p="2.5rem 1.5rem" {...restProps}>
       <Box textAlign={'center'}>
         <Heading
           fontSize="24px"

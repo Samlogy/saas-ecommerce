@@ -1,18 +1,17 @@
 import {
-  IconButton,
   Badge,
   Box,
   Button,
   Circle,
   Flex,
+  IconButton,
   Image,
   useColorModeValue
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
-import { FaTrash } from 'react-icons/fa'
+import { AiOutlineMinus, AiOutlinePlus, AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 
-import { Rating } from '../components'
+import { Rating, View } from '../components'
 import { useShoppingCart } from '../store'
 
 interface IProduct {
@@ -23,23 +22,18 @@ interface IProduct {
 
 const ProductCard = ({ id, data, readOnly = false }: IProduct) => {
   const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
-  const removeItem = useShoppingCart((state: any) => state.removeItem)
   const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
   const products = useShoppingCart((state: any) => state.products)
 
   const quantity = products.find((item: any) => item.id === id)?.quantity || 0
 
-  const increase = (e, data) => {
+  const handleQuantity = (e, type: string) => {
     e.preventDefault()
-    increaseQuantity({ id, ...data })
-  }
-  const decrease = e => {
-    e.preventDefault()
-    decreaseQuantity(id)
-  }
-  const removeOne = e => {
-    e.preventDefault()
-    removeItem(id)
+    if (type === 'inc') {
+      increaseQuantity({ id, ...data })
+      return
+    }
+    decreaseQuantity(data?.id)
   }
 
   const bgColor = useColorModeValue('gray_9', 'gray_2')
@@ -54,10 +48,10 @@ const ProductCard = ({ id, data, readOnly = false }: IProduct) => {
         cursor={'pointer'}
       >
         <Box bg={bgColor} w="full" rounded="lg" shadow="lg" position="relative">
-          {data.isNew && <Circle size="10px" position="absolute" top={2} right={2} bg="red.200" />}
+          <FavouriteButton position="absolute" top="4" right="4" />
 
           <Image
-            src={data.image}
+            src={data?.image}
             alt={`Picture of ${data.name}`}
             roundedTop="lg"
             boxSize={'154px'}
@@ -93,7 +87,7 @@ const ProductCard = ({ id, data, readOnly = false }: IProduct) => {
               </Box>
             </Flex>
 
-            {quantity === 0 ? (
+            <View cond={quantity === 0}>
               <Button
                 bg={'accent_3'}
                 _hover={{ bg: 'accent_2' }}
@@ -101,34 +95,36 @@ const ProductCard = ({ id, data, readOnly = false }: IProduct) => {
                 borderRadius="20px"
                 w="full"
                 mt=".75rem"
-                onClick={e => increase(e, data)}
+                onClick={e => handleQuantity(e, 'inc')}
               >
                 Add to Cart
               </Button>
-            ) : (
-              <Flex flexDir={'column'} alignItems={'center'}>
-                <Flex alignItems={'center'} justify="center">
-                  <IconButton
-                    aria-label="decrease-quantity"
-                    onClick={decrease}
-                    icon={<AiOutlineMinus />}
-                  />
-                  <Box>
-                    <Box as="span" className="fs-3">
-                      {quantity}
-                    </Box>{' '}
-                    in cart
-                  </Box>
+            </View>
+            <View cond={quantity > 0}>
+              <Flex
+                alignItems={'center'}
+                justify="center"
+                p=".5rem"
+                borderRadius={'.5rem'}
+                border="1px solid"
+                borderColor={useColorModeValue('gray_3', 'gray_5')}
+              >
+                <IconButton
+                  aria-label="decrease-quantity"
+                  onClick={e => handleQuantity(e, 'dec')}
+                  icon={<AiOutlineMinus />}
+                />
+                <Box as="span" p=".5rem 1.5rem">
+                  {quantity}
+                </Box>
 
-                  <IconButton
-                    aria-label="increase-quantity"
-                    onClick={e => increase(e, data)}
-                    icon={<AiOutlinePlus />}
-                  />
-                </Flex>
-                <IconButton aria-label="increase-quantity" onClick={removeOne} icon={<FaTrash />} />
+                <IconButton
+                  aria-label="increase-quantity"
+                  onClick={e => handleQuantity(e, 'inc')}
+                  icon={<AiOutlinePlus />}
+                />
               </Flex>
-            )}
+            </View>
           </Box>
         </Box>
       </Flex>
@@ -150,5 +146,24 @@ const Reviews = ({ data }: { data: number }) => {
         reviews{' '}
       </Box>
     </Flex>
+  )
+}
+
+const FavouriteButton = (props: any) => {
+  return (
+    <IconButton
+      isRound
+      bg="white"
+      color="gray.900"
+      size="sm"
+      aria-label="favourite-button"
+      _hover={{ transform: 'scale(1.1)' }}
+      sx={{ ':hover > svg': { transform: 'scale(1.1)' } }}
+      transition="all 0.15s ease"
+      icon={<AiOutlineHeart />}
+      boxShadow="md"
+      onClick={e => e.preventDefault()}
+      {...props}
+    />
   )
 }

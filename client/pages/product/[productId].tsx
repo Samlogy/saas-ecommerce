@@ -13,7 +13,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { MdLocalShipping } from 'react-icons/md'
-import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
+import { AiOutlineMinus, AiOutlinePlus, AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
@@ -111,7 +111,23 @@ export default function Product({
             </VStack>
           </Stack>
 
-          <Flex flexDir="row-reverse" justifyContent={'center'}>
+          <Flex
+            flexDir="row-reverse"
+            justifyContent={['space-around', '', 'center', '']}
+            align="center"
+          >
+            <Button
+              leftIcon={<AiOutlineHeart />}
+              bg={'accent_3'}
+              _hover={{ bg: 'accent_2' }}
+              color={'white'}
+              borderRadius="20px"
+              mt=".75rem"
+              w="15rem"
+              onClick={() => console.log('heart')}
+            >
+              Favourite
+            </Button>
             <View cond={quantity === 0}>
               <Button
                 bg={'accent_3'}

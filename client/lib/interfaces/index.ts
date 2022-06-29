@@ -6,7 +6,7 @@ export interface IComment {
 }
 
 export interface IProduct {
-  id: number
+  id?: number
   name: string
   image: string
   description: string

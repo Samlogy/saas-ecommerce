@@ -29,17 +29,19 @@ export default function Product({
   comments,
   relatedProducts
 }: {
-  product: IProduct[]
+  product: IProduct
   comments: IComment[]
   relatedProducts: IProduct[]
 }) {
-  const increment = useShoppingCart((state: any) => state.increment)
-  const decrement = useShoppingCart((state: any) => state.decrement)
-  const addToCart = useShoppingCart((state: any) => state.addToCart)
+  const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
+  const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
+  const products = useShoppingCart((state: any) => state.products)
+
+  const quantity = products.find((item: any) => item.id === product?.id)?.quantity || 0
 
   const handleQuantity = (type: string) => {
-    if (type === 'dec') decrement(product.id)
-    else increment(product.id)
+    if (type === 'dec') decreaseQuantity(product.id)
+    else increaseQuantity(product)
   }
 
   const [image, setImage] = useState<string>('')
@@ -100,7 +102,7 @@ export default function Product({
           >
             <VStack spacing={{ base: 4, sm: 6 }}>
               <Text
-                color={useColorModeValue('gray.500', 'gray.400')}
+                color={useColorModeValue('gray_2', 'gray_8')}
                 fontSize={'1rem'}
                 fontWeight={'300'}
               >
@@ -109,47 +111,95 @@ export default function Product({
             </VStack>
           </Stack>
 
-          <Flex flexDir="row-reverse" justifyContent={'space-between'}>
-            <Flex justifyContent={'space-evenly'} alignItems="center" w="150px" mt={8}>
-              <IconButton
-                icon={<AiOutlineMinus />}
-                aria-label="descrement"
-                onClick={() => handleQuantity('dec')}
-              />
-              <Text my="auto"> {product.quantity} </Text>
-              <IconButton
-                icon={<AiOutlinePlus />}
-                aria-label="increment"
-                onClick={() => handleQuantity('inc')}
-              />
-            </Flex>
+          <Flex flexDir="row-reverse" justifyContent={'center'}>
+            <View cond={quantity === 0}>
+              <Button
+                bg={'accent_3'}
+                _hover={{ bg: 'accent_2' }}
+                color={'white'}
+                borderRadius="20px"
+                w="15rem"
+                mt=".75rem"
+                onClick={() => increaseQuantity(product)}
+              >
+                Add to Cart
+              </Button>
+            </View>
 
-            <Button
-              w="200px"
-              mt={8}
-              size={'lg'}
-              bg={'green.500'}
-              color={'white'}
-              borderRadius="20px"
-              fontSize={'1rem'}
-              textTransform={'uppercase'}
-              _hover={{ transform: 'translateY(2px)', boxShadow: 'lg' }}
-              onClick={() => addToCart(product)}
-            >
-              Add to cart
-            </Button>
+            <View cond={quantity > 0}>
+              <Box as="span" color={useColorModeValue('gray_3', 'gray_7')}>
+                Quantity:
+              </Box>
+              <Flex
+                alignItems={'center'}
+                justify="center"
+                p=".5rem"
+                borderRadius={'.5rem'}
+                border="1px solid"
+                borderColor={useColorModeValue('gray_3', 'gray_5')}
+              >
+                <IconButton
+                  aria-label="decrease-quantity"
+                  onClick={() => decreaseQuantity(product?.id)}
+                  icon={<AiOutlineMinus />}
+                />
+                <Box as="span" p=".5rem 1.5rem">
+                  {quantity}
+                </Box>
+
+                <IconButton
+                  aria-label="increase-quantity"
+                  onClick={() => increaseQuantity(product)}
+                  icon={<AiOutlinePlus />}
+                />
+              </Flex>
+            </View>
           </Flex>
 
-          <Stack direction="row" alignItems="center" justifyContent={'center'}>
-            <MdLocalShipping size={20} />
-            <Text> {product.delivery} delivery </Text>
-          </Stack>
+          <DeliveryDetails data={product} />
         </Stack>
       </SimpleGrid>
       <RelatedProducts data={relatedProducts} />
 
       <ListingComments comments={comments} />
     </Layout>
+  )
+}
+
+const DeliveryDetails = ({ data }: any) => {
+  return (
+    <Flex
+      flexDir={'column'}
+      justify="center"
+      align={'center'}
+      border="1px solid"
+      borderColor={useColorModeValue('gray_9', 'gray_5')}
+      p=".75rem"
+      borderRadius={'.5rem'}
+      bg={useColorModeValue('gray_8', 'gray_3')}
+      color={useColorModeValue('gray_3', 'gray_8')}
+    >
+      <Flex w="95%">
+        <MdLocalShipping size={20} />
+        <Text w="90%" ml=".5rem">
+          {data.delivery} delivery
+        </Text>
+      </Flex>
+
+      <Flex w="95%">
+        <MdLocalShipping size={20} />
+        <Text w="90%" ml=".5rem">
+          2 year extended warranty
+        </Text>
+      </Flex>
+
+      <Flex w="95%">
+        <MdLocalShipping size={20} />
+        <Text w="90%" ml=".5rem">
+          We’re here for you 24/7
+        </Text>
+      </Flex>
+    </Flex>
   )
 }
 
@@ -184,6 +234,29 @@ const CarouselPreview = ({ images, setImage }: { images: string[]; setImage: any
           onClick={() => setImage(img)}
         />
       ))}
+    </Flex>
+  )
+}
+
+const RelatedProducts = ({ data }: { data: IProduct[] }) => {
+  return (
+    <Flex flexDir={'column'} px="1.5rem" mt="5rem" mb="4rem">
+      <Flex justifyContent={'space-between'} alignItems="center" mb="1.5rem">
+        {' '}
+        <Heading fontSize="1.2rem" textTransform={'uppercase'} fontWeight={'700'}>
+          {' '}
+          Related Products{' '}
+        </Heading>
+        <Link href="/">View All</Link>
+      </Flex>
+
+      <View cond={data?.length > 0}>
+        <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
+          {data?.map(product => (
+            <ProductCard id={product.id} data={product} />
+          ))}
+        </Flex>
+      </View>
     </Flex>
   )
 }
@@ -268,27 +341,4 @@ export const getServerSideProps = async context => {
       comments
     }
   }
-}
-
-const RelatedProducts = ({ data }: { data: IProduct[] }) => {
-  return (
-    <Flex flexDir={'column'} px="1.5rem" mt="5rem" mb="4rem">
-      <Flex justifyContent={'space-between'} alignItems="center" mb="1.5rem">
-        {' '}
-        <Heading fontSize="1.2rem" textTransform={'uppercase'} fontWeight={'700'}>
-          {' '}
-          Related Products{' '}
-        </Heading>
-        <Link href="/">View All</Link>
-      </Flex>
-
-      <View cond={data?.length > 0}>
-        <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
-          {data?.map(product => (
-            <ProductCard id={product.id} data={product} />
-          ))}
-        </Flex>
-      </View>
-    </Flex>
-  )
 }

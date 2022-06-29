@@ -1,9 +1,9 @@
 # Ecommerce Web App
 
 ## Purpose: 
-create a web app that allows to sold products online
+Create a web app that allows to sold products online
 ## Note:
-this app is only a template that can be used to create a customized ecommerce app
+This app is only a template that can be used to create a customized ecommerce app
 ### Features:
 #### Shopping cart
 1. add item to cart

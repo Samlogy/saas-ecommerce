@@ -29,46 +29,46 @@ export default function Products({ products }: { products: IProduct[] }) {
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'}>
-        Products{' '}
+        Products
       </Heading>
 
       <Flex flexDir={'row'} justifyContent="space-between">
-        {width >= 700 ? (
+        <View cond={width >= 700}>
           <Filter
             isOpen={isVisible}
             close={() => setIsVisible(false)}
             open={() => setIsVisible(true)}
           />
-        ) : (
-          <>
-            <IconButton
-              aria-label="trigger filter"
-              icon={<BsFilterLeft size={18} />}
-              ref={btnRef}
-              onClick={() => setIsVisible(true)}
-            />
-            <Drawer
-              isOpen={isVisible}
-              placement="right"
-              onClose={() => setIsVisible(false)}
-              finalFocusRef={btnRef}
-            >
-              <DrawerOverlay />
-              <DrawerContent>
-                <DrawerCloseButton />
-                <DrawerHeader> Filter </DrawerHeader>
+        </View>
 
-                <DrawerBody>
-                  <Filter
-                    isOpen={isVisible}
-                    close={() => setIsVisible(false)}
-                    open={() => setIsVisible(true)}
-                  />
-                </DrawerBody>
-              </DrawerContent>
-            </Drawer>
-          </>
-        )}
+        <View cond={width < 700}>
+          <IconButton
+            aria-label="trigger filter"
+            icon={<BsFilterLeft size={18} />}
+            ref={btnRef}
+            onClick={() => setIsVisible(true)}
+          />
+          <Drawer
+            isOpen={isVisible}
+            placement="right"
+            onClose={() => setIsVisible(false)}
+            finalFocusRef={btnRef}
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader> Filter </DrawerHeader>
+
+              <DrawerBody>
+                <Filter
+                  isOpen={isVisible}
+                  close={() => setIsVisible(false)}
+                  open={() => setIsVisible(true)}
+                />
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+        </View>
 
         <Flex flexDir={'column'}>
           <View cond={products?.length > 0}>
@@ -78,7 +78,7 @@ export default function Products({ products }: { products: IProduct[] }) {
 
             <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
               {products?.map((product: IProduct) => (
-                <ProductCard id={product.id} data={product} readOnly />
+                <ProductCard key={product.id} data={product} readOnly />
               ))}
             </Flex>
           </View>
@@ -116,7 +116,8 @@ export const getServerSideProps = async () => {
       quantity: 11,
       reviews: 34,
       currency: '£',
-      discount: null
+      discount: null,
+      isFavourite: false
     },
     {
       id: 2,
@@ -128,7 +129,8 @@ export const getServerSideProps = async () => {
       quantity: 11,
       reviews: 34,
       currency: '£',
-      discount: 0.2
+      discount: 0.2,
+      isFavourite: true
     },
     {
       id: 3,
@@ -140,7 +142,8 @@ export const getServerSideProps = async () => {
       quantity: 11,
       reviews: 34,
       currency: '£',
-      discount: 0.2
+      discount: 0.2,
+      isFavourite: false
     },
     {
       id: 4,
@@ -152,7 +155,8 @@ export const getServerSideProps = async () => {
       quantity: 11,
       reviews: 34,
       currency: '£',
-      discount: 0.2
+      discount: 0.2,
+      isFavourite: true
     }
   ]
 

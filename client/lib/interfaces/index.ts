@@ -7,6 +7,7 @@ export interface IComment {
 
 export interface IProduct {
   id?: number
+  isFavourite?: boolean
   name: string
   image: string
   description: string

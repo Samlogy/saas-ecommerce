@@ -9,8 +9,7 @@ import {
   Select,
   useColorModeValue
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { useWindowDimensions } from '../lib/hooks'
+import { useState } from 'react'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
 
@@ -42,8 +41,6 @@ const Filter = ({ isOpen, close, open }: IFilter) => {
   const [sorts, setSorts] = useState([])
   const [filters, setFilters] = useState({ product: '', category: [] })
 
-  const { height, width } = useWindowDimensions()
-
   const onSort = (vals: any) => {
     const new_sorts = vals.map((val: string) => val.toLowerCase())
     setSorts(new_sorts)
@@ -72,7 +69,7 @@ const Filter = ({ isOpen, close, open }: IFilter) => {
         type="search"
         placeholder="Search..."
         w="15rem"
-        onChange={e => onFilter({ ...filters, product: e.target.value })}
+        onChange={e => setQuery(e.target.value)}
         value={query}
         bg={itemBgColor}
         focusBorderColor="accent_6"
@@ -104,8 +101,11 @@ const Filter = ({ isOpen, close, open }: IFilter) => {
           maxW="10rem"
           focusBorderColor="accent_6"
         >
-          {CATEGORY_LIST?.map(el => (
-            <option value={el}> {el} </option>
+          {CATEGORY_LIST?.map((el, idx) => (
+            <option key={idx} value={el}>
+              {' '}
+              {el}{' '}
+            </option>
           ))}
         </Select>
       </Flex>
@@ -166,8 +166,10 @@ const TemplateSortSlider = ({
         mb=".75rem"
         focusBorderColor="accent_6"
       >
-        {selectList?.map(item => (
-          <option value={item}> {item} </option>
+        {selectList?.map((item, idx) => (
+          <option key={idx} value={item}>
+            {item}
+          </option>
         ))}
       </Select>
 
@@ -219,8 +221,10 @@ const TemplateSort = ({ label, onSort, sorts, selectList }: ITemplateSort) => {
         maxW="10rem"
         focusBorderColor="accent_6"
       >
-        {selectList?.map(el => (
-          <option value={el}> {el} </option>
+        {selectList?.map((el, idx) => (
+          <option key={idx} value={el}>
+            {el}
+          </option>
         ))}
       </Select>
     </Flex>

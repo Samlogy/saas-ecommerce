@@ -337,7 +337,7 @@ const CustomerReviews = ({ data }: { data: any }) => {
               <Text my=".75rem" fontStyle={'italic'} textAlign="center" fontSize=".9rem">
                 {el.review}{' '}
               </Text>
-              <Rating initRate={el?.rate} />
+              <Rating initRate={el?.rate} readOnly />
               <Image
                 src={productImage.src}
                 alt={el.name}

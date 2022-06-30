@@ -7,6 +7,7 @@ interface IShoppingCart {
   quantityTotal: number
   products: IProduct[]
 
+  setIsFavourite: (id: number) => void
   setOpen: (isOpen: boolean) => void
   removeItems: () => void
   removeItem: (products: IProduct[], id: number) => void
@@ -74,11 +75,20 @@ function getQuantity(products: IProduct[]) {
   return products.reduce((quantity: number, proudct: IProduct) => proudct.quantity + quantity, 0)
 }
 
+function setFavourite(products: IProduct[], id: number) {
+  return products.map((item: IProduct) => {
+    if (item.id === id) return { ...item, isFavourite: !item.isFavourite }
+    return item
+  })
+}
+
 let shoppingCartStore = (set: any) => ({
   isOpen: false, // open / close --> shopping cart
   products: [], // all proudctq inside the cart
   quantityTotal: 0, // products qunatity
 
+  setIsFavourite: (id: number) =>
+    set((state: any) => ({ products: setFavourite(state.products, id) })),
   setOpen: (val: boolean) => set(() => ({ isOpen: !val })),
   removeItems: () => set(() => ({ ...removeAll() })),
   removeItem: (id: number) =>

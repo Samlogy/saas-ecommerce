@@ -1,15 +1,6 @@
-import {
-  Badge,
-  Box,
-  Button,
-  Circle,
-  Flex,
-  IconButton,
-  Image,
-  useColorModeValue
-} from '@chakra-ui/react'
+import { Badge, Box, Button, Flex, IconButton, Image, useColorModeValue } from '@chakra-ui/react'
 import Link from 'next/link'
-import { AiOutlineMinus, AiOutlinePlus, AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+import { AiFillHeart, AiOutlineHeart, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 
 import { Rating, View } from '../components'
 import { useShoppingCart } from '../store'
@@ -17,6 +8,10 @@ import { useShoppingCart } from '../store'
 interface IProduct {
   data: any
   readOnly?: boolean
+}
+interface IFavouriteButton {
+  id: number
+  isFavourite: boolean
 }
 
 const ProductCard = ({ data, readOnly = false }: IProduct) => {
@@ -47,7 +42,7 @@ const ProductCard = ({ data, readOnly = false }: IProduct) => {
         cursor={'pointer'}
       >
         <Box bg={bgColor} w="full" rounded="lg" shadow="lg" position="relative">
-          <FavouriteButton position="absolute" top="4" right="4" />
+          <FavouriteButton id={data?.id} />
 
           <Image
             src={data?.image}
@@ -148,7 +143,16 @@ const Reviews = ({ data }: { data: number }) => {
   )
 }
 
-const FavouriteButton = (props: any) => {
+const FavouriteButton = ({ id }: { id: number }) => {
+  const setIsFavourite = useShoppingCart((state: any) => state.setIsFavourite)
+  const products = useShoppingCart((state: any) => state.products)
+
+  const isFavourite = products.find((item: any) => item.id === id)?.isFavourite || false
+
+  const handleFavourite = e => {
+    e.preventDefault()
+    setIsFavourite(id)
+  }
   return (
     <IconButton
       isRound
@@ -159,10 +163,12 @@ const FavouriteButton = (props: any) => {
       _hover={{ transform: 'scale(1.1)' }}
       sx={{ ':hover > svg': { transform: 'scale(1.1)' } }}
       transition="all 0.15s ease"
-      icon={<AiOutlineHeart />}
+      icon={isFavourite ? <AiFillHeart /> : <AiOutlineHeart />}
       boxShadow="md"
-      onClick={e => e.preventDefault()}
-      {...props}
+      onClick={e => handleFavourite(e)}
+      position="absolute"
+      top="4"
+      right="4"
     />
   )
 }

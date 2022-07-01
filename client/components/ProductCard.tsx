@@ -1,17 +1,13 @@
 import { Badge, Box, Button, Flex, IconButton, Image, useColorModeValue } from '@chakra-ui/react'
 import Link from 'next/link'
-import { AiFillHeart, AiOutlineHeart, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 
-import { Rating, View } from '../components'
+import { FavouriteButton, Rating, View } from '../components'
 import { useShoppingCart } from '../store'
 
 interface IProduct {
   data: any
   readOnly?: boolean
-}
-interface IFavouriteButton {
-  id: number
-  isFavourite: boolean
 }
 
 const ProductCard = ({ data, readOnly = false }: IProduct) => {
@@ -98,7 +94,7 @@ const ProductCard = ({ data, readOnly = false }: IProduct) => {
               <Flex
                 alignItems={'center'}
                 justify="center"
-                p=".5rem"
+                p=".25rem"
                 borderRadius={'.5rem'}
                 border="1px solid"
                 borderColor={useColorModeValue('gray_3', 'gray_5')}
@@ -107,8 +103,10 @@ const ProductCard = ({ data, readOnly = false }: IProduct) => {
                   aria-label="decrease-quantity"
                   onClick={e => handleQuantity(e, 'dec')}
                   icon={<AiOutlineMinus />}
+                  w="2.5rem!important"
+                  h="2.5rem!important"
                 />
-                <Box as="span" p=".5rem 1.5rem">
+                <Box as="span" px=".5rem!important">
                   {quantity}
                 </Box>
 
@@ -116,6 +114,8 @@ const ProductCard = ({ data, readOnly = false }: IProduct) => {
                   aria-label="increase-quantity"
                   onClick={e => handleQuantity(e, 'inc')}
                   icon={<AiOutlinePlus />}
+                  w="2.5rem!important"
+                  h="2.5rem!important"
                 />
               </Flex>
             </View>
@@ -140,35 +140,5 @@ const Reviews = ({ data }: { data: number }) => {
         reviews{' '}
       </Box>
     </Flex>
-  )
-}
-
-const FavouriteButton = ({ id }: { id: number }) => {
-  const setIsFavourite = useShoppingCart((state: any) => state.setIsFavourite)
-  const products = useShoppingCart((state: any) => state.products)
-
-  const isFavourite = products.find((item: any) => item.id === id)?.isFavourite || false
-
-  const handleFavourite = e => {
-    e.preventDefault()
-    setIsFavourite(id)
-  }
-  return (
-    <IconButton
-      isRound
-      bg="white"
-      color="gray.900"
-      size="sm"
-      aria-label="favourite-button"
-      _hover={{ transform: 'scale(1.1)' }}
-      sx={{ ':hover > svg': { transform: 'scale(1.1)' } }}
-      transition="all 0.15s ease"
-      icon={isFavourite ? <AiFillHeart /> : <AiOutlineHeart />}
-      boxShadow="md"
-      onClick={e => handleFavourite(e)}
-      position="absolute"
-      top="4"
-      right="4"
-    />
   )
 }

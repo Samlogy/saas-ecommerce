@@ -1,28 +1,29 @@
 import {
   Box,
-  IconButton,
-  Stack,
-  Text,
-  Image,
-  Flex,
-  VStack,
   Button,
+  Flex,
   Heading,
+  IconButton,
+  Image,
   SimpleGrid,
+  Stack,
   StackDivider,
-  useColorModeValue
+  Text,
+  useColorModeValue,
+  VStack
 } from '@chakra-ui/react'
-import { MdLocalShipping } from 'react-icons/md'
-import { AiOutlineMinus, AiOutlinePlus, AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useState } from 'react'
+import { AiOutlineHeart, AiFillHeart, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
+import { MdLocalShipping } from 'react-icons/md'
+import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 
-import { Layout, Carousel, View, ListingComments, ProductCard } from '../../components'
-import { useShoppingCart } from '../../store'
+import { Layout, ListingComments, ProductCard, View } from '../../components'
 import { IComment, IProduct } from '../../lib/interfaces'
+import { useShoppingCart } from '../../store'
 
-import productImage from '../../public/images/product.png'
 import heroImage from '../../public/images/home.png'
+import productImage from '../../public/images/product.png'
 
 export default function Product({
   product,
@@ -35,12 +36,19 @@ export default function Product({
 }) {
   const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
   const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
+  const setIsFavourite = useShoppingCart((state: any) => state.setIsFavourite)
   const products = useShoppingCart((state: any) => state.products)
+  const isFavourite = products.find((item: any) => item.id === product?.id)?.isFavourite || false
 
   const quantity = products.find((item: any) => item.id === product?.id)?.quantity || 0
 
   const [image, setImage] = useState<string>('')
-  const [images, setImages] = useState<string[]>(product.image)
+  //const [images, setImages] = useState<string[]>(product.image)
+
+  const handleFavourite = e => {
+    e.preventDefault()
+    setIsFavourite(product?.id)
+  }
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -54,22 +62,23 @@ export default function Product({
           <Text> No Images </Text>
         </View>
 
-        <View cond={product.image.length === 1}>
+        <View cond={product.image.length > 1}>
           <Image
             rounded={'md'}
             alt={'product image'}
-            src={image || product.image[0]}
+            src={image}
             fit={'cover'}
             align={'center'}
             w={'100%'}
             h={{ base: '100%', sm: '400px', lg: '500px' }}
+            borderRadius=".5rem"
+            border="1px solid"
+            borderColor="black"
           />
-          <CarouselPreview images={product.image} setImage={setImage} />
-        </View>
-
-        <View cond={product.image.length > 1}>
-          <Carousel slides={product.image} />
-          <CarouselPreview images={product.image} setImage={setImage} />
+          <CarouselPreview
+            images={[heroImage.src, productImage.src, heroImage.src, productImage.src]}
+            setImage={setImage}
+          />
         </View>
 
         <Stack spacing={{ base: 6, md: 10 }}>
@@ -106,30 +115,35 @@ export default function Product({
             </VStack>
           </Stack>
 
-          <Flex
-            flexDir="row-reverse"
-            justifyContent={['space-around', '', 'center', '']}
-            align="center"
-          >
+          <Flex flexDir="row-reverse" justifyContent={['space-around', '', '', '']} align="center">
             <Button
-              leftIcon={<AiOutlineHeart />}
-              bg={'accent_3'}
-              _hover={{ bg: 'accent_2' }}
-              color={'white'}
-              borderRadius="20px"
+              leftIcon={isFavourite ? <AiFillHeart /> : <AiOutlineHeart />}
+              bg={'white'}
+              color={'accent_3'}
+              border="1px solid"
+              borderColor="accent_3"
+              borderRadius=".5rem"
+              transition={'.35s all'}
+              _hover={{ bg: 'accent_3', color: 'white' }}
               mt=".75rem"
-              w="15rem"
-              onClick={() => console.log('heart')}
+              w="10rem"
+              onClick={e => handleFavourite(e)}
             >
               Favourite
             </Button>
             <View cond={quantity === 0}>
               <Button
                 bg={'accent_3'}
-                _hover={{ bg: 'accent_2' }}
                 color={'white'}
-                borderRadius="20px"
-                w="15rem"
+                transition={'.35s all'}
+                _hover={{
+                  bg: 'white',
+                  color: 'accent_3',
+                  border: '1px solid',
+                  borderColor: 'accent_3'
+                }}
+                borderRadius=".5rem"
+                w="10rem"
                 mt=".75rem"
                 onClick={() => increaseQuantity(product)}
               >
@@ -138,9 +152,6 @@ export default function Product({
             </View>
 
             <View cond={quantity > 0}>
-              <Box as="span" color={useColorModeValue('gray_3', 'gray_7')}>
-                Quantity:
-              </Box>
               <Flex
                 alignItems={'center'}
                 justify="center"
@@ -214,28 +225,86 @@ const DeliveryDetails = ({ data }: any) => {
   )
 }
 
-const CarouselPreview = ({ images, setImage }: { images: string[]; setImage: any }) => {
+const CarouselPreview = ({
+  images,
+  setImage
+}: {
+  images: string[]
+  setImage: (images: string) => void
+}) => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  const SLIDES_COUNT = images.length // number of images in carousel
+  const IMAGES_TO_DISPLAY = 3 // number of images to display in carousel (preview)
+
+  // select images to loop on
+  const imagesSlides: string[] = []
+
+  function generateImagesSlides(initImage: number) {
+    let cpt = 0
+    for (let i = initImage; i < IMAGES_TO_DISPLAY; i++) {
+      if (i <= IMAGES_TO_DISPLAY - 1) {
+        imagesSlides.push(images[i])
+      }
+      cpt = i + 1
+    }
+    if (cpt == IMAGES_TO_DISPLAY) {
+      for (let i = 0; i < IMAGES_TO_DISPLAY; i++) {
+        if (cpt <= IMAGES_TO_DISPLAY) {
+          imagesSlides.push(images[i])
+        }
+      }
+    }
+  }
+
+  // generateImagesSlides(currentSlide)
+  const prevSlide = () => {
+    setCurrentSlide(s => (s === 0 ? SLIDES_COUNT - 1 : s - 1))
+  }
+  const nextSlide = () => {
+    setCurrentSlide(s => (s === SLIDES_COUNT - 1 ? 0 : s + 1))
+  }
+
+  const arrowStyles = {
+    transition: '0.6s ease',
+    borderRadius: '50%',
+    bg: 'transparent',
+    color: 'gray_2',
+    _hover: {
+      bg: 'transparent',
+      color: 'accent_3'
+    }
+  }
   return (
     <Flex
       flexWrap={'wrap'}
-      justifyContent="space-evenly"
+      align="center"
+      justify="space-evenly"
       p={['.25rem', '', '.5rem', '']}
-      bg="green.100"
       borderRadius={'10px'}
-      my="1.5rem"
+      mt="1.5rem"
       w={['15rem', '', '70%', '']}
       mx={['auto', '', '', '']}
     >
-      {images.map(img => (
+      <IconButton
+        {...arrowStyles}
+        aria-label="previous-slide"
+        icon={<RiArrowLeftSLine size={24} />}
+        onClick={prevSlide}
+      />
+
+      {imagesSlides.map((img: string, idx: number) => (
         <Image
-          rounded={'md'}
-          alt={'product image'}
+          key={idx}
           src={img}
+          rounded={'md'}
+          alt={'product-image'}
           border="1px solid white"
           bg="white"
           borderRadius={'10px'}
           boxSize={['50px', '', '75px', '']}
           boxShadow="md"
+          filter={currentSlide !== idx + 1 && 'grayscale(80%)'}
           _hover={{
             cursor: 'pointer',
             border: '2px solid',
@@ -245,6 +314,13 @@ const CarouselPreview = ({ images, setImage }: { images: string[]; setImage: any
           onClick={() => setImage(img)}
         />
       ))}
+
+      <IconButton
+        {...arrowStyles}
+        aria-label="next-slide"
+        icon={<RiArrowRightSLine size={24} />}
+        onClick={nextSlide}
+      />
     </Flex>
   )
 }
@@ -260,7 +336,7 @@ const RelatedProducts = ({ data }: { data: IProduct[] }) => {
       </Flex>
 
       <View cond={data?.length > 0}>
-        <Flex flexWrap="wrap" justifyContent="space-between">
+        <Flex flexWrap="wrap" justifyContent={['center', '', 'space-between']}>
           {data?.map((product, idx) => (
             <ProductCard key={idx} data={product} />
           ))}

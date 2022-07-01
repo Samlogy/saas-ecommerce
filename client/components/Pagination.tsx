@@ -32,7 +32,7 @@ const Pagination = ({
   const textColor = useColorModeValue('accent_4', 'white')
 
   return (
-    <>
+    <Flex justify="center">
       <View cond={isMobile}>
         <Flex>
           <Button disabled={page === lastPage} onClick={nextPage} color={textColor} m="1.5rem auto">
@@ -109,7 +109,7 @@ const Pagination = ({
           </Button>
         </Flex>
       </View>
-    </>
+    </Flex>
   )
 }
 

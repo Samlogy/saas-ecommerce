@@ -132,11 +132,9 @@ const Reviews = ({ data }: { data: number }) => {
   return (
     <Flex mt=".2rem" fontSize=".85rem" fontStyle={'italic'} textTransform={'lowercase'}>
       <Box as="span" ml=".5rem">
-        {' '}
         {data}{' '}
       </Box>
       <Box as="span" ml=".2rem">
-        {' '}
         reviews{' '}
       </Box>
     </Flex>

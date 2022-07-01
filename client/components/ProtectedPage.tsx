@@ -1,27 +1,21 @@
 // import { useUser } from '@auth0/nextjs-auth0'
 import { useRouter } from 'next/router'
-import { ReactNode, useEffect } from 'react'
+import { ReactNode } from 'react'
 
-// import { useAuth } from "../store";
 interface IProtected {
   children: ReactNode
   isProtected?: boolean
 }
-
-export default function ProtectedPage({ children, isProtected }: IProtected) {
-  // const isLogged = useAuth((state: any) => state.isLogged)
+export default function ProtectedPage({ children, isProtected }: IProtected): any {
+  const { loading, error, data } = { loading: false, error: '', data: {} }
   const router = useRouter()
 
-  // const { user } = useUser()
-  const user = {}
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>{error?.message}</p>
 
-  // protected routes ---> profile
-
-  useEffect(() => {
-    if (!user && isProtected) {
-      // router.push('/api/auth/login')
-    }
-  }, [])
+  if (!data) {
+    return router.push('/login')
+  }
 
   return <>{children}</>
 }

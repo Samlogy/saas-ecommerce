@@ -7,14 +7,17 @@ interface ILayout {
   children: React.ReactNode
   isHeaderVisible?: boolean
   isFooterVisible?: boolean
-  rest?: any
+  [restProps: string]: any
 }
 
-export default function Layout({ children, isHeaderVisible, isFooterVisible, ...rest }: ILayout) {
+export default function Layout({
+  children,
+  isHeaderVisible,
+  isFooterVisible,
+  ...restProps
+}: ILayout) {
   const { pathname } = useRouter()
-  const isProtected =
-    pathname === '/profile' || pathname === '/edit-profile' || pathname === '/admin'
-  // console.log('protected: ', pathname, isProtected)
+  const isProtected = pathname === '/profile' || pathname === '/edit-profile'
 
   const bgColor = useColorModeValue('white', 'gray_3')
 
@@ -28,7 +31,7 @@ export default function Layout({ children, isHeaderVisible, isFooterVisible, ...
         <title> Ecommerce Web App </title>
       </Head>
 
-      <Flex flexDir="column" {...rest} bg={bgColor}>
+      <Flex flexDir="column" {...restProps} bg={bgColor}>
         {isHeaderVisible && <NavBar />}
 
         <Container
@@ -36,7 +39,7 @@ export default function Layout({ children, isHeaderVisible, isFooterVisible, ...
           bg={bgColor}
           minHeight="calc(100vh - 100px)"
           p="6rem 1.5rem 2rem 1.5rem"
-          borderRadius="4px"
+          borderRadius=".25rem"
         >
           <ProtectedPage isProtected={isProtected}>{children}</ProtectedPage>
           <ShoppingCart />

@@ -15,7 +15,7 @@ import {
   Text,
   useColorModeValue
 } from '@chakra-ui/react'
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
+import { AiOutlineMinus, AiOutlinePlus, AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { FaTrash } from 'react-icons/fa'
 import { View } from '../components'
 import { formatCurrency } from '../lib/utils/fonctions'
@@ -57,11 +57,8 @@ const ShoppingCart = () => {
               {products?.length > 0 &&
                 formatCurrency(
                   products.reduce((total: number, product: any) => {
-                    //const item = storeItems.find(i => i.id === product.id)
-                    //return total + (item?.price || 0) * product.quantity
                     const price = total + product?.price * product.quantity
-                    const priceDiscount = product.discount ? price * product?.discount : price
-                    return priceDiscount
+                    return product.discount ? price * product?.discount : price
                   }, 0)
                 )}
             </Flex>
@@ -100,6 +97,7 @@ const CartItem = ({ data }: { data: any }) => {
   const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
   const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
   const removeItem = useShoppingCart((state: any) => state.removeItem)
+  const setIsFavourite = useShoppingCart((state: any) => state.setIsFavourite)
 
   const price = data.quantity * data.price
   const priceDiscount = data.quantity * data.price * data?.discount
@@ -109,7 +107,12 @@ const CartItem = ({ data }: { data: any }) => {
     return (Math.round(price * 100) / 100).toFixed(2)
   }
 
-  //console.log(data)
+  const isFavourite = data?.isFavourite
+
+  const handleFavourite = e => {
+    e.preventDefault()
+    setIsFavourite(data?.id)
+  }
 
   const handleQuantity = (type: string) => {
     if (type === 'dec') decreaseQuantity(data.id)
@@ -169,6 +172,9 @@ const CartItem = ({ data }: { data: any }) => {
         <Flex flexDir="column" justifyContent="space-between" align={'center'}>
           <Box as="span" _hover={{ cursor: 'pointer' }}>
             <FaTrash size={16} color="#60666f" onClick={() => removeItem(data?.id)} />{' '}
+          </Box>
+          <Box _hover={{ cursor: 'pointer' }} onClick={e => handleFavourite(e)}>
+            {isFavourite ? <AiFillHeart /> : <AiOutlineHeart />}
           </Box>
           <Box>
             <Text fontSize=".9rem" textDecor={isDiscount ? 'line-through' : 'none'}>

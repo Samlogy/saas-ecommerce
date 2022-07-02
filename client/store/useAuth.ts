@@ -1,24 +1,48 @@
 import create, { SetState } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
+interface IUser {
+  id: number
+  fullName: string
+  email: string
+  address_1: string
+  address_2?: string
+  avatar?: string
+  mobile?: string
+  username: string
+  createdAt: Date
+  editedAt: Date
+  // add vendor details
+}
 // Auth Store
-type IAuth = {
-    user: any,
-    isLogged: boolean,
-    logged: (data: any) => void,
-    notLogged: () => void
+interface IAuth {
+  user: IUser | {}
+  isLogged: boolean
+  login: (data: IUser) => void
+  logout: () => void
+}
+
+const userTest = {
+  id: 1,
+  fullName: 'sam sam',
+  email: 'sam@gmail.com',
+  username: 'sam',
+  createdAt: '12-05-2012',
+  editedAt: '12-05-2012'
 }
 
 let authStore = (set: SetState<IAuth>) => ({
-    isLogged: false,
-    user: {},
-    logged: (data: any) => set((state: any) => ({ isLogged: true, user: data })),
-    notLogged: () => set((state: any) => ({ isLogged: false, user: {} }))
-}) 
+  isLogged: false,
+  user: userTest,
+  login: (data: IUser) => set(() => ({ isLogged: true, user: data })),
+  logout: () => set(() => ({ isLogged: false, user: {} }))
+})
 
+// @ts-ignore
 authStore = devtools(authStore)
-authStore = persist(authStore, { name: "auth_data" })
+// @ts-ignore
+authStore = persist(authStore, { name: 'auth_data' })
 
-const useAuth = create<IAuth>(authStore);
+const useAuth = create<IAuth>(authStore)
 
-export default useAuth;
+export default useAuth

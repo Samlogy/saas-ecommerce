@@ -22,7 +22,7 @@ const Comment = ({ data }: { data: IComment }) => {
         <Box as="span" fontWeight="300" fontSize=".8rem" ml=".25rem">
           on{' '}
         </Box>
-        <Box as="span" fontStyle={'italic'} fontSize=".8rem" ml=".5rem">
+        <Box as="span" fontStyle={'italic'} fontSize=".8rem" mx=".5rem">
           {data.createdAt}{' '}
         </Box>
         <Rating initRate={data?.rate} readOnly={true} />

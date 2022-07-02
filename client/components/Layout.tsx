@@ -16,9 +16,6 @@ export default function Layout({
   isFooterVisible,
   ...restProps
 }: ILayout) {
-  const { pathname } = useRouter()
-  const isProtected = pathname === '/profile' || pathname === '/edit-profile'
-
   const bgColor = useColorModeValue('white', 'gray_3')
 
   return (
@@ -41,7 +38,7 @@ export default function Layout({
           p="6rem 1.5rem 2rem 1.5rem"
           borderRadius=".25rem"
         >
-          <ProtectedPage isProtected={isProtected}>{children}</ProtectedPage>
+          <ProtectedPage>{children}</ProtectedPage>
           <ShoppingCart />
         </Container>
 

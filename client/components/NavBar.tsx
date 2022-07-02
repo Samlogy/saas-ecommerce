@@ -19,9 +19,9 @@ import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
 import { FiSettings } from 'react-icons/fi'
-import { DarkModeToggle, Logout, SelectLanguage, ShoppingCartIcon } from '../components'
+import { DarkModeToggle, Logout, SelectLanguage, ShoppingCartIcon, View } from '../components'
 import { Logo } from '../public/icons'
-import { useShoppingCart } from '../store'
+import { useShoppingCart, useAuth } from '../store'
 
 const Links = [
   {
@@ -66,14 +66,12 @@ const NavLink = ({ children, link }: { children: ReactNode; link: string }) => {
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  // const isLogged = useAuth((state: any) => state.isLogged);
-  // const user = useAuth((state: any) => state.user);
+  const login = useAuth((state: any) => state.login)
+  const user = useAuth((state: any) => state.user)
 
   const quantityTotal = useShoppingCart((state: any) => state.quantityTotal)
 
   const bgColor = useColorModeValue('white', 'gray_3')
-
-  const user = { avatar: '' }
 
   return (
     <Box bg={bgColor} px={4} pos="fixed" w="full" boxShadow={'md'} zIndex="100">
@@ -117,7 +115,7 @@ export default function NavBar() {
         </Flex>
       </Flex>
 
-      {isOpen ? (
+      <View cond={isOpen}>
         <Box pb={4} display={{ md: 'none' }}>
           <Stack as={'nav'} spacing={4}>
             {Links.map((link: any) => (
@@ -128,13 +126,12 @@ export default function NavBar() {
             ))}
           </Stack>
         </Box>
-      ) : null}
+      </View>
     </Box>
   )
 }
 
 const NavMenuConnected = ({ avatar }: { avatar: string }) => {
-  // const textColor = useColorModeValue('black', '#edf2f7')
   const textHoverColor = useColorModeValue('#edf2f7', 'white')
   const bgColor = useColorModeValue('#edf2f7', '#2D3748')
   const bgHoverColor = useColorModeValue('#2D3748', '#718096')
@@ -170,8 +167,7 @@ const NavMenuUnConnected = () => {
       {/* <Box as="span" color={textColor} _hover={{ textDecor: 'underline' }}> <a href="/register"> Sign Up </a> </Box>
       <Box w=".5rem"> </Box> */}
       <Box as="span" color={textColor} _hover={{ textDecor: 'underline' }}>
-        {' '}
-        <a href="/api/auth/login"> Sign In </a>{' '}
+        <a href="/api/auth/login"> Sign In </a>
       </Box>
     </Flex>
   )

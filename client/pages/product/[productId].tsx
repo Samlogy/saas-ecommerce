@@ -128,7 +128,7 @@ export default function Product({ product, comments, relatedProducts }: IProduct
           </Box>
 
           <Flex>
-            <Rating initRate={product.rate} readOnly={isLogged ? false : true} />
+            <Rating initRate={product.rate} readOnly={!isLogged} />
             <Reviews data={product?.reviews} />
           </Flex>
 
@@ -395,7 +395,7 @@ export const getServerSideProps = async context => {
       comment:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
       rate: 4,
-      createdAt: 'new Date()'
+      createdAt: JSON.parse(JSON.stringify(new Date()))
     },
     {
       id: 2,
@@ -403,7 +403,7 @@ export const getServerSideProps = async context => {
       comment:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
       rate: 2,
-      createdAt: 'new Date()'
+      createdAt: JSON.parse(JSON.stringify(new Date()))
     },
     {
       id: 3,
@@ -411,7 +411,7 @@ export const getServerSideProps = async context => {
       comment:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
       rate: 3,
-      createdAt: 'new Date()'
+      createdAt: JSON.parse(JSON.stringify(new Date()))
     }
   ]
   const relatedProducts = [

@@ -2,6 +2,7 @@ import { Box, Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import { Rating } from '../components'
 import { IComment } from '../lib/interfaces'
 import { useAuth } from '../store'
+import { dateFormat } from '../lib/utils/fonctions'
 
 const Comment = ({ data }: { data: IComment }) => {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
@@ -25,9 +26,9 @@ const Comment = ({ data }: { data: IComment }) => {
           on{' '}
         </Box>
         <Box as="span" fontStyle={'italic'} fontSize=".8rem" mx=".5rem">
-          {data.createdAt}{' '}
+          {dateFormat(data.createdAt)}
         </Box>
-        <Rating initRate={data?.rate} readOnly={isLogged ? false : true} />
+        <Rating initRate={data?.rate} readOnly={!isLogged} />
       </Flex>
       <Text fontSize={'.9rem'} fontWeight="300">
         {data.comment}{' '}

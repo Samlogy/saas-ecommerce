@@ -8,6 +8,8 @@ export interface IComment {
 export interface IProduct {
   id?: number
   isFavourite?: boolean
+  rate: number
+  reviews: number
   name: string
   image: string
   description: string

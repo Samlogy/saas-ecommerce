@@ -4,13 +4,14 @@ import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 
 import { FavouriteButton, Rating, View } from '../components'
 import { useShoppingCart } from '../store'
+import { IProduct } from '../lib/interfaces'
 
-interface IProduct {
-  data: any
+interface IProductCart {
+  data: IProduct
   readOnly?: boolean
 }
 
-const ProductCard = ({ data, readOnly = false }: IProduct) => {
+const ProductCard = ({ data, readOnly = false }: IProductCart) => {
   const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
   const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
   const products = useShoppingCart((state: any) => state.products)

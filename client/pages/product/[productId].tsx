@@ -18,22 +18,19 @@ import { AiOutlineHeart, AiFillHeart, AiOutlineMinus, AiOutlinePlus } from 'reac
 import { MdLocalShipping } from 'react-icons/md'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 
-import { Layout, ListingComments, ProductCard, View } from '../../components'
+import { Layout, ListingComments, ProductCard, View, Rating } from '../../components'
 import { IComment, IProduct } from '../../lib/interfaces'
 import { useShoppingCart } from '../../store'
 
 import heroImage from '../../public/images/home.png'
 import productImage from '../../public/images/product.png'
 
-export default function Product({
-  product,
-  comments,
-  relatedProducts
-}: {
+interface IProductPage {
   product: IProduct
   comments: IComment[]
   relatedProducts: IProduct[]
-}) {
+}
+export default function Product({ product, comments, relatedProducts }: IProductPage) {
   const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
   const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
   const setIsFavourite = useShoppingCart((state: any) => state.setIsFavourite)
@@ -42,8 +39,7 @@ export default function Product({
 
   const quantity = products.find((item: any) => item.id === product?.id)?.quantity || 0
 
-  const [image, setImage] = useState<string>('')
-  //const [images, setImages] = useState<string[]>(product.image)
+  const [image, setImage] = useState<string>(product.image[0])
 
   const handleFavourite = e => {
     e.preventDefault()
@@ -98,6 +94,11 @@ export default function Product({
               $ {product.price}
             </Text>
           </Box>
+
+          <Flex>
+            <Rating initRate={product.rate} readOnly />
+            <Reviews data={product?.reviews} />
+          </Flex>
 
           <Stack
             spacing={{ base: 4, sm: 6 }}
@@ -356,7 +357,9 @@ export const getServerSideProps = async context => {
     price: 350,
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-    delivery: '2-3 business days'
+    delivery: '2-3 business days',
+    reviews: 34,
+    rate: 4.5
   }
   const comments = [
     {
@@ -426,4 +429,17 @@ export const getServerSideProps = async context => {
       comments
     }
   }
+}
+
+const Reviews = ({ data }: { data: number }) => {
+  return (
+    <Flex mt=".2rem" fontSize=".85rem" fontStyle={'italic'} textTransform={'lowercase'}>
+      <Box as="span" ml=".5rem">
+        {data}{' '}
+      </Box>
+      <Box as="span" ml=".2rem">
+        reviews{' '}
+      </Box>
+    </Flex>
+  )
 }

@@ -24,7 +24,7 @@ import { useShoppingCart } from '../../store'
 
 import heroImage from '../../public/images/home.png'
 import productImage from '../../public/images/product.png'
-
+import { loadState, saveState } from '../../lib/utils/localStorage'
 interface IProductPage {
   product: IProduct
   comments: IComment[]
@@ -35,15 +35,37 @@ export default function Product({ product, comments, relatedProducts }: IProduct
   const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
   const setIsFavourite = useShoppingCart((state: any) => state.setIsFavourite)
   const products = useShoppingCart((state: any) => state.products)
-  const isFavourite = products.find((item: any) => item.id === product?.id)?.isFavourite || false
 
   const quantity = products.find((item: any) => item.id === product?.id)?.quantity || 0
+
+  const isFavourite = (id: number) => {
+    const data = loadState('favourite-products')
+    if (!data) return false
+    const isExist = data.find((item: number) => item === id)
+    if (isExist) return true
+    return false
+  }
 
   const [image, setImage] = useState<string>(product.image[0])
 
   const handleFavourite = e => {
     e.preventDefault()
     setIsFavourite(product?.id)
+    onAddFavourite(product?.id)
+  }
+  const onAddFavourite = (id: number) => {
+    let data = loadState('favourite-products')
+    if (!data) {
+      saveState('favourite-products', [id])
+      return
+    }
+    const isExist = data.find((item: any) => item === id)
+    if (isExist) {
+      data = data.filter((item: any) => item !== id)
+      saveState('favourite-products', [...data])
+      return
+    }
+    saveState('favourite-products', [...data, id])
   }
 
   return (
@@ -118,7 +140,7 @@ export default function Product({ product, comments, relatedProducts }: IProduct
 
           <Flex flexDir="row-reverse" justifyContent={['space-around', '', '', '']} align="center">
             <Button
-              leftIcon={isFavourite ? <AiFillHeart /> : <AiOutlineHeart />}
+              leftIcon={isFavourite(product?.id) ? <AiFillHeart /> : <AiOutlineHeart />}
               bg={'white'}
               color={'accent_3'}
               border="1px solid"
@@ -367,21 +389,24 @@ export const getServerSideProps = async context => {
       name: 'Sam',
       comment:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-      createdAt: new Date()
+      rate: 4,
+      createdAt: 'new Date()'
     },
     {
       id: 2,
       name: 'ghiles',
       comment:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-      createdAt: new Date()
+      rate: 2,
+      createdAt: 'new Date()'
     },
     {
       id: 3,
       name: 'sadek',
       comment:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-      createdAt: new Date()
+      rate: 3,
+      createdAt: 'new Date()'
     }
   ]
   const relatedProducts = [

@@ -19,6 +19,7 @@ import { AiOutlineMinus, AiOutlinePlus, AiFillHeart, AiOutlineHeart } from 'reac
 import { FaTrash } from 'react-icons/fa'
 import { View } from '../components'
 import { formatCurrency } from '../lib/utils/fonctions'
+import { loadState, saveState } from '../lib/utils/localStorage'
 import { useShoppingCart } from '../store'
 
 const ShoppingCart = () => {
@@ -107,11 +108,32 @@ const CartItem = ({ data }: { data: any }) => {
     return (Math.round(price * 100) / 100).toFixed(2)
   }
 
-  const isFavourite = data?.isFavourite
+  const isFavourite = (id: number) => {
+    const data = loadState('favourite-products')
+    if (!data) return false
+    const isExist = data.find((item: number) => item === id)
+    if (isExist) return true
+    return false
+  }
 
   const handleFavourite = e => {
     e.preventDefault()
     setIsFavourite(data?.id)
+    onAddFavourite(data?.id)
+  }
+  const onAddFavourite = (id: number) => {
+    let data = loadState('favourite-products')
+    if (!data) {
+      saveState('favourite-products', [id])
+      return
+    }
+    const isExist = data.find((item: any) => item === id)
+    if (isExist) {
+      data = data.filter((item: any) => item !== id)
+      saveState('favourite-products', [...data])
+      return
+    }
+    saveState('favourite-products', [...data, id])
   }
 
   const handleQuantity = (type: string) => {
@@ -174,7 +196,7 @@ const CartItem = ({ data }: { data: any }) => {
             <FaTrash size={16} color="#60666f" onClick={() => removeItem(data?.id)} />{' '}
           </Box>
           <Box _hover={{ cursor: 'pointer' }} onClick={e => handleFavourite(e)}>
-            {isFavourite ? <AiFillHeart /> : <AiOutlineHeart />}
+            {isFavourite(data?.id) ? <AiFillHeart /> : <AiOutlineHeart />}
           </Box>
           <Box>
             <Text fontSize=".9rem" textDecor={isDiscount ? 'line-through' : 'none'}>

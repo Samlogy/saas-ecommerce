@@ -1,8 +1,9 @@
 export interface IComment {
   id: number
   name: string
-  createdAt: string
+  rate: number
   comment: string
+  createdAt: string
 }
 
 export interface IProduct {

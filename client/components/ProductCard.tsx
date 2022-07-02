@@ -28,6 +28,7 @@ const ProductCard = ({ data, readOnly = false }: IProductCart) => {
     }
     decreaseQuantity(data?.id)
   }
+
   return (
     <Link href={`http://localhost:3000/product/${data?.id}`}>
       <Flex
@@ -66,7 +67,7 @@ const ProductCard = ({ data, readOnly = false }: IProductCart) => {
 
             <Flex flexDir={'column'} justifyContent="space-between" alignContent="center">
               <Flex>
-                <Rating initRate={data.rate} readOnly={readOnly} />
+                <Rating initRate={data.rate} readOnly={true} />
                 <Reviews data={data?.reviews} />
               </Flex>
 

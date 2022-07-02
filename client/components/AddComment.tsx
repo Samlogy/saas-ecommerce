@@ -20,6 +20,7 @@ import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '../components'
 import { commentSchema } from '../lib/validation'
 import { removeState, saveState } from '../lib/utils/localStorage'
+import { CREATE_COMMENT } from '../lib/services'
 
 interface IAddComment {
   isOpen: boolean
@@ -28,6 +29,8 @@ interface IAddComment {
 
 const AddComment = ({ isOpen, onClose }: IAddComment) => {
   const [isChecked, setIsChecked] = useState(false)
+
+  // mutate (add new comment) (apollo --> API) CREATE_COMMENT
 
   const {
     register,

@@ -21,6 +21,7 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 import { Layout, ListingComments, ProductCard, View, Rating } from '../../components'
 import { IComment, IProduct } from '../../lib/interfaces'
 import { useShoppingCart } from '../../store'
+import { GET_PRODUCT_DETAILS, GET_RELATED_PRODUCTS } from '../../lib/services'
 
 import heroImage from '../../public/images/home.png'
 import productImage from '../../public/images/product.png'
@@ -30,11 +31,19 @@ interface IProductPage {
   comments: IComment[]
   relatedProducts: IProduct[]
 }
+
+interface ICarouselPreview {
+  images: string[]
+  setImage: (images: string) => void
+}
+
 export default function Product({ product, comments, relatedProducts }: IProductPage) {
   const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
   const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
   const setIsFavourite = useShoppingCart((state: any) => state.setIsFavourite)
   const products = useShoppingCart((state: any) => state.products)
+
+  // load prouct details (apollo --> API) GET_PRODUCT_DETAILS
 
   const quantity = products.find((item: any) => item.id === product?.id)?.quantity || 0
 
@@ -248,13 +257,7 @@ const DeliveryDetails = ({ data }: any) => {
   )
 }
 
-const CarouselPreview = ({
-  images,
-  setImage
-}: {
-  images: string[]
-  setImage: (images: string) => void
-}) => {
+const CarouselPreview = ({ images, setImage }: ICarouselPreview) => {
   const [currentSlide, setCurrentSlide] = useState(0)
 
   const SLIDES_COUNT = images.length // number of images in carousel
@@ -349,6 +352,7 @@ const CarouselPreview = ({
 }
 
 const RelatedProducts = ({ data }: { data: IProduct[] }) => {
+  // load related products (apollo --> API) GET_RELATED_PRODUCTS
   return (
     <Flex flexDir={'column'} px="1.5rem" mt="5rem" mb="4rem">
       <Flex justifyContent={'space-between'} alignItems="center" mb="1.5rem">

@@ -367,21 +367,21 @@ export const getServerSideProps = async context => {
       name: 'Sam',
       comment:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-      createdAt: '15/03/2022'
+      createdAt: new Date()
     },
     {
       id: 2,
       name: 'ghiles',
       comment:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-      createdAt: '15/03/2022'
+      createdAt: new Date()
     },
     {
       id: 3,
       name: 'sadek',
       comment:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-      createdAt: '15/03/2022'
+      createdAt: new Date()
     }
   ]
   const relatedProducts = [

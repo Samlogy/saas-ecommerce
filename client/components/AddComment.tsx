@@ -32,15 +32,21 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting }
   } = useForm({
     resolver: yupResolver(commentSchema)
   })
 
   const onAdd = async (data: any) => {
-    isChecked
-      ? saveState('user_data_comment', JSON.stringify(data))
-      : removeState('user_data_comment')
+    const comment = {
+      ...data,
+      fullName: 'Annonyme'
+    }
+    isChecked ? saveState('user-comment', comment) : removeState('user-comment')
+    // call api
+    reset({ comment: '' })
+    onClose()
   }
 
   const handleChange = (e: any) => {

@@ -20,7 +20,7 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 
 import { Layout, ListingComments, ProductCard, View, Rating } from '../../components'
 import { IComment, IProduct } from '../../lib/interfaces'
-import { useShoppingCart } from '../../store'
+import { useShoppingCart, useAuth } from '../../store'
 import { GET_PRODUCT_DETAILS, GET_RELATED_PRODUCTS } from '../../lib/services'
 
 import heroImage from '../../public/images/home.png'
@@ -31,7 +31,6 @@ interface IProductPage {
   comments: IComment[]
   relatedProducts: IProduct[]
 }
-
 interface ICarouselPreview {
   images: string[]
   setImage: (images: string) => void
@@ -42,6 +41,8 @@ export default function Product({ product, comments, relatedProducts }: IProduct
   const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
   const setIsFavourite = useShoppingCart((state: any) => state.setIsFavourite)
   const products = useShoppingCart((state: any) => state.products)
+
+  const isLogged = useAuth((state: any) => state.isLogged)
 
   // load prouct details (apollo --> API) GET_PRODUCT_DETAILS
 
@@ -127,7 +128,7 @@ export default function Product({ product, comments, relatedProducts }: IProduct
           </Box>
 
           <Flex>
-            <Rating initRate={product.rate} readOnly />
+            <Rating initRate={product.rate} readOnly={isLogged ? false : true} />
             <Reviews data={product?.reviews} />
           </Flex>
 

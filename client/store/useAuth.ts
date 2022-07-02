@@ -41,7 +41,7 @@ let authStore = (set: SetState<IAuth>) => ({
 // @ts-ignore
 authStore = devtools(authStore)
 // @ts-ignore
-authStore = persist(authStore, { name: 'auth_data' })
+authStore = persist(authStore, { name: 'auth-data' })
 
 const useAuth = create<IAuth>(authStore)
 

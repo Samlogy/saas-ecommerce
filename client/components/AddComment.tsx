@@ -21,6 +21,7 @@ import { ErrorMessage } from '../components'
 import { commentSchema } from '../lib/validation'
 import { removeState, saveState } from '../lib/utils/localStorage'
 import { CREATE_COMMENT } from '../lib/services'
+import { useAuth } from '../store'
 
 interface IAddComment {
   isOpen: boolean
@@ -29,7 +30,8 @@ interface IAddComment {
 
 const AddComment = ({ isOpen, onClose }: IAddComment) => {
   const [isChecked, setIsChecked] = useState(false)
-
+  const user = useAuth((state: any) => state.user)
+  const isLogged = useAuth((state: any) => state.isLogged)
   // mutate (add new comment) (apollo --> API) CREATE_COMMENT
 
   const {
@@ -38,22 +40,16 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
     reset,
     formState: { errors, isSubmitting }
   } = useForm({
-    resolver: yupResolver(commentSchema)
+    resolver: yupResolver(commentSchema),
+    defaultValues: isLogged ? { username: user.username, email: user.email, comment: '' } : {}
   })
 
-  const onAdd = async (data: any) => {
-    const comment = {
-      ...data,
-      fullName: 'Annonyme'
-    }
+  const onAdd = async (comment: any) => {
+    // console.log(comment)
     isChecked ? saveState('user-comment', comment) : removeState('user-comment')
     // call api
     reset({ comment: '' })
     onClose()
-  }
-
-  const handleChange = (e: any) => {
-    setIsChecked(e.target.checked)
   }
 
   const inputColor = useColorModeValue('gray_9', 'gray_3')
@@ -65,25 +61,26 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
         <ModalCloseButton />
         <ModalBody py="1.5rem">
           <form onSubmit={handleSubmit(onAdd)}>
-            <FormControl id="fullName" mb="1rem">
+            <FormControl id="username" mb="1rem">
               <FormLabel>
-                Full Name
+                Username
                 <Box as="span" color="gray.500" fontSize=".85rem" fontStyle={'italic'}>
                   (Optional)
                 </Box>
               </FormLabel>
               <Input
                 type="text"
-                placeholder="Full Name"
+                placeholder="Username"
                 _placeholder={{ color: 'gray.500' }}
-                isInvalid={errors.fullName ? true : false}
+                isInvalid={errors.username ? true : false}
                 errorBorderColor="error"
                 bg={inputColor}
-                focusBorderColor={errors.fullName ? 'error' : 'accent_6'}
+                focusBorderColor={errors.username ? 'error' : 'accent_6'}
                 borderRadius="5px"
-                {...register('fullName')}
+                disabled={true}
+                {...register('username')}
               />
-              {errors.fullName && <ErrorMessage error={errors.fullName.message} />}
+              {errors.username && <ErrorMessage error={errors.username.message} />}
             </FormControl>
 
             <FormControl id="email" mb="1rem">
@@ -97,6 +94,7 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
                 bg={inputColor}
                 focusBorderColor={errors.email ? 'error' : 'accent_6'}
                 borderRadius="5px"
+                disabled={true}
                 {...register('email')}
               />
               {errors.email && <ErrorMessage error={errors.email.message} />}
@@ -116,24 +114,6 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
               />
               {errors.comment && <ErrorMessage error={errors.comment.message} />}
             </FormControl>
-
-            <Stack
-              direction={{ base: 'column', sm: 'row' }}
-              align={'start'}
-              justify={'space-between'}
-              mb="1rem"
-            >
-              <Checkbox
-                value={'true'}
-                colorScheme="green"
-                checked={isChecked}
-                onChange={handleChange}
-              >
-                <Box as="span" fontWeight={'300'} fontSize=".8rem">
-                  Save my name, email in this browser for the next time I comment.
-                </Box>
-              </Checkbox>
-            </Stack>
 
             <Button
               type="submit"

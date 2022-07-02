@@ -1,9 +1,11 @@
 import { Box, Flex, Text, useColorModeValue } from '@chakra-ui/react'
-import { IComment } from '../lib/interfaces'
 import { Rating } from '../components'
+import { IComment } from '../lib/interfaces'
+import { useAuth } from '../store'
 
 const Comment = ({ data }: { data: IComment }) => {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
+  const isLogged = useAuth((state: any) => state.isLogged)
   return (
     <Flex
       key={data.id}
@@ -25,7 +27,7 @@ const Comment = ({ data }: { data: IComment }) => {
         <Box as="span" fontStyle={'italic'} fontSize=".8rem" mx=".5rem">
           {data.createdAt}{' '}
         </Box>
-        <Rating initRate={data?.rate} readOnly={true} />
+        <Rating initRate={data?.rate} readOnly={isLogged ? false : true} />
       </Flex>
       <Text fontSize={'.9rem'} fontWeight="300">
         {data.comment}{' '}

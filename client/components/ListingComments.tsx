@@ -3,15 +3,20 @@ import React, { useState } from 'react'
 import { AddComment, Comment, View } from '../components'
 import { IComment } from '../lib/interfaces'
 import { GET_ALL_COMMENTS } from '../lib/services'
+import { useAuth } from '../store'
 
 const ListingComments = ({ comments }: { comments: IComment[] }) => {
   const [showAddComment, setShowAddComment] = useState(false)
   const textColor = useColorModeValue('balck', 'white')
+  const isLogged = useAuth((state: any) => state.isLogged)
 
   // load related products (apollo --> API) GET_ALL_COMMENTS
   return (
     <Flex flexDir="column" px="1.5rem">
-      <AddComment isOpen={showAddComment} onClose={() => setShowAddComment(false)} />
+      <View cond={isLogged}>
+        <AddComment isOpen={showAddComment} onClose={() => setShowAddComment(false)} />
+      </View>
+
       <Heading size="lg" textAlign={'center'} my="1.5rem">
         Leave a Comment
       </Heading>

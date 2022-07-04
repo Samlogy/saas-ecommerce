@@ -16,25 +16,32 @@ import {
   SliderMark,
   Tooltip
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { loadState } from '../lib/utils/localStorage'
+import { TemplateFilter } from './'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
-
-interface ITemplateSort {
-  onFilter: any
-  filters: any
-  label: string
-  selectList: any
+const data = {
+  categories: CATEGORY_LIST,
+  conditions: CATEGORY_LIST,
+  prices: [700, 1500, 10000],
+  discounts: [25, 50, 75],
+  rates: [1, 2, 3, 4, 5]
 }
 
-interface ITamplateSortSlider {
-  onFilter: any
-  filters: any
+type IFilters = {
+  search: string
+  rate: number
+  categories: string[]
+  discount: string
+  price: number[]
+  condition: string
+}
+interface ISingleFilter {
   label: string
-  defaultValue: any
-  selectList: any
-  onRange: any
+  setFilters: React.Dispatch<React.SetStateAction<IFilters>>
+  filters: any
+  data: string[] | number[]
 }
 
 export default function Filter() {
@@ -49,7 +56,6 @@ export default function Filter() {
   const [products, setProducts] = useState([])
 
   // load all lists once (catergories - condition -) save them inside localstorage
-
   function generateQuery(obj: any): string {
     let query = ''
     for (const key in obj) {
@@ -60,7 +66,7 @@ export default function Filter() {
 
     return query
   }
-  // console.log()
+  console.log(filters)
 
   const onFilter = () => {
     generateQuery(filters)
@@ -90,21 +96,26 @@ export default function Filter() {
 
       <FavouriteFilter setProducts={setProducts} />
 
-      <RateSlider label="Rate" filters={filters} setFilters={setFilters} />
-      <DiscountSlider label="Discount" filters={filters} setFilters={setFilters} />
+      <RateSlider label="Rate" filters={filters} setFilters={setFilters} data={data.rates} />
+      <DiscountSlider
+        label="Discount"
+        filters={filters}
+        setFilters={setFilters}
+        data={data.discounts}
+      />
       <CategoriesFilter
         label="Categories"
         filters={filters}
         setFilters={setFilters}
-        data={CATEGORY_LIST}
+        data={data.categories}
       />
       <ConditionFilter
         label="Condition"
         filters={filters}
         setFilters={setFilters}
-        data={CATEGORY_LIST}
+        data={data.conditions}
       />
-      <PriceSlider label="Price" filters={filters} setFilters={setFilters} />
+      <PriceSlider label="Price" filters={filters} setFilters={setFilters} data={data.prices} />
     </Flex>
   )
 }
@@ -112,7 +123,6 @@ export default function Filter() {
 function FavouriteFilter({ setProducts }) {
   const [showFavouriteProducts, setShowFavouriteProducts] = useState('no')
 
-  const inputColor = useColorModeValue('white', 'gray_2')
   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
 
   const handleCheckbox = e => {
@@ -123,9 +133,10 @@ function FavouriteFilter({ setProducts }) {
     }
     setShowFavouriteProducts('yes')
     // laod favouite products --> local storage
-    const data = loadState('favourite-products')
-    console.log(data)
-    if (data) setProducts(data)
+    const productsIds = loadState('favourite-products')
+    console.log(productsIds)
+    // call API load all related products to ids
+    if (data) setProducts(productsIds)
     // load products by id
   }
   console.log(showFavouriteProducts)
@@ -143,49 +154,27 @@ function FavouriteFilter({ setProducts }) {
     </Box>
   )
 }
-function RateSlider({ label, filters, setFilters }: any) {
+function RateSlider({ label, filters, setFilters, data }: ISingleFilter) {
   const [showTooltip, setShowTooltip] = useState(false)
 
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   return (
-    <Flex
-      flexDir={'column'}
-      justifyContent="center"
-      alignItems={'center'}
-      w="full"
-      my="1rem"
-      borderRadius={'10px'}
-      bg={itemBgColor}
-      p="1rem"
-    >
-      <Box as="span" color="gray_3" m="0 auto .3rem 0">
-        {label}
-      </Box>
+    <TemplateFilter label={label}>
       <Slider
         id="slider"
         defaultValue={filters.rate}
-        min={1}
+        min={0}
         max={5}
         colorScheme="green"
         onChange={value => setFilters({ ...filters, rate: value })}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
-        <SliderMark value={1} mt="1" fontSize="sm">
-          1
-        </SliderMark>
-        <SliderMark value={2} mt="1" fontSize="sm">
-          2
-        </SliderMark>
-        <SliderMark value={3} mt="1" fontSize="sm">
-          3
-        </SliderMark>
-        <SliderMark value={4} mt="1" fontSize="sm">
-          4
-        </SliderMark>
-        <SliderMark value={5} mt="1" fontSize="sm">
-          5
-        </SliderMark>
+        {[0, 1, 2, 3, 4, 5].map(el => (
+          <SliderMark value={el} mt="1" fontSize="sm">
+            {el}
+          </SliderMark>
+        ))}
+
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>
@@ -200,46 +189,35 @@ function RateSlider({ label, filters, setFilters }: any) {
           <SliderThumb />
         </Tooltip>
       </Slider>
-    </Flex>
+    </TemplateFilter>
   )
 }
-function DiscountSlider({ label, filters, setFilters }: any) {
+function DiscountSlider({ label, filters, setFilters, data }: ISingleFilter) {
   const [showTooltip, setShowTooltip] = useState(false)
 
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+  function round(value: number, type: string): number {
+    if (type === 'up') return Number((value * 100).toFixed(2))
+    return Number((value * 0.01).toFixed(2))
+  }
+
   return (
-    <Flex
-      flexDir={'column'}
-      justifyContent="center"
-      alignItems={'center'}
-      w="full"
-      my="1rem"
-      borderRadius={'10px'}
-      bg={itemBgColor}
-      p="1rem"
-    >
-      <Box as="span" color="gray_3" m="0 auto .3rem 0">
-        {label}
-      </Box>
+    <TemplateFilter label={label}>
       <Slider
         id="slider"
         defaultValue={5}
         min={0}
         max={100}
         colorScheme="green"
-        onChange={value => setFilters({ ...filters, discount: value * 0.01 })}
+        onChange={value => setFilters({ ...filters, discount: round(value, 'down') })}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
-        <SliderMark value={25} mt="1" ml="-2.5" fontSize="sm">
-          25%
-        </SliderMark>
-        <SliderMark value={50} mt="1" ml="-2.5" fontSize="sm">
-          50%
-        </SliderMark>
-        <SliderMark value={75} mt="1" ml="-2.5" fontSize="sm">
-          75%
-        </SliderMark>
+        {[25, 50, 75].map(el => (
+          <SliderMark value={el} mt="1" fontSize="sm">
+            {el}%
+          </SliderMark>
+        ))}
+
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>
@@ -249,67 +227,42 @@ function DiscountSlider({ label, filters, setFilters }: any) {
           color="white"
           placement="top"
           isOpen={showTooltip}
-          label={`${filters.discount * 100}%`}
+          label={`${round(filters.discount, 'up')}%`}
         >
           <SliderThumb />
         </Tooltip>
       </Slider>
-    </Flex>
+    </TemplateFilter>
   )
 }
-function CategoriesFilter({ label, filters, setFilters, data }: any) {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+function CategoriesFilter({ label, filters, setFilters, data }: ISingleFilter) {
   const inputColor = useColorModeValue('white', 'gray_2')
+  const handleCategories = e => {
+    if (filters.categories.length > 0) {
+      setFilters({ ...filters, categories: [...filters.categories, e.target.value] })
+      return
+    }
+    setFilters({ ...filters, categories: [e.target.value] })
+  }
   return (
-    <Flex
-      flexDir={'column'}
-      justifyContent="center"
-      alignItems={'center'}
-      w="full"
-      my="1rem"
-      borderRadius={'10px'}
-      bg={itemBgColor}
-      p="1rem"
-    >
-      <Box as="span" color="gray_3" mb=".3rem" mr="auto">
-        {label}
-      </Box>
-      <Select
-        onChange={e => setFilters({ ...filters, categories: [e.target.value] })}
-        bg={inputColor}
-        maxW="10rem"
-        focusBorderColor="accent_6"
-      >
+    <TemplateFilter label={label}>
+      <Select onChange={handleCategories} bg={inputColor} focusBorderColor="accent_6">
         {data?.map((el, idx) => (
           <option key={idx} value={el}>
             {el}
           </option>
         ))}
       </Select>
-    </Flex>
+    </TemplateFilter>
   )
 }
-function ConditionFilter({ label, setFilters, filters, data }: any) {
+function ConditionFilter({ label, setFilters, filters, data }: ISingleFilter) {
   const inputColor = useColorModeValue('white', 'gray_2')
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   return (
-    <Flex
-      flexDir={'column'}
-      justifyContent="center"
-      alignItems={'center'}
-      w="full"
-      my="1rem"
-      borderRadius={'10px'}
-      bg={itemBgColor}
-      p="1rem"
-    >
-      <Box as="span" color="gray_3" m="0 auto .3rem 0">
-        {label}
-      </Box>
+    <TemplateFilter label={label}>
       <Select
         onChange={e => setFilters({ ...filters, condition: e.target.value })}
         bg={inputColor}
-        maxW="10rem"
         focusBorderColor="accent_6"
       >
         {data?.map((el, idx) => (
@@ -318,27 +271,14 @@ function ConditionFilter({ label, setFilters, filters, data }: any) {
           </option>
         ))}
       </Select>
-    </Flex>
+    </TemplateFilter>
   )
 }
-function PriceSlider({ label, filters, setFilters }: any) {
+function PriceSlider({ label, filters, setFilters, data }: ISingleFilter) {
   const [showTooltip, setShowTooltip] = useState(false)
 
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   return (
-    <Flex
-      flexDir={'column'}
-      justifyContent="center"
-      alignItems={'center'}
-      w="full"
-      my="1rem"
-      borderRadius={'10px'}
-      bg={itemBgColor}
-      p="1rem"
-    >
-      <Box as="span" color="gray_3" m="0 auto .3rem 0">
-        {label}
-      </Box>
+    <TemplateFilter label={label}>
       <RangeSlider
         defaultValue={filters.price}
         colorScheme="green"
@@ -371,6 +311,6 @@ function PriceSlider({ label, filters, setFilters }: any) {
           <RangeSliderThumb index={1} />
         </Tooltip>
       </RangeSlider>
-    </Flex>
+    </TemplateFilter>
   )
 }

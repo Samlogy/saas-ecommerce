@@ -34,11 +34,7 @@ export default function Products({ products }: { products: IProduct[] }) {
 
       <Flex flexDir={'row'} justifyContent="space-between">
         <View cond={width >= 700}>
-          <Filter
-            isOpen={isVisible}
-            close={() => setIsVisible(false)}
-            open={() => setIsVisible(true)}
-          />
+          <Filter />
         </View>
 
         <View cond={width < 700}>
@@ -60,11 +56,7 @@ export default function Products({ products }: { products: IProduct[] }) {
               <DrawerHeader> Filter </DrawerHeader>
 
               <DrawerBody>
-                <Filter
-                  isOpen={isVisible}
-                  close={() => setIsVisible(false)}
-                  open={() => setIsVisible(true)}
-                />
+                <Filter />
               </DrawerBody>
             </DrawerContent>
           </Drawer>

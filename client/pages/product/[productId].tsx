@@ -22,10 +22,11 @@ import { Layout, ListingComments, ProductCard, View, Rating } from '../../compon
 import { IComment, IProduct } from '../../lib/interfaces'
 import { useShoppingCart, useAuth } from '../../store'
 import { GET_PRODUCT_DETAILS, GET_RELATED_PRODUCTS } from '../../lib/services'
+import { isProductFavourite, onAddFavouriteProduct } from '../../lib/utils/fonctions'
 
 import heroImage from '../../public/images/home.png'
 import productImage from '../../public/images/product.png'
-import { loadState, saveState } from '../../lib/utils/localStorage'
+
 interface IProductPage {
   product: IProduct
   comments: IComment[]
@@ -48,35 +49,15 @@ export default function Product({ product, comments, relatedProducts }: IProduct
 
   const quantity = products.find((item: any) => item.id === product?.id)?.quantity || 0
 
-  const isFavourite = (id: number) => {
-    const data = loadState('favourite-products')
-    if (!data) return false
-    const isExist = data.find((item: number) => item === id)
-    if (isExist) return true
-    return false
-  }
-
   const [image, setImage] = useState<string>(product.image[0])
 
   const handleFavourite = e => {
     e.preventDefault()
     setIsFavourite(product?.id)
-    onAddFavourite(product?.id)
+    onAddFavouriteProduct(product?.id)
   }
-  const onAddFavourite = (id: number) => {
-    let data = loadState('favourite-products')
-    if (!data) {
-      saveState('favourite-products', [id])
-      return
-    }
-    const isExist = data.find((item: any) => item === id)
-    if (isExist) {
-      data = data.filter((item: any) => item !== id)
-      saveState('favourite-products', [...data])
-      return
-    }
-    saveState('favourite-products', [...data, id])
-  }
+
+  const isFavourite = isProductFavourite(product?.id) ? <AiFillHeart /> : <AiOutlineHeart />
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -150,7 +131,7 @@ export default function Product({ product, comments, relatedProducts }: IProduct
 
           <Flex flexDir="row-reverse" justifyContent={['space-around', '', '', '']} align="center">
             <Button
-              leftIcon={isFavourite(product?.id) ? <AiFillHeart /> : <AiOutlineHeart />}
+              leftIcon={isFavourite}
               bg={'white'}
               color={'accent_3'}
               border="1px solid"
@@ -160,7 +141,7 @@ export default function Product({ product, comments, relatedProducts }: IProduct
               _hover={{ bg: 'accent_3', color: 'white' }}
               mt=".75rem"
               w="10rem"
-              onClick={e => handleFavourite(e)}
+              onClick={handleFavourite}
             >
               Favourite
             </Button>
@@ -374,6 +355,19 @@ const RelatedProducts = ({ data }: { data: IProduct[] }) => {
   )
 }
 
+const Reviews = ({ data }: { data: number }) => {
+  return (
+    <Flex mt=".2rem" fontSize=".85rem" fontStyle={'italic'} textTransform={'lowercase'}>
+      <Box as="span" ml=".5rem">
+        {data}{' '}
+      </Box>
+      <Box as="span" ml=".2rem">
+        reviews{' '}
+      </Box>
+    </Flex>
+  )
+}
+
 export const getServerSideProps = async context => {
   // api call (context.params.id) --> productId
   const product = {
@@ -459,17 +453,4 @@ export const getServerSideProps = async context => {
       comments
     }
   }
-}
-
-const Reviews = ({ data }: { data: number }) => {
-  return (
-    <Flex mt=".2rem" fontSize=".85rem" fontStyle={'italic'} textTransform={'lowercase'}>
-      <Box as="span" ml=".5rem">
-        {data}{' '}
-      </Box>
-      <Box as="span" ml=".2rem">
-        reviews{' '}
-      </Box>
-    </Flex>
-  )
 }

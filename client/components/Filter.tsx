@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { loadState } from '../lib/utils/localStorage'
+import { generateQuery } from '../lib/utils/fonctions'
 import { TemplateFilter } from './'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
@@ -56,22 +57,10 @@ export default function Filter() {
   const [products, setProducts] = useState([])
 
   // load all lists once (catergories - condition -) save them inside localstorage
-  function generateQuery(obj: any): string {
-    let query = ''
-    for (const key in obj) {
-      if (obj[key]) {
-        query += `${key}=${obj[key]}&`
-      }
-    }
-
-    return query
-  }
-  console.log(filters)
-
   const onFilter = () => {
-    generateQuery(filters)
+    const query = generateQuery(filters)
     // call api --> filter
-    console.log(filters)
+    console.log(query)
   }
 
   const itemBgColor = useColorModeValue('gray_8', 'gray_2')

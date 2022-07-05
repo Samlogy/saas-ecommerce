@@ -11,7 +11,7 @@ interface IProductCart {
   readOnly?: boolean
 }
 
-const ProductCard = ({ data, readOnly = false }: IProductCart) => {
+export default function ProductCard({ data, readOnly = false }: IProductCart) {
   const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
   const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
   const products = useShoppingCart((state: any) => state.products)
@@ -127,8 +127,6 @@ const ProductCard = ({ data, readOnly = false }: IProductCart) => {
     </Link>
   )
 }
-
-export default ProductCard
 
 const Reviews = ({ data }: { data: number }) => {
   return (

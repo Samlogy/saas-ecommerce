@@ -51,3 +51,37 @@ export interface ISubscribe {
   createdAt: Date
   editedAt: Date | null
 }
+
+export interface ICustomerTestimonial {
+  id: number
+  name: string
+  position: string
+  business: string
+  testimonial: string
+  avatar?: string
+  createdAt: Date
+  editedAt: Date | null
+}
+export interface IQuestionAnswer {
+  id: number
+  question: string
+  anwser: string
+  createdAt: Date
+  editedAt: Date | null
+}
+export interface IService {
+  id: number
+  title: string
+  description: string
+  image: string
+  createdAt: Date
+  editedAt: Date | null
+}
+export interface IDeal {
+  id: number
+  dueDate: Date
+  description: string
+  image: string
+  createdAt: Date
+  editedAt: Date | null
+}

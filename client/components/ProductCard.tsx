@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 
 import { FavouriteButton, Rating, View } from '../components'
+import { formatCurrency } from '../lib/utils/fonctions'
 import { useShoppingCart } from '../store'
 import { IProduct } from '../lib/interfaces'
 
@@ -29,6 +30,9 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
     decreaseQuantity(data?.id)
   }
 
+  // add a function to compute if product is new (api side)
+  const isNew = true
+
   return (
     <Link href={`http://localhost:3000/product/${data?.id}`}>
       <Flex
@@ -40,7 +44,7 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
         cursor={'pointer'}
       >
         <Box bg={bgColor} w="full" rounded="lg" shadow="lg" position="relative">
-          <FavouriteButton id={data?.id} />
+          <FavouriteButton data={data} />
 
           <Image
             src={data?.image}
@@ -52,7 +56,7 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
 
           <Box p="1rem">
             <Box d="flex" alignItems="baseline">
-              {data.isNew && (
+              {isNew && (
                 <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="red">
                   New
                 </Badge>
@@ -71,11 +75,8 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
                 <Reviews data={data?.reviews} />
               </Flex>
 
-              <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
-                <Box as="span" color={'gray.600'} fontSize="lg">
-                  {data?.currency}
-                </Box>
-                {data.price.toFixed(2)}
+              <Box fontSize="2xl" color={useColorModeValue('gray_1', 'white')}>
+                {formatCurrency(data.price)}
               </Box>
             </Flex>
 

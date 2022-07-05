@@ -22,7 +22,11 @@ import { Layout, ListingComments, ProductCard, View, Rating } from '../../compon
 import { IComment, IProduct } from '../../lib/interfaces'
 import { useShoppingCart, useAuth } from '../../store'
 import { GET_PRODUCT_DETAILS, GET_RELATED_PRODUCTS } from '../../lib/services'
-import { isProductFavourite, onAddFavouriteProduct } from '../../lib/utils/fonctions'
+import {
+  isProductFavourite,
+  onAddFavouriteProduct,
+  formatCurrency
+} from '../../lib/utils/fonctions'
 
 import heroImage from '../../public/images/home.png'
 import productImage from '../../public/images/product.png'
@@ -54,10 +58,10 @@ export default function Product({ product, comments, relatedProducts }: IProduct
   const handleFavourite = e => {
     e.preventDefault()
     setIsFavourite(product?.id)
-    onAddFavouriteProduct(product?.id)
+    onAddFavouriteProduct(product)
   }
 
-  const isFavourite = isProductFavourite(product?.id) ? <AiFillHeart /> : <AiOutlineHeart />
+  const isFavourite = isProductFavourite(product) ? <AiFillHeart /> : <AiOutlineHeart />
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -104,7 +108,7 @@ export default function Product({ product, comments, relatedProducts }: IProduct
               fontWeight={300}
               fontSize={'2xl'}
             >
-              $ {product.price}
+              {formatCurrency(product.price)}
             </Text>
           </Box>
 

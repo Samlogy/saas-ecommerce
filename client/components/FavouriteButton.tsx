@@ -4,15 +4,15 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { isProductFavourite, onAddFavouriteProduct } from '../lib/utils/fonctions'
 import { useShoppingCart } from '../store'
 
-export default function FavouriteButton({ id }: { id: number }) {
+export default function FavouriteButton({ data }: { data: any }) {
   const setIsFavourite = useShoppingCart((state: any) => state.setIsFavourite)
 
-  const isFavourite = isProductFavourite(id) ? <AiFillHeart /> : <AiOutlineHeart />
+  const isFavourite = isProductFavourite(data) ? <AiFillHeart /> : <AiOutlineHeart />
 
   const handleFavourite = e => {
     e.preventDefault()
-    setIsFavourite(id)
-    onAddFavouriteProduct(id)
+    setIsFavourite(data?.id)
+    onAddFavouriteProduct(data)
   }
 
   return (

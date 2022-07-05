@@ -35,25 +35,25 @@ export function generateQuery(obj: any): any {
   return query.join('&')
 }
 
-export function onAddFavouriteProduct(id: number) {
+export function onAddFavouriteProduct(product: any) {
   let data = loadState('favourite-products')
   if (!data) {
-    saveState('favourite-products', [id])
+    saveState('favourite-products', [product])
     return
   }
-  const isExist = data.find((item: any) => item === id)
+  const isExist = data.find((item: any) => item.id === product?.id)
   if (isExist) {
-    data = data.filter((item: any) => item !== id)
+    data = data.filter((item: any) => item.id !== product?.id)
     saveState('favourite-products', [...data])
     return
   }
-  saveState('favourite-products', [...data, id])
+  saveState('favourite-products', [...data, product])
 }
 
-export function isProductFavourite(id: number) {
+export function isProductFavourite(product: any) {
   const data = loadState('favourite-products')
   if (!data) return false
-  const isExist = data.find((item: number) => item === id)
+  const isExist = data.find((item: any) => item.id === product?.id)
   if (isExist) return true
   return false
 }

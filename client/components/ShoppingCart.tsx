@@ -18,7 +18,7 @@ import {
 import { AiOutlineMinus, AiOutlinePlus, AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { FaTrash } from 'react-icons/fa'
 import { View } from '../components'
-import { formatCurrency } from '../lib/utils/fonctions'
+import { formatCurrency, isProductFavourite, onAddFavouriteProduct } from '../lib/utils/fonctions'
 import { loadState, saveState } from '../lib/utils/localStorage'
 import { useShoppingCart } from '../store'
 
@@ -104,42 +104,17 @@ const CartItem = ({ data }: { data: any }) => {
   const priceDiscount = data.quantity * data.price * data?.discount
   const isDiscount = data.discount ? true : false
 
-  function toPrice(price: number) {
-    return (Math.round(price * 100) / 100).toFixed(2)
-  }
-
-  const isFavourite = (id: number) => {
-    const data = loadState('favourite-products')
-    if (!data) return false
-    const isExist = data.find((item: number) => item === id)
-    if (isExist) return true
-    return false
-  }
-
   const handleFavourite = e => {
     e.preventDefault()
     setIsFavourite(data?.id)
-    onAddFavourite(data?.id)
+    onAddFavouriteProduct(data)
   }
-  const onAddFavourite = (id: number) => {
-    let data = loadState('favourite-products')
-    if (!data) {
-      saveState('favourite-products', [id])
-      return
-    }
-    const isExist = data.find((item: any) => item === id)
-    if (isExist) {
-      data = data.filter((item: any) => item !== id)
-      saveState('favourite-products', [...data])
-      return
-    }
-    saveState('favourite-products', [...data, id])
-  }
-
   const handleQuantity = (type: string) => {
     if (type === 'dec') decreaseQuantity(data.id)
     else increaseQuantity(data)
   }
+
+  const isFavourite = isProductFavourite(data) ? <AiFillHeart /> : <AiOutlineHeart />
 
   return (
     <Box>
@@ -195,16 +170,16 @@ const CartItem = ({ data }: { data: any }) => {
           <Box as="span" _hover={{ cursor: 'pointer' }}>
             <FaTrash size={16} color="#60666f" onClick={() => removeItem(data?.id)} />{' '}
           </Box>
-          <Box _hover={{ cursor: 'pointer' }} onClick={e => handleFavourite(e)}>
-            {isFavourite(data?.id) ? <AiFillHeart /> : <AiOutlineHeart />}
+          <Box _hover={{ cursor: 'pointer' }} onClick={handleFavourite}>
+            {isFavourite}
           </Box>
           <Box>
             <Text fontSize=".9rem" textDecor={isDiscount ? 'line-through' : 'none'}>
-              ${toPrice(price)}
+              ${formatCurrency(price)}
             </Text>
             {isDiscount && (
               <Text fontSize="1rem" fontWeight="600">
-                ${toPrice(priceDiscount)}
+                ${formatCurrency(priceDiscount)}
               </Text>
             )}
           </Box>

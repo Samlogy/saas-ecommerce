@@ -1,5 +1,6 @@
 import {
   Box,
+  Checkbox,
   Flex,
   Input,
   RangeSlider,
@@ -7,18 +8,16 @@ import {
   RangeSliderThumb,
   RangeSliderTrack,
   Select,
-  useColorModeValue,
-  Checkbox,
   Slider,
-  SliderTrack,
   SliderFilledTrack,
-  SliderThumb,
   SliderMark,
-  Tooltip
+  SliderThumb,
+  SliderTrack,
+  Tooltip,
+  useColorModeValue
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { loadState } from '../lib/utils/localStorage'
-import { generateQuery } from '../lib/utils/fonctions'
+import { generateQuery, loadFavouriteProducts } from '../lib/utils/fonctions'
 import { TemplateFilter } from './'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
@@ -121,14 +120,8 @@ function FavouriteFilter({ setProducts }) {
       return
     }
     setShowFavouriteProducts('yes')
-    // laod favouite products --> local storage
-    const productsIds = loadState('favourite-products')
-    console.log(productsIds)
-    // call API load all related products to ids
-    if (data) setProducts(productsIds)
-    // load products by id
+    setProducts(loadFavouriteProducts())
   }
-  console.log(showFavouriteProducts)
 
   return (
     <Box w="full" my="1rem" borderRadius={'10px'} bg={itemBgColor} p="1rem">

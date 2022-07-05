@@ -1,15 +1,4 @@
-// export function getURL (mode: string) {
-//     const {href, origin, hostname, port, pathname, protocol} = window.location
-
-//     if (mode === 'current') return href
-//     if (mode === 'origin') return origin
-//     if (mode === 'protocol') return protocol
-//     if (mode === 'hostname') return hostname
-//     // if (mode === 'host') return host
-//     if (mode === 'port') return port
-//     if (mode === 'pathname') return pathname
-// }
-
+import { IProduct } from '../interfaces'
 import { loadState, saveState } from './localStorage'
 
 const CURRENCY_FORMATTER = new Intl.NumberFormat(undefined, {
@@ -35,7 +24,7 @@ export function generateQuery(obj: any): any {
   return query.join('&')
 }
 
-export function onAddFavouriteProduct(product: any) {
+export function onAddFavouriteProduct(product: IProduct) {
   let data = loadState('favourite-products')
   if (!data) {
     saveState('favourite-products', [product])
@@ -50,10 +39,17 @@ export function onAddFavouriteProduct(product: any) {
   saveState('favourite-products', [...data, product])
 }
 
-export function isProductFavourite(product: any) {
+export function isProductFavourite(product: IProduct) {
   const data = loadState('favourite-products')
   if (!data) return false
   const isExist = data.find((item: any) => item.id === product?.id)
   if (isExist) return true
   return false
+}
+
+export function loadFavouriteProducts(): IProduct[] {
+  const products = loadState('favourite-products')
+  if (!products || products.length === 0) return
+  console.log(products)
+  return products
 }

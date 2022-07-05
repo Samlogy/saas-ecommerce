@@ -58,16 +58,13 @@ export default function Footer() {
         >
           <Text fontSize=".8rem"> © 2022 Ecommerce. All rights reserved </Text>
           <Flex>
-            <Box color="accent_4" fontSize=".8rem">
-              {' '}
+            <Box color="accent_2" fontSize=".8rem">
               <Link href="/conditions"> Conditions and terms </Link>{' '}
             </Box>
             <Text mx=".5rem" fontSize=".8rem">
-              {' '}
               |{' '}
             </Text>
-            <Box color="accent_4" fontSize=".8rem">
-              {' '}
+            <Box color="accent_2" fontSize=".8rem">
               <Link href="/privacy"> Privacy </Link>{' '}
             </Box>
           </Flex>
@@ -126,7 +123,6 @@ const PaymentAccpect = () => {
   return (
     <Flex flexDir={'column'} m=".5rem" w="7rem">
       <Heading size="1rem" mb="1rem" color="accent_2">
-        {' '}
         We accept all credit cards{' '}
       </Heading>
       <Flex flexDir={'column'} justifyContent={'space-between'} alignItems="center">
@@ -165,25 +161,21 @@ const Links = () => {
   return (
     <Flex flexDir={'column'} mb="1rem" m=".5rem" w="6.5rem">
       <Heading size="12rem" mb="1rem" color="accent_2">
-        {' '}
         Site Map{' '}
       </Heading>
       <Flex flexDir={'column'} my=".5rem">
         <Link href={'/'}>
           <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'accent_3' }}>
-            {' '}
             Home{' '}
           </Box>
         </Link>
         <Link href={'/products'}>
           <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'accent_3' }}>
-            {' '}
             Products{' '}
           </Box>
         </Link>
         <Link href={'/contact'}>
           <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'accent_3' }}>
-            {' '}
             Contact{' '}
           </Box>
         </Link>

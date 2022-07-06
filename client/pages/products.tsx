@@ -22,6 +22,8 @@ export default function Products({ products }: { products: IProduct[] }) {
   const [page, setPage] = useState<number>(1)
   const data = { info: { pages: 10 } }
 
+  const [allProducts, setProducts] = useState<IProduct[]>(products)
+
   const { width } = useWindowDimensions()
 
   const [isVisible, setIsVisible] = useState(false)
@@ -34,7 +36,7 @@ export default function Products({ products }: { products: IProduct[] }) {
 
       <Flex flexDir={'row'} justifyContent="space-between">
         <View cond={width >= 700}>
-          <Filter />
+          <Filter setProducts={setProducts} />
         </View>
 
         <View cond={width < 700}>
@@ -56,42 +58,44 @@ export default function Products({ products }: { products: IProduct[] }) {
               <DrawerHeader> Filter </DrawerHeader>
 
               <DrawerBody>
-                <Filter />
+                <Filter setProducts={setProducts} />
               </DrawerBody>
             </DrawerContent>
           </Drawer>
         </View>
 
         <Flex flexDir={'column'}>
-          <View cond={products?.length > 0}>
+          <View cond={allProducts?.length > 0}>
             <Text mb="1rem" ml="3rem">
-              Products result: {products?.length}{' '}
+              Products result: {allProducts?.length}{' '}
             </Text>
 
             <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
-              {products?.map((product: IProduct) => (
+              {allProducts?.map((product: IProduct) => (
                 <ProductCard key={product.id} data={product} readOnly />
               ))}
             </Flex>
           </View>
 
-          <View cond={products?.length === 0}>
+          <View cond={allProducts?.length === 0}>
             <Text> There is no product with thoes filters </Text>
           </View>
         </Flex>
       </Flex>
 
-      <Pagination
-        page={page}
-        pages={[page, page + 1, page + 2, page + 3]}
-        changePage={setPage}
-        nextPage={() => setPage(prev => prev + 1)}
-        prevPage={() => setPage(prev => prev - 1)}
-        startPage={() => setPage(1)}
-        endPage={() => setPage(data.info.pages)}
-        lastPage={data.info.pages}
-        isMobile={width < 700 ? true : false}
-      />
+      <View cond={data.info.pages > 1}>
+        <Pagination
+          page={page}
+          pages={[page, page + 1, page + 2, page + 3]}
+          changePage={setPage}
+          nextPage={() => setPage(prev => prev + 1)}
+          prevPage={() => setPage(prev => prev - 1)}
+          startPage={() => setPage(1)}
+          endPage={() => setPage(data.info.pages)}
+          lastPage={data.info.pages}
+          isMobile={width < 700 ? true : false}
+        />
+      </View>
     </Layout>
   )
 }

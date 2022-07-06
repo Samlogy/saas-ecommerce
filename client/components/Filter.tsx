@@ -17,8 +17,10 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { generateQuery, loadFavouriteProducts } from '../lib/utils/fonctions'
+import { IProduct } from '../lib/interfaces'
+import { generateQuery, loadFavouriteProducts, formatCurrency } from '../lib/utils/fonctions'
 import { TemplateFilter } from './'
+import { useFilterStore } from '../store'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
 const data = {
@@ -36,6 +38,7 @@ type IFilters = {
   discount: string
   price: number[]
   condition: string
+  isFavourite: string
 }
 interface ISingleFilter {
   label: string
@@ -44,16 +47,15 @@ interface ISingleFilter {
   data: string[] | number[]
 }
 
-export default function Filter() {
-  const [filters, setFilters] = useState({
-    search: '',
-    rate: 1,
-    categories: [],
-    discount: '',
-    price: [10, 30],
-    condition: ''
-  })
-  const [products, setProducts] = useState([])
+interface IFavouriteFilter {
+  filters: IFilters
+  setFilters: any
+  setProducts: (products: IProduct[]) => void
+}
+
+export default function Filter({ setProducts }: { setProducts: (products: IProduct[]) => void }) {
+  const filters = useFilterStore((state: any) => state.filters)
+  const setFilters = useFilterStore((state: any) => state.setFilters)
 
   // load all lists once (catergories - condition -) save them inside localstorage
   const onFilter = () => {
@@ -82,7 +84,7 @@ export default function Filter() {
         focusBorderColor="accent_6"
       />
 
-      <FavouriteFilter setProducts={setProducts} />
+      <FavouriteFilter filters={filters} setFilters={setFilters} setProducts={setProducts} />
 
       <RateSlider label="Rate" filters={filters} setFilters={setFilters} data={data.rates} />
       <DiscountSlider
@@ -91,6 +93,7 @@ export default function Filter() {
         setFilters={setFilters}
         data={data.discounts}
       />
+      <PriceSlider label="Price" filters={filters} setFilters={setFilters} data={data.prices} />
       <CategoriesFilter
         label="Categories"
         filters={filters}
@@ -103,13 +106,12 @@ export default function Filter() {
         setFilters={setFilters}
         data={data.conditions}
       />
-      <PriceSlider label="Price" filters={filters} setFilters={setFilters} data={data.prices} />
     </Flex>
   )
 }
 
-function FavouriteFilter({ setProducts }) {
-  const [showFavouriteProducts, setShowFavouriteProducts] = useState('no')
+function FavouriteFilter({ filters, setFilters, setProducts }: IFavouriteFilter) {
+  const [showFavouriteProducts, setShowFavouriteProducts] = useState(filters.isFavourite)
 
   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
 
@@ -117,9 +119,11 @@ function FavouriteFilter({ setProducts }) {
     const value = e.target.value
     if (value === 'yes') {
       setShowFavouriteProducts('no')
+      setFilters({ ...filters, isFavourite: 'no' })
       return
     }
     setShowFavouriteProducts('yes')
+    setFilters({ ...filters, isFavourite: 'yes' })
     setProducts(loadFavouriteProducts())
   }
 
@@ -257,10 +261,11 @@ function ConditionFilter({ label, filters, setFilters, data }: ISingleFilter) {
   )
 }
 function PriceSlider({ label, filters, setFilters, data }: ISingleFilter) {
-  const [showTooltip, setShowTooltip] = useState(false)
-
   return (
     <TemplateFilter label={label}>
+      <Box as="span"> from: {formatCurrency(filters.price[0])} </Box>
+      <Box as="span"> to: {formatCurrency(filters.price[1])} </Box>
+
       <RangeSlider
         defaultValue={filters.price}
         colorScheme="green"
@@ -271,27 +276,8 @@ function PriceSlider({ label, filters, setFilters, data }: ISingleFilter) {
           <RangeSliderFilledTrack />
         </RangeSliderTrack>
 
-        <Tooltip
-          hasArrow
-          bg="green.500"
-          color="white"
-          placement="top"
-          isOpen={showTooltip}
-          label={`${filters.price[0]}`}
-        >
-          <RangeSliderThumb index={0} />
-        </Tooltip>
-
-        <Tooltip
-          hasArrow
-          bg="green.500"
-          color="white"
-          placement="top"
-          isOpen={showTooltip}
-          label={`${filters.price[1]}`}
-        >
-          <RangeSliderThumb index={1} />
-        </Tooltip>
+        <RangeSliderThumb index={0} />
+        <RangeSliderThumb index={1} />
       </RangeSlider>
     </TemplateFilter>
   )

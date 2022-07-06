@@ -64,6 +64,8 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
     console.log(query)
   }
 
+  console.log(filters)
+
   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
 
   return (
@@ -126,14 +128,17 @@ function FavouriteFilter({ filters, setFilters, setProducts }: IFavouriteFilter)
     setFilters({ ...filters, isFavourite: 'yes' })
     setProducts(loadFavouriteProducts())
   }
+  const isFavourite = filters.isFavourite === 'yes' ? true : false
 
   return (
     <Box w="full" my="1rem" borderRadius={'10px'} bg={itemBgColor} p="1rem">
       <Checkbox
+        defaultChecked={isFavourite}
         defaultValue={['yes']}
         colorScheme={'green'}
         onChange={handleCheckbox}
         value={showFavouriteProducts}
+        color="gray_3"
       >
         Favourite Products
       </Checkbox>
@@ -146,7 +151,7 @@ function RateSlider({ label, filters, setFilters, data }: ISingleFilter) {
   return (
     <TemplateFilter label={label}>
       <Slider
-        id="slider"
+        id="slider-rate"
         defaultValue={filters.rate}
         min={0}
         max={5}
@@ -189,8 +194,8 @@ function DiscountSlider({ label, filters, setFilters, data }: ISingleFilter) {
   return (
     <TemplateFilter label={label}>
       <Slider
-        id="slider"
-        defaultValue={5}
+        id="slider-discount"
+        defaultValue={round(filters.discount, 'up')}
         min={0}
         max={100}
         colorScheme="green"
@@ -232,7 +237,12 @@ function CategoriesFilter({ label, filters, setFilters, data }: ISingleFilter) {
   }
   return (
     <TemplateFilter label={label}>
-      <Select onChange={handleCategories} bg={inputColor} focusBorderColor="accent_6">
+      <Select
+        onChange={handleCategories}
+        value={filters.categories[0]}
+        bg={inputColor}
+        focusBorderColor="accent_6"
+      >
         {data?.map((el, idx) => (
           <option key={idx} value={el}>
             {el}
@@ -248,6 +258,7 @@ function ConditionFilter({ label, filters, setFilters, data }: ISingleFilter) {
     <TemplateFilter label={label}>
       <Select
         onChange={e => setFilters({ ...filters, condition: e.target.value })}
+        value={filters.condition}
         bg={inputColor}
         focusBorderColor="accent_6"
       >

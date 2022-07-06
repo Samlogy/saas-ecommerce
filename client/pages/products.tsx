@@ -10,13 +10,15 @@ import {
   DrawerContent,
   DrawerCloseButton
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { BsFilterLeft } from 'react-icons/bs'
 
 import { Filter, Layout, Pagination, ProductCard, View } from '../components'
 import { useWindowDimensions } from '../lib/hooks'
 import { IProduct } from '../lib/interfaces'
+
 import productImage from '../public/images/product.png'
+import heroImage from '../public/images/home.png'
 
 export default function Products({ products }: { products: IProduct[] }) {
   const [page, setPage] = useState<number>(1)
@@ -27,7 +29,7 @@ export default function Products({ products }: { products: IProduct[] }) {
   const { width } = useWindowDimensions()
 
   const [isVisible, setIsVisible] = useState(false)
-  const btnRef = React.useRef()
+  const btnRef = useRef()
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'}>
@@ -104,55 +106,51 @@ export const getServerSideProps = async () => {
   const products = [
     {
       id: 1,
-      isNew: true,
-      image: productImage.src,
-      name: 'Wayfarer Classic',
-      price: 6,
-      rate: 4.2,
-      quantity: 11,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
       reviews: 34,
-      currency: '£',
-      discount: null,
-      isFavourite: false
+      rate: 4
     },
     {
       id: 2,
-      isNew: true,
-      image: productImage.src,
-      name: 'Wayfarer Classic',
-      price: 4,
-      rate: 4.2,
-      quantity: 11,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
       reviews: 34,
-      currency: '£',
-      discount: 0.2,
-      isFavourite: true
+      rate: 4
     },
     {
       id: 3,
-      isNew: true,
-      image: productImage.src,
-      name: 'Wayfarer Classic',
-      price: 2,
-      rate: 4.2,
-      quantity: 11,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
       reviews: 34,
-      currency: '£',
-      discount: 0.2,
-      isFavourite: false
+      rate: 4
     },
     {
       id: 4,
-      isNew: true,
-      image: productImage.src,
-      name: 'Wayfarer Classic',
-      price: 20,
-      rate: 4.2,
-      quantity: 11,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
       reviews: 34,
-      currency: '£',
-      discount: 0.2,
-      isFavourite: true
+      rate: 4
     }
   ]
 

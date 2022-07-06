@@ -1,3 +1,10 @@
+export interface ICategory {
+  id: number
+  name: string
+  createdAt: Date
+  editedAt: Date | null
+}
+
 export interface IComment {
   id: number
   name: string
@@ -6,11 +13,9 @@ export interface IComment {
   createdAt: Date
   editedAt: Date | null
 }
-
 export interface IProduct {
   id?: number
   name: string
-  image: string
   images: string[]
   description: string
   price: number
@@ -18,6 +23,8 @@ export interface IProduct {
   discount: number
   rate: number
   reviews: number
+  comments?: IComment[]
+  categoryId?: string
   isFavourite?: boolean
   createdAt: Date
   editedAt: Date | null

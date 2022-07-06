@@ -32,7 +32,7 @@ const userTest = {
 }
 
 let authStore = (set: SetState<IAuth>) => ({
-  isLogged: false,
+  isLogged: true,
   user: userTest,
   login: (data: IUser) => set(() => ({ isLogged: true, user: data })),
   logout: () => set(() => ({ isLogged: false, user: {} }))
@@ -41,7 +41,7 @@ let authStore = (set: SetState<IAuth>) => ({
 // @ts-ignore
 authStore = devtools(authStore)
 // @ts-ignore
-authStore = persist(authStore, { name: 'auth-data' })
+//authStore = persist(authStore, { name: 'auth-data' })
 
 const useAuth = create<IAuth>(authStore)
 

@@ -31,7 +31,6 @@ interface IAddComment {
 
 const AddComment = ({ isOpen, onClose }: IAddComment) => {
   const user = useAuth((state: any) => state.user)
-  const isLogged = useAuth((state: any) => state.isLogged)
   // mutate (add new comment) (apollo --> API) CREATE_COMMENT
 
   const {
@@ -41,12 +40,15 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
     formState: { errors, isSubmitting }
   } = useForm({
     resolver: yupResolver(commentSchema),
-    defaultValues:  {}
+    defaultValues: {}
   })
 
-  const onAdd = async (comment: any) => {
+  console.log(errors)
+
+  const onAdd = async (data: any) => {
+    const comment = { ...data, username: user.username, email: user.email }
     console.log(comment)
-    // {...comment, username: user.username, email: user.email}
+    //
     // call api
     reset({ comment: '' })
     onClose()

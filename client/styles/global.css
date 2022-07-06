@@ -4,6 +4,7 @@ body {
   scroll-behavior: smooth;
 }
 
+
 /*=============== Language Switcher ===============*/
 select.select-language {
   background-color: transparent;

@@ -14,33 +14,38 @@ import {
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useState } from 'react'
-import { AiOutlineHeart, AiFillHeart, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
+import { AiFillHeart, AiOutlineHeart, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { MdLocalShipping } from 'react-icons/md'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 
-import { Layout, ListingComments, ProductCard, View, Rating } from '../../components'
+import { Layout, ListingComments, ProductCard, Rating, View } from '../../components'
 import { IComment, IProduct } from '../../lib/interfaces'
-import { useShoppingCart, useAuth } from '../../store'
-import { GET_PRODUCT_DETAILS, GET_RELATED_PRODUCTS } from '../../lib/services'
+import { useAuth, useShoppingCart } from '../../store'
+//import { GET_PRODUCT_DETAILS, GET_RELATED_PRODUCTS } from '../../lib/services'
+
 import {
+  formatCurrency,
   isProductFavourite,
-  onAddFavouriteProduct,
-  formatCurrency
+  onAddFavouriteProduct
 } from '../../lib/utils/fonctions'
 
 import heroImage from '../../public/images/home.png'
 import productImage from '../../public/images/product.png'
+
+import Slider from 'react-slick'
+// Import css files
+import 'slick-carousel/slick/slick-theme.css'
+import 'slick-carousel/slick/slick.css'
 
 interface IProductPage {
   product: IProduct
   comments: IComment[]
   relatedProducts: IProduct[]
 }
-interface ICarouselPreview {
-  images: string[]
-  setImage: (images: string) => void
+interface ICarousel {
+  data: string[]
+  setImage: (image: string) => void
 }
-
 export default function Product({ product, comments, relatedProducts }: IProductPage) {
   const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
   const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
@@ -53,7 +58,7 @@ export default function Product({ product, comments, relatedProducts }: IProduct
 
   const quantity = products.find((item: any) => item.id === product?.id)?.quantity || 0
 
-  const [image, setImage] = useState<string>(product.image[0])
+  const [image, setImage] = useState<string>(product.images[0])
 
   const handleFavourite = e => {
     e.preventDefault()
@@ -71,11 +76,11 @@ export default function Product({ product, comments, relatedProducts }: IProduct
         py={{ base: 18, md: 24 }}
         px="1.5rem"
       >
-        <View cond={product.image.length === 0}>
+        <View cond={product.images.length === 0}>
           <Text> No Images </Text>
         </View>
 
-        <View cond={product.image.length > 1}>
+        <View cond={product.images.length > 1}>
           <Image
             rounded={'md'}
             alt={'product image'}
@@ -85,16 +90,12 @@ export default function Product({ product, comments, relatedProducts }: IProduct
             w={'100%'}
             h={{ base: '100%', sm: '400px', lg: '500px' }}
             borderRadius=".5rem"
-            border="1px solid"
-            borderColor="black"
           />
-          <CarouselPreview
-            images={[heroImage.src, productImage.src, heroImage.src, productImage.src]}
-            setImage={setImage}
-          />
+
+          <Carousel data={product?.images} setImage={setImage} />
         </View>
 
-        <Stack spacing={{ base: 6, md: 10 }}>
+        <Stack spacing={{ base: 6, md: 10 }} mt={['10rem', '0rem']}>
           <Box as={'header'}>
             <Heading
               lineHeight={1.1}
@@ -243,100 +244,6 @@ const DeliveryDetails = ({ data }: any) => {
   )
 }
 
-const CarouselPreview = ({ images, setImage }: ICarouselPreview) => {
-  const [currentSlide, setCurrentSlide] = useState(0)
-
-  const SLIDES_COUNT = images.length // number of images in carousel
-  const IMAGES_TO_DISPLAY = 3 // number of images to display in carousel (preview)
-
-  // select images to loop on
-  const imagesSlides: string[] = []
-
-  function generateImagesSlides(initImage: number) {
-    let cpt = 0
-    for (let i = initImage; i < IMAGES_TO_DISPLAY; i++) {
-      if (i <= IMAGES_TO_DISPLAY - 1) {
-        imagesSlides.push(images[i])
-      }
-      cpt = i + 1
-    }
-    if (cpt == IMAGES_TO_DISPLAY) {
-      for (let i = 0; i < IMAGES_TO_DISPLAY; i++) {
-        if (cpt <= IMAGES_TO_DISPLAY) {
-          imagesSlides.push(images[i])
-        }
-      }
-    }
-  }
-
-  // generateImagesSlides(currentSlide)
-  const prevSlide = () => {
-    setCurrentSlide(s => (s === 0 ? SLIDES_COUNT - 1 : s - 1))
-  }
-  const nextSlide = () => {
-    setCurrentSlide(s => (s === SLIDES_COUNT - 1 ? 0 : s + 1))
-  }
-
-  const arrowStyles = {
-    transition: '0.6s ease',
-    borderRadius: '50%',
-    bg: 'transparent',
-    color: 'gray_2',
-    _hover: {
-      bg: 'transparent',
-      color: 'accent_3'
-    }
-  }
-  return (
-    <Flex
-      flexWrap={'wrap'}
-      align="center"
-      justify="space-evenly"
-      p={['.25rem', '', '.5rem', '']}
-      borderRadius={'10px'}
-      mt="1.5rem"
-      w={['15rem', '', '70%', '']}
-      mx={['auto', '', '', '']}
-    >
-      <IconButton
-        {...arrowStyles}
-        aria-label="previous-slide"
-        icon={<RiArrowLeftSLine size={24} />}
-        onClick={prevSlide}
-      />
-
-      {imagesSlides.map((img: string, idx: number) => (
-        <Image
-          key={idx}
-          src={img}
-          rounded={'md'}
-          alt={'product-image'}
-          border="1px solid white"
-          bg="white"
-          borderRadius={'10px'}
-          boxSize={['50px', '', '75px', '']}
-          boxShadow="md"
-          filter={currentSlide !== idx + 1 && 'grayscale(80%)'}
-          _hover={{
-            cursor: 'pointer',
-            border: '2px solid',
-            borderColor: 'accent_3',
-            transition: 'border .25s'
-          }}
-          onClick={() => setImage(img)}
-        />
-      ))}
-
-      <IconButton
-        {...arrowStyles}
-        aria-label="next-slide"
-        icon={<RiArrowRightSLine size={24} />}
-        onClick={nextSlide}
-      />
-    </Flex>
-  )
-}
-
 const RelatedProducts = ({ data }: { data: IProduct[] }) => {
   // load related products (apollo --> API) GET_RELATED_PRODUCTS
   return (
@@ -377,14 +284,14 @@ export const getServerSideProps = async context => {
   const product = {
     id: 1,
     name: 'Automatic Watch',
-    image: [productImage.src, heroImage.src, productImage.src],
+    images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
     quantity: 1,
     price: 350,
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
     delivery: '2-3 business days',
     reviews: 34,
-    rate: 4.5
+    rate: 4
   }
   const comments = [
     {
@@ -457,4 +364,106 @@ export const getServerSideProps = async context => {
       comments
     }
   }
+}
+
+const SlickArrowLeft = props => {
+  const { onClick } = props
+  const arrowColor = useColorModeValue('gray_8', 'gray_5')
+  const arrowColorHover = useColorModeValue('gray_7', 'gray_4')
+  return (
+    <IconButton
+      aria-label="previous-slide"
+      icon={<RiArrowLeftSLine size={24} />}
+      onClick={onClick}
+      pos="absolute"
+      left="0"
+      top="4rem"
+      zIndex="100"
+      borderRadius="50%"
+      bg={arrowColor}
+      _hover={{ bg: arrowColorHover }}
+    />
+  )
+}
+
+const SlickArrowRight = props => {
+  const { onClick } = props
+  const arrowColor = useColorModeValue('gray_8', 'gray_5')
+  const arrowColorHover = useColorModeValue('gray_7', 'gray_4')
+  return (
+    <IconButton
+      aria-label="next-slide"
+      icon={<RiArrowRightSLine size={24} />}
+      onClick={onClick}
+      pos="absolute"
+      right="0"
+      top="4rem"
+      zIndex="100"
+      borderRadius="50%"
+      bg={arrowColor}
+      _hover={{ bg: arrowColorHover }}
+    />
+  )
+}
+
+function Carousel({ data, setImage }: ICarousel) {
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToScroll: 1,
+    slidesToShow: 3,
+    initialSlide: 0,
+    nextArrow: <SlickArrowRight />,
+    prevArrow: <SlickArrowLeft />,
+    appendDots: dots => (
+      <Box>
+        <ul style={{ margin: '0px' }}> {dots} </ul>
+      </Box>
+    ),
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  }
+  return (
+    <Flex flexDir="column">
+      <Slider {...settings}>
+        {data.map((img, idx) => (
+          <Box key={idx} borderRadius=".5rem" h="10rem">
+            <Image
+              src={img}
+              alt={`img-${idx}`}
+              h="fit-content"
+              maxH="10rem"
+              mx="auto"
+              _hover={{ cursor: 'pointer' }}
+              //filter={currentSlide !== idx + 1 && 'grayscale(80%)'}
+              onClick={() => setImage(img)}
+            />
+          </Box>
+        ))}
+      </Slider>
+    </Flex>
+  )
 }

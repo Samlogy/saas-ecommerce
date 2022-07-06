@@ -238,7 +238,7 @@ function CategoriesFilter({ label, filters, setFilters, data }: ISingleFilter) {
     </TemplateFilter>
   )
 }
-function ConditionFilter({ label, setFilters, filters, data }: ISingleFilter) {
+function ConditionFilter({ label, filters, setFilters, data }: ISingleFilter) {
   const inputColor = useColorModeValue('white', 'gray_2')
   return (
     <TemplateFilter label={label}>

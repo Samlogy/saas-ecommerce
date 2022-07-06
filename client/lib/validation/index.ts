@@ -50,7 +50,5 @@ export const profileSchema = yup.object().shape({
 })
 
 export const commentSchema = yup.object().shape({
-  username: yup.string(),
-  email: yup.string().email('Enter a valid Email Address').required('Email Address re'),
   comment: yup.string().required('Enter your comment please')
 })

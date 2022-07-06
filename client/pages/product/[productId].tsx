@@ -17,6 +17,7 @@ import { useState } from 'react'
 import { AiFillHeart, AiOutlineHeart, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { MdLocalShipping } from 'react-icons/md'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
+import Slider from 'react-slick'
 
 import { Layout, ListingComments, ProductCard, Rating, View } from '../../components'
 import { IComment, IProduct } from '../../lib/interfaces'
@@ -32,7 +33,6 @@ import {
 import heroImage from '../../public/images/home.png'
 import productImage from '../../public/images/product.png'
 
-import Slider from 'react-slick'
 // Import css files
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
@@ -322,39 +322,39 @@ export const getServerSideProps = async context => {
   const relatedProducts = [
     {
       id: 1,
-      isNew: true,
-      image: productImage.src,
-      name: 'Wayfarer Classic',
-      price: 6,
-      rating: 4.2,
-      quantity: 11,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
       reviews: 34,
-      currency: '£',
-      discount: 0.2
+      rate: 4
     },
     {
       id: 2,
-      isNew: true,
-      image: productImage.src,
-      name: 'Wayfarer Classic',
-      price: 4,
-      rating: 4.2,
-      quantity: 11,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
       reviews: 34,
-      currency: '£',
-      discount: 0.2
+      rate: 4
     },
     {
       id: 3,
-      isNew: true,
-      image: productImage.src,
-      name: 'Wayfarer Classic',
-      price: 2,
-      rating: 4.2,
-      quantity: 11,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
       reviews: 34,
-      currency: '£',
-      discount: 0.2
+      rate: 4
     }
   ]
   return {

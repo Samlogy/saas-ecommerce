@@ -6,6 +6,7 @@ import {
   FormLabel,
   Input,
   Modal,
+  ModalHeader,
   ModalBody,
   ModalCloseButton,
   ModalContent,
@@ -29,7 +30,6 @@ interface IAddComment {
 }
 
 const AddComment = ({ isOpen, onClose }: IAddComment) => {
-  const [isChecked, setIsChecked] = useState(false)
   const user = useAuth((state: any) => state.user)
   const isLogged = useAuth((state: any) => state.isLogged)
   // mutate (add new comment) (apollo --> API) CREATE_COMMENT
@@ -41,12 +41,12 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
     formState: { errors, isSubmitting }
   } = useForm({
     resolver: yupResolver(commentSchema),
-    defaultValues: isLogged ? { username: user.username, email: user.email, comment: '' } : {}
+    defaultValues:  {}
   })
 
   const onAdd = async (comment: any) => {
-    // console.log(comment)
-    isChecked ? saveState('user-comment', comment) : removeState('user-comment')
+    console.log(comment)
+    // {...comment, username: user.username, email: user.email}
     // call api
     reset({ comment: '' })
     onClose()
@@ -58,48 +58,10 @@ const AddComment = ({ isOpen, onClose }: IAddComment) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
+        <ModalHeader>Add Comment</ModalHeader>
         <ModalCloseButton />
         <ModalBody py="1.5rem">
           <form onSubmit={handleSubmit(onAdd)}>
-            <FormControl id="username" mb="1rem">
-              <FormLabel>
-                Username
-                <Box as="span" color="gray.500" fontSize=".85rem" fontStyle={'italic'}>
-                  (Optional)
-                </Box>
-              </FormLabel>
-              <Input
-                type="text"
-                placeholder="Username"
-                _placeholder={{ color: 'gray.500' }}
-                isInvalid={errors.username ? true : false}
-                errorBorderColor="error"
-                bg={inputColor}
-                focusBorderColor={errors.username ? 'error' : 'accent_6'}
-                borderRadius="5px"
-                disabled={true}
-                {...register('username')}
-              />
-              {errors.username && <ErrorMessage error={errors.username.message} />}
-            </FormControl>
-
-            <FormControl id="email" mb="1rem">
-              <FormLabel> Email Address </FormLabel>
-              <Input
-                type="email"
-                placeholder="your-email@example.com"
-                _placeholder={{ color: 'gray.500' }}
-                isInvalid={errors.email ? true : false}
-                errorBorderColor="error"
-                bg={inputColor}
-                focusBorderColor={errors.email ? 'error' : 'accent_6'}
-                borderRadius="5px"
-                disabled={true}
-                {...register('email')}
-              />
-              {errors.email && <ErrorMessage error={errors.email.message} />}
-            </FormControl>
-
             <FormControl id="comment" mb="1rem">
               <FormLabel> Your Comment </FormLabel>
               <Textarea

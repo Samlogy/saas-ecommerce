@@ -15,7 +15,7 @@ interface IPagination {
   isMobile?: boolean
 }
 
-const Pagination = ({
+export default function Pagination({
   page,
   changePage,
   pages,
@@ -25,7 +25,7 @@ const Pagination = ({
   endPage,
   lastPage,
   isMobile
-}: IPagination) => {
+}: IPagination) {
   const { colorMode: mode } = useColorMode()
 
   const bgColor = useColorModeValue('gray_8', 'gray_2')
@@ -112,5 +112,3 @@ const Pagination = ({
     </Flex>
   )
 }
-
-export default Pagination

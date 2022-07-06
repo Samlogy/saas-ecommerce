@@ -1,6 +1,5 @@
 export { default as AddComment } from './AddComment'
 export { default as BackTop } from './BackTop'
-export { default as Carousel } from './Carousel'
 export { default as Comment } from './Comment'
 export { default as CookieBox } from './CookieBox'
 export { default as Countdown } from './Countdown'

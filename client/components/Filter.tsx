@@ -19,7 +19,7 @@ import {
 import React, { useState } from 'react'
 import { IProduct } from '../lib/interfaces'
 import { generateQuery, loadFavouriteProducts, formatCurrency } from '../lib/utils/fonctions'
-import { TemplateFilter } from './'
+import { TemplateFilter, InputField } from './'
 import { useFilterStore } from '../store'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
@@ -76,14 +76,14 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
       borderRadius="10px"
       p="1.5rem .5rem"
     >
-      <Input
+      <InputField
         type="search"
-        placeholder="Search..."
-        w="15rem"
+        name="email"
         onChange={e => setFilters({ ...filters, search: e.target.value })}
         value={filters.search}
+        placeholdr="Search..."
         bg={itemBgColor}
-        focusBorderColor="accent_6"
+        w="15rem"
       />
 
       <FavouriteFilter filters={filters} setFilters={setFilters} setProducts={setProducts} />

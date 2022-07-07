@@ -1,24 +1,19 @@
 import {
-  Flex,
   Box,
-  Heading,
-  Text,
-  IconButton,
   Button,
+  Flex,
   FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Textarea,
+  Heading,
+  IconButton,
+  Text,
   useColorModeValue
 } from '@chakra-ui/react'
-import { MdPhone, MdEmail, MdLocationOn, MdFacebook, MdOutlineEmail } from 'react-icons/md'
-import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
+import { BsDiscord, BsGithub, BsPerson } from 'react-icons/bs'
+import { MdEmail, MdFacebook, MdLocationOn, MdOutlineEmail, MdPhone } from 'react-icons/md'
 
-import { Layout, ErrorMessage } from '../components'
+import { InputField, Layout, TextField } from '../components'
 import { contactSchema } from '../lib/validation'
 
 const contacts = [
@@ -131,63 +126,32 @@ export default function contact() {
 
           <Flex flexDir="column" justifyContent={'space-between'} mx={['auto', '', '0', '']}>
             <form onSubmit={handleSubmit(onContact)}>
-              <FormControl id="name" mb="1rem">
-                <FormLabel>
-                  Your Name
-                  <Box as="span" color="gray_4" fontSize=".85rem" ml=".15rem" fontStyle={'italic'}>
-                    (Optional)
-                  </Box>
-                </FormLabel>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none" children={<BsPerson color="gray_1" />} />
-                  <Input
-                    type="text"
-                    size="md"
-                    isInvalid={errors.name ? true : false}
-                    focusBorderColor={errors.name ? 'error' : 'accent_6'}
-                    errorBorderColor="error"
-                    borderRadius="5px"
-                    bg={inputColor}
-                    {...register('name')}
-                  />
-                </InputGroup>
-                {errors.name && <ErrorMessage error={errors.name.message} />}
-              </FormControl>
+              <InputField
+                name="name"
+                register={register}
+                errors={errors}
+                label="Your Name (Optional)"
+                iconLeft={<BsPerson color="gray_1" />}
+                bg={inputColor}
+              />
 
-              <FormControl id="name" mb="1rem">
-                <FormLabel> Email </FormLabel>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<MdOutlineEmail color="gray_1" />}
-                  />
-                  <Input
-                    type="email"
-                    size="md"
-                    isInvalid={errors.email ? true : false}
-                    focusBorderColor={errors.email ? 'error' : 'accent_6'}
-                    errorBorderColor="error"
-                    borderRadius="5px"
-                    bg={inputColor}
-                    {...register('email')}
-                  />
-                </InputGroup>
-                {errors.email && <ErrorMessage error={errors.email.message} />}
-              </FormControl>
+              <InputField
+                name="email"
+                register={register}
+                errors={errors}
+                label="Email"
+                iconLeft={<MdOutlineEmail color="gray_1" />}
+                bg={inputColor}
+              />
 
-              <FormControl id="name" mb="1rem">
-                <FormLabel> Message </FormLabel>
-                <Textarea
-                  placeholder="message"
-                  isInvalid={errors.message ? true : false}
-                  focusBorderColor={errors.message ? 'error' : 'accent_6'}
-                  errorBorderColor="error"
-                  bg={inputColor}
-                  borderRadius="5px"
-                  {...register('message')}
-                />
-                {errors.message && <ErrorMessage error={errors.message.message} />}
-              </FormControl>
+              <TextField
+                name="message"
+                register={register}
+                errors={errors}
+                label="Message"
+                iconLeft={<MdOutlineEmail color="gray_1" />}
+                bg={inputColor}
+              />
 
               <FormControl id="name" float="right" mb=".5rem">
                 <Button type="submit" bg="accent_4" color="white" _hover={{ bg: 'accent_3' }}>

@@ -14,7 +14,7 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ErrorMessage } from '../components'
+import { ErrorMessage, TextField } from '../components'
 import { commentSchema } from '../lib/validation'
 // import { CREATE_COMMENT } from '../lib/services'
 import { useAuthStore } from '../store'
@@ -54,20 +54,16 @@ const AddComment = () => {
           <ModalCloseButton />
           <ModalBody py="1.5rem">
             <form onSubmit={handleSubmit(onAdd)}>
-              <FormControl id="comment" mb="1rem">
-                <FormLabel> Your Comment </FormLabel>
-                <Textarea
-                  placeholder="Your Comment ..."
-                  _placeholder={{ color: 'gray.500' }}
-                  isInvalid={errors.comment ? true : false}
-                  errorBorderColor="error"
-                  bg={inputColor}
-                  focusBorderColor={errors.comment ? 'error' : 'accent_6'}
-                  borderRadius="5px"
-                  {...register('comment')}
-                />
-                {errors.comment && <ErrorMessage error={errors.comment.message} />}
-              </FormControl>
+              <TextField
+                name="message"
+                register={register}
+                errors={errors}
+                label="Your Comment"
+                bg={inputColor}
+                placeholder="Your Comment ..."
+                _placeholder={{ color: 'gray.500' }}
+                w="100%"
+              />
 
               <Button
                 type="submit"

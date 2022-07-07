@@ -34,43 +34,51 @@ export default function Home() {
   const productsData = [
     {
       id: 1,
-      isNew: true,
-      image: productImage.src,
-      name: 'Wayfarer Classic',
-      price: 45,
-      rate: 4.2,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
       reviews: 34,
-      currency: '£'
+      rate: 4
     },
     {
       id: 2,
-      isNew: true,
-      image: productImage.src,
-      name: 'Wayfarer Classic',
-      price: 45,
-      rate: 4.2,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
       reviews: 34,
-      currency: '£'
+      rate: 4
     },
     {
       id: 3,
-      isNew: true,
-      image: productImage.src,
-      name: 'Wayfarer Classic',
-      price: 45,
-      rate: 4.2,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
       reviews: 34,
-      currency: '£'
+      rate: 4
     },
     {
       id: 4,
-      isNew: true,
-      image: productImage.src,
-      name: 'Wayfarer Classic',
-      price: 45,
-      rate: 4.2,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
       reviews: 34,
-      currency: '£'
+      rate: 4
     }
   ]
   const servicesData = [

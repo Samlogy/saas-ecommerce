@@ -7,7 +7,7 @@ interface IRating {
   readOnly?: boolean
 }
 
-const Rating = ({ initRate, readOnly }: IRating) => {
+export default function Rating({ initRate, readOnly }: IRating) {
   const [rate, setRate] = useState(initRate || null)
   const [hover, setHover] = useState(null)
 
@@ -52,4 +52,3 @@ const Rating = ({ initRate, readOnly }: IRating) => {
     </Flex>
   )
 }
-export default Rating

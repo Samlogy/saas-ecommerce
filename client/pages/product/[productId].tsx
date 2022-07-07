@@ -21,7 +21,7 @@ import Slider from 'react-slick'
 
 import { Layout, ListingComments, ProductCard, Rating, View } from '../../components'
 import { IComment, IProduct } from '../../lib/interfaces'
-import { useAuth, useShoppingCart } from '../../store'
+import { useAuthStore, useShoppingCartStore } from '../../store'
 //import { GET_PRODUCT_DETAILS, GET_RELATED_PRODUCTS } from '../../lib/services'
 
 import {
@@ -47,12 +47,12 @@ interface ICarousel {
   setImage: (image: string) => void
 }
 export default function Product({ product, comments, relatedProducts }: IProductPage) {
-  const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
-  const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
-  const setIsFavourite = useShoppingCart((state: any) => state.setIsFavourite)
-  const products = useShoppingCart((state: any) => state.products)
+  const increaseQuantity = useShoppingCartStore((state: any) => state.increaseQuantity)
+  const decreaseQuantity = useShoppingCartStore((state: any) => state.decreaseQuantity)
+  const setIsFavourite = useShoppingCartStore((state: any) => state.setIsFavourite)
+  const products = useShoppingCartStore((state: any) => state.products)
 
-  const isLogged = useAuth((state: any) => state.isLogged)
+  const isLogged = useAuthStore((state: any) => state.isLogged)
 
   // load prouct details (apollo --> API) GET_PRODUCT_DETAILS
 

@@ -15,7 +15,13 @@ interface IStepFrom {
   onSubmit?: any
 }
 
-const StepForm = ({ initialStep = 0, steps, handleSubmit, trigger, onSubmit }: IStepFrom) => {
+export default function StepForm({
+  initialStep = 0,
+  steps,
+  handleSubmit,
+  trigger,
+  onSubmit
+}: IStepFrom) {
   const { nextStep, prevStep, activeStep } = useSteps({
     initialStep: initialStep
   })
@@ -83,5 +89,3 @@ const StepForm = ({ initialStep = 0, steps, handleSubmit, trigger, onSubmit }: I
     </>
   )
 }
-
-export default StepForm

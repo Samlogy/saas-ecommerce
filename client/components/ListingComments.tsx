@@ -19,25 +19,13 @@ const ListingComments = ({ comments }: { comments: IComment[] }) => {
   // load related products (apollo --> API) GET_ALL_COMMENTS
   return (
     <Flex flexDir="column" px="1.5rem">
-      <AddComment isOpen={showAddComment} onClose={() => setShowAddComment(false)} />
+      <View cond={isLogged}>
+        <AddComment />
+      </View>
 
       <Heading size="lg" textAlign={'center'} my="1.5rem">
         Leave a Comment
       </Heading>
-
-      <View cond={isLogged}>
-        <Button
-          bg={'accent_3'}
-          _hover={{ bg: 'accent_2' }}
-          color={'white'}
-          w="10rem"
-          display={'flex'}
-          ml="auto"
-          onClick={() => setShowAddComment(true)}
-        >
-          Add Comment
-        </Button>
-      </View>
 
       <View cond={comments?.length > 0}>
         {comments?.map(comment => (

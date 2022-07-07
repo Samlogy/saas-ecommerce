@@ -47,7 +47,7 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
           <FavouriteButton data={data} />
 
           <Image
-            src={data?.image}
+            src={data?.images[0]}
             alt={`Picture of ${data.name}`}
             roundedTop="lg"
             boxSize={'154px'}

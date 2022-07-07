@@ -2,7 +2,7 @@ import { Box, IconButton, useColorModeValue } from '@chakra-ui/react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { useShoppingCartStore } from '../store'
 
-const ShoppingCartIcon = ({ value }: { value: number }) => {
+export default function ShoppingCartIcon({ value }: { value: number }) {
   const setOpen = useShoppingCartStore(state => state.setOpen)
   const isOpen = useShoppingCartStore(state => state.isOpen)
 
@@ -46,5 +46,3 @@ const ShoppingCartIcon = ({ value }: { value: number }) => {
     </Box>
   )
 }
-
-export default ShoppingCartIcon

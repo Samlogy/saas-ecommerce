@@ -11,18 +11,16 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
-  Stack,
   Textarea,
   useColorModeValue
 } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '../components'
 import { commentSchema } from '../lib/validation'
-import { removeState, saveState } from '../lib/utils/localStorage'
-import { CREATE_COMMENT } from '../lib/services'
-import { useAuth } from '../store'
+// import { CREATE_COMMENT } from '../lib/services'
+import { useAuthStore } from '../store'
 
 interface IAddComment {
   isOpen: boolean
@@ -30,7 +28,7 @@ interface IAddComment {
 }
 
 const AddComment = ({ isOpen, onClose }: IAddComment) => {
-  const user = useAuth((state: any) => state.user)
+  const user = useAuthStore((state: any) => state.user)
   // mutate (add new comment) (apollo --> API) CREATE_COMMENT
 
   const {

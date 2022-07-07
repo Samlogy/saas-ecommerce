@@ -21,7 +21,7 @@ import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
 import { FiSettings } from 'react-icons/fi'
 import { DarkModeToggle, Logout, SelectLanguage, ShoppingCartIcon, View } from '../components'
 import { Logo } from '../public/icons'
-import { useShoppingCart, useAuth } from '../store'
+import { useShoppingCartStore, useAuthStore } from '../store'
 
 const Links = [
   {
@@ -66,10 +66,10 @@ const NavLink = ({ children, link }: { children: ReactNode; link: string }) => {
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const login = useAuth((state: any) => state.login)
-  const user = useAuth((state: any) => state.user)
+  const login = useAuthStore((state: any) => state.login)
+  const user = useAuthStore((state: any) => state.user)
 
-  const quantityTotal = useShoppingCart((state: any) => state.quantityTotal)
+  const quantityTotal = useShoppingCartStore((state: any) => state.quantityTotal)
 
   const bgColor = useColorModeValue('white', 'gray_3')
 

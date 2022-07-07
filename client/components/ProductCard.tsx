@@ -4,7 +4,7 @@ import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 
 import { FavouriteButton, Rating, View } from '../components'
 import { formatCurrency } from '../lib/utils/fonctions'
-import { useShoppingCart } from '../store'
+import { useShoppingCartStore } from '../store'
 import { IProduct } from '../lib/interfaces'
 
 interface IProductCart {
@@ -13,9 +13,9 @@ interface IProductCart {
 }
 
 export default function ProductCard({ data, readOnly = false }: IProductCart) {
-  const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
-  const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
-  const products = useShoppingCart((state: any) => state.products)
+  const increaseQuantity = useShoppingCartStore((state: any) => state.increaseQuantity)
+  const decreaseQuantity = useShoppingCartStore((state: any) => state.decreaseQuantity)
+  const products = useShoppingCartStore((state: any) => state.products)
 
   const quantity = products.find((item: any) => item.id === data?.id)?.quantity || 0
 

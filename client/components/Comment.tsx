@@ -1,12 +1,12 @@
 import { Box, Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import { Rating } from '../components'
 import { IComment } from '../lib/interfaces'
-import { useAuth } from '../store'
+import { useAuthStore } from '../store'
 import { dateFormat } from '../lib/utils/fonctions'
 
 const Comment = ({ data }: { data: IComment }) => {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
-  const isLogged = useAuth((state: any) => state.isLogged)
+  const isLogged = useAuthStore((state: any) => state.isLogged)
   return (
     <Flex
       key={data.id}

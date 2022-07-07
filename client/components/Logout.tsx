@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { HiOutlineLogout } from 'react-icons/hi'
 
-import { useAuth } from '../store'
+import { useAuthStore } from '../store'
 
 const Logout = ({ children }: { children?: React.ReactNode }) => {
   const [logOut, setLogOut] = useState(false)
@@ -14,7 +14,7 @@ const Logout = ({ children }: { children?: React.ReactNode }) => {
   const textColor = useColorModeValue('black', 'gray.100')
   const textHoverColor = useColorModeValue('gray.100', 'white')
 
-  const logout = useAuth((state: any) => state.logout)
+  const logout = useAuthStore((state: any) => state.logout)
 
   if (logOut) {
     logout()

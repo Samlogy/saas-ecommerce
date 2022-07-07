@@ -43,6 +43,6 @@ authStore = devtools(authStore)
 // @ts-ignore
 //authStore = persist(authStore, { name: 'auth-data' })
 
-const useAuth = create<IAuth>(authStore)
+const useAuthStore = create<IAuth>(authStore)
 
-export default useAuth
+export default useAuthStore

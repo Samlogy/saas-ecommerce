@@ -110,6 +110,6 @@ shoppingCartStore = devtools(shoppingCartStore)
 // @ts-ignore
 shoppingCartStore = persist(shoppingCartStore, { name: 'shopping_cart' })
 // @ts-ignore
-const useShoppingCart = create<IShoppingCart>(shoppingCartStore)
+const useShoppingCartStore = create<IShoppingCart>(shoppingCartStore)
 
-export default useShoppingCart
+export default useShoppingCartStore

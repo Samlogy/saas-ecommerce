@@ -114,7 +114,7 @@ export default function contact() {
               alignItems={'center'}
               justifyContent={['center', '', 'start', '']}
             >
-              {socialMedia.map(icon => (
+              {socialMedia.map((icon, idx) => (
                 <IconButton
                   aria-label="social media icon"
                   variant="ghost"
@@ -123,6 +123,7 @@ export default function contact() {
                   mr={['1rem', '', '0', '']}
                   isRound={true}
                   icon={icon}
+                  key={idx}
                 />
               ))}
             </Flex>

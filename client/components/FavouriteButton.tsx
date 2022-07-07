@@ -2,10 +2,10 @@ import { IconButton } from '@chakra-ui/react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 
 import { isProductFavourite, onAddFavouriteProduct } from '../lib/utils/fonctions'
-import { useShoppingCart } from '../store'
+import { useShoppingCartStore } from '../store'
 
 export default function FavouriteButton({ data }: { data: any }) {
-  const setIsFavourite = useShoppingCart((state: any) => state.setIsFavourite)
+  const setIsFavourite = useShoppingCartStore((state: any) => state.setIsFavourite)
 
   const isFavourite = isProductFavourite(data) ? <AiFillHeart /> : <AiOutlineHeart />
 

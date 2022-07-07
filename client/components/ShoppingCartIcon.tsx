@@ -1,10 +1,10 @@
 import { Box, IconButton, useColorModeValue } from '@chakra-ui/react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
-import { useShoppingCart } from '../store'
+import { useShoppingCartStore } from '../store'
 
 const ShoppingCartIcon = ({ value }: { value: number }) => {
-  const setOpen = useShoppingCart(state => state.setOpen)
-  const isOpen = useShoppingCart(state => state.isOpen)
+  const setOpen = useShoppingCartStore(state => state.setOpen)
+  const isOpen = useShoppingCartStore(state => state.isOpen)
 
   const bgColor = useColorModeValue('transparent', 'gray_3')
   const bgHoverColor = useColorModeValue('gray_8', 'gray_2')

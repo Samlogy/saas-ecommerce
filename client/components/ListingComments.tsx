@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { AddComment, Comment, View, Pagination } from '../components'
 import { IComment } from '../lib/interfaces'
 import { GET_ALL_COMMENTS } from '../lib/services'
-import { useAuth } from '../store'
+import { useAuthStore } from '../store'
 
 const ListingComments = ({ comments }: { comments: IComment[] }) => {
   // pagination logic
@@ -14,7 +14,7 @@ const ListingComments = ({ comments }: { comments: IComment[] }) => {
 
   const textColor = useColorModeValue('balck', 'white')
 
-  const isLogged = useAuth((state: any) => state.isLogged)
+  const isLogged = useAuthStore((state: any) => state.isLogged)
 
   // load related products (apollo --> API) GET_ALL_COMMENTS
   return (

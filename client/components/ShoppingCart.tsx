@@ -20,13 +20,13 @@ import { FaTrash } from 'react-icons/fa'
 import { View } from '../components'
 import { formatCurrency, isProductFavourite, onAddFavouriteProduct } from '../lib/utils/fonctions'
 import { loadState, saveState } from '../lib/utils/localStorage'
-import { useShoppingCart } from '../store'
+import { useShoppingCartStore } from '../store'
 
 const ShoppingCart = () => {
-  const isOpen = useShoppingCart((state: any) => state.isOpen)
-  const setOpen = useShoppingCart((state: any) => state.setOpen)
-  const removeItems = useShoppingCart((state: any) => state.removeItems)
-  const products = useShoppingCart((state: any) => state.products)
+  const isOpen = useShoppingCartStore((state: any) => state.isOpen)
+  const setOpen = useShoppingCartStore((state: any) => state.setOpen)
+  const removeItems = useShoppingCartStore((state: any) => state.removeItems)
+  const products = useShoppingCartStore((state: any) => state.products)
 
   return (
     <Drawer isOpen={isOpen} placement="right" size="sm" onClose={() => setOpen(isOpen)}>
@@ -95,10 +95,10 @@ const ShoppingCart = () => {
 export default ShoppingCart
 
 const CartItem = ({ data }: { data: any }) => {
-  const increaseQuantity = useShoppingCart((state: any) => state.increaseQuantity)
-  const decreaseQuantity = useShoppingCart((state: any) => state.decreaseQuantity)
-  const removeItem = useShoppingCart((state: any) => state.removeItem)
-  const setIsFavourite = useShoppingCart((state: any) => state.setIsFavourite)
+  const increaseQuantity = useShoppingCartStore((state: any) => state.increaseQuantity)
+  const decreaseQuantity = useShoppingCartStore((state: any) => state.decreaseQuantity)
+  const removeItem = useShoppingCartStore((state: any) => state.removeItem)
+  const setIsFavourite = useShoppingCartStore((state: any) => state.setIsFavourite)
 
   const price = data.quantity * data.price
   const priceDiscount = data.quantity * data.price * data?.discount

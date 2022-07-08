@@ -7,14 +7,19 @@ export interface IAction {
 }
 
 export interface IProduct {
-  id: number
+  id?: number
   name: string
-  price: number | string
+  images: string[]
   description: string
-  discount: number // ]0,1[
-  image: string
-  quantity: number | string
-  categories: string[]
+  price: number
+  quantity: number
+  discount: number
+  rate: number
+  reviews: number
+  categoryId?: string
+  isFavourite?: boolean
+  createdAt: Date
+  editedAt: Date | null
 }
 
 export interface IOptions {
@@ -27,10 +32,46 @@ export interface INotification {
   title: string
   text: string
   createdAt: string
+  editedAt: Date
 }
 export interface IMessage {
   id: number
   title: string
   text: string
-  createdAt: string
+  createdAt: Date
+  editedAt: Date
+}
+
+export interface ICustomerTestimonial {
+  id: number
+  name: string
+  position: string
+  business: string
+  testimonial: string
+  avatar?: string
+  createdAt: Date
+  editedAt: Date | null
+}
+export interface IQuestionAnswer {
+  id: number
+  question: string
+  anwser: string
+  createdAt: Date
+  editedAt: Date | null
+}
+export interface IService {
+  id: number
+  title: string
+  description: string
+  image: string
+  createdAt: Date
+  editedAt: Date | null
+}
+export interface IDeal {
+  id: number
+  dueDate: Date
+  description: string
+  image: string
+  createdAt: Date
+  editedAt: Date | null
 }

@@ -1,4 +1,5 @@
 import { Box, Button, Flex, Heading, Image, useColorModeValue } from '@chakra-ui/react'
+import {ReactNode} from "react"
 import Link from 'next/link'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BsCalendarDate } from 'react-icons/bs'
@@ -7,7 +8,7 @@ import { Layout, View } from '../components'
 import { useLocale } from '../lib/hooks'
 import profileImage from '../public/images/profile.jpg'
 
-function Profile(props: any) {
+export default function Profile(props: any) {
   const user = {} // super tokens
   const userExtends = props.userExtends // our db
   const shipping = props.shipping // our db
@@ -54,11 +55,13 @@ function Profile(props: any) {
   )
 }
 
-export default Profile
+interface IBoxData { data: any; label: string; icon: any }
+interface ITemplateDisplayData { title: string; children: ReactNode }
+interface IDisplayData { data: any; labelData: any }
 
-const DisplayUserData = ({ data, labelData }: { data: any; labelData: any }) => {
+const DisplayUserData = ({ data, labelData }: IDisplayData) => {
   return (
-    <TemplateDataDisplay title="My Personal Informations">
+    <TemplateDisplayData title="My Personal Informations">
       <Image
         src={data?.avatar}
         boxSize="90px"
@@ -67,6 +70,9 @@ const DisplayUserData = ({ data, labelData }: { data: any; labelData: any }) => 
         mb="1rem"
         alt="avatar"
       />
+      { data.map((el, idx) => )
+
+      }
       <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} label={labelData?.email} />
       <BoxData
         data={data?.address}
@@ -78,12 +84,12 @@ const DisplayUserData = ({ data, labelData }: { data: any; labelData: any }) => 
         icon={<BsCalendarDate size={24} />}
         label={labelData?.createdAt}
       />
-    </TemplateDataDisplay>
+    </TemplateDisplayData>
   )
 }
-const DisplayShippingData = ({ data, labelData }: { data: any; labelData: any }) => {
+const DisplayShippingData = ({ data, labelData }: IDisplayData) => {
   return (
-    <TemplateDataDisplay title="My Shipping Informations">
+    <TemplateDisplayData title="My Shipping Informations">
       <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} label={labelData?.email} />
       <BoxData
         data={data?.address}
@@ -95,12 +101,12 @@ const DisplayShippingData = ({ data, labelData }: { data: any; labelData: any })
         icon={<BsCalendarDate size={24} />}
         label={labelData?.createdAt}
       />
-    </TemplateDataDisplay>
+    </TemplateDisplayData>
   )
 }
-const DisplayVendorData = ({ data, labelData }: { data: any; labelData: any }) => {
+const DisplayVendorData = ({ data, labelData }: IDisplayData) => {
   return (
-    <TemplateDataDisplay title="My Vendor Informations">
+    <TemplateDisplayData title="My Vendor Informations">
       <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} label={labelData?.email} />
       <BoxData
         data={data?.address}
@@ -112,11 +118,11 @@ const DisplayVendorData = ({ data, labelData }: { data: any; labelData: any }) =
         icon={<BsCalendarDate size={24} />}
         label={labelData?.createdAt}
       />
-    </TemplateDataDisplay>
+    </TemplateDisplayData>
   )
 }
 
-const BoxData = ({ data, label, icon }: { data: any; label: string; icon: any }) => {
+const BoxData = ({ data, label, icon }: IBoxData) => {
   return (
     <Flex alignItems={'center'} mb="1rem">
       {icon}
@@ -136,7 +142,7 @@ const BoxData = ({ data, label, icon }: { data: any; label: string; icon: any })
   )
 }
 
-const TemplateDataDisplay = ({ title, children }: { title: string; children: React.ReactNode }) => {
+const TemplateDisplayData = ({ title, children }: ITemplateDisplayData) => {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <Flex

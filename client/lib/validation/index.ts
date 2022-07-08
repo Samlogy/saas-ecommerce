@@ -6,16 +6,8 @@ export const contactSchema = yup.object().shape({
   message: yup.string().required('Message required')
 })
 
-export const addProductSchema = yup.object().shape({
-  img: yup.string().required('Full Name required'),
-  name: yup.string().required('Product Name required'),
-  description: yup.string().required('Product Description required'),
-  price: yup.number().required('Product Price required'),
-  coupon: yup.string()
-})
-
 export const profileSchema = yup.object().shape({
-  // avatar: yup.string().required('Avatar required'),
+  avatar: yup.string().required('Avatar required'),
   fullName: yup.string().required('Full Name required'),
   email: yup.string().email('Enter a valid Email Address').required('Email required'),
   mobile: yup.string(),

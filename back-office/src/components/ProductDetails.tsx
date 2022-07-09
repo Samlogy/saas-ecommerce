@@ -15,13 +15,15 @@ import {
   UnorderedList
 } from '@chakra-ui/react'
 import { IProduct } from '../lib/interfaces'
+import { useProductStore } from 'store'
 
 interface IProductDetails {
   isOpen: boolean
   onClose: () => void
-  product: IProduct
 }
-const ProductDetails = ({ isOpen, onClose, product }: IProductDetails) => {
+export default function ProductDetails({ isOpen, onClose }: IProductDetails) {
+  const product = useProductStore((state: any) => state.product)
+  const setProduct = useProductStore((state: any) => state.setProduct)
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
@@ -33,7 +35,7 @@ const ProductDetails = ({ isOpen, onClose, product }: IProductDetails) => {
           <Flex flexDir="column">
             <Flex justifyContent={'space-between'} alignItems="center" mb=".5rem">
               <Image
-                src={product?.image}
+                src={product?.images[0]}
                 fallbackSrc="https://via.placeholder.com/100"
                 // fallback="https://via.placeholder.com/50"
                 alt="product iamge"
@@ -58,8 +60,6 @@ const ProductDetails = ({ isOpen, onClose, product }: IProductDetails) => {
     </Modal>
   )
 }
-
-export default ProductDetails
 
 const Display = ({ label, data }: { label: string; data: any }) => {
   const isDataExist = (data: any) => {

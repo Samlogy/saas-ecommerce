@@ -18,16 +18,14 @@ import {
 import { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm, Controller } from 'react-hook-form'
-import { MultiSelect } from 'react-multi-select-component'
 
 import { ErrorMessage } from 'components'
 import { addProductSchema } from '../lib/validation'
-import { setValues } from 'framer-motion/types/render/utils/setters'
+import { useProductStore } from 'store'
 
 interface IAddEditProduct {
   isOpen: boolean
   onClose: () => void
-  product?: any
   mode: string
 }
 interface IEditImage {
@@ -39,7 +37,10 @@ interface IAvatar {
   isLoading: boolean
   error: string
 }
-const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => {
+export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduct) {
+  const product = useProductStore((state: any) => state.product)
+  const setProduct = useProductStore((state: any) => state.setProduct)
+
   const formOptions = {
     resolver: yupResolver(addProductSchema),
     defaultValues: mode === 'add' ? {} : product
@@ -167,31 +168,6 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
               {errors.quantity && <ErrorMessage error={errors.quantity.message} />}
             </FormControl>
 
-            <FormControl id="categories" mb=".5rem">
-              <FormLabel> Category </FormLabel>
-              <Controller
-                name="categories"
-                render={({ field }) => (
-                  <MultiSelect
-                    {...field}
-                    options={categoryList}
-                    value={category}
-                    onChange={(val: any) => {
-                      setCategory(val)
-                      setValue('categories', val)
-                    }}
-                    valueRenderer={val => (!val.length ? 'Category' : null)}
-                    className={errors.categories ? 'mutli-select error' : 'multi-select'}
-                    // overrideStrings={multiselect_strings}
-                    labelledBy="categories"
-                  />
-                )}
-                control={control}
-                defaultValue=""
-              />
-              {errors.categories && <ErrorMessage error={errors.categories.message} />}
-            </FormControl>
-
             <FormControl id="discount" mb=".5rem">
               <FormLabel> Add Discount </FormLabel>
               <Input
@@ -241,7 +217,6 @@ const AddEditProduct = ({ isOpen, onClose, product, mode }: IAddEditProduct) => 
     </Modal>
   )
 }
-export default AddEditProduct
 
 const EditImage = ({ data, upload, avatar }: IEditImage) => {
   return (

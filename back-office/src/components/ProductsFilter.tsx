@@ -7,26 +7,21 @@ import {
   InputRightElement,
   useColorModeValue
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
+import { IProduct } from 'lib/interfaces'
+import { useProductStore } from 'store'
 
-interface IProductFilter {
-  setQuery: any
-  query: string
-}
-const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
+export default function ProductsFilter() {
+  const product = useProductStore((state: any) => state.product)
+  const setProduct = useProductStore((state: any) => state.setProduct)
+  const products = useProductStore((state: any) => state.products)
+  const setProducts = useProductStore((state: any) => state.setProducts)
+
   const keys = ['image', 'name', 'description', 'qunatity', 'price']
 
-  const onSort = (e: any) => {
-    const selected = e.target.value
-    console.log('selected: ', selected)
-  }
-  const onFilter = (e: any) => {
-    const filters = e.target.value.toLowerCase()
-    // console.log('filters: ', filters)
-    setQuery(filters)
-    // call api --> filtering according to (name, description)
-  }
+  const [query, setQuery] = useState('')
+
   const bgColor = useColorModeValue('white', 'gray_2')
   const inputColor = useColorModeValue('gray_9', 'gray_2')
   return (
@@ -42,7 +37,8 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
             type="search"
             placeholder="Search..."
             w={['80%', '', '20rem', '']}
-            onChange={onFilter}
+            value={query}
+            onChange={e => setQuery(e.target.value)}
             focusBorderColor="accent_5"
             bg={inputColor}
           />
@@ -56,7 +52,7 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
 
       <Flex alignItems={'center'}>
         <Select
-          onChange={onSort}
+          // onChange={onSort}
           focusBorderColor="accent_5"
           placeholder="Order"
           w={['80%', '', '6rem', '']}
@@ -69,5 +65,3 @@ const ProductsFilter = ({ setQuery, query }: IProductFilter) => {
     </Flex>
   )
 }
-
-export default ProductsFilter

@@ -22,6 +22,7 @@ import {
   ActionsMenu
 } from 'components'
 import { IAction, IProduct } from 'lib/interfaces'
+import { useProductStore } from 'store'
 
 const productList = [
   {
@@ -77,30 +78,8 @@ const productList = [
 ]
 
 export default function Products() {
-  const [action, setAction] = useState<IAction>({
-    delete: false,
-    disable: false,
-    add: false,
-    edit: false,
-    details: false
-  })
-  const [products, setProducts] = useState<IProduct[]>()
-  const [query, setQuery] = useState('')
-  const [product, setProduct] = useState<IProduct>({
-    id: 0,
-    name: '',
-    image: '',
-    discount: 0,
-    description: '',
-    quantity: 0,
-    price: '',
-    categories: []
-  })
-
-  useEffect(() => {
-    // load products data
-    // setProducts(data)
-  }, [])
+  const action = useProductStore((state: any) => state.action)
+  const setAction = useProductStore((state: any) => state.setAction)
 
   // products list
   const productTableHead = [
@@ -139,7 +118,7 @@ export default function Products() {
         {product.name}
       </Td>
       <Td p="15px 10px" maxW="2rem">
-        {product.image}
+        {product.images[0]}
       </Td>
       <Td p="15px 10px" maxW="2rem" isTruncated>
         {product.description}
@@ -154,12 +133,7 @@ export default function Products() {
         {product.discount}
       </Td>
       <Td p="15px 10px" w="2rem">
-        <ActionsMenu
-          productId={product.id}
-          setAction={setAction}
-          setProduct={setProduct}
-          product={product}
-        />
+        <ActionsMenu setAction={setAction} />
       </Td>
     </Tr>
   )
@@ -185,7 +159,6 @@ export default function Products() {
         leftIcon={<AiOutlinePlus size={16} />}
         onClick={() => setAction({ ...action, add: true })}
       >
-        {' '}
         Add Product{' '}
       </Button>
 
@@ -194,8 +167,6 @@ export default function Products() {
           isOpen={action.delete}
           setAction={setAction}
           onClose={() => setAction({ ...action, delete: false })}
-          productId={product.id}
-          setProduct={setProduct}
           mode="delete"
         />
       </View>
@@ -205,8 +176,6 @@ export default function Products() {
           isOpen={action.disable}
           setAction={setAction}
           onClose={() => setAction({ ...action, disable: false })}
-          productId={product.id}
-          setProduct={setProduct}
           mode="disable"
         />
       </View>
@@ -223,7 +192,6 @@ export default function Products() {
         <AddEditProduct
           isOpen={action.edit}
           onClose={() => setAction({ ...action, edit: false })}
-          product={product}
           mode="edit"
         />
       </View>
@@ -232,11 +200,10 @@ export default function Products() {
         <ProductDetails
           isOpen={action.details}
           onClose={() => setAction({ ...action, details: false })}
-          product={product}
         />
       </View>
 
-      <ProductsFilter setQuery={setQuery} query={query} />
+      <ProductsFilter />
 
       <CustomTable
         limit="4"

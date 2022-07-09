@@ -9,25 +9,27 @@ import {
   AlertDialogCloseButton
 } from '@chakra-ui/react'
 import React, { useRef } from 'react'
+import { useProductStore } from 'store'
 
 interface IProductBox {
   isOpen: boolean
   onClose: () => void
-  productId: number
   setAction: any
   mode: string
-  setProduct: any
 }
-const ProductBox = ({ isOpen, onClose, productId, setAction, mode }: IProductBox) => {
+export default function ProductBox({ isOpen, onClose, mode, setAction }: IProductBox) {
   const cancelRef = useRef(null)
 
-  const onDelete = (productId: string | number) => {
-    console.log('delete product: ', productId)
+  const product = useProductStore((state: any) => state.product)
+  const setProduct = useProductStore((state: any) => state.setProduct)
+
+  const onDelete = (id: number) => {
+    console.log('delete product: ', id)
     setAction({ delete: false })
   }
 
-  const onDisable = (productId: string | number) => {
-    console.log('disable product: ', productId)
+  const onDisable = (id: number) => {
+    console.log('disable product: ', id)
     setAction({ disable: false })
   }
 
@@ -57,7 +59,7 @@ const ProductBox = ({ isOpen, onClose, productId, setAction, mode }: IProductBox
         <AlertDialogFooter>
           <Button
             colorScheme="red"
-            onClick={mode === 'delete' ? () => onDelete(productId) : () => onDisable(productId)}
+            onClick={mode === 'delete' ? () => onDelete(product.id) : () => onDisable(product.id)}
           >
             Yes
           </Button>
@@ -76,5 +78,3 @@ const ProductBox = ({ isOpen, onClose, productId, setAction, mode }: IProductBox
     </AlertDialog>
   )
 }
-
-export default ProductBox

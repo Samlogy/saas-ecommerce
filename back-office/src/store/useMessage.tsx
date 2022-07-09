@@ -1,30 +1,31 @@
 import create, { SetState } from 'zustand'
 import { devtools } from 'zustand/middleware'
+import { IMessage } from 'lib/interfaces'
 
 // Auth Store
 type IMessages = {
   message: any
   messages: any
   isVisible: boolean
-  handleMessageVisibility: (visible: boolean) => void
-  setMessage: (data: any) => void
-  setMessages: (data: any) => void
+  setVisibile: (isVisible: boolean) => void
+  setMessage: (data: IMessage) => void
+  setMessages: (data: IMessage[]) => void
 }
 
 let messageStore = (set: SetState<IMessages>) => ({
   isVisible: false,
   message: {},
   messages: [],
-  handleMessageVisibility: (isVisible: boolean) => {
+  setVisibile: (isVisible: boolean) => {
     set({ isVisible: isVisible })
   },
-  setMessage: (message: any) => {
+  setMessage: (message: IMessage) => {
     set(state => ({
       ...state,
       message: message
     }))
   },
-  setMessages: (messages: any) => {
+  setMessages: (messages: IMessage[]) => {
     set(state => ({
       ...state,
       messages: [...messages, ...state.messages]
@@ -36,5 +37,4 @@ let messageStore = (set: SetState<IMessages>) => ({
 messageStore = devtools(messageStore)
 
 const useMessage = create<IMessages>(messageStore)
-
 export default useMessage

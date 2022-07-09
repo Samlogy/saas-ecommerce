@@ -4,17 +4,18 @@ import { Button, Badge, Box, MenuItem, Text } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
 import { Dropdown, View } from 'components'
-import { useMessageStore } from '../store'
+import { useMessageStore } from 'store'
+import { IMessage } from 'lib/interfaces'
 
-function MessageButton() {
+export default function MessageButton() {
   const messages = useMessageStore((state: any) => state.messages)
-  const handleMessageVisibility = useMessageStore((state: any) => state.handleMessageVisibility)
+  const setVisibile = useMessageStore((state: any) => state.handleMessageVisibility)
   const setMessage = useMessageStore((state: any) => state.setMessage)
 
   const msgs = messages.length
 
-  const handleClickMessage = (data: any) => {
-    handleMessageVisibility(true)
+  const handleClickMessage = (data: IMessage) => {
+    setVisibile(true)
     setMessage(data)
   }
 
@@ -46,7 +47,7 @@ function MessageButton() {
   return (
     <Dropdown icon={<CustomButton msgs={msgs} />}>
       <View cond={messages.length > 0}>
-        {messages?.map((item: any) => (
+        {messages?.map((item: IMessage) => (
           <MenuItem
             key={item.id}
             flexDir={'row'}
@@ -64,7 +65,6 @@ function MessageButton() {
 
       <View cond={messages.length === 0}>
         <Text textAlign={'center'} color="gray_4">
-          {' '}
           There's no new Message{' '}
         </Text>
       </View>
@@ -87,5 +87,3 @@ const CustomButton = ({ msgs }: { msgs: number }) => {
     </Button>
   )
 }
-
-export default MessageButton

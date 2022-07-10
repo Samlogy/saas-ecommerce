@@ -5,11 +5,12 @@ import {
   Th,
   Td,
   Image,
+  Text,
   useColorModeValue,
+  Flex,
   useColorMode
 } from '@chakra-ui/react'
 import { AiOutlinePlus } from 'react-icons/ai'
-import React, { useEffect, useState } from 'react'
 
 import {
   Layout,
@@ -24,62 +25,62 @@ import {
 import { IAction, IProduct } from 'lib/interfaces'
 import { useProductStore } from 'store'
 
-const productList = [
+const allProducts = [
   {
     id: 1,
-    // image: '',
-    name: 'Brittan Rois',
+    name: 'Automatic Watch',
+    images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+    quantity: 1,
+    price: 350,
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
-    discount: 0.1,
-    quantity: 10,
-    price: 24011
+      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+    delivery: '2-3 business days',
+    reviews: 34,
+    rate: 4
   },
   {
     id: 2,
-    // image: '',
-    name: 'Brittan Rois',
+    name: 'Automatic Watch',
+    images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+    quantity: 1,
+    price: 350,
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
-    discount: 0.1,
-    quantity: 10,
-    price: 24011
+      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+    delivery: '2-3 business days',
+    reviews: 34,
+    rate: 4
   },
   {
     id: 3,
-    // image: '',
-    name: 'Brittan Rois',
+    name: 'Automatic Watch',
+    images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+    quantity: 1,
+    price: 350,
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
-    discount: 0.1,
-    quantity: 10,
-    price: 24011
+      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+    delivery: '2-3 business days',
+    reviews: 34,
+    rate: 4
   },
   {
     id: 4,
-    // image: '',
-    name: 'Brittan Rois',
+    name: 'Automatic Watch',
+    images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+    quantity: 1,
+    price: 350,
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
-    discount: 0.1,
-    quantity: 10,
-    price: 24011
-  },
-  {
-    id: 5,
-    // image: '',
-    name: 'Brittan Rois',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quos omnis accusamus, debitis ducimus eveniet ex, ut aspernatur dolorum velit, consequatur eius amet et molestias non quae veritatis nostrum doloribus.',
-    discount: 0.1,
-    quantity: 10,
-    price: 24011
+      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+    delivery: '2-3 business days',
+    reviews: 34,
+    rate: 4
   }
 ]
 
 export default function Products() {
   const action = useProductStore((state: any) => state.action)
   const setAction = useProductStore((state: any) => state.setAction)
+
+  const { colorMode: mode } = useColorMode()
 
   // products list
   const productTableHead = [
@@ -109,16 +110,13 @@ export default function Products() {
           boxSize="100px"
           borderRadius={'5px'}
           objectFit="cover"
-          src={product.image}
+          src={product.images[0]}
           fallbackSrc="https://via.placeholder.com/100"
           alt={product.name}
         />
       </Td>
       <Td p="15px 10px" maxW="2rem">
         {product.name}
-      </Td>
-      <Td p="15px 10px" maxW="2rem">
-        {product.images[0]}
       </Td>
       <Td p="15px 10px" maxW="2rem" isTruncated>
         {product.description}
@@ -137,8 +135,6 @@ export default function Products() {
       </Td>
     </Tr>
   )
-
-  const { colorMode: mode } = useColorMode()
 
   return (
     <Layout isHeaderVisible>
@@ -204,14 +200,19 @@ export default function Products() {
       </View>
 
       <ProductsFilter />
+      <Flex flexDir={'column'}>
+        <View cond={allProducts?.length > 0}>
+          <Text mb="1rem" ml="3rem">
+            Products result: {allProducts?.length}{' '}
+          </Text>
 
-      <CustomTable
-        limit="4"
-        headData={productTableHead}
-        renderHead={(product: any, idx: any) => renderHead(product, idx)}
-        bodyData={productList}
-        renderBody={(product: any, idx: any) => renderBody(product, idx)}
-      />
+          {/* display table full of products */}
+        </View>
+
+        <View cond={allProducts?.length === 0}>
+          <Text> There is no product with thoes filters </Text>
+        </View>
+      </Flex>
     </Layout>
   )
 }

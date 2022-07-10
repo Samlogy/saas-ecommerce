@@ -1,27 +1,11 @@
-import {
-  Button,
-  Image,
-  Box,
-  Flex,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
-  Input,
-  Textarea,
-  useColorModeValue
-} from '@chakra-ui/react'
-import { useState } from 'react'
+import { Box, Button, Flex, FormControl, Image, Input, useColorModeValue } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm, Controller } from 'react-hook-form'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { ErrorMessage } from 'components'
-import { addProductSchema } from '../lib/validation'
+import { CustomModal, ErrorMessage, InputField, TextField, SelectField } from 'components'
 import { useProductStore } from 'store'
+import { addProductSchema } from '../lib/validation'
 
 interface IAddEditProduct {
   isOpen: boolean
@@ -36,7 +20,11 @@ interface IEditImage {
 interface IAvatar {
   isLoading: boolean
   error: string
+  img: string
 }
+
+const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
+
 export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduct) {
   const product = useProductStore((state: any) => state.product)
   const setProduct = useProductStore((state: any) => state.setProduct)
@@ -49,9 +37,6 @@ export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduc
     register,
     handleSubmit,
     reset,
-    setValue,
-    getValues,
-    control,
     formState: { errors, isSubmitting }
   } = useForm(formOptions)
 
@@ -61,164 +46,136 @@ export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduc
   }
 
   function createProduct(data: any) {
-    const new_data = {
-      ...data,
-      categories: category
-    }
-    console.log('create product: ', new_data)
+    console.log('create product: ', data)
   }
 
-  function updateProduct(id: string, data: any) {
-    const new_data = {
-      ...data,
-      categories: category
-    }
-    console.log('update product: ', id, new_data)
+  function updateProduct(id: number, data: any) {
+    console.log('update product: ', id, data)
   }
 
   const [avatar, setAvatar] = useState<IAvatar>({
     isLoading: false,
-    error: ''
+    error: '',
+    img: ''
   })
 
   // image
-  const onUploadImage = () => {
-    setAvatar({ ...avatar, isLoading: true })
-    // call api when done --> error / success
-    setAvatar({ ...avatar, isLoading: false })
+  const onUploadImage = (e: any) => {
+    const imgBase = e.target.files[0]
+    const imgPreview = URL.createObjectURL(imgBase)
+    setAvatar({ ...avatar, img: imgPreview })
   }
 
   const inputColor = useColorModeValue('gray_9', 'gray_3')
-  const [category, setCategory] = useState([])
-  const categoryList = [
-    { label: 'Grapes 🍇', value: 'grapes' },
-    { label: 'Mango 🥭', value: 'mango' },
-    { label: 'Banane', value: 'banane' },
-    { label: 'Kiwi', value: 'kiwi' },
-    { label: 'Strawberry 🍓', value: 'strawberry', disabled: true }
-  ]
 
-  return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader> {mode === 'add' ? 'Add' : 'Edit'} Product </ModalHeader>
-        <ModalCloseButton />
+  const Form = (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <EditImages data={product?.images} upload={onUploadImage} avatar={avatar} />
 
-        <ModalBody>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <EditImage data={product?.image} upload={onUploadImage} avatar={avatar} />
+      <InputField
+        errors={errors}
+        register={register}
+        name="name"
+        label="Name"
+        placeholder="Name"
+        bg={inputColor}
+        w="full"
+      />
 
-            <FormControl id="name" mb=".5rem">
-              <FormLabel> Name </FormLabel>
-              <Input
-                type="text"
-                placeholder="Product Name"
-                _placeholder={{ color: 'gray_4' }}
-                isInvalid={errors.name ? true : false}
-                focusBorderColor={errors.name ? 'error' : 'accent_5'}
-                bg={inputColor}
-                borderRadius="5px"
-                {...register('name')}
-              />
-              {errors.name && <ErrorMessage error={errors.name.message} />}
-            </FormControl>
+      <TextField
+        errors={errors}
+        register={register}
+        name="description"
+        placeholder="Description"
+        label="Description"
+        bg={inputColor}
+        w="full"
+      />
 
-            <FormControl id="description" mb=".5rem">
-              <FormLabel> Description </FormLabel>
-              <Textarea
-                placeholder="Product Description"
-                _placeholder={{ color: 'gray_4' }}
-                isInvalid={errors.description ? true : false}
-                focusBorderColor={errors.description ? 'error' : 'accent_5'}
-                bg={inputColor}
-                borderRadius="5px"
-                {...register('description')}
-              />
-              {errors.description && <ErrorMessage error={errors.description.message} />}
-            </FormControl>
+      <InputField
+        type="number"
+        errors={errors}
+        register={register}
+        name="price"
+        placeholder="Price"
+        label="Price"
+        bg={inputColor}
+        w="full"
+      />
 
-            <FormControl id="price" mb=".5rem">
-              <FormLabel> Price </FormLabel>
-              <Input
-                type="number"
-                placeholder="Product Price"
-                _placeholder={{ color: 'gray_4' }}
-                isInvalid={errors.price ? true : false}
-                focusBorderColor={errors.price ? 'error' : 'accent_5'}
-                bg={inputColor}
-                borderRadius="5px"
-                {...register('price')}
-              />
-              {errors.price && <ErrorMessage error={errors.price.message} />}
-            </FormControl>
+      <InputField
+        type="number"
+        errors={errors}
+        register={register}
+        name="quantity"
+        placeholder="Quantity"
+        label="Quantity"
+        bg={inputColor}
+        w="full"
+      />
 
-            <FormControl id="quantity" mb=".5rem">
-              <FormLabel> Quantity </FormLabel>
-              <Input
-                type="number"
-                placeholder="Product Quantity"
-                _placeholder={{ color: 'gray_4' }}
-                isInvalid={errors.quantity ? true : false}
-                focusBorderColor={errors.quantity ? 'error' : 'accent_5'}
-                bg={inputColor}
-                borderRadius="5px"
-                {...register('quantity')}
-              />
-              {errors.quantity && <ErrorMessage error={errors.quantity.message} />}
-            </FormControl>
+      <SelectField
+        errors={errors}
+        register={register}
+        name="category"
+        label="Category"
+        placeholder="Category"
+        bg={inputColor}
+        w="full"
+      >
+        {CATEGORY_LIST?.map((el: string, idx: number) => (
+          <option key={idx} value={el}>
+            {el}
+          </option>
+        ))}
+      </SelectField>
 
-            <FormControl id="discount" mb=".5rem">
-              <FormLabel> Add Discount </FormLabel>
-              <Input
-                type="number"
-                placeholder="Product Discount"
-                _placeholder={{ color: 'gray_4' }}
-                isInvalid={errors.discount ? true : false}
-                focusBorderColor={errors.discount ? 'error' : 'accent_5'}
-                bg={inputColor}
-                borderRadius="5px"
-                {...register('discount')}
-              />
-              {errors.discount && <ErrorMessage error={errors.discount.message} />}
-            </FormControl>
+      <InputField
+        type="number"
+        errors={errors}
+        register={register}
+        name="discount"
+        placeholder="Discount"
+        label="Discount"
+        bg={inputColor}
+        w="full"
+      />
 
-            <Flex flexDir="row">
-              <Button
-                type="submit"
-                isLoading={isSubmitting}
-                bg="accent_3"
-                color="white"
-                mt="1rem"
-                ml="auto"
-                display={'flex'}
-                justifyContent="flex-end"
-                _hover={{ bg: 'accent_2' }}
-              >
-                {mode === 'add' ? 'Create' : 'Edit'}
-              </Button>
-              <Button
-                type="reset"
-                bg="gray_3"
-                color="white"
-                mt="1rem"
-                ml="1rem"
-                display={'flex'}
-                justifyContent="flex-end"
-                _hover={{ bg: 'gray_4' }}
-                onClick={() => (mode === 'edit' ? {} : reset(formOptions.defaultValues))}
-              >
-                Reset
-              </Button>
-            </Flex>
-          </form>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+      <Flex flexDir="row">
+        <Button
+          type="submit"
+          isLoading={isSubmitting}
+          bg="accent_3"
+          color="white"
+          mt="1rem"
+          ml="auto"
+          display={'flex'}
+          justifyContent="flex-end"
+          _hover={{ bg: 'accent_2' }}
+        >
+          {mode === 'add' ? 'Create' : 'Edit'}
+        </Button>
+        <Button
+          type="reset"
+          bg="gray_3"
+          color="white"
+          mt="1rem"
+          ml="1rem"
+          display={'flex'}
+          justifyContent="flex-end"
+          _hover={{ bg: 'gray_4' }}
+          onClick={() => (mode === 'edit' ? {} : reset(formOptions.defaultValues))}
+        >
+          Reset
+        </Button>
+      </Flex>
+    </form>
   )
+
+  return <CustomModal title="something ..." isOpen={isOpen} onClose={onClose} body={Form} />
 }
 
-const EditImage = ({ data, upload, avatar }: IEditImage) => {
+const EditImages = ({ data, upload, avatar }: IEditImage) => {
   return (
     <>
       <Box pos="relative" w="fit-content">
@@ -226,25 +183,25 @@ const EditImage = ({ data, upload, avatar }: IEditImage) => {
           <Image
             boxSize="50px"
             objectFit="cover"
-            src={data ? data : ''}
+            src={data ? data : avatar.img}
             fallbackSrc="https://via.placeholder.com/100"
-            // fallback="https://via.placeholder.com/50"
-            alt="Product Image"
+            alt="Image"
             mb="1rem"
             borderRadius="5px"
           />
         </Flex>
-        <FormControl id="avatar">
-          <Input
-            type="file"
-            id="profile-image"
-            border="none"
-            disabled={avatar.isLoading}
-            borderRadius="5px"
-            onChange={upload}
-            px="0"
-          />
-        </FormControl>
+
+        <InputField
+          type="file"
+          accept="image/*"
+          name="images"
+          label="images"
+          placeholder="images"
+          onChange={upload}
+          w="full"
+          px="0"
+          border="none"
+        />
       </Box>
       <Flex mb=".5rem"> {avatar.error && <ErrorMessage error={avatar.error} />} </Flex>
     </>

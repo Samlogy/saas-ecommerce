@@ -6,14 +6,12 @@ interface IDropdown {
   children?: any
 }
 
-const Dropdown = ({ icon, label, children }: IDropdown) => {
+export default function Dropdown({ icon, label, children }: IDropdown) {
   return (
     <Menu>
       <MenuButton
         as={label ? Button : IconButton}
         icon={icon}
-        p=".1rem 0"
-        transition="all 0.2s"
         borderRadius="md"
         bg="transparent"
         _focus={{ boxShadow: 'outline' }}
@@ -29,5 +27,3 @@ const Dropdown = ({ icon, label, children }: IDropdown) => {
     </Menu>
   )
 }
-
-export default Dropdown

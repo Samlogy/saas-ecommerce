@@ -1,25 +1,24 @@
-import React, { useState } from 'react'
-import { Box, Image, Stack, Text, Avatar, IconButton, MenuItem } from '@chakra-ui/react'
+import { Avatar, Box, IconButton, Flex, Text } from '@chakra-ui/react'
+import { useState } from 'react'
 import { BiMenu } from 'react-icons/bi'
-// import { useAuth0 } from '@auth0/auth0-react'
 
 import {
-  SideBar,
-  LogoutButton,
   DarkModeToggle,
-  NotificationButton,
   Dropdown,
-  NotificationDetails,
   LanguageSwitcher,
+  LogoutButton,
   MessageButton,
-  MessageDetails
+  MessageDetails,
+  NotificationButton,
+  NotificationDetails,
+  SideBar
 } from 'components'
 
 interface ITopBar {
   isFixedNav?: boolean
 }
 
-const TopBar = ({ isFixedNav }: ITopBar) => {
+export default function TopBar({ isFixedNav }: ITopBar) {
   const [isVisible, setIsVisible] = useState(false)
 
   const user = { name: '' }
@@ -48,19 +47,16 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
           ADMIN Dashboard
         </Text>
 
-        <Stack direction={['row']} alignItems={['flex-end', 'center']}>
+        <Flex alignItems={['flex-end', 'center']}>
           <LanguageSwitcher />
           <DarkModeToggle />
           <NotificationButton />
           <MessageButton />
 
           <Dropdown icon={<Avatar name="admin" src={user?.name} size="sm" />}>
-            <MenuItem flexDir={'column'}>
-              {' '}
-              <LogoutButton />{' '}
-            </MenuItem>
+            <LogoutButton />
           </Dropdown>
-        </Stack>
+        </Flex>
       </Box>
 
       <SideBar isOpen={isVisible} onClose={() => setIsVisible(false)} />
@@ -69,5 +65,3 @@ const TopBar = ({ isFixedNav }: ITopBar) => {
     </>
   )
 }
-
-export default TopBar

@@ -8,40 +8,13 @@ import { useNotificationStore } from '../store'
 
 const NotificationButton = () => {
   const notifications = useNotificationStore((state: any) => state.notifications)
-  const handleNotificationVisibility = useNotificationStore(
-    (state: any) => state.handleNotificationVisibility
-  )
+  const setVisible = useNotificationStore((state: any) => state.setVisible)
   const setNotification = useNotificationStore((state: any) => state.setNotification)
 
   const notifs = notifications.length
 
-  useEffect(() => {
-    // load notification data (useQuery) --> delete useEffect & state related to it
-    const data = [
-      {
-        id: 1,
-        title: 'title',
-        text: 'text...',
-        createdAt: '19/03/2022'
-      },
-      {
-        id: 2,
-        title: 'title',
-        text: 'text...',
-        createdAt: '19/03/2022'
-      },
-      {
-        id: 3,
-        title: 'title',
-        text: 'text...',
-        createdAt: '19/03/2022'
-      }
-    ]
-    // setNotifications(data)
-  }, [])
-
   const handleClickNotification = (data: any) => {
-    handleNotificationVisibility(true)
+    setVisible(true)
     setNotification(data)
   }
 

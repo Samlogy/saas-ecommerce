@@ -6,7 +6,7 @@ type INotification = {
   notifications: any
   notification: any
   isVisible: boolean
-  handleNotificationVisibility: (visible: boolean) => void
+  setVisible: (visible: boolean) => void
   setNotification: (data: any) => void
   setNotifications: (data: any) => void
 }
@@ -23,7 +23,7 @@ let notificationStore = (set: SetState<INotification>) => ({
   isVisible: false,
   notification: {},
   notifications: [testMsg],
-  handleNotificationVisibility: (isVisible: boolean) => {
+  setVisible: (isVisible: boolean) => {
     set({ isVisible: isVisible })
   },
   setNotification: (notification: any) => {

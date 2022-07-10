@@ -3,7 +3,7 @@ import { Dropdown } from 'components'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-function LanguageSwitcher() {
+export default function LanguageSwitcher() {
   const { i18n } = useTranslation()
 
   const changeLanguage = (lang: string) => {
@@ -24,7 +24,6 @@ function LanguageSwitcher() {
                 bg={i18n.language === lang ? '#ccc' : 'transparent'}
                 borderRadius="5px"
               >
-                {' '}
                 {lang}{' '}
               </MenuItem>
             )
@@ -50,5 +49,3 @@ const CustomButton = ({ lang }: { lang: string }) => {
     </Button>
   )
 }
-
-export default LanguageSwitcher

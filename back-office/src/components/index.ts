@@ -27,6 +27,8 @@ export { default as TemplateFilter } from './TemplateFilter'
 // notifications
 export { default as NotificationButton } from './NotificationButton'
 export { default as NotificationDetails } from './NotificationDetails'
+export { default as Listing } from './Listing'
+export { default as Details } from './Details'
 
 // messages
 export { default as MessageButton } from './MessageButton'

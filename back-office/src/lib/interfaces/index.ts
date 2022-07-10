@@ -32,14 +32,14 @@ export interface INotification {
   title: string
   text: string
   createdAt: string
-  editedAt: Date
+  editedAt: string
 }
 export interface IMessage {
   id: number
   title: string
   text: string
-  createdAt: Date
-  editedAt: Date
+  createdAt: string
+  editedAt: string
 }
 
 export interface ICustomerTestimonial {

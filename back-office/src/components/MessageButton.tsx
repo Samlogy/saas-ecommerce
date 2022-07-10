@@ -45,7 +45,7 @@ export default function MessageButton() {
   }, [])
 
   return (
-    <Dropdown icon={<CustomButton msgs={msgs} />}>
+    <Dropdown icon={<CustomButton data={msgs} icon={<MdEmail size="18" color="#ccc" />} />}>
       <View cond={messages.length > 0}>
         {messages?.map((item: IMessage) => (
           <MenuItem
@@ -72,18 +72,22 @@ export default function MessageButton() {
   )
 }
 
-const CustomButton = ({ msgs }: { msgs: number }) => {
+interface ICustomButton {
+  data: any
+  icon: React.ReactNode
+}
+const CustomButton = ({ data, icon }: ICustomButton) => {
   const btnRef = React.useRef(null)
   return (
     <Button variant="ghost" _hover={{ bg: 'transparent' }} className="hover-icon" ref={btnRef}>
-      {msgs > 0 ? (
+      {data > 0 ? (
         <Badge variant="solid" colorScheme="red" borderRadius="2xl">
-          {msgs > 99 ? '99+' : msgs}
+          {data > 99 ? '99+' : data}
         </Badge>
       ) : (
         ''
       )}
-      <MdEmail size="18" color="#ccc" />
+      {icon && icon}
     </Button>
   )
 }

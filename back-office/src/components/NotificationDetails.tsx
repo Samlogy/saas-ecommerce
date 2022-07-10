@@ -1,63 +1,12 @@
-import {
-  Box,
-  Text,
-  Button,
-  Image,
-  Flex,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  ModalFooter
-} from '@chakra-ui/react'
-
+import { Details } from 'components'
 import { useNotificationStore } from 'store'
 
-const NotificationDetails = () => {
-  const handleNotificationVisibility = useNotificationStore(
-    (state: any) => state.handleNotificationVisibility
-  )
+export default function MessageDetails() {
+  const setVisibile = useNotificationStore((state: any) => state.setVisibile)
   const notification = useNotificationStore((state: any) => state.notification)
   const isVisible = useNotificationStore((state: any) => state.isVisible)
-  return (
-    <Modal isOpen={isVisible} onClose={() => handleNotificationVisibility(false)} size="xl">
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader> Notification Details </ModalHeader>
-        <ModalCloseButton />
 
-        <ModalBody>
-          <Flex flexDir="column">
-            <Image
-              src={notification?.img}
-              alt="notification image"
-              borderRadius={'5px'}
-              w="5rem"
-              h="5rem"
-              mb=".5rem"
-            />
-            <Text> {notification.title} </Text>
-            <Text> {notification.text} </Text>
-            <Text> {notification.createdAt} </Text>
-          </Flex>
-        </ModalBody>
-        <ModalFooter>
-          {' '}
-          <Button
-            bg={'disable'}
-            color="white"
-            _hover={{ bg: 'gray_3' }}
-            onClick={() => handleNotificationVisibility(false)}
-          >
-            {' '}
-            Close{' '}
-          </Button>{' '}
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+  return (
+    <Details title="Notification" data={notification} isOpen={isVisible} setOpen={setVisibile} />
   )
 }
-
-export default NotificationDetails

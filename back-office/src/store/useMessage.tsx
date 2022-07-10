@@ -4,26 +4,31 @@ import { IMessage } from 'lib/interfaces'
 
 // Auth Store
 type IMessages = {
-  message: any
-  messages: any
+  message: IMessage
+  messages: IMessage[]
   isVisible: boolean
   setVisibile: (isVisible: boolean) => void
   setMessage: (data: IMessage) => void
   setMessages: (data: IMessage[]) => void
 }
 
+const testMsg = {
+  id: 1,
+  title: 'message title',
+  text: 'message text ...',
+  createdAt: 'new Date()',
+  editedAt: 'new Date()'
+}
+
 let messageStore = (set: SetState<IMessages>) => ({
   isVisible: false,
   message: {},
-  messages: [],
+  messages: [testMsg],
   setVisibile: (isVisible: boolean) => {
     set({ isVisible: isVisible })
   },
   setMessage: (message: IMessage) => {
-    set(state => ({
-      ...state,
-      message: message
-    }))
+    set({ message: message })
   },
   setMessages: (messages: IMessage[]) => {
     set(state => ({
@@ -35,6 +40,6 @@ let messageStore = (set: SetState<IMessages>) => ({
 
 // @ts-ignore
 messageStore = devtools(messageStore)
-
+// @ts-ignore
 const useMessage = create<IMessages>(messageStore)
 export default useMessage

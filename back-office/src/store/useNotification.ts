@@ -11,23 +11,18 @@ type INotification = {
   setNotifications: (data: any) => void
 }
 
+const testMsg = {
+  id: 1,
+  title: 'message title',
+  text: 'message text ...',
+  createdAt: 'new Date()',
+  editedAt: 'new Date()'
+}
+
 let notificationStore = (set: SetState<INotification>) => ({
   isVisible: false,
   notification: {},
-  notifications: [
-    // {
-    //   id: 1,
-    //   title: 'title',
-    //   text: 'text...',
-    //   createdAt: '19/03/2022'
-    // },
-    // {
-    //   id: 2,
-    //   title: 'title 2',
-    //   text: 'text 2...',
-    //   createdAt: '20/03/2022'
-    // }
-  ],
+  notifications: [testMsg],
   handleNotificationVisibility: (isVisible: boolean) => {
     set({ isVisible: isVisible })
   },

@@ -9,6 +9,7 @@ export { default as LogoutButton } from './LogoutButton'
 export { default as DarkModeToggle } from './DarkModeToggle'
 export { default as LanguageSwitcher } from './LanguageSwitcher'
 export { default as CustomPreLoader } from './CustomPreLoader'
+export { default as CustomAccordion } from './CustomAccordion'
 
 // custom fields
 export { default as InputField } from './InputField'

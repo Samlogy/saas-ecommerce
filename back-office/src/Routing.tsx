@@ -1,5 +1,5 @@
 import { ProtectedRoute } from 'components'
-import { Analytics, Messages, NotFound, Notifications, Products } from 'pages'
+import { Analytics, Messages, NotFound, Notifications, Products, Home } from 'pages'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import SuperTokens, { getSuperTokensRoutesForReactRouterDom } from 'supertokens-auth-react'
 import Session from 'supertokens-auth-react/recipe/session'
@@ -62,6 +62,15 @@ const Routing = () => {
           element={
             <ProtectedRoute>
               <Messages />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="home"
+          element={
+            <ProtectedRoute>
+              <Home />
             </ProtectedRoute>
           }
         />

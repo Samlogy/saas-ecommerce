@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { AiFillHome } from 'react-icons/ai'
-import { FaProductHunt } from 'react-icons/fa'
+import { FaProductHunt, FaChartLine } from 'react-icons/fa'
 import LogoutButton from './LogoutButton'
 
 interface ISideBar {
@@ -26,7 +26,7 @@ interface ISideBarItem {
   data: any
   active: boolean
 }
-const SideBar = ({ onClose, isOpen }: ISideBar) => {
+export default function SideBar({ onClose, isOpen }: ISideBar) {
   const activeItem = sideBarData.findIndex(item => item.url === window.location.pathname)
   const bgColor = useColorModeValue('white', 'gray_3')
 
@@ -52,8 +52,6 @@ const SideBar = ({ onClose, isOpen }: ISideBar) => {
     </Drawer>
   )
 }
-
-export default SideBar
 
 const SideBarItem = ({ key, data, active }: ISideBarItem) => {
   const textColor = useColorModeValue('black', 'white')
@@ -87,7 +85,7 @@ const SideBarItem = ({ key, data, active }: ISideBarItem) => {
 const sideBarData = [
   {
     url: '/',
-    icon: <AiFillHome size="24" />,
+    icon: <FaChartLine size="24" />,
     label: 'Analytics',
     id: 0
   },
@@ -96,5 +94,11 @@ const sideBarData = [
     icon: <FaProductHunt size="24" />,
     label: 'Products',
     id: 1
+  },
+  {
+    url: '/home',
+    icon: <AiFillHome size="24" />,
+    label: 'Home',
+    id: 2
   }
 ]

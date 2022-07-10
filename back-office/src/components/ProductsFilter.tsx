@@ -65,19 +65,18 @@ export default function ProductsFilter() {
 
   return (
     <Flex
-      flexDir={'row'}
-      justifyContent={'space-between'}
+      flexDir={'column'}
+      justifyContent="flex-start"
       alignItems={'center'}
       borderRadius="10px"
       p="1.5rem .5rem"
-      overflowX={'scroll'}
     >
       <InputField
         type="search"
         name="email"
         onChange={(e: any) => setFilters({ ...filters, search: e.target.value })}
         value={filters.search}
-        placeholdr="Search..."
+        placeholder="Search..."
         bg={itemBgColor}
         w="15rem"
       />

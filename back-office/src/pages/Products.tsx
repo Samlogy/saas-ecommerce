@@ -1,35 +1,38 @@
 import {
-  Heading,
   Button,
-  Tr,
-  Th,
-  Td,
-  Image,
-  Text,
-  useColorModeValue,
   Flex,
+  Heading,
+  IconButton,
+  Image,
+  Td,
+  Text,
+  Th,
+  Tr,
   useColorMode
 } from '@chakra-ui/react'
+import { useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
+import { BsFilterLeft } from 'react-icons/bs'
 
 import {
+  ActionsMenu,
+  AddEditProduct,
+  CustomDrawer,
   Layout,
-  View,
-  CustomTable,
-  ProductsFilter,
   ProductBox,
   ProductDetails,
-  AddEditProduct,
-  ActionsMenu
+  ProductsFilter,
+  View
 } from 'components'
-import { IAction, IProduct } from 'lib/interfaces'
 import { useProductStore } from 'store'
+import heroImage from '../assets/images/home.png'
+import productImage from '../assets/images/product.png'
 
 const allProducts = [
   {
     id: 1,
     name: 'Automatic Watch',
-    images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+    images: [heroImage, productImage, heroImage, productImage],
     quantity: 1,
     price: 350,
     description:
@@ -41,7 +44,7 @@ const allProducts = [
   {
     id: 2,
     name: 'Automatic Watch',
-    images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+    images: [heroImage, productImage, heroImage, productImage],
     quantity: 1,
     price: 350,
     description:
@@ -53,7 +56,7 @@ const allProducts = [
   {
     id: 3,
     name: 'Automatic Watch',
-    images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+    images: [heroImage, productImage, heroImage, productImage],
     quantity: 1,
     price: 350,
     description:
@@ -65,7 +68,7 @@ const allProducts = [
   {
     id: 4,
     name: 'Automatic Watch',
-    images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+    images: [heroImage, productImage, heroImage, productImage],
     quantity: 1,
     price: 350,
     description:
@@ -79,6 +82,10 @@ const allProducts = [
 export default function Products() {
   const action = useProductStore((state: any) => state.action)
   const setAction = useProductStore((state: any) => state.setAction)
+
+  const width = 690
+
+  const [isVisible, setIsVisible] = useState(false)
 
   const { colorMode: mode } = useColorMode()
 
@@ -199,7 +206,24 @@ export default function Products() {
         />
       </View>
 
-      <ProductsFilter />
+      <View cond={width >= 700}>
+        <ProductsFilter />
+      </View>
+
+      <View cond={width < 700}>
+        <IconButton
+          aria-label="trigger filter"
+          icon={<BsFilterLeft size={18} />}
+          onClick={() => setIsVisible(true)}
+        />
+        <CustomDrawer
+          isOpen={isVisible}
+          title="Filter"
+          body={<ProductsFilter />}
+          onClose={() => setIsVisible(false)}
+        />
+      </View>
+
       <Flex flexDir={'column'}>
         <View cond={allProducts?.length > 0}>
           <Text mb="1rem" ml="3rem">

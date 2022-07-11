@@ -9,22 +9,34 @@ const INIT_ACTIONS = {
   edit: false,
   details: false
 }
+const INIT_HOME = {
+  services: [],
+  questionsAnswers: [],
+  deals: {},
+  about: {}
+}
 
 type IHome = {
-  home: any
+  allData: any
   actions: IAction
+  singleData: any
   setAction: (action: IAction) => void
-  setHome: (data: any) => void
+  setAllData: (allData: any) => void
+  setSingleData: (singleData: any) => void
 }
 
 let homeStore = (set: SetState<IHome>) => ({
   actions: INIT_ACTIONS,
-  home: {},
+  allData: INIT_HOME,
+  singleData: {},
   setAction: (newAction: IAction) => {
     set({ actions: { ...newAction } })
   },
-  setHome: (home: any) => {
-    set({ home: home })
+  setAllData: (allData: any) => {
+    set({ allData: allData })
+  },
+  setSingleData: (singleData: any) => {
+    set({ singleData: singleData })
   }
 })
 

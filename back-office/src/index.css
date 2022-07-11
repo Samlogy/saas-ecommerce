@@ -92,16 +92,3 @@
   background: hsl(152, 4%, 29%);
   border-radius: 0.5rem;
 }
-
-
-/* Multi Select */
-.mutli-select {
-  border-radius: 5px;
-  border: 1px solid #e2e8f0;
-  /* background-color: ; */
-}
-.mutli-select .error {
-  border-radius: 5px;
-  border: 1px solid #e53e3e;
-  /* background-color: ; */
-}

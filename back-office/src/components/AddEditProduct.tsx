@@ -1,9 +1,9 @@
-import { Box, Button, Flex, FormControl, Image, Input, useColorModeValue } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, useColorModeValue } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { CustomModal, ErrorMessage, InputField, TextField, SelectField } from 'components'
+import { CustomModal, ErrorMessage, InputField, SelectField, TextField } from 'components'
 import { useProductStore } from 'store'
 import { addProductSchema } from '../lib/validation'
 

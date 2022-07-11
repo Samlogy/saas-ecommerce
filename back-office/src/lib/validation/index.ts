@@ -21,3 +21,28 @@ export const addProductSchema = yup.object().shape({
     .typeError('Discount must be a number')
     .transform((v, o) => (o === '' ? null : v))
 })
+
+/* Home */
+export const dealFormSchema = yup.object().shape({
+  title: yup.string().required('tile required'),
+  description: yup.string().required('Description required'),
+  dueDate: yup.string().required('Due Date required required'), // check validity data ??
+  image: yup.string().required('image required')
+})
+
+export const aboutFormSchema = yup.object().shape({
+  title: yup.string().required('tile required'),
+  description: yup.string().required('Description required'),
+  image: yup.string().required('image required')
+})
+
+export const serviceFormSchema = yup.object().shape({
+  name: yup.string().required('tile required'),
+  description: yup.string().required('Description required'),
+  image: yup.string().required('image required')
+})
+
+export const questionAnswerFormSchema = yup.object().shape({
+  question: yup.string().required('question required'),
+  answer: yup.string().required('answer required')
+})

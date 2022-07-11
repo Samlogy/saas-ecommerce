@@ -230,7 +230,7 @@ export default function Products() {
             Products result: {allProducts?.length}{' '}
           </Text>
 
-          {/* display table full of products */}
+          {/* display table full of products + options for each row */}
         </View>
 
         <View cond={allProducts?.length === 0}>

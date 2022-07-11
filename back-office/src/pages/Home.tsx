@@ -1,4 +1,13 @@
-import { Box, Button, Flex, Heading, Text, Image, useColorModeValue } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Image,
+  Text,
+  useColorModeValue,
+  Link as ChakraLink
+} from '@chakra-ui/react'
 import { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { BiDetail } from 'react-icons/bi'
@@ -33,28 +42,16 @@ const data = [
     icon: <BiDetail color="info" size="18" />
   }
 ]
+
+// add: components --> details - delete - edit/add - disable (same as product logic)
 export default function Home() {
-  const inputColor = useColorModeValue('gray_9', 'gray_3')
-
-  const [avatar, setAvatar] = useState<any>({
-    isLoading: false,
-    error: '',
-    img: ''
-  })
-  const mode = 'add'
-
-  // image
-  const handleImage = (e: any) => {
-    const imgBase = e.target.files[0]
-    const imgPreview = URL.createObjectURL(imgBase)
-    setAvatar({ ...avatar, img: imgPreview })
-  }
-
   return (
     <Layout isHeaderVisible>
       <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full" mb="2rem">
         Home
       </Heading>
+
+      <MiniMap />
 
       <CustomAccordion title="services" body={<Services />} />
       <CustomAccordion title="questions & answers" body={<QuestionsAnswersListing />} />
@@ -274,5 +271,49 @@ function Services() {
         </Flex>
       ))}
     </>
+  )
+}
+
+function MiniMap() {
+  const data = [
+    {
+      link: '#services',
+      label: 'Services'
+    },
+    {
+      link: '#questionsAnswers',
+      label: 'QuestionsAnswers'
+    },
+    {
+      link: '#deal',
+      label: 'Deal'
+    },
+    {
+      link: '#about',
+      label: 'About'
+    }
+  ]
+  return (
+    <Flex
+      flexDir={'column'}
+      w="12rem"
+      h="fit-content"
+      border="1px solid"
+      borderColor={'gray_8'}
+      bg={'gray_9'}
+      color="gray_2"
+      p=".5rem"
+      borderRadius={'10px'}
+      pos="fixed"
+      right="5%"
+      opacity={0.95}
+      zIndex={100}
+    >
+      {data.map((el, idx) => (
+        <ChakraLink key={idx} href={el.link} _hover={{ color: 'accent_3' }}>
+          {el.label}
+        </ChakraLink>
+      ))}
+    </Flex>
   )
 }

@@ -15,7 +15,16 @@ import { FiEdit, FiTrash } from 'react-icons/fi'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
-import { CustomAccordion, CustomMenu, InputField, Layout, TextField, View } from 'components'
+import {
+  CustomAccordion,
+  CustomMenu,
+  InputField,
+  Layout,
+  TextField,
+  View,
+  CustomModal,
+  DisplayRowData
+} from 'components'
 import {
   dealFormSchema,
   aboutFormSchema,
@@ -24,33 +33,6 @@ import {
 } from 'lib/validation'
 import { useHomeStore } from 'store'
 import img from '../assets/images/home.png'
-
-const data = [
-  {
-    color: 'warning',
-    onclick: () => console.log('edit'),
-    label: 'Edit',
-    icon: <FiEdit color="warning" size="18" />
-  },
-  {
-    color: 'gray_4',
-    onclick: () => console.log('Disable'),
-    label: 'Disable',
-    icon: <AiOutlineClose color="disable" size="18" />
-  },
-  {
-    color: 'error',
-    onclick: () => console.log('delete'),
-    label: 'Delete',
-    icon: <FiTrash color="error" size="18" />
-  },
-  {
-    color: 'info',
-    onclick: () => console.log('details'),
-    label: 'Details',
-    icon: <BiDetail color="info" size="18" />
-  }
-]
 
 // load about data from db
 const homeData = {
@@ -120,31 +102,41 @@ export default function Home() {
 
       <MiniMap />
 
-      <View cond={actions.delete}>{/*  */}</View>
-
       <View cond={actions.add}>{/*  */}</View>
 
       <View cond={actions.edit}>{/*  */}</View>
 
-      <View cond={actions.disable}>{/*  */}</View>
+      <View cond={actions.delete}>
+        <ActionBox
+          mode="delete"
+          isOpen={actions.delete}
+          onClose={() => setAction({ ...actions, delete: false })}
+        />
+      </View>
 
-      <View cond={actions.details}>{/*  */}</View>
+      <View cond={actions.disable}>
+        <ActionBox
+          mode="disable"
+          isOpen={actions.disable}
+          onClose={() => setAction({ ...actions, disable: false })}
+        />
+      </View>
 
       <CustomAccordion title="services" body={<Services data={homeData.services} />} />
       <CustomAccordion
         title="questions & answers"
         body={<QuestionsAnswersListing data={homeData.questionsAnswers} />}
       />
-      <CustomAccordion title="about" body={<About data={homeData.about} mode="add" />} />
-      <CustomAccordion title="deal" body={<Deal data={homeData.deal} mode="add" />} />
+      <CustomAccordion title="about" body={<About data={homeData.about} />} />
+      <CustomAccordion title="deal" body={<Deal data={homeData.deal} />} />
     </Layout>
   )
 }
 
-function About({ data, mode }: { data: any; mode: string }) {
+function About({ data }: { data: any }) {
   const formOptions = {
     resolver: yupResolver(aboutFormSchema),
-    defaultValues: mode === 'add' ? {} : data
+    defaultValues: data ? data : {}
   }
   const {
     register,
@@ -152,9 +144,17 @@ function About({ data, mode }: { data: any; mode: string }) {
     formState: { errors, isSubmitting }
   } = useForm(formOptions)
 
-  function onSubmit(data: any) {
-    console.log(data)
-    //return mode === 'add' ? createProduct(data) : updateProduct(product.id, data)
+  function onSubmit(about: any) {
+    console.log(about)
+    return !data ? create(data) : update(data.id, about)
+  }
+
+  function create(about: any) {
+    console.log('create: ', about)
+  }
+
+  function update(id: number, about: any) {
+    console.log('update: ', id, about)
   }
 
   const inputColor = useColorModeValue('gray_9', 'gray_3')
@@ -212,17 +212,17 @@ function About({ data, mode }: { data: any; mode: string }) {
           ml="auto"
           _hover={{ bg: 'accent_2' }}
         >
-          {mode === 'add' ? 'Create' : 'Edit'}
+          {data ? 'Edit' : 'Create'}
         </Button>
       </form>
     </Flex>
   )
 }
 
-function Deal({ data, mode }: { data: any; mode: string }) {
+function Deal({ data }: { data: any }) {
   const formOptions = {
-    resolver: yupResolver(aboutFormSchema),
-    defaultValues: mode === 'add' ? {} : data
+    resolver: yupResolver(dealFormSchema),
+    defaultValues: data ? data : {}
   }
   const {
     register,
@@ -230,17 +230,17 @@ function Deal({ data, mode }: { data: any; mode: string }) {
     formState: { errors, isSubmitting }
   } = useForm(formOptions)
 
-  function onSubmit(about: any) {
-    console.log(about)
-    return mode === 'add' ? create(data) : update(data.id, about)
+  function onSubmit(deal: any) {
+    console.log(deal)
+    return !data ? create(data) : update(data.id, deal)
   }
 
-  function create(about: any) {
-    console.log('create: ', about)
+  function create(deal: any) {
+    console.log('create: ', deal)
   }
 
-  function update(id: number, about: any) {
-    console.log('update: ', id, about)
+  function update(id: number, deal: any) {
+    console.log('update: ', id, deal)
   }
 
   const inputColor = useColorModeValue('gray_9', 'gray_3')
@@ -308,7 +308,7 @@ function Deal({ data, mode }: { data: any; mode: string }) {
           ml="auto"
           _hover={{ bg: 'accent_2' }}
         >
-          {mode === 'add' ? 'Create' : 'Edit'}
+          {!data ? 'Create' : 'Edit'}
         </Button>
       </form>
     </Flex>
@@ -334,12 +334,6 @@ function QuestionsAnswersListing({ data }: { data: any }) {
       onclick: () => console.log('delete'),
       label: 'Delete',
       icon: <FiTrash color="error" size="18" />
-    },
-    {
-      color: 'info',
-      onclick: () => console.log('details'),
-      label: 'Details',
-      icon: <BiDetail color="info" size="18" />
     }
   ]
   return (
@@ -368,30 +362,26 @@ function QuestionsAnswersListing({ data }: { data: any }) {
 }
 
 function Services({ data }: { data: any }) {
+  const setAction = useHomeStore((state: any) => state.setAction)
+
   const menuData = [
     {
       color: 'warning',
-      onclick: () => console.log('edit'),
+      onclick: () => setAction({ edit: true }),
       label: 'Edit',
       icon: <FiEdit color="warning" size="18" />
     },
     {
       color: 'gray_4',
-      onclick: () => console.log('Disable'),
+      onclick: () => setAction({ disable: true }),
       label: 'Disable',
       icon: <AiOutlineClose color="disable" size="18" />
     },
     {
       color: 'error',
-      onclick: () => console.log('delete'),
+      onclick: () => setAction({ delete: true }),
       label: 'Delete',
       icon: <FiTrash color="error" size="18" />
-    },
-    {
-      color: 'info',
-      onclick: () => console.log('details'),
-      label: 'Details',
-      icon: <BiDetail color="info" size="18" />
     }
   ]
 
@@ -462,5 +452,81 @@ function MiniMap() {
         </ChakraLink>
       ))}
     </Flex>
+  )
+}
+
+interface IItemDetails {
+  title: string
+  isOpen: boolean
+  onClose: () => void
+}
+
+function ItemDetails({ title, isOpen, onClose }: IItemDetails) {
+  const singleData = useHomeStore((state: any) => state.singleData)
+
+  const body = (
+    <Flex flexDir="column">
+      <Flex justifyContent={'space-between'} alignItems="center" mb=".5rem">
+        <Image
+          src={singleData.images[0]}
+          fallbackSrc="https://via.placeholder.com/100"
+          // fallback="https://via.placeholder.com/50"
+          alt="product iamge"
+          borderRadius={'5px'}
+          w="5rem"
+          h="5rem"
+          mb=".5rem"
+        />
+      </Flex>
+      <DisplayRowData label="Name" data={singleData?.name} />
+      <DisplayRowData label="Name" data={singleData?.name} />
+    </Flex>
+  )
+  const footer = (
+    <Button bg="gray_3" color="white" _hover={{ bg: 'gray_4' }} onClick={onClose}>
+      Close
+    </Button>
+  )
+  return <CustomModal title={title} isOpen={isOpen} onClose={onClose} body={body} footer={footer} />
+}
+interface IActionBox {
+  isOpen: boolean
+  onClose: () => void
+  mode: string
+}
+function ActionBox({ isOpen, onClose, mode }: IActionBox) {
+  const singleData = useHomeStore((state: any) => state.singleData)
+  const setAction = useHomeStore((state: any) => state.setAction)
+
+  const body = mode === 'delete' ? 'Delete Product ?' : 'Disable Product ?'
+  const footer = (
+    <>
+      <Button
+        colorScheme="red"
+        onClick={
+          mode === 'delete' ? () => onDelete(singleData?.id) : () => onDisable(singleData?.id)
+        }
+      >
+        Yes
+      </Button>
+      <Button onClick={onClose} bg="gray_3" color="white" _hover={{ bg: 'gray_4' }} ml={3}>
+        No
+      </Button>
+    </>
+  )
+
+  const onDelete = (id: number) => {
+    console.log('delete product: ', id)
+    setAction({ delete: false })
+  }
+
+  const onDisable = (id: number) => {
+    console.log('disable product: ', id)
+    setAction({ disable: false })
+  }
+  return (
+    <>
+      <CustomModal onClose={onClose} isOpen={isOpen} body={body} footer={footer} />
+    </>
   )
 }

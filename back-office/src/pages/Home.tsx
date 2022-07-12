@@ -5,11 +5,12 @@ import {
   Heading,
   Image,
   Text,
+  IconButton,
   useColorModeValue,
   Link as ChakraLink
 } from '@chakra-ui/react'
 import { useState } from 'react'
-import { AiOutlineClose } from 'react-icons/ai'
+import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai'
 import { BiDetail } from 'react-icons/bi'
 import { FiEdit, FiTrash } from 'react-icons/fi'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -100,9 +101,27 @@ export default function Home() {
         Home
       </Heading>
 
-      <View cond={actions.add}>{/*  */}</View>
+      <View cond={actions.add}>
+        <AddEditService
+          isOpen={actions.add}
+          onClose={() => setAction({ ...actions, add: false })}
+        />
+        <AddEditQuestionAnswer
+          isOpen={actions.add}
+          onClose={() => setAction({ ...actions, add: false })}
+        />
+      </View>
 
-      <View cond={actions.edit}>{/*  */}</View>
+      <View cond={actions.edit}>
+        <AddEditService
+          isOpen={actions.edit}
+          onClose={() => setAction({ ...actions, edit: false })}
+        />
+        <AddEditQuestionAnswer
+          isOpen={actions.edit}
+          onClose={() => setAction({ ...actions, edit: false })}
+        />
+      </View>
 
       <View cond={actions.delete}>
         <ActionBox
@@ -321,28 +340,44 @@ function Deal({ data }: { data: any }) {
 }
 
 function QuestionsAnswersListing({ data }: { data: any }) {
+  const setAction = useHomeStore((state: any) => state.setAction)
+  const actions = useHomeStore((state: any) => state.actions)
+  const setSingleData = useHomeStore((state: any) => state.setSingleData)
+
   const menuData = [
     {
       color: 'warning',
-      onclick: () => console.log('edit'),
+      onclick: () => {
+        setAction({ edit: true })
+        setSingleData(data[0])
+      },
       label: 'Edit',
       icon: <FiEdit color="warning" size="18" />
     },
     {
       color: 'gray_4',
-      onclick: () => console.log('Disable'),
+      onclick: () => setAction({ disable: true }),
       label: 'Disable',
       icon: <AiOutlineClose color="disable" size="18" />
     },
     {
       color: 'error',
-      onclick: () => console.log('delete'),
+      onclick: () => setAction({ delete: true }),
       label: 'Delete',
       icon: <FiTrash color="error" size="18" />
     }
   ]
   return (
     <>
+      <IconButton
+        colorScheme="green"
+        aria-label="add-item"
+        size="md"
+        icon={<AiOutlinePlus size={28} />}
+        ml="auto"
+        display={'flex'}
+        onClick={() => setAction({ ...actions, add: true })}
+      />
       {data.map((el: any) => (
         <Flex justify={'space-between'} align="center">
           <Flex flexDir="column" p=".5rem 1rem" borderBottom="1px solid" borderColor="gray_6">
@@ -368,11 +403,16 @@ function QuestionsAnswersListing({ data }: { data: any }) {
 
 function Services({ data }: { data: any }) {
   const setAction = useHomeStore((state: any) => state.setAction)
+  const actions = useHomeStore((state: any) => state.actions)
+  const setSingleData = useHomeStore((state: any) => state.setSingleData)
 
   const menuData = [
     {
       color: 'warning',
-      onclick: () => setAction({ edit: true }),
+      onclick: () => {
+        setAction({ edit: true })
+        setSingleData(data)
+      },
       label: 'Edit',
       icon: <FiEdit color="warning" size="18" />
     },
@@ -392,6 +432,15 @@ function Services({ data }: { data: any }) {
 
   return (
     <>
+      <IconButton
+        colorScheme="green"
+        aria-label="add-item"
+        size="md"
+        icon={<AiOutlinePlus size={28} />}
+        ml="auto"
+        display={'flex'}
+        onClick={() => setAction({ ...actions, add: true })}
+      />
       {data.map((el: any) => (
         <Flex justify={'space-between'} align="center">
           <Flex flexDir="column" p=".5rem 1rem" borderBottom="1px solid" borderColor="gray_6">
@@ -458,40 +507,6 @@ function MiniMap() {
   )
 }
 
-interface IItemDetails {
-  title: string
-  isOpen: boolean
-  onClose: () => void
-}
-
-function ItemDetails({ title, isOpen, onClose }: IItemDetails) {
-  const singleData = useHomeStore((state: any) => state.singleData)
-
-  const body = (
-    <Flex flexDir="column">
-      <Flex justifyContent={'space-between'} alignItems="center" mb=".5rem">
-        <Image
-          src={singleData.images[0]}
-          fallbackSrc="https://via.placeholder.com/100"
-          // fallback="https://via.placeholder.com/50"
-          alt="product iamge"
-          borderRadius={'5px'}
-          w="5rem"
-          h="5rem"
-          mb=".5rem"
-        />
-      </Flex>
-      <DisplayRowData label="Name" data={singleData?.name} />
-      <DisplayRowData label="Name" data={singleData?.name} />
-    </Flex>
-  )
-  const footer = (
-    <Button bg="gray_3" color="white" _hover={{ bg: 'gray_4' }} onClick={onClose}>
-      Close
-    </Button>
-  )
-  return <CustomModal title={title} isOpen={isOpen} onClose={onClose} body={body} footer={footer} />
-}
 interface IActionBox {
   isOpen: boolean
   onClose: () => void
@@ -527,9 +542,201 @@ function ActionBox({ isOpen, onClose, mode }: IActionBox) {
     console.log('disable product: ', id)
     setAction({ disable: false })
   }
-  return (
-    <>
-      <CustomModal onClose={onClose} isOpen={isOpen} body={body} footer={footer} />
-    </>
+  return <CustomModal onClose={onClose} isOpen={isOpen} body={body} footer={footer} />
+}
+
+interface IAddEditForm {
+  isOpen: boolean
+  onClose: () => void
+}
+function AddEditService({ isOpen, onClose }: IAddEditForm) {
+  const singleData = useHomeStore((state: any) => state.singleData)
+  const formOptions = {
+    resolver: yupResolver(serviceFormSchema),
+    defaultValues: singleData ? singleData : {}
+  }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting }
+  } = useForm(formOptions)
+
+  function onSubmit(data: any) {
+    return !singleData ? create(data) : update(singleData.id, data)
+  }
+
+  function create(data: any) {
+    console.log('create product: ', data)
+    // api call
+  }
+
+  function update(id: number, data: any) {
+    console.log('update product: ', id, data)
+  }
+  // edit/create fct - form - schema - title
+  const title = !singleData ? 'Add Service' : 'Edit Service'
+
+  const inputColor = useColorModeValue('gray_9', 'gray_3')
+  const [avatar, setAvatar] = useState<any>({
+    isLoading: false,
+    error: '',
+    img: ''
+  })
+
+  // image
+  const handleImage = (e: any) => {
+    const imgBase = e.target.files[0]
+    const imgPreview = URL.createObjectURL(imgBase)
+    setAvatar({ ...avatar, img: imgPreview })
+  }
+  const Form = (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <InputField
+        type="file"
+        accept="image/*"
+        name="images"
+        label="image"
+        placeholder="image"
+        onChange={handleImage}
+        w={['full', '30rem']}
+        px="0"
+        border="none"
+      />
+      <InputField
+        errors={errors}
+        register={register}
+        name="name"
+        placeholder="Name"
+        label="Name"
+        bg={inputColor}
+        w="full"
+      />
+
+      <TextField
+        errors={errors}
+        register={register}
+        name="description"
+        placeholder="Description"
+        label="Description"
+        bg={inputColor}
+        w="full"
+      />
+
+      <Flex flexDir="row">
+        <Button
+          type="submit"
+          isLoading={isSubmitting}
+          bg="accent_3"
+          color="white"
+          mt="1rem"
+          ml="auto"
+          display={'flex'}
+          justifyContent="flex-end"
+          _hover={{ bg: 'accent_2' }}
+        >
+          {!singleData ? 'Create' : 'Edit'}
+        </Button>
+        <Button
+          type="reset"
+          bg="gray_3"
+          color="white"
+          mt="1rem"
+          ml="1rem"
+          display={'flex'}
+          justifyContent="flex-end"
+          _hover={{ bg: 'gray_4' }}
+          onClick={() => (!singleData ? {} : reset(formOptions.defaultValues))}
+        >
+          Reset
+        </Button>
+      </Flex>
+    </form>
   )
+  return <CustomModal title={title} isOpen={isOpen} onClose={onClose} body={Form} />
+}
+
+function AddEditQuestionAnswer({ isOpen, onClose }: IAddEditForm) {
+  const singleData = useHomeStore((state: any) => state.singleData)
+  const formOptions = {
+    resolver: yupResolver(questionAnswerFormSchema),
+    defaultValues: singleData ? singleData : {}
+  }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting }
+  } = useForm(formOptions)
+
+  function onSubmit(data: any) {
+    console.log(data)
+    return !singleData ? create(data) : update(singleData.id, data)
+  }
+
+  function create(data: any) {
+    console.log('create product: ', data)
+    // api call
+  }
+
+  function update(id: number, data: any) {
+    console.log('update product: ', id, data)
+  }
+  // edit/create fct - form - schema - title
+  const title = !singleData ? 'Add Questions & Answer' : 'Edit Questions & Answer'
+
+  const inputColor = useColorModeValue('gray_9', 'gray_3')
+  const Form = (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <TextField
+        errors={errors}
+        register={register}
+        name="question"
+        placeholder="Question"
+        label="Question"
+        bg={inputColor}
+        w="full"
+      />
+
+      <TextField
+        errors={errors}
+        register={register}
+        name="answer"
+        placeholder="Answer"
+        label="Answer"
+        bg={inputColor}
+        w="full"
+      />
+
+      <Flex flexDir="row">
+        <Button
+          type="submit"
+          isLoading={isSubmitting}
+          bg="accent_3"
+          color="white"
+          mt="1rem"
+          ml="auto"
+          display={'flex'}
+          justifyContent="flex-end"
+          _hover={{ bg: 'accent_2' }}
+        >
+          {!singleData ? 'Create' : 'Edit'}
+        </Button>
+        <Button
+          type="reset"
+          bg="gray_3"
+          color="white"
+          mt="1rem"
+          ml="1rem"
+          display={'flex'}
+          justifyContent="flex-end"
+          _hover={{ bg: 'gray_4' }}
+          onClick={() => (!singleData ? {} : reset(formOptions.defaultValues))}
+        >
+          Reset
+        </Button>
+      </Flex>
+    </form>
+  )
+  return <CustomModal title={title} isOpen={isOpen} onClose={onClose} body={Form} />
 }

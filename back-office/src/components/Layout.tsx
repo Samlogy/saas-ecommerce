@@ -5,20 +5,20 @@ import { TopBar } from 'components'
 interface ILayout {
   children: React.ReactNode
   isHeaderVisible?: boolean
-  rest?: any
+  [restProps: string]: any
 }
 
-export default function Layout({ children, isHeaderVisible, ...rest }: ILayout) {
+export default function Layout({ children, isHeaderVisible, ...restProps }: ILayout) {
   const bgColor = useColorModeValue('white', 'gray_3')
   return (
-    <Flex flexDir="column" {...rest} bg={bgColor}>
+    <Flex flexDir="column" {...restProps} bg={bgColor}>
       {isHeaderVisible && <TopBar />}
       <Container
-        maxW="1024px"
+        maxW="80em"
         bg={bgColor}
         minHeight="calc(100vh - 100px)"
         p="1.5rem 1.5rem 2rem 1.5rem"
-        borderRadius="4px"
+        borderRadius="5px"
       >
         {children}
       </Container>

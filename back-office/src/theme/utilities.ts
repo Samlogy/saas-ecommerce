@@ -1,3 +1,5 @@
+import { createBreakpoints } from '@chakra-ui/theme-tools'
+
 export const colors = {
   white: '#fff',
   black: '#000',
@@ -25,3 +27,14 @@ export const colors = {
   gray_8: '#edf2f7', // 100
   gray_9: '#f7fafc' // 50
 }
+
+export const breakpoints = createBreakpoints({
+  // xs: "20em",
+  sm: '40em',
+  md: '52em',
+  lg: '64em',
+  xl: '80em',
+  '2xl': '90em'
+})
+
+export const fonts = { body: `'Poppins', sans-serif`, heading: `'Poppins', sans-serif` }

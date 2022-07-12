@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai'
-import { BiDetail } from 'react-icons/bi'
 import { FiEdit, FiTrash } from 'react-icons/fi'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
@@ -195,7 +194,7 @@ function About({ data }: { data: any }) {
     setAvatar({ ...avatar, img: imgPreview })
   }
   return (
-    <Flex flexDir={'column'} mx="auto" w={['full', '30rem']}>
+    <Flex id="#about" flexDir={'column'} mx="auto" w={['full', '30rem']}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputField
           errors={errors}
@@ -282,7 +281,7 @@ function Deal({ data }: { data: any }) {
     setAvatar({ ...avatar, img: imgPreview })
   }
   return (
-    <Flex flexDir={'column'} mx="auto" w={['full', '30rem']}>
+    <Flex id="deal" flexDir={'column'} mx="auto" w={['full', '30rem']}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputField
           errors={errors}
@@ -368,16 +367,17 @@ function QuestionsAnswersListing({ data }: { data: any }) {
     }
   ]
   return (
-    <>
-      <IconButton
+    <Box id="qa">
+      <Button
         colorScheme="green"
-        aria-label="add-item"
-        size="md"
-        icon={<AiOutlinePlus size={28} />}
+        variant={'outline'}
+        leftIcon={<AiOutlinePlus size={28} />}
         ml="auto"
         display={'flex'}
         onClick={() => setAction({ ...actions, add: true })}
-      />
+      >
+        Q&A
+      </Button>
       {data.map((el: any) => (
         <Flex justify={'space-between'} align="center">
           <Flex flexDir="column" p=".5rem 1rem" borderBottom="1px solid" borderColor="gray_6">
@@ -397,7 +397,7 @@ function QuestionsAnswersListing({ data }: { data: any }) {
           <CustomMenu data={menuData} />
         </Flex>
       ))}
-    </>
+    </Box>
   )
 }
 
@@ -431,16 +431,17 @@ function Services({ data }: { data: any }) {
   ]
 
   return (
-    <>
-      <IconButton
+    <Box id="services">
+      <Button
         colorScheme="green"
-        aria-label="add-item"
-        size="md"
-        icon={<AiOutlinePlus size={28} />}
+        variant={'outline'}
+        leftIcon={<AiOutlinePlus size={28} />}
         ml="auto"
         display={'flex'}
         onClick={() => setAction({ ...actions, add: true })}
-      />
+      >
+        Service
+      </Button>
       {data.map((el: any) => (
         <Flex justify={'space-between'} align="center">
           <Flex flexDir="column" p=".5rem 1rem" borderBottom="1px solid" borderColor="gray_6">
@@ -461,7 +462,7 @@ function Services({ data }: { data: any }) {
           <CustomMenu data={menuData} />
         </Flex>
       ))}
-    </>
+    </Box>
   )
 }
 
@@ -472,7 +473,7 @@ function MiniMap() {
       label: 'Services'
     },
     {
-      link: '#questionsAnswers',
+      link: '#qa',
       label: 'QuestionsAnswers'
     },
     {
@@ -484,22 +485,29 @@ function MiniMap() {
       label: 'About'
     }
   ]
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
+  const textColor = useColorModeValue('gray_3', 'gray_9')
   return (
     <Flex
       flexDir={'column'}
       w="12rem"
       h="fit-content"
       border="1px solid"
-      borderColor={'gray_8'}
-      bg={'gray_9'}
-      color="gray_2"
+      borderColor={bgColor}
+      bg={bgColor}
+      color={textColor}
       p=".5rem"
       borderRadius={'10px'}
       flexBasis={['20%', '', '', '10%']}
       display={['none', '', 'flex']}
     >
       {data.map((el, idx) => (
-        <ChakraLink key={idx} href={el.link} _hover={{ color: 'accent_3' }}>
+        <ChakraLink
+          key={idx}
+          href={el.link}
+          _hover={{ color: 'accent_3', textDecor: 'underline' }}
+          mb=".25rem"
+        >
           {el.label}
         </ChakraLink>
       ))}

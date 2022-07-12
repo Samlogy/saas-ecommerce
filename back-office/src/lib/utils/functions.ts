@@ -1,3 +1,4 @@
+import { loadState } from './localStorage'
 const CURRENCY_FORMATTER = new Intl.NumberFormat(undefined, {
   currency: 'USD',
   style: 'currency'
@@ -32,4 +33,15 @@ export const isEmpty = (data: any): boolean => {
   if (typeof data === 'object' && Object.entries(data).length === 0) return false
   if (!data) return false
   return true
+}
+
+export function loadFilters() {
+  return loadState('ecommerce-filters')
+    ? loadState('ecommerce-filters')
+    : {
+        line: {},
+        pie: {},
+        stacked: {},
+        table: {}
+      }
 }

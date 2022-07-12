@@ -1,6 +1,5 @@
 import { Box, Flex, useColorModeValue } from '@chakra-ui/react'
-import { ObjLoop, isEmpty } from 'lib/utils/functions'
-import { loadState } from 'lib/utils/localStorage'
+import { isEmpty, loadFilters, ObjLoop } from 'lib/utils/functions'
 import { useState } from 'react'
 import Chart from 'react-apexcharts'
 
@@ -13,15 +12,7 @@ interface ICustomChart {
 export default function CustomChart({ type, options, series }: ICustomChart) {
   const bgColor = useColorModeValue('white', 'gray_2')
 
-  const INIT_FILTERS = loadState('ecommerce-filters')
-    ? loadState('ecommerce-filters')
-    : {
-        line: {},
-        pie: {},
-        stacked: {},
-        table: {}
-      }
-  const [filters, setFilters] = useState(INIT_FILTERS[type])
+  const [filters, setFilters] = useState(loadFilters())
 
   return (
     <Flex

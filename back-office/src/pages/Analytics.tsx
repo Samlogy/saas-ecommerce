@@ -3,8 +3,7 @@ import { useState } from 'react'
 
 import { CustomChart, Layout, TotalRevenue, View, Widget } from 'components'
 import { useChart, useTable } from 'lib/hooks'
-import { isEmpty } from 'lib/utils/functions'
-import { loadState } from 'lib/utils/localStorage'
+import { isEmpty, loadFilters } from 'lib/utils/functions'
 
 // chart options
 const chartOptions = {
@@ -79,22 +78,11 @@ export default function Analytics() {
   const pieOptions = useChart('pie')
   const stackedOptions = useChart('stacked')
 
-  // load widget data
-  // const {widget} = useWidget()
-
   // load table data
   const { isLoading, error, data: d } = useTable('income')
 
   // sort state --> table
-  const INIT_FILTERS = loadState('accounting-sorts')
-    ? loadState('accounting-sorts')
-    : {
-        line: {},
-        pie: {},
-        stacked: {},
-        table: {}
-      }
-  const [filters, setFilters] = useState(INIT_FILTERS['table'])
+  const [filters, setFilters] = useState(loadFilters())
 
   // show chart if visible or not
   const [show, setShow] = useState({

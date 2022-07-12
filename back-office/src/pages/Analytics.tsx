@@ -1,9 +1,10 @@
-import { Heading, Flex, Select, useColorModeValue } from '@chakra-ui/react'
-import { useTranslation } from 'react-i18next'
+import { Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react'
 import { useState } from 'react'
 
-import { Layout, Widget, TotalRevenue, Charts } from 'components'
-import { IOptions } from '../lib/interfaces'
+import { CustomChart, Layout, TotalRevenue, View, Widget } from 'components'
+import { useChart, useTable } from 'lib/hooks'
+import { isEmpty } from 'lib/utils/functions'
+import { loadState } from 'lib/utils/localStorage'
 
 // chart options
 const chartOptions = {
@@ -58,44 +59,49 @@ const totalRevenueData = {
   percent: 50,
   price: 5000
 }
+const data: any = [
+  {
+    id: 12,
+    name: 'mobile dev app',
+    price: 500,
+    quantity: 15,
+    date: '2022-05-18',
+    nature: 'service',
+    paymentMethod: 'paysera',
+    description: 'description'
+  }
+]
 
 export default function Analytics() {
-  const [options, setOptions] = useState<IOptions>(chartOptions.options)
-  const [series, setSeries] = useState(chartOptions.series)
-  const [sorted, setSorted] = useState('daily')
-
-  const { t } = useTranslation()
-
-  const handleClick = (e: any) => {
-    const category = e.target.value.toLowerCase()
-    // console.log('category: ', category)
-    let min = 2
-    // use certain formula according to the case
-    if (category === 'daily') {
-      min = 10
-      setSorted(category)
-    } else if (category === 'weekly') {
-      min = 1
-      setSorted(category)
-    } else if (category === 'monthly') {
-      min = -1
-      setSorted(category)
-    } else if (category === 'yearly') {
-      min = 0
-      setSorted(category)
-    }
-
-    setSeries(prev =>
-      series.map(s => {
-        const data = s.data.map(() => {
-          return Math.floor(Math.random() * (180 - min + 1)) + min
-        })
-        return { data, name: s.name }
-      })
-    )
-  }
-
   const bgColor = useColorModeValue('white', 'gray_2')
+
+  // load chart data
+  const pieOptions = useChart('pie')
+  const stackedOptions = useChart('stacked')
+
+  // load widget data
+  // const {widget} = useWidget()
+
+  // load table data
+  const { isLoading, error, data: d } = useTable('income')
+
+  // sort state --> table
+  const INIT_FILTERS = loadState('accounting-sorts')
+    ? loadState('accounting-sorts')
+    : {
+        line: {},
+        pie: {},
+        stacked: {},
+        table: {}
+      }
+  const [filters, setFilters] = useState(INIT_FILTERS['table'])
+
+  // show chart if visible or not
+  const [show, setShow] = useState({
+    line: isEmpty(stackedOptions.options) && isEmpty(stackedOptions.series),
+    pie: isEmpty(pieOptions.options) && isEmpty(pieOptions.series),
+    table: isEmpty(data)
+  })
 
   return (
     <Layout isHeaderVisible>
@@ -103,52 +109,62 @@ export default function Analytics() {
         Analytics
       </Heading>
 
-      <Flex flexWrap="wrap" justifyContent={'space-evenly'}>
-        {widgetsData?.map((el: any) => (
-          <Widget data={el} />
-        ))}
+      <Flex flexDir={'column'} my="1rem">
+        <Heading as="h2" fontSize="1.5rem" textTransform="uppercase" my="1rem">
+          Widgets Analytics
+        </Heading>
+
+        <Flex justify={['center', 'space-between']} flexWrap="wrap">
+          {widgetsData.map((item: any, idx: number) => (
+            <Widget key={idx} data={item} />
+          ))}
+        </Flex>
 
         <TotalRevenue data={totalRevenueData} />
+      </Flex>
 
-        <Flex flexDir="column" justifyContent={'center'}>
-          <Select
-            onChange={handleClick}
-            defaultValue={sorted}
-            w="6.5rem"
-            p="0"
-            m={['0 auto 1rem auto', '0 0 1rem 36.5rem', '', '0 0 1rem 50rem']}
-            focusBorderColor="accent_6"
-            bg={bgColor}
-          >
-            <option value="daily"> Daily </option>
-            <option value="weekly"> Weekly </option>
-            <option value="monthly"> Monthly </option>
-            <option value="yearly"> yearly </option>
-          </Select>
+      <Flex flexDir="column" my="1rem">
+        <Heading as="h2" fontSize="1.5rem" textTransform="uppercase" my="1rem">
+          Chart Analytics
+        </Heading>
 
-          <Flex justifyContent={'center'} flexWrap="wrap">
-            <Charts
+        <Flex flexWrap="wrap" justify={['center', '', 'space-between']}>
+          <View cond={show.line}>
+            <CustomChart
               type={'line'}
-              options={options}
-              series={series}
-              sorted={sorted}
-              setOptions={setOptions}
+              options={stackedOptions.options}
+              series={stackedOptions.series}
             />
-            <Charts
-              type={'area'}
-              options={options}
-              series={series}
-              sorted={sorted}
-              setOptions={setOptions}
-            />
-            <Charts
+          </View>
+          <View cond={show.pie}>
+            <CustomChart type={'pie'} options={pieOptions.options} series={pieOptions.series} />
+          </View>
+
+          <View cond={show.line}>
+            <CustomChart
               type={'bar'}
-              options={options}
-              series={series}
-              sorted={sorted}
-              setOptions={setOptions}
+              options={stackedOptions.options}
+              series={stackedOptions.series}
             />
-          </Flex>
+          </View>
+
+          <View cond={!show.line}>
+            <Text color="gray_4" fontStyle="italic" textAlign="center" m="2rem auto">
+              Error occured while loading Incomes chart (line bars)
+            </Text>
+          </View>
+
+          <View cond={!show.pie}>
+            <Text color="gray_4" fontStyle="italic" textAlign="center" m="2rem auto">
+              Error occured while loading Incomes chart (pie bars)
+            </Text>
+          </View>
+
+          <View cond={!show.line}>
+            <Text color="gray_4" fontStyle="italic" textAlign="center" m="2rem auto">
+              Error occured while loading Incomes chart (stacked bars)
+            </Text>
+          </View>
         </Flex>
       </Flex>
     </Layout>

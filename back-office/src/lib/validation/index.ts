@@ -26,7 +26,11 @@ export const addProductSchema = yup.object().shape({
 export const dealFormSchema = yup.object().shape({
   title: yup.string().required('tile required'),
   description: yup.string().required('Description required'),
-  dueDate: yup.string().required('Due Date required required'), // check validity data ??
+  dueDate: yup
+    .date()
+    .nullable()
+    .transform((curr, orig) => (orig === '' ? null : curr))
+    .required('Due Date is required'),
   image: yup.string().required('image required')
 })
 

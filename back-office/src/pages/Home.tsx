@@ -84,7 +84,7 @@ const homeData = {
   deal: {
     title: 'about ...',
     description: 'lorem stuff and something ....',
-    dueDate: '11-07-2021',
+    dueDate: '2022-07-12T22:18',
     image: img
   }
 }
@@ -99,8 +99,6 @@ export default function Home() {
       <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full" mb="2rem">
         Home
       </Heading>
-
-      <MiniMap />
 
       <View cond={actions.add}>{/*  */}</View>
 
@@ -122,13 +120,19 @@ export default function Home() {
         />
       </View>
 
-      <CustomAccordion title="services" body={<Services data={homeData.services} />} />
-      <CustomAccordion
-        title="questions & answers"
-        body={<QuestionsAnswersListing data={homeData.questionsAnswers} />}
-      />
-      <CustomAccordion title="about" body={<About data={homeData.about} />} />
-      <CustomAccordion title="deal" body={<Deal data={homeData.deal} />} />
+      <Flex flexDir="row" justify="space-between">
+        <Flex flexDir="column" flexBasis={['full', '', '70%', '80%']}>
+          <CustomAccordion title="services" body={<Services data={homeData.services} />} />
+          <CustomAccordion
+            title="questions & answers"
+            body={<QuestionsAnswersListing data={homeData.questionsAnswers} />}
+          />
+          <CustomAccordion title="about" body={<About data={homeData.about} />} />
+          <CustomAccordion title="deal" body={<Deal data={homeData.deal} />} />
+        </Flex>
+
+        <MiniMap />
+      </Flex>
     </Layout>
   )
 }
@@ -227,6 +231,7 @@ function Deal({ data }: { data: any }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting }
   } = useForm(formOptions)
 
@@ -248,7 +253,7 @@ function Deal({ data }: { data: any }) {
   const [avatar, setAvatar] = useState<any>({
     isLoading: false,
     error: '',
-    img: ''
+    img: data?.image || ''
   })
 
   // image
@@ -281,7 +286,7 @@ function Deal({ data }: { data: any }) {
         <InputField
           errors={errors}
           register={register}
-          type="date"
+          type="datetime-local"
           name="dueDate"
           label="Due Date"
           placeholder="Due Date"
@@ -441,10 +446,8 @@ function MiniMap() {
       color="gray_2"
       p=".5rem"
       borderRadius={'10px'}
-      pos="fixed"
-      right="5%"
-      opacity={0.95}
-      zIndex={100}
+      flexBasis={['20%', '', '', '10%']}
+      display={['none', '', 'flex']}
     >
       {data.map((el, idx) => (
         <ChakraLink key={idx} href={el.link} _hover={{ color: 'accent_3' }}>

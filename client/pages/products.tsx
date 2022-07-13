@@ -1,24 +1,13 @@
-import {
-  Flex,
-  Heading,
-  Text,
-  IconButton,
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton
-} from '@chakra-ui/react'
-import React, { useState, useRef } from 'react'
+import { Flex, Heading, IconButton, Text } from '@chakra-ui/react'
+import { useRef, useState } from 'react'
 import { BsFilterLeft } from 'react-icons/bs'
 
-import { Filter, Layout, Pagination, ProductCard, View } from '../components'
+import { CustomDrawer, Filter, Layout, Pagination, ProductCard, View } from '../components'
 import { useWindowDimensions } from '../lib/hooks'
 import { IProduct } from '../lib/interfaces'
 
-import productImage from '../public/images/product.png'
 import heroImage from '../public/images/home.png'
+import productImage from '../public/images/product.png'
 
 export default function Products({ products }: { products: IProduct[] }) {
   const [page, setPage] = useState<number>(1)
@@ -48,22 +37,12 @@ export default function Products({ products }: { products: IProduct[] }) {
             ref={btnRef}
             onClick={() => setIsVisible(true)}
           />
-          <Drawer
+          <CustomDrawer
+            title="Filter"
             isOpen={isVisible}
-            placement="right"
             onClose={() => setIsVisible(false)}
-            finalFocusRef={btnRef}
-          >
-            <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader> Filter </DrawerHeader>
-
-              <DrawerBody>
-                <Filter setProducts={setProducts} />
-              </DrawerBody>
-            </DrawerContent>
-          </Drawer>
+            body={<Filter setProducts={setProducts} />}
+          />
         </View>
 
         <Flex flexDir={'column'}>
@@ -72,7 +51,7 @@ export default function Products({ products }: { products: IProduct[] }) {
               Products result: {allProducts?.length}{' '}
             </Text>
 
-            <Flex flexDir="row" flexWrap="wrap" justifyContent="space-evenly">
+            <Flex flexDir="row" flexWrap="wrap" justifyContent="space-between">
               {allProducts?.map((product: IProduct) => (
                 <ProductCard key={product.id} data={product} readOnly />
               ))}

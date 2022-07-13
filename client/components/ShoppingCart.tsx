@@ -48,7 +48,7 @@ export default function ShoppingCart() {
     </>
   )
   const Footer = (
-    <>
+    <Flex flexDir="column" align="center">
       <Divider my="1rem" />
       <Text mb="1rem" fontSize=".9rem" color="gray.500">
         Shipping and taxes calculated at checkout.{' '}
@@ -62,7 +62,7 @@ export default function ShoppingCart() {
           Continue Shopping →{' '}
         </Text>
       </Text>
-    </>
+    </Flex>
   )
 
   return (

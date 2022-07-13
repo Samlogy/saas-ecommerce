@@ -30,7 +30,7 @@ export default function Testimonials({ data }: { data: any }) {
               </Text>
               <Rating initRate={el?.rate} readOnly />
               <Image
-                src={productImage.src}
+                src={el.avatar}
                 alt={el.name}
                 boxSize="100px"
                 fallbackSrc="https://via.placeholder.com/100"

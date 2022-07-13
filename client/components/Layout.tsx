@@ -32,7 +32,7 @@ export default function Layout({
         {isHeaderVisible && <NavBar />}
 
         <Container
-          maxW="1024px"
+          maxW="80em"
           bg={bgColor}
           minHeight="calc(100vh - 100px)"
           p="6rem 1.5rem 2rem 1.5rem"

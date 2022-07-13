@@ -4,7 +4,7 @@ import { useLocale } from '../lib/hooks'
 // import lang from "../locales/index.json"
 import { languages } from '../locales'
 
-const SelectLanguage = () => {
+export default function SelectLanguage() {
   const router = useRouter()
   const { colorMode: mode } = useColorMode()
   const { locale } = useLocale()
@@ -21,14 +21,11 @@ const SelectLanguage = () => {
       defaultValue={locale}
       className={mode === 'light' ? 'select-language' : 'select-language dark'}
     >
-      {languages.map((lang: string) => (
-        <option key={lang} value={lang}>
-          {' '}
-          {lang}{' '}
+      {languages.map((lang: string, idx: number) => (
+        <option key={idx} value={lang}>
+          {lang}
         </option>
       ))}
     </select>
   )
 }
-
-export default SelectLanguage

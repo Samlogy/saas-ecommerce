@@ -7,8 +7,6 @@ import {
   IconButton,
   Menu,
   MenuButton,
-  MenuDivider,
-  MenuItem,
   MenuList,
   Stack,
   useColorModeValue,
@@ -18,10 +16,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
-import { FiSettings } from 'react-icons/fi'
 import { DarkModeToggle, Logout, SelectLanguage, ShoppingCartIcon, View } from '../components'
 import { Logo } from '../public/icons'
-import { useShoppingCartStore, useAuthStore } from '../store'
+import { useAuthStore, useShoppingCartStore } from '../store'
 
 const Links = [
   {
@@ -141,19 +138,9 @@ const NavMenuConnected = ({ avatar }: { avatar: string }) => {
       <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
         <Avatar size={'sm'} src={avatar} />
       </MenuButton>
-      <MenuList bg={bgColor}>
-        <MenuItem
-          bg={bgColor}
-          _hover={{ bg: bgHoverColor, color: textHoverColor }}
-          icon={<FiSettings />}
-        >
-          <Link href="/profile"> My Account </Link>
-        </MenuItem>
-        <MenuDivider />
-        <MenuItem _hover={{ bg: bgHoverColor, color: textHoverColor }}>
-          {' '}
-          <Logout />{' '}
-        </MenuItem>
+      <MenuList bg={bgColor} display="flex" flexDir={'column'} justify="center" align="center">
+        <Link href="/profile"> My Account </Link>
+        <Logout />
       </MenuList>
     </Menu>
   )

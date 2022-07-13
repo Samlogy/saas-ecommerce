@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Heading, Image, useColorModeValue } from '@chakra-ui/react'
-import {ReactNode} from "react"
+import { ReactNode } from 'react'
 import Link from 'next/link'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BsCalendarDate } from 'react-icons/bs'
@@ -55,9 +55,19 @@ export default function Profile(props: any) {
   )
 }
 
-interface IBoxData { data: any; label: string; icon: any }
-interface ITemplateDisplayData { title: string; children: ReactNode }
-interface IDisplayData { data: any; labelData: any }
+interface IBoxData {
+  data: any
+  label: string
+  icon: any
+}
+interface ITemplateDisplayData {
+  title: string
+  children: ReactNode
+}
+interface IDisplayData {
+  data: any
+  labelData: any
+}
 
 const DisplayUserData = ({ data, labelData }: IDisplayData) => {
   return (
@@ -70,9 +80,7 @@ const DisplayUserData = ({ data, labelData }: IDisplayData) => {
         mb="1rem"
         alt="avatar"
       />
-      { data.map((el, idx) => )
 
-      }
       <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} label={labelData?.email} />
       <BoxData
         data={data?.address}

@@ -8,6 +8,7 @@ interface ITemplateFilter {
 
 export default function TemplateFilter({ label, children }: ITemplateFilter) {
   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+  const textColor = useColorModeValue('gray_4', 'gray_8')
   return (
     <Flex
       flexDir={'column'}
@@ -19,7 +20,7 @@ export default function TemplateFilter({ label, children }: ITemplateFilter) {
       bg={itemBgColor}
       p="1rem"
     >
-      <Box as="span" color="gray_3" m="0 auto .3rem 0">
+      <Box as="span" color={textColor} m="0 auto .3rem 0">
         {label}
       </Box>
       <>{children}</>

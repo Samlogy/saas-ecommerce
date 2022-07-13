@@ -24,7 +24,7 @@ export default function About({ data }: { data: any }) {
             mt="1rem"
             fontSize=".9rem"
             transition={'.25s'}
-            _hover={{ bg: 'transparent', border: '2px solid', borerColor: {titleColor} }}
+            _hover={{ bg: 'transparent', border: '2px solid', borerColor: { titleColor } }}
           >
             Shop Now
           </Button>

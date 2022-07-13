@@ -37,6 +37,7 @@ export default function TextField({
         />
       ) : (
         <Textarea
+          name={name}
           placeholder={placeholder}
           _placeholder={{ color: 'gray_4' }}
           focusBorderColor={'accent_5'}

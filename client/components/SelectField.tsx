@@ -42,6 +42,7 @@ export default function SelectField({
         </Select>
       ) : (
         <Select
+          name={name}
           placeholder={placeholder}
           _placeholder={{ color: 'gray_4' }}
           focusBorderColor={'accent_5'}

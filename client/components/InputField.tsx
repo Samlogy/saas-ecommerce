@@ -51,6 +51,7 @@ export default function InputField({
         ) : (
           <Input
             type={type}
+            name={name}
             placeholder={placeholder}
             _placeholder={{ color: 'gray_4' }}
             focusBorderColor="accent_5"

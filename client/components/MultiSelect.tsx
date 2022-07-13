@@ -10,11 +10,13 @@ import {
   MenuItemOption,
   MenuButtonProps,
   Input,
-  Button
+  Button,
+  useColorModeValue
 } from '@chakra-ui/react'
 import { RiArrowRightSLine, RiArrowDownSLine } from 'react-icons/ri'
 
 export type IMultiSelect = {
+  name: string
   label: string
   options: string[]
   onChange?: (selectedValues: string[]) => void
@@ -23,10 +25,13 @@ export type IMultiSelect = {
   setSelectedOptions: any
 }
 export default function MultiSelect(props: IMultiSelect): JSX.Element {
-  const { label, options, buttonProps, selectedOptions, setSelectedOptions } = props
+  const { label, options, name, selectedOptions, setSelectedOptions, buttonProps } = props
   const [search, setSearch] = useState<any>({ input: '', result: [] })
 
-  console.log(search)
+  const itemBgColor = useColorModeValue('white', 'gray_3')
+  const textColor = useColorModeValue('gray_3', 'gray_8')
+
+  //console.log(search)
 
   function onFilter(e: any) {
     const value = e.target.value
@@ -47,10 +52,8 @@ export default function MultiSelect(props: IMultiSelect): JSX.Element {
         <>
           <MenuButton
             as={Button}
-            bg={'white'}
-            color={selectedOptions.length ? 'accent_5' : 'gray_4'}
-            borderColor={selectedOptions.length ? 'accent_5' : 'gray_4'}
-            border="1px solid"
+            bg={itemBgColor}
+            color={selectedOptions.length ? 'accent_5' : textColor}
             p="1rem"
             borderRadius="10px"
             w="15rem"

@@ -4,7 +4,7 @@ import {
   BackTop,
   Hero,
   Layout,
-  ProductsOnTrend,
+  ProductSection,
   Promotion,
   QuestionsAnswers,
   Services,
@@ -134,8 +134,9 @@ export default function Home() {
       <Hero />
       <About data={aboutData} />
       <Services data={servicesData} />
-      <ProductsOnTrend data={productsData} />
+      <ProductSection title={'Check out our products'} data={productsData} />
       <Promotion />
+      <ProductSection title={'Deal Of the Day'} data={productsData} />
       <Testimonials data={reviewsData} />
       <QuestionsAnswers data={questionsanswersdata} />
       <AppStore />

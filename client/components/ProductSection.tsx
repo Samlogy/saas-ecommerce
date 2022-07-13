@@ -1,9 +1,9 @@
 import { Flex } from '@chakra-ui/react'
 import { ProductCard, SectionWrapper } from '../components'
 
-export default function ProductsOnTrend({ data }: { data: any }) {
+export default function ProductSection({ title, data }: { title: string; data: any }) {
   return (
-    <SectionWrapper title="Check out our products">
+    <SectionWrapper title={title}>
       <Flex flexDir="row" flexWrap="wrap" justifyContent={['center', '', 'space-between']}>
         {data.length > 0 &&
           data.map((product: any) => <ProductCard key={product?.id} data={product} readOnly />)}

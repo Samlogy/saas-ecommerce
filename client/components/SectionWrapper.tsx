@@ -8,7 +8,7 @@ interface ISectionWrapper {
 
 export default function SectionWrapper({ children, title, restProps }: ISectionWrapper) {
   return (
-    <Flex flexDir="column" p="2.5rem 1.5rem" {...restProps}>
+    <Flex flexDir="column" py="2.5rem" {...restProps}>
       <Box textAlign={'center'}>
         <Heading
           fontSize="24px"

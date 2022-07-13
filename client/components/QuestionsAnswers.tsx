@@ -29,8 +29,9 @@ export default function QuestionsAnswers({ data }: { data: any }) {
                   <h2>
                     <AccordionButton
                       _expanded={{ bg: 'accent_2', color: 'white' }}
-                      borderRadius="5px"
+                      borderRadius="10px"
                       fontSize={'.9rem'}
+                      py=".75rem"
                     >
                       <Box flex="1" textAlign="left" fontWeight="500">
                         {item.question}

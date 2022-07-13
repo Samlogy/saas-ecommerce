@@ -19,7 +19,7 @@ import {
 import React, { useState } from 'react'
 import { IProduct } from '../lib/interfaces'
 import { generateQuery, loadFavouriteProducts, formatCurrency } from '../lib/utils/fonctions'
-import { TemplateFilter, InputField } from './'
+import { TemplateFilter, InputField, MultiSelect } from './'
 import { useFilterStore } from '../store'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
@@ -81,9 +81,9 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
         name="email"
         onChange={e => setFilters({ ...filters, search: e.target.value })}
         value={filters.search}
-        placeholdr="Search..."
+        placeholder="Search..."
         bg={itemBgColor}
-        w="15rem"
+        w="calc(15rem + 2rem)"
       />
 
       <FavouriteFilter filters={filters} setFilters={setFilters} setProducts={setProducts} />
@@ -160,8 +160,8 @@ function RateSlider({ label, filters, setFilters, data }: ISingleFilter) {
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
-        {[0, 1, 2, 3, 4, 5].map(el => (
-          <SliderMark value={el} mt="1" fontSize="sm">
+        {[0, 1, 2, 3, 4, 5].map((el, idx) => (
+          <SliderMark key={idx} value={el} mt="1" fontSize="sm">
             {el}
           </SliderMark>
         ))}
@@ -203,8 +203,8 @@ function DiscountSlider({ label, filters, setFilters, data }: ISingleFilter) {
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
-        {[25, 50, 75].map(el => (
-          <SliderMark value={el} mt="1" fontSize="sm">
+        {[25, 50, 75].map((el, idx) => (
+          <SliderMark key={idx} value={el} mt="1" fontSize="sm">
             {el}%
           </SliderMark>
         ))}
@@ -228,27 +228,17 @@ function DiscountSlider({ label, filters, setFilters, data }: ISingleFilter) {
 }
 function CategoriesFilter({ label, filters, setFilters, data }: ISingleFilter) {
   const inputColor = useColorModeValue('white', 'gray_2')
-  const handleCategories = e => {
-    if (filters.categories.length > 0) {
-      setFilters({ ...filters, categories: [...filters.categories, e.target.value] })
-      return
-    }
-    setFilters({ ...filters, categories: [e.target.value] })
-  }
+
+  // const [categories, setCategories] = useState([])
+
   return (
     <TemplateFilter label={label}>
-      <Select
-        onChange={handleCategories}
-        value={filters.categories[0]}
-        bg={inputColor}
-        focusBorderColor="accent_6"
-      >
-        {data?.map((el, idx) => (
-          <option key={idx} value={el}>
-            {el}
-          </option>
-        ))}
-      </Select>
+      <MultiSelect
+        label="Categories"
+        options={data}
+        selectedOptions={filters.categories}
+        setSelectedOptions={value => setFilters({ ...filters, categories: value })}
+      />
     </TemplateFilter>
   )
 }

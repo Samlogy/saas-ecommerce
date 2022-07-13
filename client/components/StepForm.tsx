@@ -8,7 +8,7 @@ import { ModalPopUp } from '../components'
 }
 
 interface IStepFrom {
-  initialStep?: number
+  initStep?: number
   steps: any
   handleSubmit?: any
   trigger?: any
@@ -16,14 +16,14 @@ interface IStepFrom {
 }
 
 export default function StepForm({
-  initialStep = 0,
+  initStep = 0,
   steps,
   handleSubmit,
   trigger,
   onSubmit
 }: IStepFrom) {
   const { nextStep, prevStep, activeStep } = useSteps({
-    initialStep: initialStep
+    initialStep: initStep
   })
 
   const handleSubmitt = async () => {

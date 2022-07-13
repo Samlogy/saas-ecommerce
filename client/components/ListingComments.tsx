@@ -1,11 +1,10 @@
-import { Button, Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { AddComment, Comment, View, Pagination } from '../components'
+import { Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react'
+import { useState } from 'react'
+import { AddComment, Comment, Pagination, View } from '../components'
 import { IComment } from '../lib/interfaces'
-import { GET_ALL_COMMENTS } from '../lib/services'
 import { useAuthStore } from '../store'
 
-const ListingComments = ({ comments }: { comments: IComment[] }) => {
+export default function ListingComments({ comments }: { comments: IComment[] }) {
   // pagination logic
   const [page, setPage] = useState<number>(1)
   const data = { info: { pages: 3 } }
@@ -53,5 +52,3 @@ const ListingComments = ({ comments }: { comments: IComment[] }) => {
     </Flex>
   )
 }
-
-export default ListingComments

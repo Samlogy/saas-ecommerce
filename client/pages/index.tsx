@@ -126,6 +126,12 @@ export default function Home() {
     title: 'Best Food In The Country',
     text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente commodi facilis, minus earum labore vero animi necessitatibus tempora? Assumenda, itaque ad eveniet explicabo quia vero porro quos voluptatum ipsum velit.'
   }
+  const promotionData = {
+    text: 'With our app you can view the route of your order, from our local headquarters to the place where you are. Look for the app now!',
+    title: 'Deal of The Day',
+    image: heroImage.src,
+    dueDate: '2023-06-07T14:00'
+  }
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -135,7 +141,7 @@ export default function Home() {
       <About data={aboutData} />
       <Services data={servicesData} />
       <ProductSection title={'Check out our products'} data={productsData} />
-      <Promotion />
+      <Promotion data={promotionData} />
       <ProductSection title={'Deal Of the Day'} data={productsData} />
       <Testimonials data={reviewsData} />
       <QuestionsAnswers data={questionsanswersdata} />

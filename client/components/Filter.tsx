@@ -58,7 +58,10 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
   const setFilters = useFilterStore((state: any) => state.setFilters)
 
   // load all lists once (catergories - condition -) save them inside localstorage
-  const onFilter = () => {
+  const onFilter = (e: any) => {
+    if (e.target == null) return
+    console.log(e.target)
+    setFilters({ ...filters, [e.target.name]: e.target.value })
     const query = generateQuery(filters)
     // call api --> filter
     console.log(query)
@@ -78,12 +81,13 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
     >
       <InputField
         type="search"
-        name="email"
-        onChange={e => setFilters({ ...filters, search: e.target.value })}
+        name="search"
+        onChange={onFilter}
         value={filters.search}
         placeholder="Search..."
         bg={itemBgColor}
         w="calc(15rem + 2rem)"
+        borderRadius="10px"
       />
 
       <FavouriteFilter filters={filters} setFilters={setFilters} setProducts={setProducts} />
@@ -116,6 +120,7 @@ function FavouriteFilter({ filters, setFilters, setProducts }: IFavouriteFilter)
   const [showFavouriteProducts, setShowFavouriteProducts] = useState(filters.isFavourite)
 
   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+  const textColor = useColorModeValue('gray_4', 'gray_8')
 
   const handleCheckbox = e => {
     const value = e.target.value
@@ -138,7 +143,7 @@ function FavouriteFilter({ filters, setFilters, setProducts }: IFavouriteFilter)
         colorScheme={'green'}
         onChange={handleCheckbox}
         value={showFavouriteProducts}
-        color="gray_3"
+        color={textColor}
       >
         Favourite Products
       </Checkbox>
@@ -156,6 +161,7 @@ function RateSlider({ label, filters, setFilters, data }: ISingleFilter) {
         min={0}
         max={5}
         colorScheme="green"
+        name="rate"
         onChange={value => setFilters({ ...filters, rate: value })}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
@@ -199,6 +205,7 @@ function DiscountSlider({ label, filters, setFilters, data }: ISingleFilter) {
         min={0}
         max={100}
         colorScheme="green"
+        name="discount"
         onChange={value => setFilters({ ...filters, discount: round(value, 'down') })}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
@@ -236,6 +243,7 @@ function CategoriesFilter({ label, filters, setFilters, data }: ISingleFilter) {
       <MultiSelect
         label="Categories"
         options={data}
+        name="categories"
         selectedOptions={filters.categories}
         setSelectedOptions={value => setFilters({ ...filters, categories: value })}
       />
@@ -243,14 +251,16 @@ function CategoriesFilter({ label, filters, setFilters, data }: ISingleFilter) {
   )
 }
 function ConditionFilter({ label, filters, setFilters, data }: ISingleFilter) {
-  const inputColor = useColorModeValue('white', 'gray_2')
+  const inputColor = useColorModeValue('white', 'gray_3')
   return (
     <TemplateFilter label={label}>
       <Select
         onChange={e => setFilters({ ...filters, condition: e.target.value })}
+        name="condition"
         value={filters.condition}
         bg={inputColor}
         focusBorderColor="accent_6"
+        borderRadius={'10px'}
       >
         {data?.map((el, idx) => (
           <option key={idx} value={el}>
@@ -271,6 +281,7 @@ function PriceSlider({ label, filters, setFilters, data }: ISingleFilter) {
         defaultValue={filters.price}
         colorScheme="green"
         aria-label={['min', 'max']}
+        name="price"
         onChangeEnd={value => setFilters({ ...filters, price: value })}
       >
         <RangeSliderTrack>

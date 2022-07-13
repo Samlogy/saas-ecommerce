@@ -4,12 +4,11 @@ import { IComment } from '../lib/interfaces'
 import { useAuthStore } from '../store'
 import { dateFormat } from '../lib/utils/fonctions'
 
-const Comment = ({ data }: { data: IComment }) => {
+export default function Comment({ data }: { data: IComment }) {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   const isLogged = useAuthStore((state: any) => state.isLogged)
   return (
     <Flex
-      key={data.id}
       flexDir="column"
       alignItems="flex-start"
       my="1.5rem"
@@ -20,21 +19,19 @@ const Comment = ({ data }: { data: IComment }) => {
     >
       <Flex alignItems="center" mb=".5rem">
         <Box as="span" fontWeight="600">
-          {data.name}{' '}
+          {data?.name}{' '}
         </Box>
         <Box as="span" fontWeight="300" fontSize=".8rem" ml=".25rem">
           on{' '}
         </Box>
         <Box as="span" fontStyle={'italic'} fontSize=".8rem" mx=".5rem">
-          {dateFormat(data.createdAt)}
+          {dateFormat(data?.createdAt)}
         </Box>
         <Rating initRate={data?.rate} readOnly={!isLogged} />
       </Flex>
       <Text fontSize={'.9rem'} fontWeight="300">
-        {data.comment}{' '}
+        {data?.comment}{' '}
       </Text>
     </Flex>
   )
 }
-
-export default Comment

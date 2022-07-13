@@ -38,11 +38,9 @@ export { default as FavouriteButton } from './FavouriteButton'
 // other
 export { default as CookieBox } from './CookieBox'
 export { default as Countdown } from './Countdown'
-export { default as ModalPopUp } from './ModalPopUp'
 export { default as Pagination } from './Pagination'
 export { default as Rating } from './Rating'
 export { default as StepForm } from './StepForm'
-export { default as PreviewImages } from './PreviewImages'
 
 // home
 export { default as SectionWrapper } from './SectionWrapper'

@@ -35,14 +35,7 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
 
   return (
     <Link href={`http://localhost:3000/product/${data?.id}`}>
-      <Flex
-        key={data?.id}
-        m=".5rem"
-        w="18rem"
-        alignItems="center"
-        justifyContent="center"
-        cursor={'pointer'}
-      >
+      <Flex m=".5rem" w="18rem" alignItems="center" justifyContent="center" cursor={'pointer'}>
         <Box bg={bgColor} w="full" rounded="lg" shadow="lg" position="relative">
           <FavouriteButton data={data} />
 

@@ -1,5 +1,4 @@
-import React from 'react'
-import { Stack, Flex, Text, Button, useColorModeValue } from '@chakra-ui/react'
+import { Button, Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import { AiFillLock } from 'react-icons/ai'
 
 export default function CookieBox() {
@@ -8,7 +7,6 @@ export default function CookieBox() {
     <Flex flexDir={'column'} p="4" boxShadow="lg" m="4" bg={bgColor} borderRadius={'10px'}>
       <Flex alignItems="center">
         <Text fontWeight="semibold" mr=".5rem">
-          {' '}
           Your Privacy{' '}
         </Text>
         <AiFillLock />
@@ -45,7 +43,6 @@ export default function CookieBox() {
             w={['10rem', '', '10rem', '']}
             mx={['.15rem']}
           >
-            {' '}
             OK{' '}
           </Button>
         </Flex>

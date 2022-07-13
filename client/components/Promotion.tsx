@@ -1,8 +1,7 @@
 import { Button, Flex, Heading, Image, Text } from '@chakra-ui/react'
 import { Countdown } from '../components'
-import heroImage from '../public/images/home.png'
 
-export default function Promotion() {
+export default function Promotion({ data }: { data: any }) {
   return (
     <Flex
       flexDir={['column', '', 'row', '']}
@@ -19,14 +18,13 @@ export default function Promotion() {
           wordBreak={'keep-all'}
           textAlign={'left'}
         >
-          Deal of The Day
+          {data?.title}
         </Heading>
         <Text mb="1rem" textAlign={'left'} w={['15rem', '', '24rem', '']} fontSize={'.9rem'}>
-          With our app you can view the route of your order, from our local headquarters to the
-          place where you are. Look for the app now!{' '}
+          {data?.text}
         </Text>
 
-        <Countdown initYear={new Date().getFullYear()} dueDay={new Date('2022-07-10')} />
+        <Countdown dueDay={new Date(data?.dueDate)} />
 
         <Button
           bg={'accent_3'}
@@ -40,7 +38,7 @@ export default function Promotion() {
       </Flex>
 
       <Image
-        src={heroImage.src}
+        src={data?.image}
         boxSize={['180px', '', '', '']}
         mx={['auto', '', '0', '0']}
         mt={['2rem', '', '0', '']}

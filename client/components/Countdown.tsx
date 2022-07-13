@@ -1,7 +1,15 @@
 import { Box, Flex, useColorModeValue } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 
-const calculateTimeLeft = (dueDay: any) => {
+interface ICountdown {
+  dueDay: string
+}
+interface ICountBox {
+  data: any
+  type: any
+}
+
+function calculateTimeLeft(dueDay: any) {
   let year = new Date().getFullYear()
   const difference = +dueDay - +new Date()
   //   console.log('difference: ', difference)
@@ -16,17 +24,12 @@ const calculateTimeLeft = (dueDay: any) => {
     }
   }
 
+  console.log(timeLeft)
   return timeLeft
 }
 
-interface ICountdown {
-  initYear: number
-  dueDay: any
-}
-
-function Countdown({ initYear, dueDay }: ICountdown) {
+export default function Countdown({ dueDay }: ICountdown) {
   const [timeLeft, setTimeLeft] = useState<any>(calculateTimeLeft(dueDay))
-  const [year] = useState(initYear)
 
   useEffect(() => {
     setTimeout(() => {
@@ -44,9 +47,7 @@ function Countdown({ initYear, dueDay }: ICountdown) {
   )
 }
 
-export default Countdown
-
-const CountBox = ({ data, type }: { data: any; type: any }) => {
+function CountBox({ data, type }: ICountBox) {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   const dataType =
     type === 'days'
@@ -70,11 +71,9 @@ const CountBox = ({ data, type }: { data: any; type: any }) => {
       bg={bgColor}
     >
       <Box as="span" fontWeight={'600'} fontSize="1rem">
-        {' '}
         {data}{' '}
       </Box>
       <Box as="span" fontSize={'.8rem'}>
-        {' '}
         {dataType}{' '}
       </Box>
     </Flex>

@@ -1,12 +1,5 @@
+import { Accordion } from '@chakra-ui/react'
 import React from 'react'
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box
-} from '@chakra-ui/react'
 
 interface ICustomAccordion {
   body: React.ReactNode

@@ -1,7 +1,7 @@
 import { IconButton, useColorMode, useColorModeValue } from '@chakra-ui/react'
 import { FiMoon, FiSun } from 'react-icons/fi'
 
-const DarkModeToggle = () => {
+export default function DarkModeToggle() {
   const { colorMode: mode, toggleColorMode } = useColorMode()
 
   const bgColor = useColorModeValue('transparent', 'gray_3')
@@ -23,4 +23,3 @@ const DarkModeToggle = () => {
     />
   )
 }
-export default DarkModeToggle

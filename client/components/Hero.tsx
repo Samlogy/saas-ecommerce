@@ -17,20 +17,17 @@ export default function Hero() {
       >
         <Heading mb="1.5rem"> Plants will make your life better </Heading>
         <Text mb="1.5rem">
-          {' '}
           Create incredible plant design for your offices or apastaments. Add fresness to your new
-          ideas.{' '}
+          ideas.
         </Text>
         <Button
           w="120px"
-          mr={['0', '', 'auto', '']}
-          mx={['auto', '', '0', '']}
+          m={['0 auto 0 auto', '', '0 0 0 auto', '']}
           bg={'accent_3'}
           _hover={{ bg: 'accent_2' }}
           color={'white'}
         >
-          {' '}
-          Explore{' '}
+          Explore
         </Button>
       </Flex>
       <Image

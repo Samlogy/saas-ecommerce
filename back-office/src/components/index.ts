@@ -38,7 +38,6 @@ export { default as MessageDetails } from './MessageDetails'
 // analytics
 export { default as Widget } from './Widget'
 export { default as TotalRevenue } from './TotalRevenue'
-export { default as Charts } from './Charts'
 export { default as CustomChart } from './CustomChart'
 
 // other

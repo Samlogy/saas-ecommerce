@@ -54,3 +54,6 @@ export { default as Testimonials } from './Testimonials'
 export { default as About } from './About'
 export { default as Hero } from './Hero'
 export { default as AppStore } from './AppStore'
+
+export { default as CustomDrawer } from './CustomDrawer'
+export { default as CustomModal } from './CustomModal'

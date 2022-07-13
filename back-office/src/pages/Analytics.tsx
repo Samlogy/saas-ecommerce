@@ -5,35 +5,6 @@ import { CustomChart, Layout, TotalRevenue, View, Widget } from 'components'
 import { useChart, useTable } from 'lib/hooks'
 import { isEmpty, loadFilters } from 'lib/utils/functions'
 
-// chart options
-const chartOptions = {
-  options: {
-    color: ['#6ab04c', '#2980b9'],
-    chart: {
-      height: 350,
-      width: 450,
-      fontFamily: 'Poppins, sans-serif',
-      zoom: {
-        enabled: true
-      }
-    }
-  },
-  theme: {
-    palette: 'palette',
-    monochrome: { enabled: false },
-    shadeIntensity: 0.5
-  },
-  series: [
-    {
-      name: 'Online Customers',
-      data: [40, 70, 20, 90, 36, 80, 30, 91, 60]
-    },
-    {
-      name: 'Store Customers',
-      data: [40, 30, 70, 80, 40, 16, 40, 20, 51, 10]
-    }
-  ]
-}
 const widgetsData = [
   {
     name: 'name...',

@@ -29,7 +29,7 @@ export default function CustomChart({ type, options, series }: ICustomChart) {
       {/* <Filter type={type === 'bar' ? 'stacked' : type} filters={filters} setFilters={setFilters} /> */}
 
       <Box mb="1rem" ml="auto" color={'gray.400'}>
-        Sorted:
+        Filters:
         <Box as="span" fontStyle="oblique" textTransform="capitalize" ml=".25rem">
           {filters && isEmpty(filters) ? ObjLoop(filters) : '----'}
         </Box>

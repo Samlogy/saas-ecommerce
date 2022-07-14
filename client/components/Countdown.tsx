@@ -23,8 +23,6 @@ function calculateTimeLeft(dueDay: any) {
       seconds: Math.floor((difference / 1000) % 60)
     }
   }
-
-  console.log(timeLeft)
   return timeLeft
 }
 

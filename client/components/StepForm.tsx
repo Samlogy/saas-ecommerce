@@ -1,11 +1,6 @@
 import { Step, Steps, useSteps } from 'chakra-ui-steps'
 import { Flex, Box, Button } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
-import { ModalPopUp } from '../components'
-
-{
-  /* <StepForm steps={steps} handleSubmit={handleSubmit} trigger={trigger} onSubmit={onSubmit} /> */
-}
 
 interface IStepFrom {
   initStep?: number
@@ -13,6 +8,7 @@ interface IStepFrom {
   handleSubmit?: any
   trigger?: any
   onSubmit?: any
+  isSubmitting?: any
 }
 
 export default function StepForm({
@@ -20,26 +16,38 @@ export default function StepForm({
   steps,
   handleSubmit,
   trigger,
-  onSubmit
+  onSubmit,
+  isSubmitting
 }: IStepFrom) {
   const { nextStep, prevStep, activeStep } = useSteps({
     initialStep: initStep
   })
 
-  const handleSubmitt = async () => {
-    btnRef?.current?.click()
-    setShow({ state: true, status: 'success' })
-  }
-
   const handleNextStep = async () => {
+    if (activeStep === steps.length) {
+      btnRef?.current?.click()
+      return
+    }
+
     let isValid = false
-    for (let i = 0; i <= activeStep; i++) {
-      if (i === activeStep) isValid = await trigger(steps[activeStep].fields)
+    switch (activeStep) {
+      case 0: {
+        isValid = await trigger(['fullName'])
+        break
+      }
+      case 1: {
+        isValid = await trigger(['email'])
+        break
+      }
+      case 2: {
+        isValid = await trigger(['username'])
+        break
+      }
     }
     if (isValid) nextStep()
   }
 
-  const [show, setShow] = useState({ state: false, status: '' })
+  //const [show, setShow] = useState({ state: false, status: '' })
   const btnRef = useRef(null)
 
   return (
@@ -48,44 +56,23 @@ export default function StepForm({
         <form onSubmit={handleSubmit(onSubmit)}>
           <Steps activeStep={activeStep}>
             {steps.map(({ label, icon, content, description }) => (
-              <Step label={label} key={label} icon={icon} description={description}>
+              <Step key={label} label={label}  icon={icon} description={description}>
                 {content}
               </Step>
             ))}
-            <Button type="submit" mx="auto" size="sm" ref={btnRef} display="none">
-              Hidden
-            </Button>
+            <Button type="submit" mx="auto" size="sm" ref={btnRef} display="none"></Button>
           </Steps>
         </form>
 
-        {activeStep === steps.length ? (
-          <Flex p={4}>
-            <Button mx="auto" size="sm" onClick={() => handleSubmitt()}>
-              Submit
-            </Button>
-          </Flex>
-        ) : (
-          <Flex w="100%" justify="flex-end">
-            <Button
-              isDisabled={activeStep === 0}
-              mr={4}
-              onClick={prevStep}
-              size="sm"
-              variant="ghost"
-            >
-              Prev
-            </Button>
-            <Button size="sm" onClick={() => handleNextStep()}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
-          </Flex>
-        )}
+        <Flex w="100%" justify="flex-end">
+          <Button isDisabled={activeStep === 0} mr={4} onClick={prevStep} size="sm" variant="ghost">
+            Prev
+          </Button>
+          <Button size="sm" onClick={() => handleNextStep()} isDisabled={isSubmitting}>
+            {activeStep === steps.length ? 'Finish' : 'Next'}
+          </Button>
+        </Flex>
       </Box>
-      <ModalPopUp
-        open={show.state}
-        close={() => setShow({ ...show, state: false })}
-        mode={show.status}
-      />
     </>
   )
 }

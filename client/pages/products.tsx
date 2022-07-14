@@ -137,6 +137,7 @@ export default function Products({ products }: { products: IProduct[] }) {
         totalCount={data.length}
         pageSize={PageSize}
         onPageChange={page => setCurrentPage(page)}
+        isMobile={width <= 700 ? true : false}
       />
     </Layout>
   )

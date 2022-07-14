@@ -5,8 +5,31 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 import { View } from './'
 import { usePagination, DOTS } from '../lib/hooks/usePagination'
 
-export default function Pagination(props) {
-  const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, isMobile } = props
+interface IPagination {
+  totalCount: number
+  siblingCount?: number
+  onPageChange: any
+  currentPage: number
+  pageSize: number
+  isMobile?: boolean
+}
+
+export default function Pagination({
+  onPageChange,
+  totalCount,
+  siblingCount = 1,
+  currentPage,
+  pageSize,
+  isMobile
+}: IPagination) {
+  console.log({
+    onPageChange,
+    totalCount,
+    siblingCount,
+    currentPage,
+    pageSize,
+    isMobile
+  })
 
   const bgColor = useColorModeValue('gray_8', 'gray_2')
   const textColor = useColorModeValue('accent_1', 'gray_7')
@@ -36,13 +59,12 @@ export default function Pagination(props) {
       <View cond={isMobile}>
         <Flex>
           <Button
-            disabled={currentPage === paginate.lastPage}
-            onClick={onNext}
+            onClick={currentPage === paginate.lastPage ? () => onPrevious() : () => onNext()}
             bg={bgColor}
             color={textColor}
             m="1.5rem auto"
           >
-            Load More
+            {currentPage === paginate.lastPage ? 'Load Less' : 'Load More'}
           </Button>
         </Flex>
       </View>

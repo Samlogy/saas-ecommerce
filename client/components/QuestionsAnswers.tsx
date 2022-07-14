@@ -19,7 +19,6 @@ export default function QuestionsAnswers({ data }: { data: any }) {
       boxShadow={'md'}
       borderRadius="10px"
       bg={bgColor}
-      py=".75rem"
     >
       {({ isExpanded }) => (
         <>
@@ -28,20 +27,19 @@ export default function QuestionsAnswers({ data }: { data: any }) {
               _expanded={{ bg: 'accent_2', color: 'white' }}
               borderRadius="10px"
               fontSize={'.9rem'}
-              py=".75rem"
             >
-              <Box flex="1" textAlign="left" fontWeight="500">
+              <Box flex="1" textAlign="left" fontWeight="500" py=".5rem">
                 {item.question}
               </Box>
               {isExpanded ? <FiMinus size={18} /> : <FiPlus size={18} />}
             </AccordionButton>
           </h2>
           <AccordionPanel
-            pb={4}
+            py="1rem"
             fontSize={'.9rem'}
             bg={isExpanded ? 'accent_2' : 'white'}
             color={isExpanded ? 'white' : 'black'}
-            borderRadius="5px"
+            borderRadius="10px"
           >
             {item.answer}
           </AccordionPanel>
@@ -51,9 +49,7 @@ export default function QuestionsAnswers({ data }: { data: any }) {
   ))
   return (
     <SectionWrapper title="Some common questions were often asked">
-      <Box p="1.5rem 1rem">
-        <CustomAccordion defaultIndex={[0]} allowMultiple body={Body} />
-      </Box>
+      <CustomAccordion defaultIndex={[0]} allowMultiple body={Body} />
     </SectionWrapper>
   )
 }

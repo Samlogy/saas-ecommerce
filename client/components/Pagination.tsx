@@ -1,46 +1,51 @@
-import { Button, Flex, IconButton, useColorModeValue, useColorMode } from '@chakra-ui/react'
+import React from 'react'
+import { Button, Flex, IconButton, useColorModeValue, useColorMode, Box } from '@chakra-ui/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 
 import { View } from './'
+import { usePagination, DOTS } from '../lib/hooks/usePagination'
 
-interface IPagination {
-  page: number
-  changePage: any
-  pages: number[]
-  nextPage: any
-  prevPage: any
-  startPage: any
-  endPage: any
-  lastPage: number
-  isMobile?: boolean
-}
-
-export default function Pagination({
-  page,
-  changePage,
-  pages,
-  nextPage,
-  prevPage,
-  startPage,
-  endPage,
-  lastPage,
-  isMobile
-}: IPagination) {
-  const { colorMode: mode } = useColorMode()
+export default function Pagination(props) {
+  const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, isMobile } = props
 
   const bgColor = useColorModeValue('gray_8', 'gray_2')
-  const textColor = useColorModeValue('accent_4', 'white')
+  const textColor = useColorModeValue('accent_1', 'gray_7')
 
+  const paginate = usePagination({
+    currentPage,
+    totalCount,
+    siblingCount,
+    pageSize
+  })
+
+  console.log(paginate)
+
+  if (currentPage === 0 || paginate.range.length < 2) {
+    return null
+  }
+
+  const onNext = () => {
+    onPageChange(currentPage + 1)
+  }
+
+  const onPrevious = () => {
+    onPageChange(currentPage - 1)
+  }
   return (
-    <Flex justify="center">
+    <>
       <View cond={isMobile}>
         <Flex>
-          <Button disabled={page === lastPage} onClick={nextPage} color={textColor} m="1.5rem auto">
+          <Button
+            disabled={currentPage === paginate.lastPage}
+            onClick={onNext}
+            bg={bgColor}
+            color={textColor}
+            m="1.5rem auto"
+          >
             Load More
           </Button>
         </Flex>
       </View>
-
       <View cond={!isMobile}>
         <Flex
           flexDir="row"
@@ -48,67 +53,35 @@ export default function Pagination({
           w={['', '30rem', '', '']}
           m="1.5rem auto"
         >
-          <Button
-            fontSize=".9rem"
-            mx=".25rem"
-            bg={bgColor}
-            color={textColor}
-            _hover={{ bg: mode === 'light' ? 'gray_7' : 'gray_4', color: 'white' }}
-            disabled={page === 1}
-            onClick={startPage}
-          >
-            Start
-          </Button>
-
           <IconButton
-            aria-label="arrow left"
+            aria-label="arrow-left"
             icon={<RiArrowLeftSLine size={22} color="gray" />}
+            onClick={onPrevious}
+            disabled={currentPage === paginate.firstPage}
             bg={bgColor}
             color={textColor}
-            _hover={{ bg: mode === 'light' ? 'gray_7' : 'gray_4', color: 'white' }}
-            disabled={page === 1}
-            onClick={prevPage}
           />
+          {paginate.range.map(pageNumber => {
+            if (pageNumber === DOTS) {
+              return <Box as="span">&#8230;</Box>
+            }
 
-          <Flex flexDir="row" justifyContent={'center'}>
-            {pages.map((page: number) => (
-              <Button
-                key={page}
-                bg={bgColor}
-                color={textColor}
-                fontSize=".9rem"
-                mx=".25rem"
-                _hover={{ bg: mode === 'light' ? 'gray_7' : 'gray_4', color: 'white' }}
-                onClick={() => changePage(page)}
-              >
-                {page}
+            return (
+              <Button bg={bgColor} color={textColor} onClick={() => onPageChange(pageNumber)}>
+                {pageNumber}
               </Button>
-            ))}
-          </Flex>
-
+            )
+          })}
           <IconButton
-            aria-label="arrow right"
+            aria-label="arrow-right"
             icon={<RiArrowRightSLine size={22} color="gray" />}
-            _hover={{ bg: mode === 'light' ? 'gray_7' : 'gray_4', color: 'white' }}
+            onClick={onNext}
+            disabled={paginate.lastPage === currentPage}
             bg={bgColor}
             color={textColor}
-            disabled={page === lastPage}
-            onClick={nextPage}
           />
-
-          <Button
-            bg={bgColor}
-            color={textColor}
-            fontSize=".9rem"
-            mx=".25rem"
-            _hover={{ bg: mode === 'light' ? 'gray_7' : 'gray_4', color: 'white' }}
-            disabled={page === lastPage}
-            onClick={endPage}
-          >
-            Last
-          </Button>
         </Flex>
       </View>
-    </Flex>
+    </>
   )
 }

@@ -104,21 +104,56 @@ export default function Home() {
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
       rate: 2.5,
       name: 'jane',
-      avatar: productImage.src
+      avatar: productImage.src,
+      position: 'CEO Netflix'
     },
     {
       review:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
       rate: 4,
       name: 'bob',
-      avatar: productImage.src
+      avatar: productImage.src,
+      position: 'CEO Google'
     },
     {
       review:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
       rate: 5,
       name: 'jone',
-      avatar: productImage.src
+      avatar: productImage.src,
+      position: 'CEO Apple'
+    },
+    {
+      review:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+      rate: 5,
+      name: 'jone',
+      avatar: productImage.src,
+      position: 'CEO Tesla'
+    },
+    {
+      review:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+      rate: 5,
+      name: 'jone',
+      avatar: productImage.src,
+      position: 'CEO Amazon'
+    },
+    {
+      review:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+      rate: 5,
+      name: 'jone',
+      avatar: productImage.src,
+      position: 'CEO Space-X'
+    },
+    {
+      review:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+      rate: 5,
+      name: 'jone',
+      avatar: productImage.src,
+      position: 'CEO Disney'
     }
   ]
   const aboutData = {

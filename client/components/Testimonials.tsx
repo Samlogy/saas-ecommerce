@@ -1,13 +1,99 @@
-import { Box, Flex, Image, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, Flex, IconButton, Image, Text, useColorModeValue } from '@chakra-ui/react'
+import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 import { Rating, SectionWrapper } from '../components'
 import { IconReview } from '../public/icons'
-import productImage from '../public/images/product.png'
+
+import Slider from 'react-slick'
+// Import css files
+import 'slick-carousel/slick/slick-theme.css'
+import 'slick-carousel/slick/slick.css'
 
 export default function Testimonials({ data }: { data: any }) {
-  const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <SectionWrapper title="Customer Reviews">
-      <Flex flexDir="row" flexWrap="wrap" justifyContent={['center', 'space-between']}>
+      <Carousel data={data} />
+    </SectionWrapper>
+  )
+}
+
+const SlickArrowLeft = props => {
+  const { onClick } = props
+  return (
+    <IconButton
+      aria-label="previous-slide"
+      icon={<RiArrowLeftSLine size={24} />}
+      onClick={onClick}
+      pos="absolute"
+      left="0"
+      top="11rem"
+      zIndex="100"
+      borderRadius="50%"
+      bg={'transparent'}
+    />
+  )
+}
+
+const SlickArrowRight = props => {
+  const { onClick } = props
+  return (
+    <IconButton
+      aria-label="next-slide"
+      icon={<RiArrowRightSLine size={24} />}
+      onClick={onClick}
+      pos="absolute"
+      right="0"
+      top="11rem"
+      zIndex="100"
+      borderRadius="50%"
+      bg={'transparent'}
+    />
+  )
+}
+
+function Carousel({ data }) {
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToScroll: 1,
+    slidesToShow: 4,
+    initialSlide: 0,
+    nextArrow: <SlickArrowRight />,
+    prevArrow: <SlickArrowLeft />,
+    appendDots: dots => (
+      <Box>
+        <ul style={{ margin: '0px' }}> {dots} </ul>
+      </Box>
+    ),
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  }
+  return (
+    <>
+      <Slider {...settings}>
         {data.length > 0 &&
           data.map((el: any, idx: number) => (
             <Flex
@@ -17,6 +103,7 @@ export default function Testimonials({ data }: { data: any }) {
               alignItems={'center'}
               boxShadow={'md'}
               w="15rem"
+              maxH="24rem"
               borderRadius={'10px'}
               p="1.5rem"
               m={'1rem .5rem'}
@@ -26,23 +113,29 @@ export default function Testimonials({ data }: { data: any }) {
                 <IconReview color="#38a169" />
               </Box>
               <Text my=".75rem" fontStyle={'italic'} textAlign="center" fontSize=".9rem">
-                {el.review}{' '}
+                {el?.review}
               </Text>
-              <Rating initRate={el?.rate} readOnly />
+              <Flex justify={'center'}>
+                <Rating initRate={el?.rate} readOnly />
+              </Flex>
               <Image
-                src={el.avatar}
-                alt={el.name}
+                src={el?.avatar}
+                alt={el?.name}
                 boxSize="100px"
                 fallbackSrc="https://via.placeholder.com/100"
                 borderRadius={'full'}
                 my=".75rem"
+                mx="auto"
               />
-              <Text fontSize=".9rem" textTransform={'uppercase'}>
-                {el.name}{' '}
+              <Text fontSize=".9rem" textAlign={'center'} textTransform={'uppercase'}>
+                {el?.name}
+              </Text>
+              <Text fontSize=".8rem" textAlign={'center'} fontStyle="italic">
+                {el?.position}
               </Text>
             </Flex>
           ))}
-      </Flex>
-    </SectionWrapper>
+      </Slider>
+    </>
   )
 }

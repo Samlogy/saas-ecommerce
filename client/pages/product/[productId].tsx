@@ -458,7 +458,6 @@ function Carousel({ data, setImage }: ICarousel) {
               maxH="10rem"
               mx="auto"
               _hover={{ cursor: 'pointer' }}
-              //filter={currentSlide !== idx + 1 && 'grayscale(80%)'}
               onClick={() => setImage(img)}
             />
           </Box>

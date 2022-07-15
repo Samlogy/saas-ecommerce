@@ -1,8 +1,8 @@
 export interface ICategory {
   id: number
   name: string
-  createdAt: Date
-  editedAt: Date | null
+  createdAt: string
+  editedAt: string | null
 }
 
 export interface IComment {
@@ -10,8 +10,8 @@ export interface IComment {
   name: string
   rate: number
   comment: string
-  createdAt: Date
-  editedAt: Date | null
+  createdAt: string
+  editedAt: string | null
 }
 export interface IProduct {
   id?: number
@@ -26,8 +26,8 @@ export interface IProduct {
   comments?: IComment[]
   categoryId?: string
   isFavourite?: boolean
-  createdAt: Date
-  editedAt: Date | null
+  createdAt: string
+  editedAt: string | null
 }
 
 export interface IUser {
@@ -38,7 +38,7 @@ export interface IUser {
   phone: string
   avatar?: string
   createdAt?: Date
-  editedAt: Date | null
+  editedAt: string | null
 }
 
 export interface IUserVendor extends IUser {}
@@ -46,17 +46,18 @@ export interface IUserCustomer extends IUser {}
 
 export interface IContact {
   id: number
+  name: string
   email: string
   message: string
-  createdAt: Date
-  editedAt: Date | null
+  createdAt: string
+  editedAt: string | null
 }
 
 export interface ISubscribe {
   id: number
   email: string
-  createdAt: Date
-  editedAt: Date | null
+  createdAt: string
+  editedAt: string | null
 }
 
 export interface ICustomerTestimonial {
@@ -66,29 +67,29 @@ export interface ICustomerTestimonial {
   business: string
   testimonial: string
   avatar?: string
-  createdAt: Date
-  editedAt: Date | null
+  createdAt: string
+  editedAt: string | null
 }
 export interface IQuestionAnswer {
   id: number
   question: string
   anwser: string
-  createdAt: Date
-  editedAt: Date | null
+  createdAt: string
+  editedAt: string | null
 }
 export interface IService {
   id: number
   title: string
   description: string
   image: string
-  createdAt: Date
-  editedAt: Date | null
+  createdAt: string
+  editedAt: string | null
 }
 export interface IDeal {
   id: number
-  dueDate: Date
+  dueDate: string
   description: string
   image: string
-  createdAt: Date
-  editedAt: Date | null
+  createdAt: string
+  editedAt: string | null
 }

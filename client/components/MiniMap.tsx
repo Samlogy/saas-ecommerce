@@ -1,7 +1,7 @@
 import { Flex, Link as ChakraLink, useColorModeValue } from '@chakra-ui/react'
 
 export default function MiniMap({ data }: { data: any }) {
-  const bgColor = useColorModeValue('gray_9', 'gray_2')
+  const bgColor = useColorModeValue('gray_8', 'gray_2')
   const textColor = useColorModeValue('gray_3', 'gray_9')
   return (
     <Flex

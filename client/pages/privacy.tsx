@@ -1,44 +1,50 @@
-import { Box, Heading, Text } from '@chakra-ui/react'
 import Link from 'next/link'
-import { Layout, View } from '../components'
+import { Box, Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react'
+import { Layout, MiniMap, View } from '../components'
 
 export default function Privacy({ data }: { data: any }) {
-  const url = ''
+  const textColor = useColorModeValue('gray_3', 'gray_7')
+  const titleColor = useColorModeValue('gray_2', 'gray_8')
 
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Box py={10} px={0}>
-        <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full">
+        <Heading
+          fontSize="1.5rem"
+          textTransform={'uppercase'}
+          mr="auto"
+          w="full"
+          color={titleColor}
+        >
           Privacy
         </Heading>
 
-        <Text color={'gray.500'} fontSize="12px" mt=".25rem" mb="1rem">
+        <Text color={textColor} mt=".25rem" fontSize="12px">
           Last updated: {data?.editedAt || data?.createdAt}
         </Text>
 
-        <View cond={data.content.length > 0}>
-          {data &&
-            data.content.map(el => (
-              <Link href={`${url}${el.link}`}>
-                <Box color="accent_4" _hover={{ cursor: 'pointer' }} mb=".25rem">
-                  {el.title}
-                </Box>
-              </Link>
-            ))}
-        </View>
-
-        <View cond={data.content.length > 0}>
-          {data &&
-            data.content.map(el => (
+        <Flex flexDir="row" justify="space-between">
+          <View
+            cond={data?.content.length > 0}
+            display="flex"
+            flexDir="column"
+            flexBasis={['full', '', '60%', '70%']}
+          >
+            {data?.content.map(el => (
               <Box key={el.title} my="2rem">
-                <Heading fontSize="1.5rem">{el.title}</Heading>
+                <Heading fontSize="1.5rem" color={titleColor}>
+                  {el.title}
+                </Heading>
 
-                <Text fontSize="1rem" mt=".5rem">
+                <Text fontSize="1rem" mt=".5rem" color={textColor}>
                   {el.text}
                 </Text>
               </Box>
             ))}
-        </View>
+          </View>
+
+          <MiniMap data={data?.content} />
+        </Flex>
       </Box>
     </Layout>
   )

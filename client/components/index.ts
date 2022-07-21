@@ -41,6 +41,7 @@ export { default as Countdown } from './Countdown'
 export { default as Pagination } from './Pagination'
 export { default as Rating } from './Rating'
 export { default as StepForm } from './StepForm'
+export { default as MiniMap } from './MiniMap'
 
 // home
 export { default as SectionWrapper } from './SectionWrapper'

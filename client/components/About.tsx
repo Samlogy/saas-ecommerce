@@ -3,7 +3,7 @@ import { SectionWrapper } from '../components'
 
 export default function About({ data }: { data: any }) {
   const textColor = useColorModeValue('gray_4', 'gray_8')
-  const titleColor = useColorModeValue('accent_5', 'accent_6')
+  const titleColor = useColorModeValue('accent_3', 'accent_6')
   return (
     <SectionWrapper title="WHY CHOOSE US ?">
       <Flex flexWrap="wrap" justifyContent={'space-evenly'}>
@@ -24,7 +24,7 @@ export default function About({ data }: { data: any }) {
             mt="1rem"
             fontSize=".9rem"
             transition={'.25s'}
-            _hover={{ bg: 'transparent', border: '2px solid', borerColor: { titleColor } }}
+            _hover={{ bg: 'transparent', border: '2px solid', borerColor: titleColor }}
           >
             Shop Now
           </Button>

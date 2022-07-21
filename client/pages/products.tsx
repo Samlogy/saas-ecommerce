@@ -116,10 +116,10 @@ export default function Products({ products }: { products: IProduct[] }) {
         <Flex flexDir={'column'}>
           <View cond={allProducts?.length > 0}>
             <Text mb="1rem" ml="3rem">
-              Products result: {allProducts?.length}{' '}
+              Products result: {allProducts?.length}
             </Text>
 
-            <Flex flexDir="row" flexWrap="wrap" justifyContent="space-between">
+            <Flex flexDir="row" flexWrap="wrap" justifyContent={['center', '', 'space-between']}>
               {allProducts?.map((product: IProduct) => (
                 <ProductCard key={product.id} data={product} readOnly />
               ))}
@@ -127,18 +127,20 @@ export default function Products({ products }: { products: IProduct[] }) {
           </View>
 
           <View cond={allProducts?.length === 0}>
-            <Text> There is no product with thoes filters </Text>
+            <Text> There is no product with these filters </Text>
           </View>
         </Flex>
       </Flex>
 
-      <Pagination
-        currentPage={currentPage}
-        totalCount={data.length}
-        pageSize={PageSize}
-        onPageChange={page => setCurrentPage(page)}
-        isMobile={width <= 700 ? true : false}
-      />
+      <View cond={allProducts.length > PageSize}>
+        <Pagination
+          currentPage={currentPage}
+          totalCount={data.length}
+          pageSize={PageSize}
+          onPageChange={page => setCurrentPage(page)}
+          isMobile={width <= 700 ? true : false}
+        />
+      </View>
     </Layout>
   )
 }

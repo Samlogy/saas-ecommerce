@@ -137,8 +137,8 @@ export default function Product({ product, comments, relatedProducts }: IProduct
           <Flex flexDir="row-reverse" justifyContent={['space-around', '', '', '']} align="center">
             <Button
               leftIcon={isFavourite}
-              bg={'white'}
-              color={'accent_3'}
+              bg={useColorModeValue('white', 'gray_3')}
+              color={useColorModeValue('accent_3', 'accent_6')}
               border="1px solid"
               borderColor="accent_3"
               borderRadius=".5rem"
@@ -279,93 +279,6 @@ const Reviews = ({ data }: { data: number }) => {
   )
 }
 
-export const getServerSideProps = async context => {
-  // api call (context.params.id) --> productId
-  const product = {
-    id: 1,
-    name: 'Automatic Watch',
-    images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
-    quantity: 1,
-    price: 350,
-    description:
-      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-    delivery: '2-3 business days',
-    reviews: 34,
-    rate: 4
-  }
-  const comments = [
-    {
-      id: 1,
-      name: 'Sam',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-      rate: 4,
-      createdAt: JSON.parse(JSON.stringify(new Date()))
-    },
-    {
-      id: 2,
-      name: 'ghiles',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-      rate: 2,
-      createdAt: JSON.parse(JSON.stringify(new Date()))
-    },
-    {
-      id: 3,
-      name: 'sadek',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
-      rate: 3,
-      createdAt: JSON.parse(JSON.stringify(new Date()))
-    }
-  ]
-  const relatedProducts = [
-    {
-      id: 1,
-      name: 'Automatic Watch',
-      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
-      quantity: 1,
-      price: 350,
-      description:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-      delivery: '2-3 business days',
-      reviews: 34,
-      rate: 4
-    },
-    {
-      id: 2,
-      name: 'Automatic Watch',
-      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
-      quantity: 1,
-      price: 350,
-      description:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-      delivery: '2-3 business days',
-      reviews: 34,
-      rate: 4
-    },
-    {
-      id: 3,
-      name: 'Automatic Watch',
-      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
-      quantity: 1,
-      price: 350,
-      description:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-      delivery: '2-3 business days',
-      reviews: 34,
-      rate: 4
-    }
-  ]
-  return {
-    props: {
-      product,
-      relatedProducts,
-      comments
-    }
-  }
-}
-
 const SlickArrowLeft = props => {
   const { onClick } = props
   const arrowColor = useColorModeValue('gray_8', 'gray_5')
@@ -465,4 +378,91 @@ function Carousel({ data, setImage }: ICarousel) {
       </Slider>
     </Flex>
   )
+}
+
+export const getServerSideProps = async context => {
+  // api call (context.params.id) --> productId
+  const product = {
+    id: 1,
+    name: 'Automatic Watch',
+    images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+    quantity: 1,
+    price: 350,
+    description:
+      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+    delivery: '2-3 business days',
+    reviews: 34,
+    rate: 4
+  }
+  const comments = [
+    {
+      id: 1,
+      name: 'Sam',
+      comment:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+      rate: 4,
+      createdAt: JSON.parse(JSON.stringify(new Date()))
+    },
+    {
+      id: 2,
+      name: 'ghiles',
+      comment:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+      rate: 2,
+      createdAt: JSON.parse(JSON.stringify(new Date()))
+    },
+    {
+      id: 3,
+      name: 'sadek',
+      comment:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur provident optio debitis adipisci explicabo',
+      rate: 3,
+      createdAt: JSON.parse(JSON.stringify(new Date()))
+    }
+  ]
+  const relatedProducts = [
+    {
+      id: 1,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
+      reviews: 34,
+      rate: 4
+    },
+    {
+      id: 2,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
+      reviews: 34,
+      rate: 4
+    },
+    {
+      id: 3,
+      name: 'Automatic Watch',
+      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
+      quantity: 1,
+      price: 350,
+      description:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+      delivery: '2-3 business days',
+      reviews: 34,
+      rate: 4
+    }
+  ]
+  return {
+    props: {
+      product,
+      relatedProducts,
+      comments
+    }
+  }
 }

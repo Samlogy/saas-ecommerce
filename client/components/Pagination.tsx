@@ -22,15 +22,6 @@ export default function Pagination({
   pageSize,
   isMobile
 }: IPagination) {
-  console.log({
-    onPageChange,
-    totalCount,
-    siblingCount,
-    currentPage,
-    pageSize,
-    isMobile
-  })
-
   const bgColor = useColorModeValue('gray_8', 'gray_2')
   const textColor = useColorModeValue('accent_1', 'gray_7')
 
@@ -52,7 +43,7 @@ export default function Pagination({
   }
 
   const onPrevious = () => {
-    onPageChange(currentPage - 1)
+    onPageChange(1)
   }
   return (
     <>

@@ -1,13 +1,18 @@
 import { Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { AddComment, Comment, Pagination, View } from '../components'
 import { IComment } from '../lib/interfaces'
 import { useAuthStore } from '../store'
 
 export default function ListingComments({ comments }: { comments: IComment[] }) {
   // pagination logic
-  const [page, setPage] = useState<number>(1)
-  const data = { info: { pages: 3 } }
+  const [currentPage, setCurrentPage] = useState(1)
+  let PageSize = 1
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize
+    const lastPageIndex = firstPageIndex + PageSize
+    return comments.slice(firstPageIndex, lastPageIndex)
+  }, [currentPage])
 
   const [showAddComment, setShowAddComment] = useState(false)
 
@@ -32,14 +37,10 @@ export default function ListingComments({ comments }: { comments: IComment[] }) 
         ))}
 
         <Pagination
-          page={page}
-          pages={[page, page + 1, page + 2, page + 3]}
-          changePage={setPage}
-          nextPage={() => setPage(prev => prev + 1)}
-          prevPage={() => setPage(prev => prev - 1)}
-          startPage={() => setPage(1)}
-          endPage={() => setPage(data.info.pages)}
-          lastPage={data.info.pages}
+          currentPage={currentPage}
+          totalCount={comments.length}
+          pageSize={PageSize}
+          onPageChange={page => setCurrentPage(page)}
           isMobile={true}
         />
       </View>

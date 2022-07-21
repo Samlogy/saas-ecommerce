@@ -27,7 +27,7 @@ export function generateQuery(obj: any): any {
 export function onAddFavouriteProduct(product: IProduct) {
   let data = loadState('favourite-products')
   if (!data) {
-    saveState('favourite-products', [product])
+    saveState('favourite-products', [{ ...product, isFavourite: true }])
     return
   }
   const isExist = data.find((item: any) => item.id === product?.id)

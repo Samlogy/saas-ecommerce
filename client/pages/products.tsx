@@ -94,28 +94,33 @@ export default function Products({ products }: { products: IProduct[] }) {
       </Heading>
 
       <Flex flexDir={'row'} justifyContent="space-between">
-        <View cond={width >= 700}>
-          <Filter setProducts={setProducts} />
-        </View>
+        <Flex flexDir={'column'}>
+          <Text ml=".75rem" fontSize="1.3rem" fontWeight="600">
+            Filter By
+          </Text>
+          <View cond={width >= 700}>
+            <Filter setProducts={setProducts} />
+          </View>
 
-        <View cond={width < 700}>
-          <IconButton
-            aria-label="trigger filter"
-            icon={<BsFilterLeft size={18} />}
-            ref={btnRef}
-            onClick={() => setIsVisible(true)}
-          />
-          <CustomDrawer
-            title="Filter"
-            isOpen={isVisible}
-            onClose={() => setIsVisible(false)}
-            body={<Filter setProducts={setProducts} />}
-          />
-        </View>
+          <View cond={width < 700}>
+            <IconButton
+              aria-label="trigger filter"
+              icon={<BsFilterLeft size={18} />}
+              ref={btnRef}
+              onClick={() => setIsVisible(true)}
+            />
+            <CustomDrawer
+              title="Filter"
+              isOpen={isVisible}
+              onClose={() => setIsVisible(false)}
+              body={<Filter setProducts={setProducts} />}
+            />
+          </View>
+        </Flex>
 
         <Flex flexDir={'column'}>
           <View cond={allProducts?.length > 0}>
-            <Text mb="1rem" ml="3rem">
+            <Text mb="1rem" textAlign="left" ml=".5rem">
               Products result: {allProducts?.length}
             </Text>
 

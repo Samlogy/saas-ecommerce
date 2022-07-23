@@ -14,6 +14,7 @@ interface ICustomDrawer {
   onClose: any
   title?: string
   placement?: any
+  size?: string
   body?: React.ReactNode
   footer?: React.ReactNode
 }
@@ -22,11 +23,12 @@ export default function CustomDrawer({
   onClose,
   title,
   placement = 'right',
+  size = 'md',
   body,
   footer
 }: ICustomDrawer) {
   return (
-    <Drawer isOpen={isOpen} placement={placement} onClose={onClose}>
+    <Drawer size={size} isOpen={isOpen} placement={placement} onClose={onClose}>
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />

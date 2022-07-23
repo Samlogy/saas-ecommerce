@@ -4,6 +4,7 @@ import { devtools, persist } from 'zustand/middleware'
 let filterStore = (set: SetState<any>) => ({
   filters: {
     search: '',
+    sort: '',
     rate: 1,
     categories: [],
     discount: '',

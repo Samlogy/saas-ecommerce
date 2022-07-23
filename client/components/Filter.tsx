@@ -307,7 +307,7 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
       <InputField
         type="number"
         name="price_min"
-        onChange={e => setFilters({ ...filters, price: [...filters.price[0], e.target.value] })}
+        onChange={e => setFilters({ ...filters, price: [e.target.value, filters.price[1]] })}
         value={filters.price[0]}
         placeholder="Search..."
         bg={itemBgColor}
@@ -318,7 +318,7 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
       <InputField
         type="number"
         name="price_max"
-        onChange={e => setFilters({ ...filters, price: [...filters.price[0], e.target.value] })}
+        onChange={e => setFilters({ ...filters, price: [filters.price[0], e.target.value] })}
         value={filters.price[1]}
         placeholder="Search..."
         bg={itemBgColor}

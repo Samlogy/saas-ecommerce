@@ -1,9 +1,8 @@
-import { Flex, Heading, IconButton, Text } from '@chakra-ui/react'
+import { Flex, Heading, IconButton, Text, useBreakpointValue } from '@chakra-ui/react'
 import { useRef, useState, useMemo } from 'react'
 import { BsFilterLeft } from 'react-icons/bs'
 
 import { CustomDrawer, Filter, Layout, Pagination, ProductCard, View } from '../components'
-import { useWindowDimensions } from '../lib/hooks'
 import { IProduct } from '../lib/interfaces'
 
 import heroImage from '../public/images/home.png'
@@ -20,7 +19,7 @@ export default function Products({ products }: { products: IProduct[] }) {
 
   const [allProducts, setProducts] = useState<IProduct[]>(products)
 
-  const { width } = useWindowDimensions()
+  const isMobile = useBreakpointValue({ base: true, md: false })
 
   const [isVisible, setIsVisible] = useState(false)
   const btnRef = useRef()
@@ -36,15 +35,15 @@ export default function Products({ products }: { products: IProduct[] }) {
             ml=".75rem"
             fontSize="1.3rem"
             fontWeight="600"
-            display={width < 700 ? 'none' : 'block'}
+            display={isMobile ? 'none' : 'block'}
           >
             Filter By
           </Text>
-          <View cond={width >= 700}>
+          <View cond={!isMobile}>
             <Filter setProducts={setProducts} />
           </View>
 
-          <View cond={width < 700}>
+          <View cond={isMobile}>
             <IconButton
               aria-label="trigger filter"
               icon={<BsFilterLeft size={18} />}
@@ -62,7 +61,7 @@ export default function Products({ products }: { products: IProduct[] }) {
 
         <Flex flexDir={'column'}>
           <View cond={allProducts?.length > 0}>
-            <Text mb="1rem" textAlign={width < 700 ? 'center' : 'left'} ml=".5rem">
+            <Text mb="1rem" textAlign={!isMobile ? 'center' : 'left'} ml=".5rem">
               Products result: {allProducts?.length}
             </Text>
 
@@ -85,7 +84,7 @@ export default function Products({ products }: { products: IProduct[] }) {
           totalCount={allProducts.length}
           pageSize={PageSize}
           onPageChange={page => setCurrentPage(page)}
-          isMobile={width <= 700 ? true : false}
+          isMobile={isMobile ? true : false}
         />
       </View>
     </Layout>

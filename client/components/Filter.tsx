@@ -1,11 +1,12 @@
 import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   Box,
   Checkbox,
   Flex,
-  RangeSlider,
-  RangeSliderFilledTrack,
-  RangeSliderThumb,
-  RangeSliderTrack,
   Select,
   Slider,
   SliderFilledTrack,
@@ -13,18 +14,13 @@ import {
   SliderThumb,
   SliderTrack,
   Tooltip,
-  useColorModeValue,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon
+  useColorModeValue
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { IProduct } from '../lib/interfaces'
-import { generateQuery, loadFavouriteProducts, formatCurrency } from '../lib/utils/fonctions'
-import { TemplateFilter, InputField, MultiSelect, SelectField } from './'
+import { generateQuery, loadFavouriteProducts } from '../lib/utils/fonctions'
 import { useFilterStore } from '../store'
+import { InputField, MultiSelect, SelectField, TemplateFilter } from './'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
 const data = {

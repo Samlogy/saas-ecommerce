@@ -1,9 +1,26 @@
-import { Flex, Heading, IconButton, Text, useBreakpointValue } from '@chakra-ui/react'
+import {
+  Flex,
+  Heading,
+  IconButton,
+  Text,
+  Box,
+  useBreakpointValue,
+  useColorModeValue
+} from '@chakra-ui/react'
 import { useRef, useState, useMemo } from 'react'
 import { BsFilterLeft } from 'react-icons/bs'
 
-import { CustomDrawer, Filter, Layout, Pagination, ProductCard, View } from '../components'
+import {
+  CustomDrawer,
+  Filter,
+  Layout,
+  Pagination,
+  ProductCard,
+  View,
+  SelectField
+} from '../components'
 import { IProduct } from '../lib/interfaces'
+import { useFilterStore } from '../store'
 
 import heroImage from '../public/images/home.png'
 import productImage from '../public/images/product.png'
@@ -19,10 +36,28 @@ export default function Products({ products }: { products: IProduct[] }) {
 
   const [allProducts, setProducts] = useState<IProduct[]>(products)
 
+  const filters = useFilterStore((state: any) => state.filters)
+  const setFilters = useFilterStore((state: any) => state.setFilters)
+
   const isMobile = useBreakpointValue({ base: true, md: false })
 
   const [isVisible, setIsVisible] = useState(false)
   const btnRef = useRef()
+
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+
+  function getFilters(filters: any): string[] {
+    if (!filters) return
+
+    let list: string[] = []
+    for (let i in filters) {
+      if (filters[i]) list.push(`${i}: ${filters[i]}`)
+    }
+
+    return list
+  }
+  const filterData = getFilters(filters)
+
   return (
     <Layout isHeaderVisible isFooterVisible>
       <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'}>
@@ -61,9 +96,46 @@ export default function Products({ products }: { products: IProduct[] }) {
 
         <Flex flexDir={'column'}>
           <View cond={allProducts?.length > 0}>
-            <Text mb="1rem" textAlign={!isMobile ? 'center' : 'left'} ml=".5rem">
-              Products result: {allProducts?.length}
-            </Text>
+            <Flex
+              flexDir="row"
+              flexWrap="wrap"
+              justify="space-between"
+              mb="1rem"
+              ml={isMobile ? '1rem' : '0'}
+            >
+              {filterData.map((el, idx) => (
+                <Box
+                  key={idx}
+                  as="span"
+                  bg="accent_4"
+                  color="white"
+                  borderRadius="10px"
+                  p=".2rem"
+                  fontSize=".9rem"
+                  mb=".5rem"
+                >
+                  {el}
+                </Box>
+              ))}
+            </Flex>
+            <Flex justify="space-between">
+              <Text mb="1rem" textAlign={isMobile ? 'center' : 'left'} ml=".5rem">
+                Products result: {allProducts?.length}
+              </Text>
+
+              <SelectField
+                name="sort"
+                onChange={e => setFilters({ ...filters, sort: e.target.value })}
+                value={filters.sort}
+                placeholder="Sort"
+                bg={itemBgColor}
+                w={['10rem', '15rem']}
+                borderRadius="10px"
+              >
+                <option value="recommended"> Recommended </option>
+                <option value="newest"> Newest </option>
+              </SelectField>
+            </Flex>
 
             <Flex flexDir="row" flexWrap="wrap" justifyContent={['center', '', 'space-between']}>
               {allProducts?.map((product: IProduct) => (

@@ -70,8 +70,6 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
     console.log(query)
   }
 
-  console.log(filters)
-
   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
 
   return (
@@ -92,18 +90,7 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
         w="calc(15rem + 2rem)"
         borderRadius="10px"
       />
-      <SelectField
-        name="sort"
-        onChange={onFilter}
-        value={filters.sort}
-        placeholder="Sort"
-        bg={itemBgColor}
-        w="calc(15rem + 2rem)"
-        borderRadius="10px"
-      >
-        <option value="recommended"> Recommended </option>
-        <option value="newest"> Newest </option>
-      </SelectField>
+      
 
       <AccordionCustom
         title="Favourite Products"
@@ -328,7 +315,7 @@ function AccordionCustom({ title, body }: IAccordionCustom) {
   return (
     <Accordion defaultIndex={[0]} allowMultiple w="17rem">
       <AccordionItem>
-        <AccordionButton>
+        <AccordionButton bg={'gray_3'} _expanded={{ bg: 'accent_2' }}>
           <Box flex="1" textAlign="left">
             {title}
           </Box>

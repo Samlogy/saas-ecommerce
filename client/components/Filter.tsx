@@ -143,8 +143,7 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
 function FavouriteFilter({ filters, setFilters, setProducts }: IFavouriteFilter) {
   const [showFavouriteProducts, setShowFavouriteProducts] = useState(filters.isFavourite)
 
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
-  const textColor = useColorModeValue('gray_4', 'gray_8')
+  const textColor = useColorModeValue('gray_3', 'gray_8')
 
   const handleCheckbox = e => {
     const value = e.target.value
@@ -160,7 +159,7 @@ function FavouriteFilter({ filters, setFilters, setProducts }: IFavouriteFilter)
   const isFavourite = filters.isFavourite === 'yes' ? true : false
 
   return (
-    <Box w="full" my="1rem" borderRadius={'10px'} bg={itemBgColor} p="1rem">
+    <>
       <Checkbox
         defaultChecked={isFavourite}
         defaultValue={['yes']}
@@ -171,7 +170,7 @@ function FavouriteFilter({ filters, setFilters, setProducts }: IFavouriteFilter)
       >
         Favourite Products
       </Checkbox>
-    </Box>
+    </>
   )
 }
 function RateSlider({ filters, setFilters, data }: ISingleFilter) {
@@ -263,7 +262,7 @@ function CategoriesFilter({ filters, setFilters, data }: ISingleFilter) {
   // const [categories, setCategories] = useState([])
 
   return (
-    <TemplateFilter>
+    <>
       <MultiSelect
         label="Categories"
         options={data}
@@ -271,18 +270,18 @@ function CategoriesFilter({ filters, setFilters, data }: ISingleFilter) {
         selectedOptions={filters.categories}
         setSelectedOptions={value => setFilters({ ...filters, categories: value })}
       />
-    </TemplateFilter>
+    </>
   )
 }
 function ConditionFilter({ filters, setFilters, data }: ISingleFilter) {
-  const inputColor = useColorModeValue('white', 'gray_3')
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   return (
-    <TemplateFilter>
+    <>
       <Select
         onChange={e => setFilters({ ...filters, condition: e.target.value })}
         name="condition"
         value={filters.condition}
-        bg={inputColor}
+        bg={itemBgColor}
         focusBorderColor="accent_6"
         borderRadius={'10px'}
       >
@@ -292,13 +291,13 @@ function ConditionFilter({ filters, setFilters, data }: ISingleFilter) {
           </option>
         ))}
       </Select>
-    </TemplateFilter>
+    </>
   )
 }
 function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_3')
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   return (
-    <TemplateFilter>
+    <Flex flexDir={'column'} align="center" justify={'center'}>
       from:
       <InputField
         type="number"
@@ -321,7 +320,7 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
         w="7rem"
         borderRadius="10px"
       />
-    </TemplateFilter>
+    </Flex>
   )
 }
 

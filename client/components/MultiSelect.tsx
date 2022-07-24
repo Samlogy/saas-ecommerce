@@ -28,7 +28,7 @@ export default function MultiSelect(props: IMultiSelect): JSX.Element {
   const { label, options, name, selectedOptions, setSelectedOptions, buttonProps } = props
   const [search, setSearch] = useState<any>({ input: '', result: [] })
 
-  const itemBgColor = useColorModeValue('white', 'gray_3')
+   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   const textColor = useColorModeValue('gray_3', 'gray_8')
 
   //console.log(search)

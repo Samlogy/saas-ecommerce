@@ -20,7 +20,7 @@ import React, { useState } from 'react'
 import { IProduct } from '../lib/interfaces'
 import { generateQuery, loadFavouriteProducts } from '../lib/utils/fonctions'
 import { useFilterStore } from '../store'
-import { InputField, MultiSelect, SelectField, TemplateFilter } from './'
+import { InputField, MultiSelect, TemplateFilter } from './'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
 const data = {
@@ -90,7 +90,6 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
         w="calc(15rem + 2rem)"
         borderRadius="10px"
       />
-      
 
       <AccordionCustom
         title="Favourite Products"

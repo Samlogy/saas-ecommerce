@@ -3,22 +3,18 @@ import {
   Flex,
   Heading,
   IconButton,
-  Image,
-  Td,
   Text,
-  Th,
-  Tr,
-  useColorMode,
-  useBreakpointValue
+  useBreakpointValue,
+  useColorMode
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { BsFilterLeft } from 'react-icons/bs'
 
 import {
-  ActionsMenu,
   AddEditProduct,
   CustomDrawer,
+  CustomTable,
   Layout,
   ProductBox,
   ProductDetails,
@@ -34,51 +30,56 @@ const allProducts = [
     id: 1,
     name: 'Automatic Watch',
     images: [heroImage, productImage, heroImage, productImage],
-    quantity: 1,
+    quantity: 5,
     price: 350,
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
     delivery: '2-3 business days',
     reviews: 34,
-    rate: 4
+    rate: 4,
+    discount: 0.5
   },
   {
     id: 2,
     name: 'Automatic Watch',
     images: [heroImage, productImage, heroImage, productImage],
-    quantity: 1,
+    quantity: 10,
     price: 350,
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
     delivery: '2-3 business days',
     reviews: 34,
-    rate: 4
+    rate: 4,
+    discount: 0.2
   },
   {
     id: 3,
     name: 'Automatic Watch',
     images: [heroImage, productImage, heroImage, productImage],
-    quantity: 1,
+    quantity: 15,
     price: 350,
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
     delivery: '2-3 business days',
     reviews: 34,
-    rate: 4
+    rate: 4,
+    discount: null
   },
   {
     id: 4,
     name: 'Automatic Watch',
     images: [heroImage, productImage, heroImage, productImage],
-    quantity: 1,
+    quantity: 23,
     price: 350,
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
     delivery: '2-3 business days',
     reviews: 34,
-    rate: 4
+    rate: 4,
+    discount: 0.1
   }
 ]
+const headers = ['', 'image', 'name', 'quantity', 'price', 'discount', 'actions']
 
 export default function Products() {
   const action = useProductStore((state: any) => state.action)
@@ -89,60 +90,6 @@ export default function Products() {
   const [isVisible, setIsVisible] = useState(false)
 
   const { colorMode: mode } = useColorMode()
-
-  // products list
-  const productTableHead = [
-    '',
-    'image',
-    'name',
-    'description',
-    'quantity',
-    'price',
-    'discount',
-    'actions'
-  ]
-
-  const renderHead = (product: any, idx: any) => (
-    <Th key={idx} p="15px 10px" textAlign={'left'}>
-      {product}
-    </Th>
-  )
-
-  const renderBody = (product: any, idx: any) => (
-    <Tr key={idx} textAlign="left">
-      <Td p="15px 10px" maxW="2rem">
-        {product.id}
-      </Td>
-      <Td p="15px 10px">
-        <Image
-          boxSize="100px"
-          borderRadius={'5px'}
-          objectFit="cover"
-          src={product.images[0]}
-          fallbackSrc="https://via.placeholder.com/100"
-          alt={product.name}
-        />
-      </Td>
-      <Td p="15px 10px" maxW="2rem">
-        {product.name}
-      </Td>
-      <Td p="15px 10px" maxW="2rem" isTruncated>
-        {product.description}
-      </Td>
-      <Td p="15px 10px" maxW="2rem">
-        {product.quantity}
-      </Td>
-      <Td p="15px 10px" maxW="2rem">
-        {product.price}
-      </Td>
-      <Td p="15px 10px" maxW="2rem">
-        {product.discount}
-      </Td>
-      <Td p="15px 10px" w="2rem">
-        <ActionsMenu setAction={setAction} />
-      </Td>
-    </Tr>
-  )
 
   return (
     <Layout isHeaderVisible>
@@ -232,6 +179,7 @@ export default function Products() {
           </Text>
 
           {/* display table full of products + options for each row */}
+          <CustomTable headers={headers} data={allProducts} />
         </View>
 
         <View cond={allProducts?.length === 0}>

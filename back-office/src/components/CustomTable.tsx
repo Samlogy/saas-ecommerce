@@ -1,80 +1,66 @@
-import React, { useState } from 'react'
-import { Table, Thead, Tbody, Tr, Flex, Box, useColorModeValue } from '@chakra-ui/react'
+import { Table, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr, Image } from '@chakra-ui/react'
 
-const CustomTable = (props: any) => {
-  const initDataShow =
-    props.limit && props.bodyData ? props.bodyData.slice(0, Number(props.limit)) : props.bodyData
+import { formatCurrency } from 'lib/utils/functions'
+import { ActionsMenu } from './'
+import { useProductStore } from 'store'
 
-  const [dataShow, setDataShow] = useState(initDataShow)
-
-  let pages = 1
-
-  let range: any = []
-
-  if (props.limit !== undefined) {
-    let page = Math.floor(props.bodyData.length / Number(props.limit))
-    pages = props.bodyData.length % Number(props.limit) === 0 ? page : page + 1
-    // @ts-ignore
-    range = [...Array(pages).keys()]
-  }
-
-  const [currPage, setCurrPage] = useState(0)
-
-  const selectPage = (page: any) => {
-    const start = Number(props.limit) * page
-    const end = start + Number(props.limit)
-
-    setDataShow(props.bodyData.slice(start, end))
-
-    setCurrPage(page)
-  }
-
-  const bgColor = useColorModeValue('white', 'gray_2')
-  const textColor = useColorModeValue('black', 'white')
-
-  return (
-    <Box borderRadius={'8px'} boxShadow="md" p=".75rem 1rem" bg={bgColor}>
-      <div className="table-wrapper">
-        <Table variant="striped" colorScheme="green">
-          {props.headData && props.renderHead ? (
-            <Thead>
-              <Tr textAlign="left">
-                {props.headData.map((item: any, idx: any) => props.renderHead(item, idx))}
-              </Tr>
-            </Thead>
-          ) : null}
-          {props.bodyData && props.renderBody ? (
-            <Tbody>{dataShow.map((item: any, idx: any) => props.renderBody(item, idx))}</Tbody>
-          ) : null}
-        </Table>
-      </div>
-
-      {pages > 1 ? (
-        <Flex justifyContent={'flex-end'} mt="1rem" alignItems={'center'}>
-          {range.map((item: any, idx: any) => (
-            <Flex
-              key={idx}
-              w="2rem"
-              h="2rem"
-              mr=".25rem"
-              cursor={'pointer'}
-              alignItems="center"
-              justifyContent={'center'}
-              borderRadius={'full'}
-              transition="all 0.35s"
-              _hover={{ bg: 'accent_4', color: 'white' }}
-              bg={currPage === idx ? 'accent_3' : ''}
-              color={currPage === idx ? 'white' : textColor}
-              fontWeight={currPage === idx ? '600' : '300'}
-              onClick={() => selectPage(idx)}
-            >
-              {item + 1}
-            </Flex>
-          ))}
-        </Flex>
-      ) : null}
-    </Box>
-  )
+interface ICustomTable {
+  headers: string[]
+  data: any
+  isFooter?: boolean
 }
 
-export default CustomTable
+export default function CustomTable({ headers, data, isFooter = false }: ICustomTable) {
+  const setAction = useProductStore((state: any) => state.setAction)
+  return (
+    <>
+      <TableContainer>
+        <Table variant="striped" colorScheme="green">
+          <Thead>
+            {headers.map((el, idx) => (
+              <Th key={idx}> {el} </Th>
+            ))}
+          </Thead>
+          <Tbody>
+            {data.map((el: any, idx: number) => (
+              <Tr key={idx}>
+                <Td p="15px 10px" maxW="2rem">
+                  {el.id}
+                </Td>
+                <Td p="15px 10px">
+                  <Image
+                    boxSize="100px"
+                    borderRadius="10px"
+                    src={el.images[0]}
+                    fallbackSrc="https://via.placeholder.com/100"
+                    alt={el.name}
+                  />
+                </Td>
+                <Td p="15px 10px">{el.name}</Td>
+                <Td p="15px 10px" maxW="2rem" textAlign="center">
+                  {el.quantity}
+                </Td>
+                <Td p="15px 10px" maxW="2rem" textAlign="center">
+                  {formatCurrency(el.price)}
+                </Td>
+                <Td p="15px 10px" maxW="2rem" textAlign="center">
+                  {el.discount ? `${el.discount * 100}%` : '---'}
+                </Td>
+                <Td p="15px 10px" w="2rem">
+                  <ActionsMenu setAction={setAction} />
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+          {isFooter && (
+            <Tfoot>
+              {headers.map((el, idx) => (
+                <Th key={idx}> {el} </Th>
+              ))}
+            </Tfoot>
+          )}
+        </Table>
+      </TableContainer>
+    </>
+  )
+}

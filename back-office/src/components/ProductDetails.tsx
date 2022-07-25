@@ -8,14 +8,13 @@ interface IProductDetails {
 }
 export default function ProductDetails({ isOpen, onClose }: IProductDetails) {
   const product = useProductStore((state: any) => state.product)
-
+  console.log(product)
   const body = (
     <Flex flexDir="column">
       <Flex justifyContent={'space-between'} alignItems="center" mb=".5rem">
         <Image
           src={product?.images[0]}
           fallbackSrc="https://via.placeholder.com/100"
-          // fallback="https://via.placeholder.com/50"
           alt="product iamge"
           borderRadius={'5px'}
           w="5rem"
@@ -25,7 +24,10 @@ export default function ProductDetails({ isOpen, onClose }: IProductDetails) {
       </Flex>
       <DisplayRowData label="Name" data={product.name} />
       <DisplayRowData label="Quantity" data={product.quantity} />
+      <DisplayRowData label="Price" data={product.price} />
       <DisplayRowData label="Description" data={product.description} />
+      <DisplayRowData label="Rate" data={product.rate} />
+      <DisplayRowData label="Reviews" data={product.reviews} />
       <DisplayRowData label="Discount" data={product.discount} />
     </Flex>
   )

@@ -99,7 +99,7 @@ export default function Products({ products }: { products: IProduct[] }) {
             <Flex
               flexDir="row"
               flexWrap="wrap"
-              justify="space-between"
+              justify="flex-start"
               mb="1rem"
               ml={isMobile ? '1rem' : '0'}
             >
@@ -107,18 +107,19 @@ export default function Products({ products }: { products: IProduct[] }) {
                 <Box
                   key={idx}
                   as="span"
-                  bg="accent_4"
+                  bg="accent_3"
                   color="white"
                   borderRadius="10px"
                   p=".2rem"
                   fontSize=".9rem"
                   mb=".5rem"
+                  mr=".25rem"
                 >
                   {el}
                 </Box>
               ))}
             </Flex>
-            <Flex justify="space-between">
+            <Flex justify="space-between" align="center">
               <Text mb="1rem" textAlign={isMobile ? 'center' : 'left'} ml=".5rem">
                 Products result: {allProducts?.length}
               </Text>

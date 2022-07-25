@@ -6,7 +6,7 @@ import { HiOutlineLogout } from 'react-icons/hi'
 
 import { useAuthStore } from '../store'
 
-export default function Logout ({ children }: { children?: React.ReactNode }) {
+export default function Logout() {
   const [logOut, setLogOut] = useState(false)
 
   const router = useRouter()

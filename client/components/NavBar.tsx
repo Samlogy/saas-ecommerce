@@ -138,9 +138,11 @@ const NavMenuConnected = ({ avatar }: { avatar: string }) => {
       <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
         <Avatar size={'sm'} src={avatar} />
       </MenuButton>
-      <MenuList bg={bgColor} display="flex" flexDir={'column'} justify="center" align="center">
-        <Link href="/profile"> My Account </Link>
-        <Logout />
+      <MenuList bg={bgColor}>
+        <Flex display="flex" flexDir={'column'} justify="center" align="center">
+          <Link href="/profile"> My Account </Link>
+          <Logout />
+        </Flex>
       </MenuList>
     </Menu>
   )

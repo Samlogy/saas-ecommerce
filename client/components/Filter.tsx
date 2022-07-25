@@ -243,10 +243,6 @@ function DiscountSlider({ filters, setFilters, data }: ISingleFilter) {
   )
 }
 function CategoriesFilter({ filters, setFilters, data }: ISingleFilter) {
-  const inputColor = useColorModeValue('white', 'gray_2')
-
-  // const [categories, setCategories] = useState([])
-
   return (
     <>
       <MultiSelect
@@ -311,10 +307,17 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
 }
 
 function AccordionCustom({ title, body }: IAccordionCustom) {
+  const itemBgColor = useColorModeValue('gray_8', 'gray_3')
+  const itemColor = useColorModeValue('gray_2', 'gray_8')
   return (
-    <Accordion defaultIndex={[0]} allowMultiple w="17rem">
+    <Accordion defaultIndex={[0]} allowMultiple w="17rem" mb=".5rem">
       <AccordionItem>
-        <AccordionButton bg={'gray_3'} _expanded={{ bg: 'accent_2' }}>
+        <AccordionButton
+          bg={itemBgColor}
+          color={itemColor}
+          _expanded={{ bg: 'accent_2', color: 'white' }}
+          borderRadius="10px"
+        >
           <Box flex="1" textAlign="left">
             {title}
           </Box>

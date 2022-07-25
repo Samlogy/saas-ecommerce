@@ -35,14 +35,6 @@ export { default as DarkModeToggle } from './DarkModeToggle'
 export { default as ProductCard } from './ProductCard'
 export { default as FavouriteButton } from './FavouriteButton'
 
-// other
-export { default as CookieBox } from './CookieBox'
-export { default as Countdown } from './Countdown'
-export { default as Pagination } from './Pagination'
-export { default as Rating } from './Rating'
-export { default as StepForm } from './StepForm'
-export { default as MiniMap } from './MiniMap'
-
 // home
 export { default as SectionWrapper } from './SectionWrapper'
 export { default as Promotion } from './Promotion'
@@ -54,6 +46,13 @@ export { default as About } from './About'
 export { default as Hero } from './Hero'
 export { default as AppStore } from './AppStore'
 
+// other
+export { default as CookieBox } from './CookieBox'
+export { default as Countdown } from './Countdown'
+export { default as Pagination } from './Pagination'
+export { default as Rating } from './Rating'
+export { default as StepForm } from './StepForm'
+export { default as MiniMap } from './MiniMap'
 export { default as CustomDrawer } from './CustomDrawer'
 export { default as CustomModal } from './CustomModal'
 export { default as CustomAccordion } from './CustomAccordion'

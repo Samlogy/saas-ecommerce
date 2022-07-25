@@ -18,7 +18,7 @@ import { RiArrowRightSLine, RiArrowDownSLine } from 'react-icons/ri'
 export type IMultiSelect = {
   name: string
   label: string
-  options: string[]
+  options: any
   onChange?: (selectedValues: string[]) => void
   buttonProps?: MenuButtonProps
   selectedOptions: any

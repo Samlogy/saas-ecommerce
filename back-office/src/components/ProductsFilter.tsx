@@ -1,12 +1,12 @@
 import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   Box,
   Checkbox,
   Flex,
-  Input,
-  RangeSlider,
-  RangeSliderFilledTrack,
-  RangeSliderThumb,
-  RangeSliderTrack,
   Select,
   Slider,
   SliderFilledTrack,
@@ -17,9 +17,10 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { generateQuery, formatCurrency } from 'lib/utils/functions'
-import { TemplateFilter, InputField } from './'
-import { useFilterStore } from 'store'
+import { IProduct } from '../lib/interfaces'
+import { generateQuery } from '../lib/utils/functions'
+import { useFilterStore } from '../store'
+import { InputField, MultiSelect } from './'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
 const data = {
@@ -40,88 +41,101 @@ type IFilters = {
   isFavourite: string
 }
 interface ISingleFilter {
-  label: string
   setFilters: React.Dispatch<React.SetStateAction<IFilters>>
   filters: any
   data: string[] | number[]
 }
 
-export default function ProductsFilter() {
+interface IAccordionCustom {
+  title: string
+  body: React.ReactNode
+}
+
+export default function ProductsFilter({
+  setProducts
+}: {
+  setProducts: (products: IProduct[]) => void
+}) {
   const filters = useFilterStore((state: any) => state.filters)
   const setFilters = useFilterStore((state: any) => state.setFilters)
 
-  const setProducts = useFilterStore((state: any) => state.setProducts)
-
   // load all lists once (catergories - condition -) save them inside localstorage
-  const onFilter = () => {
+  const onFilter = (e: any) => {
+    if (e.target == null) return
+
+    setFilters({ ...filters, [e.target.name]: e.target.value })
     const query = generateQuery(filters)
     // call api --> filter
     console.log(query)
   }
-
-  // console.log(filters)
 
   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
 
   return (
     <Flex
       flexDir={'column'}
-      justifyContent="flex-start"
+      justifyContent={'flex-start'}
       alignItems={'center'}
       borderRadius="10px"
       p="1.5rem .5rem"
     >
       <InputField
         type="search"
-        name="email"
-        onChange={(e: any) => setFilters({ ...filters, search: e.target.value })}
+        name="search"
+        onChange={onFilter}
         value={filters.search}
         placeholder="Search..."
         bg={itemBgColor}
-        w="15rem"
+        w="calc(15rem + 2rem)"
+        borderRadius="10px"
       />
 
-      <RateSlider label="Rate" filters={filters} setFilters={setFilters} data={data.rates} />
-      <DiscountSlider
-        label="Discount"
-        filters={filters}
-        setFilters={setFilters}
-        data={data.discounts}
+      <AccordionCustom
+        title="Discount"
+        body={<DiscountSlider filters={filters} setFilters={setFilters} data={data.discounts} />}
       />
-      <PriceSlider label="Price" filters={filters} setFilters={setFilters} data={data.prices} />
-      <CategoriesFilter
-        label="Categories"
-        filters={filters}
-        setFilters={setFilters}
-        data={data.categories}
+
+      <AccordionCustom
+        title="Rate"
+        body={<RateSlider filters={filters} setFilters={setFilters} data={data.rates} />}
       />
-      <ConditionFilter
-        label="Condition"
-        filters={filters}
-        setFilters={setFilters}
-        data={data.conditions}
+
+      <AccordionCustom
+        title="Price"
+        body={<PriceSlider filters={filters} setFilters={setFilters} data={data.prices} />}
+      />
+
+      <AccordionCustom
+        title="Categories"
+        body={<CategoriesFilter filters={filters} setFilters={setFilters} data={data.categories} />}
+      />
+
+      <AccordionCustom
+        title="Condition"
+        body={<ConditionFilter filters={filters} setFilters={setFilters} data={data.conditions} />}
       />
     </Flex>
   )
 }
 
-function RateSlider({ label, filters, setFilters, data }: ISingleFilter) {
+function RateSlider({ filters, setFilters, data }: ISingleFilter) {
   const [showTooltip, setShowTooltip] = useState(false)
 
   return (
-    <TemplateFilter label={label}>
+    <>
       <Slider
         id="slider-rate"
         defaultValue={filters.rate}
         min={0}
         max={5}
         colorScheme="green"
-        onChange={(value: any) => setFilters({ ...filters, rate: value })}
+        name="rate"
+        onChange={value => setFilters({ ...filters, rate: value })}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
-        {[0, 1, 2, 3, 4, 5].map(el => (
-          <SliderMark value={el} mt="1" fontSize="sm">
+        {[0, 1, 2, 3, 4, 5].map((el, idx) => (
+          <SliderMark key={idx} value={el} mt="1" fontSize="sm">
             {el}
           </SliderMark>
         ))}
@@ -140,10 +154,10 @@ function RateSlider({ label, filters, setFilters, data }: ISingleFilter) {
           <SliderThumb />
         </Tooltip>
       </Slider>
-    </TemplateFilter>
+    </>
   )
 }
-function DiscountSlider({ label, filters, setFilters, data }: ISingleFilter) {
+function DiscountSlider({ filters, setFilters, data }: ISingleFilter) {
   const [showTooltip, setShowTooltip] = useState(false)
 
   function round(value: number, type: string): number {
@@ -152,19 +166,20 @@ function DiscountSlider({ label, filters, setFilters, data }: ISingleFilter) {
   }
 
   return (
-    <TemplateFilter label={label}>
+    <>
       <Slider
         id="slider-discount"
         defaultValue={round(filters.discount, 'up')}
         min={0}
         max={100}
         colorScheme="green"
-        onChange={(value: any) => setFilters({ ...filters, discount: round(value, 'down') })}
+        name="discount"
+        onChange={value => setFilters({ ...filters, discount: round(value, 'down') })}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
-        {[25, 50, 75].map(el => (
-          <SliderMark value={el} mt="1" fontSize="sm">
+        {[25, 50, 75].map((el, idx) => (
+          <SliderMark key={idx} value={el} mt="1" fontSize="sm">
             {el}%
           </SliderMark>
         ))}
@@ -183,44 +198,33 @@ function DiscountSlider({ label, filters, setFilters, data }: ISingleFilter) {
           <SliderThumb />
         </Tooltip>
       </Slider>
-    </TemplateFilter>
+    </>
   )
 }
-function CategoriesFilter({ label, filters, setFilters, data }: ISingleFilter) {
-  const inputColor = useColorModeValue('white', 'gray_2')
-  const handleCategories = (e: any) => {
-    if (filters.categories.length > 0) {
-      setFilters({ ...filters, categories: [...filters.categories, e.target.value] })
-      return
-    }
-    setFilters({ ...filters, categories: [e.target.value] })
-  }
+function CategoriesFilter({ filters, setFilters, data }: ISingleFilter) {
   return (
-    <TemplateFilter label={label}>
-      <Select
-        onChange={handleCategories}
-        value={filters.categories[0]}
-        bg={inputColor}
-        focusBorderColor="accent_6"
-      >
-        {data?.map((el, idx) => (
-          <option key={idx} value={el}>
-            {el}
-          </option>
-        ))}
-      </Select>
-    </TemplateFilter>
+    <>
+      <MultiSelect
+        label="Categories"
+        options={data}
+        name="categories"
+        selectedOptions={filters.categories}
+        setSelectedOptions={(value: any) => setFilters({ ...filters, categories: value })}
+      />
+    </>
   )
 }
-function ConditionFilter({ label, filters, setFilters, data }: ISingleFilter) {
-  const inputColor = useColorModeValue('white', 'gray_2')
+function ConditionFilter({ filters, setFilters, data }: ISingleFilter) {
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   return (
-    <TemplateFilter label={label}>
+    <>
       <Select
         onChange={(e: any) => setFilters({ ...filters, condition: e.target.value })}
+        name="condition"
         value={filters.condition}
-        bg={inputColor}
+        bg={itemBgColor}
         focusBorderColor="accent_6"
+        borderRadius={'10px'}
       >
         {data?.map((el, idx) => (
           <option key={idx} value={el}>
@@ -228,28 +232,58 @@ function ConditionFilter({ label, filters, setFilters, data }: ISingleFilter) {
           </option>
         ))}
       </Select>
-    </TemplateFilter>
+    </>
   )
 }
-function PriceSlider({ label, filters, setFilters, data }: ISingleFilter) {
+function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   return (
-    <TemplateFilter label={label}>
-      <Box as="span"> from: {formatCurrency(filters.price[0])} </Box>
-      <Box as="span"> to: {formatCurrency(filters.price[1])} </Box>
+    <Flex flexDir={'column'} align="center" justify={'center'}>
+      from:
+      <InputField
+        type="number"
+        name="price_min"
+        onChange={(e: any) => setFilters({ ...filters, price: [e.target.value, filters.price[1]] })}
+        value={filters.price[0]}
+        placeholder="Search..."
+        bg={itemBgColor}
+        w="7rem"
+        borderRadius="10px"
+      />
+      to:
+      <InputField
+        type="number"
+        name="price_max"
+        onChange={(e: any) => setFilters({ ...filters, price: [filters.price[0], e.target.value] })}
+        value={filters.price[1]}
+        placeholder="Search..."
+        bg={itemBgColor}
+        w="7rem"
+        borderRadius="10px"
+      />
+    </Flex>
+  )
+}
 
-      <RangeSlider
-        defaultValue={filters.price}
-        colorScheme="green"
-        aria-label={['min', 'max']}
-        onChangeEnd={(value: any) => setFilters({ ...filters, price: value })}
-      >
-        <RangeSliderTrack>
-          <RangeSliderFilledTrack />
-        </RangeSliderTrack>
-
-        <RangeSliderThumb index={0} />
-        <RangeSliderThumb index={1} />
-      </RangeSlider>
-    </TemplateFilter>
+function AccordionCustom({ title, body }: IAccordionCustom) {
+  const itemBgColor = useColorModeValue('gray_8', 'gray_3')
+  const itemColor = useColorModeValue('gray_2', 'gray_8')
+  return (
+    <Accordion defaultIndex={[0]} allowMultiple w="17rem" mb=".5rem">
+      <AccordionItem>
+        <AccordionButton
+          bg={itemBgColor}
+          color={itemColor}
+          _expanded={{ bg: 'accent_2', color: 'white' }}
+          borderRadius="10px"
+        >
+          <Box flex="1" textAlign="left">
+            {title}
+          </Box>
+          <AccordionIcon />
+        </AccordionButton>
+        <AccordionPanel pb={4}>{body}</AccordionPanel>
+      </AccordionItem>
+    </Accordion>
   )
 }

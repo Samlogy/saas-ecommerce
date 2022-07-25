@@ -5,9 +5,11 @@ import {
   IconButton,
   Text,
   useBreakpointValue,
-  useColorMode
+  useColorMode,
+  useColorModeValue,
+  Box
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { BsFilterLeft } from 'react-icons/bs'
 
@@ -21,7 +23,8 @@ import {
   ProductsFilter,
   View
 } from 'components'
-import { useProductStore } from 'store'
+import { IProduct } from 'lib/interfaces'
+import { useProductStore, useFilterStore } from 'store'
 import heroImage from '../assets/images/home.png'
 import productImage from '../assets/images/product.png'
 
@@ -82,14 +85,33 @@ const allProducts = [
 const headers = ['', 'image', 'name', 'quantity', 'price', 'discount', 'actions']
 
 export default function Products() {
+  const [products, setProducts] = useState<any>(allProducts)
+
   const action = useProductStore((state: any) => state.action)
   const setAction = useProductStore((state: any) => state.setAction)
+
+  const filters = useFilterStore((state: any) => state.filters)
 
   const isMobile = useBreakpointValue({ base: true, md: false })
 
   const [isVisible, setIsVisible] = useState(false)
 
-  const { colorMode: mode } = useColorMode()
+  const addButtonBg = useColorModeValue('white', 'accent_3')
+  const addButtonColor = useColorModeValue('accent_3', 'white')
+
+  const btnRef = useRef<any>()
+
+  function getFilters(filters: any): string[] | [] {
+    if (!filters) return []
+
+    let list: string[] = []
+    for (let i in filters) {
+      if (filters[i]) list.push(`${i}: ${filters[i]}`)
+    }
+
+    return list
+  }
+  const filterData = getFilters(filters)
 
   return (
     <Layout isHeaderVisible>
@@ -98,11 +120,9 @@ export default function Products() {
       </Heading>
 
       <Button
-        bg={mode === 'light' ? 'white' : 'accent_3'}
-        color={mode === 'light' ? 'accent_3' : 'white'}
-        _hover={{
-          bg: mode === 'light' ? 'white' : 'accent_4'
-        }}
+        bg={addButtonBg}
+        color={addButtonColor}
+        _hover={{ bg: 'accent_4' }}
         border="1px solid"
         borderColor={'accent_3'}
         ml="auto"
@@ -112,6 +132,62 @@ export default function Products() {
       >
         Add Product
       </Button>
+
+      <Flex flexDir={'column'}>
+        <Text fontSize="1.3rem" fontWeight="600" mb=".75rem">
+          Filter By
+        </Text>
+
+        <Box mb=".75rem">
+          <IconButton
+            aria-label="trigger filter"
+            icon={<BsFilterLeft size={18} />}
+            ref={btnRef}
+            onClick={() => setIsVisible(true)}
+          />
+          <CustomDrawer
+            title="Filter"
+            isOpen={isVisible}
+            onClose={() => setIsVisible(false)}
+            body={<ProductsFilter setProducts={setProducts} />}
+          />
+        </Box>
+
+        <Flex
+          flexDir="row"
+          flexWrap="wrap"
+          justify="flex-start"
+          mb="1rem"
+          ml={isMobile ? '1rem' : '0'}
+        >
+          {filterData.map((el, idx) => (
+            <Box
+              key={idx}
+              as="span"
+              bg="accent_4"
+              color="white"
+              borderRadius="10px"
+              p=".2rem"
+              fontSize=".9rem"
+              mb=".5rem"
+              mr=".25rem"
+            >
+              {el}
+            </Box>
+          ))}
+        </Flex>
+        <Text textAlign={isMobile ? 'center' : 'left'}>Products result: {allProducts?.length}</Text>
+      </Flex>
+
+      <Flex flexDir={'column'}>
+        <View cond={products?.length > 0}>
+          <CustomTable headers={headers} data={products} />
+        </View>
+
+        <View cond={products?.length === 0}>
+          <Text> There is no product with thoes filters </Text>
+        </View>
+      </Flex>
 
       <View cond={action.delete}>
         <ProductBox
@@ -153,39 +229,6 @@ export default function Products() {
           onClose={() => setAction({ ...action, details: false })}
         />
       </View>
-
-      <View cond={!isMobile}>
-        <ProductsFilter />
-      </View>
-
-      <View cond={isMobile}>
-        <IconButton
-          aria-label="trigger filter"
-          icon={<BsFilterLeft size={18} />}
-          onClick={() => setIsVisible(true)}
-        />
-        <CustomDrawer
-          isOpen={isVisible}
-          title="Filter"
-          body={<ProductsFilter />}
-          onClose={() => setIsVisible(false)}
-        />
-      </View>
-
-      <Flex flexDir={'column'}>
-        <View cond={allProducts?.length > 0}>
-          <Text mb="1rem" ml="3rem">
-            Products result: {allProducts?.length}{' '}
-          </Text>
-
-          {/* display table full of products + options for each row */}
-          <CustomTable headers={headers} data={allProducts} />
-        </View>
-
-        <View cond={allProducts?.length === 0}>
-          <Text> There is no product with thoes filters </Text>
-        </View>
-      </Flex>
     </Layout>
   )
 }

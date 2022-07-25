@@ -18,7 +18,7 @@ import { RiArrowRightSLine, RiArrowDownSLine } from 'react-icons/ri'
 export type IMultiSelect = {
   name: string
   label: string
-  options: string[]
+  options: any
   onChange?: (selectedValues: string[]) => void
   buttonProps?: MenuButtonProps
   selectedOptions: any
@@ -100,7 +100,7 @@ export default function MultiSelect(props: IMultiSelect): JSX.Element {
                 props.onChange?.(values)
               }}
             >
-              {options.map(option => {
+              {options.map((option: any) => {
                 return (
                   <MenuItemOption
                     key={`multiselect-menu-${option}`}

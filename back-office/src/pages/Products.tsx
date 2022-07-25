@@ -8,7 +8,8 @@ import {
   Text,
   Th,
   Tr,
-  useColorMode
+  useColorMode,
+  useBreakpointValue
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
@@ -83,7 +84,7 @@ export default function Products() {
   const action = useProductStore((state: any) => state.action)
   const setAction = useProductStore((state: any) => state.setAction)
 
-  const width = 690
+  const isMobile = useBreakpointValue({ base: true, md: false })
 
   const [isVisible, setIsVisible] = useState(false)
 
@@ -162,7 +163,7 @@ export default function Products() {
         leftIcon={<AiOutlinePlus size={16} />}
         onClick={() => setAction({ ...action, add: true })}
       >
-        Add Product{' '}
+        Add Product
       </Button>
 
       <View cond={action.delete}>
@@ -206,11 +207,11 @@ export default function Products() {
         />
       </View>
 
-      <View cond={width >= 700}>
+      <View cond={!isMobile}>
         <ProductsFilter />
       </View>
 
-      <View cond={width < 700}>
+      <View cond={isMobile}>
         <IconButton
           aria-label="trigger filter"
           icon={<BsFilterLeft size={18} />}

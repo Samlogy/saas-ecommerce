@@ -5,9 +5,8 @@ import {
   IconButton,
   Text,
   useBreakpointValue,
-  useColorMode,
-  useColorModeValue,
-  Box
+  Box,
+  useColorModeValue
 } from '@chakra-ui/react'
 import { useState, useRef } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
@@ -21,6 +20,7 @@ import {
   ProductBox,
   ProductDetails,
   ProductsFilter,
+  SelectField,
   View
 } from 'components'
 import { IProduct } from 'lib/interfaces'
@@ -91,15 +91,15 @@ export default function Products() {
   const setAction = useProductStore((state: any) => state.setAction)
 
   const filters = useFilterStore((state: any) => state.filters)
+  const setFilters = useFilterStore((state: any) => state.setFilters)
 
   const isMobile = useBreakpointValue({ base: true, md: false })
 
   const [isVisible, setIsVisible] = useState(false)
 
-  const addButtonBg = useColorModeValue('white', 'accent_3')
-  const addButtonColor = useColorModeValue('accent_3', 'white')
-
   const btnRef = useRef<any>()
+
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
 
   function getFilters(filters: any): string[] | [] {
     if (!filters) return []
@@ -120,14 +120,14 @@ export default function Products() {
       </Heading>
 
       <Button
-        bg={addButtonBg}
-        color={addButtonColor}
+        bg={'accent_3'}
+        color={'white'}
         _hover={{ bg: 'accent_4' }}
         border="1px solid"
         borderColor={'accent_3'}
         ml="auto"
         display={'flex'}
-        leftIcon={<AiOutlinePlus size={16} />}
+        leftIcon={<AiOutlinePlus size={22} />}
         onClick={() => setAction({ ...action, add: true })}
       >
         Add Product
@@ -138,20 +138,35 @@ export default function Products() {
           Filter By
         </Text>
 
-        <Box mb=".75rem">
-          <IconButton
-            aria-label="trigger filter"
-            icon={<BsFilterLeft size={18} />}
-            ref={btnRef}
-            onClick={() => setIsVisible(true)}
-          />
-          <CustomDrawer
-            title="Filter"
-            isOpen={isVisible}
-            onClose={() => setIsVisible(false)}
-            body={<ProductsFilter setProducts={setProducts} />}
-          />
-        </Box>
+        <Flex justify="space-between">
+          <Box mb=".75rem">
+            <IconButton
+              aria-label="trigger-filter"
+              icon={<BsFilterLeft size={18} />}
+              ref={btnRef}
+              onClick={() => setIsVisible(true)}
+            />
+            <CustomDrawer
+              title="Filter"
+              isOpen={isVisible}
+              onClose={() => setIsVisible(false)}
+              body={<ProductsFilter setProducts={setProducts} />}
+            />
+          </Box>
+
+          <SelectField
+            name="sort"
+            onChange={(e: any) => setFilters({ ...filters, sort: e.target.value })}
+            value={filters.sort}
+            placeholder="Sort"
+            bg={itemBgColor}
+            w={['10rem', '15rem']}
+            borderRadius="10px"
+          >
+            <option value="recommended"> Recommended </option>
+            <option value="newest"> Newest </option>
+          </SelectField>
+        </Flex>
 
         <Flex
           flexDir="row"
@@ -164,7 +179,7 @@ export default function Products() {
             <Box
               key={idx}
               as="span"
-              bg="accent_4"
+              bg="accent_3"
               color="white"
               borderRadius="10px"
               p=".2rem"
@@ -176,7 +191,9 @@ export default function Products() {
             </Box>
           ))}
         </Flex>
-        <Text textAlign={isMobile ? 'center' : 'left'}>Products result: {allProducts?.length}</Text>
+        <Text textAlign={isMobile ? 'center' : 'left'} mb="1rem">
+          Products result: {allProducts?.length}
+        </Text>
       </Flex>
 
       <Flex flexDir={'column'}>

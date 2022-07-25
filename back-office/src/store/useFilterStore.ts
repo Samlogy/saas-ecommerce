@@ -9,7 +9,7 @@ let filterStore = (set: SetState<any>) => ({
     discount: '',
     price: [10, 30],
     condition: '',
-    isFavourite: 'no'
+    sort: ''
   },
   setFilters: (data: any) => set(() => ({ filters: { ...data } }))
 })

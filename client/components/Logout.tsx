@@ -12,7 +12,6 @@ export default function Logout() {
   const router = useRouter()
 
   const textColor = useColorModeValue('black', 'gray.100')
-  const textHoverColor = useColorModeValue('gray.100', 'white')
 
   const logout = useAuthStore((state: any) => state.logout)
 
@@ -24,14 +23,13 @@ export default function Logout() {
   return (
     <Button
       leftIcon={<HiOutlineLogout />}
-      variant="ghost"
-      color={textColor}
-      h="20px"
-      px="0px"
+      variant="solid"
+      colorScheme="green"
+      h="2rem"
+      p=".5rem 0"
       fontWeight="400"
       mr="0rem"
-      w="full"
-      _hover={{ border: 'none', color: textHoverColor }}
+      w="70%"
       onClick={() => setLogOut(true)}
     >
       Logout

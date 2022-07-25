@@ -13,13 +13,8 @@ export default function DarkModeToggle() {
       bg={bgColor}
       _hover={{ bg: bgHoverColor }}
       onClick={() => toggleColorMode()}
-      icon={
-        mode === 'light' ? (
-          <FiMoon color={mode ? 'black' : 'white'} />
-        ) : (
-          <FiSun color={mode ? 'white' : 'black'} />
-        )
-      }
+      color={useColorModeValue('black', 'white')}
+      icon={mode === 'light' ? <FiMoon /> : <FiSun />}
     />
   )
 }

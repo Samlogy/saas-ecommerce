@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { CustomModal, ErrorMessage, InputField, SelectField, TextField } from 'components'
+import { CustomModal, ErrorMessage, InputField, MultiSelect, TextField } from 'components'
 import { useProductStore } from 'store'
 import { addProductSchema } from '../lib/validation'
 
@@ -58,6 +58,8 @@ export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduc
     error: '',
     img: ''
   })
+
+  const [categories, setCategories] = useState([])
 
   // image
   const onUploadImage = (e: any) => {
@@ -114,21 +116,13 @@ export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduc
         w="full"
       />
 
-      <SelectField
-        errors={errors}
-        register={register}
-        name="category"
-        label="Category"
-        placeholder="Category"
-        bg={inputColor}
-        w="full"
-      >
-        {CATEGORY_LIST?.map((el: string, idx: number) => (
-          <option key={idx} value={el}>
-            {el}
-          </option>
-        ))}
-      </SelectField>
+      <MultiSelect
+        label="Categories"
+        options={CATEGORY_LIST}
+        name="categories"
+        selectedOptions={categories}
+        setSelectedOptions={(value: any) => setCategories(value)}
+      />
 
       <InputField
         type="number"

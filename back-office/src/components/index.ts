@@ -15,6 +15,7 @@ export { default as CustomAccordion } from './CustomAccordion'
 export { default as InputField } from './InputField'
 export { default as TextField } from './TextField'
 export { default as SelectField } from './SelectField'
+export { default as MultiSelect } from './MultiSelect'
 export { default as ErrorMessage } from './ErrorMessage'
 
 // products

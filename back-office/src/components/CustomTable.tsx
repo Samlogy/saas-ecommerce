@@ -47,7 +47,7 @@ export default function CustomTable({ headers, data, isFooter = false }: ICustom
                   {el.discount ? `${el.discount * 100}%` : '---'}
                 </Td>
                 <Td p="15px 10px" w="2rem">
-                  <ActionsMenu setAction={setAction} />
+                  <ActionsMenu data={el} setAction={setAction} />
                 </Td>
               </Tr>
             ))}

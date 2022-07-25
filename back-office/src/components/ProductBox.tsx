@@ -21,7 +21,6 @@ export default function ProductBox({ isOpen, onClose, mode, setAction }: IProduc
   const cancelRef = useRef(null)
 
   const product = useProductStore((state: any) => state.product)
-  const setProduct = useProductStore((state: any) => state.setProduct)
 
   const onDelete = (id: number) => {
     console.log('delete product: ', id)

@@ -59,7 +59,7 @@ export default function ProductsFilter() {
     console.log(query)
   }
 
-  console.log(filters)
+  // console.log(filters)
 
   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
 

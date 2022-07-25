@@ -27,12 +27,12 @@ const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
 
 export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduct) {
   const product = useProductStore((state: any) => state.product)
-  const setProduct = useProductStore((state: any) => state.setProduct)
 
   const formOptions = {
     resolver: yupResolver(addProductSchema),
     defaultValues: mode === 'add' ? {} : product
   }
+
   const {
     register,
     handleSubmit,
@@ -42,14 +42,14 @@ export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduc
 
   function onSubmit(data: any) {
     console.log(data)
-    return mode === 'add' ? createProduct(data) : updateProduct(product.id, data)
+    return mode === 'add' ? create(data) : update(product?.id, data)
   }
 
-  function createProduct(data: any) {
+  function create(data: any) {
     console.log('create product: ', data)
   }
 
-  function updateProduct(id: number, data: any) {
+  function update(id: number, data: any) {
     console.log('update product: ', id, data)
   }
 
@@ -172,7 +172,14 @@ export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduc
     </form>
   )
 
-  return <CustomModal title="something ..." isOpen={isOpen} onClose={onClose} body={Form} />
+  return (
+    <CustomModal
+      title={mode === 'add' ? 'Add Product' : 'Edit Product'}
+      isOpen={isOpen}
+      onClose={onClose}
+      body={Form}
+    />
+  )
 }
 
 const EditImages = ({ data, upload, avatar }: IEditImage) => {

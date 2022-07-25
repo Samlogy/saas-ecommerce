@@ -6,32 +6,33 @@ import { FaEllipsisV } from 'react-icons/fa'
 
 import { useProductStore } from 'store'
 interface IActionMenu {
+  data: any
   setAction: any
 }
 
-export default function ActionsMenu({ setAction }: IActionMenu) {
+export default function ActionsMenu({ data, setAction }: IActionMenu) {
   const product = useProductStore((state: any) => state.product)
   const setProduct = useProductStore((state: any) => state.setProduct)
 
   const onEdit = (id: number) => {
     // console.log('edit product: ', productId)
     setAction({ edit: true })
-    setProduct(product)
+    setProduct(data)
   }
   const onDelete = (id: number) => {
     // console.log('delete product: ', productId)
     setAction({ delete: true })
-    setProduct({ id })
+    setProduct(data?.id)
   }
   const onDisable = (id: number) => {
     // console.log('disable product: ', productId)
     setAction({ disable: true })
-    setProduct({ id })
+    setProduct(data?.id)
   }
   const onDetails = (id: number) => {
     // console.log('details product: ', productId)
     setAction({ details: true })
-    setProduct(product)
+    setProduct(data)
   }
 
   return (
@@ -44,28 +45,28 @@ export default function ActionsMenu({ setAction }: IActionMenu) {
           icon={<FiEdit color="warning" size="18" />}
           onClick={() => onEdit(product?.id)}
         >
-          Edit{' '}
+          Edit
         </MenuItem>
         <MenuItem
           color={'error'}
           icon={<FiTrash color="error" size="18" />}
           onClick={() => onDelete(product?.id)}
         >
-          Delete{' '}
+          Delete
         </MenuItem>
         <MenuItem
           color={'gray_4'}
           icon={<AiOutlineClose color="disable" size="18" />}
           onClick={() => onDisable(product?.id)}
         >
-          Disable{' '}
+          Disable
         </MenuItem>
         <MenuItem
           color="info"
           icon={<BiDetail color="info" size="18" />}
           onClick={() => onDetails(product?.id)}
         >
-          Details{' '}
+          Details
         </MenuItem>
       </MenuList>
     </Menu>

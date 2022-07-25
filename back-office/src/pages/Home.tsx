@@ -179,7 +179,7 @@ function About({ data }: { data: any }) {
     console.log('update: ', id, about)
   }
 
-  const inputColor = useColorModeValue('gray_9', 'gray_3')
+  const inputColor = useColorModeValue('gray_9', 'gray_2')
 
   const [avatar, setAvatar] = useState<any>({
     isLoading: false,
@@ -266,7 +266,7 @@ function Deal({ data }: { data: any }) {
     console.log('update: ', id, deal)
   }
 
-  const inputColor = useColorModeValue('gray_9', 'gray_3')
+  const inputColor = useColorModeValue('gray_9', 'gray_2')
 
   const [avatar, setAvatar] = useState<any>({
     isLoading: false,
@@ -343,6 +343,9 @@ function QuestionsAnswersListing({ data }: { data: any }) {
   const actions = useHomeStore((state: any) => state.actions)
   const setSingleData = useHomeStore((state: any) => state.setSingleData)
 
+  const textColor = useColorModeValue('gray_2', 'gray_7')
+  const titleColor = useColorModeValue('black', 'white')
+
   const menuData = [
     {
       color: 'warning',
@@ -382,14 +385,18 @@ function QuestionsAnswersListing({ data }: { data: any }) {
         <Flex justify={'space-between'} align="center">
           <Flex flexDir="column" p=".5rem 1rem" borderBottom="1px solid" borderColor="gray_6">
             <Box>
-              Question:
-              <Text color="gray_3" mb=".75rem">
+              <Box as="span" color={titleColor}>
+                Question:
+              </Box>
+              <Text color={textColor} mb=".75rem">
                 {el.question}
               </Text>
             </Box>
             <Box>
-              Answer:
-              <Text color="gray_3" mb=".75rem">
+              <Box as="span" color={titleColor}>
+                Answer:
+              </Box>
+              <Text color={textColor} mb=".75rem">
                 {el.answer}
               </Text>
             </Box>
@@ -405,6 +412,9 @@ function Services({ data }: { data: any }) {
   const setAction = useHomeStore((state: any) => state.setAction)
   const actions = useHomeStore((state: any) => state.actions)
   const setSingleData = useHomeStore((state: any) => state.setSingleData)
+
+  const textColor = useColorModeValue('gray_2', 'gray_7')
+  const titleColor = useColorModeValue('black', 'white')
 
   const menuData = [
     {
@@ -447,14 +457,18 @@ function Services({ data }: { data: any }) {
           <Flex flexDir="column" p=".5rem 1rem" borderBottom="1px solid" borderColor="gray_6">
             <Image src={el?.image} alt="" borderRadius="10px" w="5rem" h="5rem" />
             <Box>
-              Name:
-              <Text color="gray_3" mb=".75rem">
+              <Box as="span" color={titleColor}>
+                Name:
+              </Box>
+              <Text color={textColor} mb=".75rem">
                 {el.name}
               </Text>
             </Box>
             <Box>
-              Description:
-              <Text color="gray_3" mb=".75rem">
+              <Box as="span" color={titleColor}>
+                Description:
+              </Box>
+              <Text color={textColor} mb=".75rem">
                 {el.description}
               </Text>
             </Box>

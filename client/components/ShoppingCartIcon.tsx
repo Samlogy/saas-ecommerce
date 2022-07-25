@@ -11,7 +11,7 @@ export default function ShoppingCartIcon({ value }: { value: number }) {
 
   return (
     <Box pos="relative" onClick={() => setOpen(isOpen)}>
-      {value > 0 ? (
+      {value > 0 && 
         <Box
           as="span"
           fontSize="xs"
@@ -32,10 +32,7 @@ export default function ShoppingCartIcon({ value }: { value: number }) {
           bottom={'65%'}
         >
           {value >= 100 ? '99+' : value}
-        </Box>
-      ) : (
-        ''
-      )}
+        </Box>}
       <IconButton
         aria-label="Shopping Cart"
         bg={bgColor}

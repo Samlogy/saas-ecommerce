@@ -4,7 +4,7 @@ import { Countdown } from '../components'
 export default function Promotion({ data }: { data: any }) {
   return (
     <Flex
-      flexDir={['column', '', 'row', '']}
+      flexDir={['column', 'column', 'row']}
       justifyContent={['center', '', 'space-evenly', '']}
       mt="1.5rem"
       p="2.5rem 1.5rem"

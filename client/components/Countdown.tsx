@@ -2,7 +2,7 @@ import { Box, Flex, useColorModeValue } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 
 interface ICountdown {
-  dueDay: string
+  dueDay: any
 }
 interface ICountBox {
   data: any

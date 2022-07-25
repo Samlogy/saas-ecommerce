@@ -7,13 +7,13 @@ export default function CookieBox() {
     <Flex flexDir={'column'} p="4" boxShadow="lg" m="4" bg={bgColor} borderRadius={'10px'}>
       <Flex alignItems="center">
         <Text fontWeight="semibold" mr=".5rem">
-          Your Privacy{' '}
+          Your Privacy
         </Text>
         <AiFillLock />
       </Flex>
 
       <Flex
-        flexDir={['column', '', 'row', '']}
+        flexDir={['column', 'column', 'row']}
         justifyContent="space-between"
         alignItems={'center'}
         p=".5rem 0"
@@ -43,7 +43,7 @@ export default function CookieBox() {
             w={['10rem', '', '10rem', '']}
             mx={['.15rem']}
           >
-            OK{' '}
+            OK
           </Button>
         </Flex>
       </Flex>

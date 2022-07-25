@@ -1,5 +1,4 @@
 import {
-  Accordion,
   AccordionButton,
   AccordionItem,
   AccordionPanel,
@@ -7,7 +6,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { FiMinus, FiPlus } from 'react-icons/fi'
-import { SectionWrapper, CustomAccordion } from '../components'
+import { CustomAccordion, SectionWrapper } from '../components'
 
 export default function QuestionsAnswers({ data }: { data: any }) {
   const bgColor = useColorModeValue('gray_9', 'gray_2')

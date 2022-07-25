@@ -64,7 +64,7 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
 
             <Flex flexDir={'column'} justifyContent="space-between" alignContent="center">
               <Flex>
-                <Rating initRate={data.rate} readOnly={true} />
+                <Rating initRate={data.rate} readOnly={readOnly} />
                 <Reviews data={data?.reviews} />
               </Flex>
 

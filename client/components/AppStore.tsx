@@ -6,7 +6,7 @@ export default function AppStore() {
   return (
     <SectionWrapper title="Watch Your Delivery At Any Time">
       <Flex
-        flexDir={['column', '', 'row-reverse', '']}
+        flexDir={['column', 'column', 'row-reverse']}
         justifyContent={['center', '', 'space-evenly', '']}
         mt="1.5rem"
       >

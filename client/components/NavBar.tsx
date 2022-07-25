@@ -117,7 +117,6 @@ export default function NavBar() {
           <Stack as={'nav'} spacing={4}>
             {Links.map((link: any) => (
               <NavLink key={link.link} link={link.link}>
-                {' '}
                 {link.name}{' '}
               </NavLink>
             ))}

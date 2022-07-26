@@ -1,45 +1,38 @@
-import { Button, useColorMode } from '@chakra-ui/react'
-import { FiLogOut } from 'react-icons/fi'
-// import { useNavigate } from 'react-router-dom'
-import { redirectToAuth, signOut } from 'supertokens-auth-react/recipe/thirdpartyemailpassword'
+import { Button, useColorModeValue } from '@chakra-ui/react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-function LogoutButton() {
-  // const { isLoading, isAuthenticated, error, logout } = useAuth0<{ name: string }>()
-  // const navigate = useNavigate()
+import React from 'react'
+import { HiOutlineLogout } from 'react-icons/hi'
 
-  const { colorMode: mode } = useColorMode()
+//import { useAuthStore } from '../store'
+//import { redirectToAuth, signOut } from 'supertokens-auth-react/recipe/thirdpartyemailpassword'
 
-  const onLogout = async () => {
-    // isAuthenticated && removeState('auth-admin')
-    // logout({ returnTo: window.location.origin })
-    await signOut()
-    redirectToAuth()
-    // navigate('/auth')
+export default function LogoutButton() {
+  const [logOut, setLogOut] = useState(false)
+
+  const textColor = useColorModeValue('black', 'gray.100')
+  const navigate = useNavigate()
+
+  //const logout = useAuthStore((state: any) => state.logout)
+
+  if (logOut) {
+    //logout()
+    navigate('/login')
   }
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>
-  // }
-  // if (error) {
-  //   return <div>Oops... {error.message}</div>
-  // }
-
   return (
     <Button
-      rightIcon={<FiLogOut size={16} />}
-      border="1px solid"
-      borderColor={'accent_3'}
-      _hover={{
-        bg: mode === 'light' ? 'white' : 'accent_4'
-      }}
-      bg={mode === 'light' ? 'white' : 'accent_3'}
-      color={mode === 'light' ? 'accent_3' : 'white'}
-      onClick={() => onLogout()}
+      leftIcon={<HiOutlineLogout />}
+      variant="solid"
+      colorScheme="green"
+      h="2rem"
+      p=".5rem 0"
+      fontWeight="400"
+      mr="0rem"
+      w="70%"
+      onClick={() => setLogOut(true)}
     >
-      {' '}
-      Log Out{' '}
+      Logout
     </Button>
   )
 }
-
-export default LogoutButton

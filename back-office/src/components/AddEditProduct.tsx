@@ -13,14 +13,14 @@ interface IAddEditProduct {
   mode: string
 }
 interface IEditImage {
-  data: any
-  upload: any
+  setAvatar: any
   avatar: IAvatar
 }
 interface IAvatar {
   isLoading: boolean
   error: string
-  img: string
+  previews: string[]
+  images: string[]
 }
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
@@ -42,7 +42,7 @@ export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduc
 
   function onSubmit(data: any) {
     console.log(data)
-    return mode === 'add' ? create(data) : update(product?.id, data)
+    mode === 'add' ? create(data) : update(product?.id, data)
   }
 
   function create(data: any) {
@@ -56,23 +56,16 @@ export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduc
   const [avatar, setAvatar] = useState<IAvatar>({
     isLoading: false,
     error: '',
-    img: ''
+    previews: product?.images || [],
+    images: product?.images || []
   })
-
   const [categories, setCategories] = useState([])
-
-  // image
-  const onUploadImage = (e: any) => {
-    const imgBase = e.target.files[0]
-    const imgPreview = URL.createObjectURL(imgBase)
-    setAvatar({ ...avatar, img: imgPreview })
-  }
 
   const inputColor = useColorModeValue('gray_9', 'gray_3')
 
   const Form = (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <EditImages data={product?.images} upload={onUploadImage} avatar={avatar} />
+      <EditImages setAvatar={setAvatar} avatar={avatar} />
 
       <InputField
         errors={errors}
@@ -176,29 +169,40 @@ export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduc
   )
 }
 
-const EditImages = ({ data, upload, avatar }: IEditImage) => {
+const EditImages = ({ avatar, setAvatar }: IEditImage) => {
+  const handleImage = (e: any) => {
+    let baseImages = e.target.files
+    baseImages = [...baseImages]
+    const imgPreview = baseImages.map((el: any) => URL.createObjectURL(el))
+    setAvatar({ ...avatar, previews: imgPreview, images: baseImages })
+  }
   return (
     <>
       <Box pos="relative" w="fit-content">
-        <Flex justifyContent={'space-between'} alignItems="center">
-          <Image
-            boxSize="50px"
-            objectFit="cover"
-            src={data ? data : avatar.img}
-            fallbackSrc="https://via.placeholder.com/100"
-            alt="Image"
-            mb="1rem"
-            borderRadius="5px"
-          />
+        <Flex justify="flex-start" align="center">
+          {avatar?.previews &&
+            avatar?.previews.map((img: string, idx: number) => (
+              <Image
+                key={idx}
+                boxSize="70px"
+                objectFit="cover"
+                src={img}
+                fallbackSrc="https://via.placeholder.com/100"
+                alt="Image"
+                m="0 .25rem .5rem 0"
+                borderRadius="5px"
+              />
+            ))}
         </Flex>
 
         <InputField
           type="file"
+          multiple
           accept="image/*"
           name="images"
           label="images"
           placeholder="images"
-          onChange={upload}
+          onChange={handleImage}
           w="full"
           px="0"
           border="none"

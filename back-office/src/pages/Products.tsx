@@ -23,7 +23,6 @@ import {
   SelectField,
   View
 } from 'components'
-import { IProduct } from 'lib/interfaces'
 import { useProductStore, useFilterStore } from 'store'
 import heroImage from '../assets/images/home.png'
 import productImage from '../assets/images/product.png'

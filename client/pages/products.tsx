@@ -21,6 +21,7 @@ import {
 } from '../components'
 import { IProduct } from '../lib/interfaces'
 import { useFilterStore } from '../store'
+import { formatCurrency } from '../lib/utils/fonctions'
 
 import heroImage from '../public/images/home.png'
 import productImage from '../public/images/product.png'
@@ -46,12 +47,36 @@ export default function Products({ products }: { products: IProduct[] }) {
 
   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
 
-  function getFilters(filters: any): string[] {
+  function getFilters(filters: any) {
+    // check if filters empty
+    // check if each values is empty (array, primitive)
+    // otherwise add it to array
+    // ex: price (min: val, max: val) - categories: list
     if (!filters) return
 
-    let list: string[] = []
+    let list: any = []
     for (let i in filters) {
-      if (filters[i]) list.push(`${i}: ${filters[i]}`)
+      if (filters[i]) {
+        if (i === 'discount') {
+          list.push(`${i}: ${filters[i] * 100}%`)
+        }
+        if (i === 'isFavourite') {
+          list.push(`Favourite Products: ${filters[i]}`)
+        }
+        if (i === 'categories') {
+          list.push(...filters.categories)
+        }
+        if (i === 'price') {
+          list.push(
+            ...[
+              ...list,
+              `Min: ${formatCurrency(filters.price[0])}`,
+              `Max: ${formatCurrency(filters.price[1])}`
+            ]
+          )
+        }
+        //else list.push(`${i}: ${filters[i]}`)
+      }
     }
 
     return list
@@ -96,31 +121,9 @@ export default function Products({ products }: { products: IProduct[] }) {
 
         <Flex flexDir={'column'}>
           <View cond={allProducts?.length > 0}>
-            <Flex
-              flexDir="row"
-              flexWrap="wrap"
-              justify="flex-start"
-              mb="1rem"
-              ml={isMobile ? '1rem' : '0'}
-            >
-              {filterData.map((el, idx) => (
-                <Box
-                  key={idx}
-                  as="span"
-                  bg="accent_3"
-                  color="white"
-                  borderRadius="10px"
-                  p=".2rem"
-                  fontSize=".9rem"
-                  mb=".5rem"
-                  mr=".25rem"
-                >
-                  {el}
-                </Box>
-              ))}
-            </Flex>
+            <DisplayFilters data={filterData} isMobile={isMobile} />
             <Flex justify="space-between" align="center">
-              <Text mb="1rem" textAlign={isMobile ? 'center' : 'left'} ml=".5rem">
+              <Text mb="1rem" textAlign={isMobile ? 'center' : 'left'} ml={isMobile ? '1rem' : '0'}>
                 Products result: {allProducts?.length}
               </Text>
 
@@ -221,4 +224,26 @@ export const getServerSideProps = async () => {
       products
     }
   }
+}
+
+function DisplayFilters({ data, isMobile }: { data: any; isMobile: boolean }) {
+  return (
+    <Flex flexDir="row" flexWrap="wrap" justify="flex-start" mb="1rem" ml={isMobile ? '1rem' : '0'}>
+      {data.map((el, idx) => (
+        <Box
+          key={idx}
+          as="span"
+          bg="accent_3"
+          color="white"
+          borderRadius="10px"
+          p=".2rem"
+          fontSize=".9rem"
+          mb=".5rem"
+          mr=".25rem"
+        >
+          {el}
+        </Box>
+      ))}
+    </Flex>
+  )
 }

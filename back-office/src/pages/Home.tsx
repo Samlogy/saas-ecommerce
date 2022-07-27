@@ -4,30 +4,28 @@ import {
   Flex,
   Heading,
   Image,
+  Link as ChakraLink,
   Text,
-  IconButton,
-  useColorModeValue,
-  Link as ChakraLink
+  useColorModeValue
 } from '@chakra-ui/react'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai'
 import { FiEdit, FiTrash } from 'react-icons/fi'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
 
 import {
   CustomAccordion,
   CustomMenu,
+  CustomModal,
   InputField,
   Layout,
   TextField,
-  View,
-  CustomModal,
-  DisplayRowData
+  View
 } from 'components'
 import {
-  dealFormSchema,
   aboutFormSchema,
+  dealFormSchema,
   questionAnswerFormSchema,
   serviceFormSchema
 } from 'lib/validation'
@@ -179,7 +177,7 @@ function About({ data }: { data: any }) {
     console.log('update: ', id, about)
   }
 
-  const inputColor = useColorModeValue('gray_9', 'gray_2')
+  const inputColor = useColorModeValue('gray_9', 'gray_3')
 
   const [avatar, setAvatar] = useState<any>({
     isLoading: false,
@@ -255,7 +253,7 @@ function Deal({ data }: { data: any }) {
 
   function onSubmit(deal: any) {
     console.log(deal)
-    return !data ? create(data) : update(data.id, deal)
+    !data ? create(data) : update(data.id, deal)
   }
 
   function create(deal: any) {
@@ -266,7 +264,7 @@ function Deal({ data }: { data: any }) {
     console.log('update: ', id, deal)
   }
 
-  const inputColor = useColorModeValue('gray_9', 'gray_2')
+  const inputColor = useColorModeValue('gray_9', 'gray_3')
 
   const [avatar, setAvatar] = useState<any>({
     isLoading: false,
@@ -373,7 +371,7 @@ function QuestionsAnswersListing({ data }: { data: any }) {
     <Box id="qa">
       <Button
         colorScheme="green"
-        variant={'outline'}
+        variant={'solid'}
         leftIcon={<AiOutlinePlus size={28} />}
         ml="auto"
         display={'flex'}
@@ -444,7 +442,7 @@ function Services({ data }: { data: any }) {
     <Box id="services">
       <Button
         colorScheme="green"
-        variant={'outline'}
+        variant={'solid'}
         leftIcon={<AiOutlinePlus size={28} />}
         ml="auto"
         display={'flex'}

@@ -72,39 +72,39 @@ export default function NavBar() {
 
   return (
     <Box bg={bgColor} px={4} pos="fixed" w="full" boxShadow={'md'} zIndex="100">
-      <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+      <Flex h={16} align={'center'} justify={'space-between'}>
         <IconButton
           size={'md'}
           icon={
             isOpen ? (
-              <Flex justifyContent={'center'} alignItems="center">
+              <Flex justify={'center'} align="center">
                 <AiOutlineClose />
               </Flex>
             ) : (
-              <Flex justifyContent={'center'} alignItems="center">
+              <Flex justify={'center'} align="center">
                 <AiOutlineMenu />
               </Flex>
             )
           }
-          aria-label={'Toggle Menu'}
+          aria-label={'toggle-menu'}
           display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
         />
 
-        <HStack spacing={8} alignItems={'center'}>
+        <HStack spacing={8} align={'center'}>
           <Box>
             <Logo />
           </Box>
           <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
             {Links.map((link: any) => (
               <NavLink key={link.link} link={link.link}>
-                {link.name}{' '}
+                {link.name}
               </NavLink>
             ))}
           </HStack>
         </HStack>
 
-        <Flex alignItems={'center'}>
+        <Flex align={'center'}>
           <SelectLanguage />
           <DarkModeToggle />
           <ShoppingCartIcon value={quantityTotal} />

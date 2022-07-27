@@ -1,65 +1,57 @@
-import { Button, Badge, Box, MenuItem, Text } from '@chakra-ui/react'
-import { MdNotificationsActive } from 'react-icons/md'
-import React, { useEffect } from 'react'
+import { Box, IconButton, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react'
+import React from 'react'
+import { MdNotificationsActive, MdNotificationsNone } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 
-import { Dropdown, View } from 'components'
+import { View } from 'components'
 import { useNotificationStore } from '../store'
 
-const NotificationButton = () => {
+export default function NotificationButton() {
   const notifications = useNotificationStore((state: any) => state.notifications)
   const setVisible = useNotificationStore((state: any) => state.setVisible)
   const setNotification = useNotificationStore((state: any) => state.setNotification)
-
-  const notifs = notifications.length
 
   const handleClickNotification = (data: any) => {
     setVisible(true)
     setNotification(data)
   }
 
+  const messageIcon =
+    notifications.length > 0 ? (
+      <MdNotificationsActive size={20} />
+    ) : (
+      <MdNotificationsNone size={20} />
+    )
   return (
-    <Dropdown icon={<CustomButton notifs={notifs} />}>
-      <View cond={notifications.length > 0}>
-        {notifications?.map((item: any) => (
-          <MenuItem
-            key={item.id}
-            flexDir={'row'}
-            justifyContent="space-between"
-            onClick={() => handleClickNotification(item)}
-          >
-            <Text> {item.title} </Text>
-            <Text> {item.text} </Text>
+    <Menu>
+      <MenuButton as={IconButton} icon={messageIcon} bg="transparent"></MenuButton>
+      <MenuList>
+        {notifications.length > 0 ? (
+          notifications?.map((item: any) => (
+            <MenuItem
+              key={item.id}
+              flexDir={'column'}
+              justifyContent="space-between"
+              onClick={() => handleClickNotification(item)}
+            >
+              <Text isTruncated> {item.title} </Text>
+              <Text isTruncated> {item.text} </Text>
+            </MenuItem>
+          ))
+        ) : (
+          <Text textAlign={'center'} color="gray_4">
+            There's no new Message{' '}
+          </Text>
+        )}
+
+        <View cond={notifications.length > 0}>
+          <MenuItem justifyContent={'center'}>
+            <Box color="accent_4">
+              <Link to="/notifications"> View All </Link>
+            </Box>
           </MenuItem>
-        ))}
-        <Box textAlign="center" color="accent_4">
-          <Link to="/notifications"> View All </Link>
-        </Box>
-      </View>
-
-      <View cond={notifications.length === 0}>
-        <Text textAlign={'center'} color="gray_4">
-          {' '}
-          There's no new Notification{' '}
-        </Text>
-      </View>
-    </Dropdown>
+        </View>
+      </MenuList>
+    </Menu>
   )
 }
-
-const CustomButton = ({ notifs }: { notifs: number }) => {
-  const btnRef = React.useRef(null)
-  return (
-    <Button variant="ghost" _hover={{ bg: 'transparent' }} className="hover-icon" ref={btnRef}>
-      {notifs > 0 ? (
-        <Badge variant="solid" colorScheme="red" borderRadius="2xl">
-          {notifs > 99 ? '99+' : notifs}
-        </Badge>
-      ) : (
-        ''
-      )}
-      <MdNotificationsActive size="20" color={'#ccc'} />
-    </Button>
-  )
-}
-export default NotificationButton

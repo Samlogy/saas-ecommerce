@@ -68,9 +68,25 @@
   }
 }
 
-/*  language selector */
-.select-language {
+/*=============== Language Switcher ===============*/
+select.select-language {
+  background-color: transparent;
+  border-radius: 5px;
   text-transform: uppercase;
+  padding: .5rem .25rem;
+  transition: all .25s;
+}
+
+select.select-language:hover {
+  cursor: pointer;
+  background-color: #edf2f7;
+}
+
+/* select language dark mode */
+select.select-language:hover.dark {
+  cursor: pointer;
+  background-color: #2d3748;
+  color: white;
 }
 
 /* Hover icon on nav bar */

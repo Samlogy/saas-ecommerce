@@ -1,4 +1,14 @@
-import { Avatar, Box, IconButton, Flex, Text } from '@chakra-ui/react'
+import {
+  Avatar,
+  Box,
+  IconButton,
+  Flex,
+  Text,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList
+} from '@chakra-ui/react'
 import { useState } from 'react'
 import { BiMenu } from 'react-icons/bi'
 
@@ -49,13 +59,20 @@ export default function TopBar({ isFixedNav }: ITopBar) {
 
         <Flex alignItems={['flex-end', 'center']}>
           <LanguageSwitcher />
-          <DarkModeToggle />
-          <NotificationButton />
-          <MessageButton />
 
-          <Dropdown icon={<Avatar name="admin" src={user?.name} size="sm" />}>
+          <DarkModeToggle />
+
+          <CustomMenuList>
+            <NotificationButton />
+          </CustomMenuList>
+
+          <CustomMenuList>
+            <MessageButton />
+          </CustomMenuList>
+
+          <CustomMenuList icon={<Avatar name="admin" src={''} size="sm" />}>
             <LogoutButton />
-          </Dropdown>
+          </CustomMenuList>
         </Flex>
       </Box>
 
@@ -63,5 +80,16 @@ export default function TopBar({ isFixedNav }: ITopBar) {
       <NotificationDetails />
       <MessageDetails />
     </>
+  )
+}
+
+function CustomMenuList({ children, icon }: { children: React.ReactNode; icon?: any }) {
+  return (
+    <Menu>
+      <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
+        {icon && icon}
+      </MenuButton>
+      <MenuList>{children}</MenuList>
+    </Menu>
   )
 }

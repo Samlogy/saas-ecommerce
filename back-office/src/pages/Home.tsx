@@ -98,25 +98,29 @@ export default function Home() {
         Home
       </Heading>
 
-      <View cond={actions.add}>
-        <AddEditService
-          isOpen={actions.add}
-          onClose={() => setAction({ ...actions, add: false })}
-        />
+      <View cond={actions.add && actions.type === 'qa'}>
         <AddEditQuestionAnswer
           isOpen={actions.add}
-          onClose={() => setAction({ ...actions, add: false })}
+          onClose={() => setAction({ ...actions, add: false, type: '' })}
+        />
+      </View>
+      <View cond={actions.add && actions.type === 'service'}>
+        <AddEditService
+          isOpen={actions.add}
+          onClose={() => setAction({ ...actions, add: false, type: '' })}
         />
       </View>
 
-      <View cond={actions.edit}>
-        <AddEditService
-          isOpen={actions.edit}
-          onClose={() => setAction({ ...actions, edit: false })}
-        />
+      <View cond={actions.edit && actions.type === 'qa'}>
         <AddEditQuestionAnswer
           isOpen={actions.edit}
-          onClose={() => setAction({ ...actions, edit: false })}
+          onClose={() => setAction({ ...actions, edit: false, type: '' })}
+        />
+      </View>
+      <View cond={actions.edit && actions.type === 'service'}>
+        <AddEditService
+          isOpen={actions.edit}
+          onClose={() => setAction({ ...actions, edit: false, type: '' })}
         />
       </View>
 
@@ -375,7 +379,7 @@ function QuestionsAnswersListing({ data }: { data: any }) {
         leftIcon={<AiOutlinePlus size={28} />}
         ml="auto"
         display={'flex'}
-        onClick={() => setAction({ ...actions, add: true })}
+        onClick={() => setAction({ ...actions, add: true, type: 'qa' })}
       >
         Q&A
       </Button>
@@ -446,7 +450,7 @@ function Services({ data }: { data: any }) {
         leftIcon={<AiOutlinePlus size={28} />}
         ml="auto"
         display={'flex'}
-        onClick={() => setAction({ ...actions, add: true })}
+        onClick={() => setAction({ ...actions, add: true, type: 'service' })}
       >
         Service
       </Button>
@@ -678,6 +682,7 @@ function AddEditService({ isOpen, onClose }: IAddEditForm) {
 
 function AddEditQuestionAnswer({ isOpen, onClose }: IAddEditForm) {
   const singleData = useHomeStore((state: any) => state.singleData)
+
   const formOptions = {
     resolver: yupResolver(questionAnswerFormSchema),
     defaultValues: singleData ? singleData : {}
@@ -690,7 +695,6 @@ function AddEditQuestionAnswer({ isOpen, onClose }: IAddEditForm) {
   } = useForm(formOptions)
 
   function onSubmit(data: any) {
-    console.log(data)
     return !singleData ? create(data) : update(singleData.id, data)
   }
 

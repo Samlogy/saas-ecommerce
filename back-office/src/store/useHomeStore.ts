@@ -7,7 +7,8 @@ const INIT_ACTIONS = {
   disable: false,
   add: false,
   edit: false,
-  details: false
+  details: false,
+  type: ''
 }
 const INIT_HOME = {
   services: [],

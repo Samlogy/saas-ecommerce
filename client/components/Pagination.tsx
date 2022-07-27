@@ -32,7 +32,7 @@ export default function Pagination({
     pageSize
   })
 
-  console.log(paginate)
+  // console.log(paginate)
 
   if (currentPage === 0 || paginate.range.length < 2) {
     return null
@@ -80,7 +80,11 @@ export default function Pagination({
             }
 
             return (
-              <Button bg={bgColor} color={textColor} onClick={() => onPageChange(pageNumber)}>
+              <Button
+                bg={currentPage === pageNumber ? 'gray_7' : 'gray_2'}
+                color={currentPage === pageNumber ? 'accent_3' : 'accent_4'}
+                onClick={() => onPageChange(pageNumber)}
+              >
                 {pageNumber}
               </Button>
             )

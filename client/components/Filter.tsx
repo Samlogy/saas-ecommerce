@@ -307,7 +307,7 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
 }
 
 function AccordionCustom({ title, body }: IAccordionCustom) {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_3')
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   const itemColor = useColorModeValue('gray_2', 'gray_8')
   return (
     <Accordion defaultIndex={[0]} allowMultiple w="17rem" mb=".5rem">

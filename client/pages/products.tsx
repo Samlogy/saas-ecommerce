@@ -105,7 +105,7 @@ export default function Products({ products }: { products: IProduct[] }) {
 
           <View cond={isMobile}>
             <IconButton
-              aria-label="trigger filter"
+              aria-label="trigger-filter"
               icon={<BsFilterLeft size={18} />}
               ref={btnRef}
               onClick={() => setIsVisible(true)}
@@ -141,7 +141,12 @@ export default function Products({ products }: { products: IProduct[] }) {
               </SelectField>
             </Flex>
 
-            <Flex flexDir="row" flexWrap="wrap" justifyContent={['center', '', 'space-between']}>
+            <Flex
+              flexDir="row"
+              flexWrap="wrap"
+              justifyContent={['center', '', 'space-between']}
+              flexBasis="75%"
+            >
               {allProducts?.map((product: IProduct) => (
                 <ProductCard key={product.id} data={product} readOnly />
               ))}

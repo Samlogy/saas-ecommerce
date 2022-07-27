@@ -1,62 +1,49 @@
-import React, { useState } from 'react'
-import {
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  Text,
-  Box,
-  useColorModeValue,
-  useColorMode
-} from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Box, Text, Flex, useColorModeValue } from '@chakra-ui/react'
 import { AiFillHome } from 'react-icons/ai'
-import { FaProductHunt, FaChartLine } from 'react-icons/fa'
-import LogoutButton from './LogoutButton'
+import { FaChartLine, FaProductHunt } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+import { CustomDrawer, LogoutButton } from './'
 
 interface ISideBar {
   onClose: () => void
   isOpen: boolean
 }
 interface ISideBarItem {
-  key: number
   data: any
   active: boolean
 }
 export default function SideBar({ onClose, isOpen }: ISideBar) {
   const activeItem = sideBarData.findIndex(item => item.url === window.location.pathname)
-  const bgColor = useColorModeValue('white', 'gray_3')
+
+  const Body = (
+    <>
+      {sideBarData.map((item: any) => (
+        <SideBarItem key={item.id} data={item} active={item.id === activeItem} />
+      ))}
+    </>
+  )
+  const Footer = (
+    <Flex justify="center" w="full">
+      <LogoutButton />
+    </Flex>
+  )
 
   return (
-    <Drawer placement="left" onClose={onClose} isOpen={isOpen} size="xs">
-      <DrawerOverlay />
-
-      <DrawerContent bg={bgColor}>
-        <DrawerCloseButton />
-
-        <DrawerHeader borderBottomWidth="1px"> Dashboard </DrawerHeader>
-
-        <DrawerBody display="flex" flexDirection="column" justifyContent="left">
-          {sideBarData.map((item: any) => (
-            <SideBarItem key={item.id} data={item} active={item.id === activeItem} />
-          ))}
-        </DrawerBody>
-
-        <DrawerFooter display="flex" flexDirection="column" justifyContent="center">
-          <LogoutButton />
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+    <CustomDrawer
+      title="Dashboard"
+      placement="left"
+      isOpen={isOpen}
+      onClose={onClose}
+      body={Body}
+      footer={Footer}
+    />
   )
 }
 
-const SideBarItem = ({ key, data, active }: ISideBarItem) => {
+const SideBarItem = ({ data, active }: ISideBarItem) => {
   const textColor = useColorModeValue('black', 'white')
   return (
-    <Link key={key} to={data.url}>
+    <Link to={data.url}>
       <Box
         display="flex"
         flexDirection="row"

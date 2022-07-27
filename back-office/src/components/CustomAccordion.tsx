@@ -5,27 +5,40 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Box
+  Box,
+  useColorModeValue
 } from '@chakra-ui/react'
 
 interface ICustomAccordion {
   title: string
   body: React.ReactNode
+  [restProps: string]: any
 }
 
-export default function CustomAccordion({ title, body }: ICustomAccordion) {
+export default function CustomAccordion({ title, body, ...restProps }: ICustomAccordion) {
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+  const itemColor = useColorModeValue('gray_2', 'gray_8')
+  //
+  //defaultIndex={[0]}
   return (
-    <Accordion allowToggle mb="1.5rem">
+    <Accordion allowToggle mb="1.5rem" {...restProps}>
       <AccordionItem>
         <h2>
-          <AccordionButton _expanded={{ bg: 'accent_4', color: 'white' }}>
+          <AccordionButton
+            bg={itemBgColor}
+            color={itemColor}
+            _expanded={{ bg: 'accent_2', color: 'white' }}
+            borderRadius="10px"
+          >
             <Box flex="1" textAlign="left" textTransform={'uppercase'}>
               {title && title}
             </Box>
             <AccordionIcon />
           </AccordionButton>
         </h2>
-        <AccordionPanel>{body && body}</AccordionPanel>
+        <AccordionPanel bg={itemBgColor} color={itemColor}>
+          {body && body}
+        </AccordionPanel>
       </AccordionItem>
     </Accordion>
   )

@@ -100,12 +100,14 @@ export default function Home() {
 
       <View cond={actions.add && actions.type === 'qa'}>
         <AddEditQuestionAnswer
+          mode="add"
           isOpen={actions.add}
           onClose={() => setAction({ ...actions, add: false, type: '' })}
         />
       </View>
       <View cond={actions.add && actions.type === 'service'}>
         <AddEditService
+          mode="add"
           isOpen={actions.add}
           onClose={() => setAction({ ...actions, add: false, type: '' })}
         />
@@ -113,12 +115,14 @@ export default function Home() {
 
       <View cond={actions.edit && actions.type === 'qa'}>
         <AddEditQuestionAnswer
+          mode="edit"
           isOpen={actions.edit}
           onClose={() => setAction({ ...actions, edit: false, type: '' })}
         />
       </View>
       <View cond={actions.edit && actions.type === 'service'}>
         <AddEditService
+          mode="edit"
           isOpen={actions.edit}
           onClose={() => setAction({ ...actions, edit: false, type: '' })}
         />
@@ -383,8 +387,8 @@ function QuestionsAnswersListing({ data }: { data: any }) {
       >
         Q&A
       </Button>
-      {data.map((el: any) => (
-        <Flex justify={'space-between'} align="center">
+      {data.map((el: any, idx: number) => (
+        <Flex key={idx} justify={'space-between'} align="center">
           <Flex flexDir="column" p=".5rem 1rem" borderBottom="1px solid" borderColor="gray_6">
             <Box>
               <Box as="span" color={titleColor}>
@@ -454,8 +458,8 @@ function Services({ data }: { data: any }) {
       >
         Service
       </Button>
-      {data.map((el: any) => (
-        <Flex justify={'space-between'} align="center">
+      {data.map((el: any, idx: number) => (
+        <Flex key={idx} justify={'space-between'} align="center">
           <Flex flexDir="column" p=".5rem 1rem" borderBottom="1px solid" borderColor="gray_6">
             <Image src={el?.image} alt="" borderRadius="10px" w="5rem" h="5rem" />
             <Box>
@@ -571,13 +575,14 @@ function ActionBox({ isOpen, onClose, mode }: IActionBox) {
 
 interface IAddEditForm {
   isOpen: boolean
+  mode: string
   onClose: () => void
 }
-function AddEditService({ isOpen, onClose }: IAddEditForm) {
+function AddEditService({ mode, isOpen, onClose }: IAddEditForm) {
   const singleData = useHomeStore((state: any) => state.singleData)
   const formOptions = {
     resolver: yupResolver(serviceFormSchema),
-    defaultValues: singleData ? singleData : {}
+    defaultValues: mode === 'add' ? {} : singleData
   }
   const {
     register,
@@ -587,7 +592,7 @@ function AddEditService({ isOpen, onClose }: IAddEditForm) {
   } = useForm(formOptions)
 
   function onSubmit(data: any) {
-    return !singleData ? create(data) : update(singleData.id, data)
+    mode === 'add' ? create(data) : update(singleData.id, data)
   }
 
   function create(data: any) {
@@ -599,7 +604,7 @@ function AddEditService({ isOpen, onClose }: IAddEditForm) {
     console.log('update product: ', id, data)
   }
   // edit/create fct - form - schema - title
-  const title = !singleData ? 'Add Service' : 'Edit Service'
+  const title = mode === 'add' ? 'Add Service' : 'Edit Service'
 
   const inputColor = useColorModeValue('gray_9', 'gray_3')
   const [avatar, setAvatar] = useState<any>({
@@ -659,7 +664,7 @@ function AddEditService({ isOpen, onClose }: IAddEditForm) {
           justifyContent="flex-end"
           _hover={{ bg: 'accent_2' }}
         >
-          {!singleData ? 'Create' : 'Edit'}
+          {mode === 'add' ? 'Create' : 'Edit'}
         </Button>
         <Button
           type="reset"
@@ -670,7 +675,7 @@ function AddEditService({ isOpen, onClose }: IAddEditForm) {
           display={'flex'}
           justifyContent="flex-end"
           _hover={{ bg: 'gray_4' }}
-          onClick={() => (!singleData ? {} : reset(formOptions.defaultValues))}
+          onClick={() => (mode === 'add' ? {} : reset(formOptions.defaultValues))}
         >
           Reset
         </Button>
@@ -680,12 +685,12 @@ function AddEditService({ isOpen, onClose }: IAddEditForm) {
   return <CustomModal title={title} isOpen={isOpen} onClose={onClose} body={Form} />
 }
 
-function AddEditQuestionAnswer({ isOpen, onClose }: IAddEditForm) {
+function AddEditQuestionAnswer({ mode, isOpen, onClose }: IAddEditForm) {
   const singleData = useHomeStore((state: any) => state.singleData)
 
   const formOptions = {
     resolver: yupResolver(questionAnswerFormSchema),
-    defaultValues: singleData ? singleData : {}
+    defaultValues: mode === 'add' ? {} : singleData
   }
   const {
     register,
@@ -695,7 +700,7 @@ function AddEditQuestionAnswer({ isOpen, onClose }: IAddEditForm) {
   } = useForm(formOptions)
 
   function onSubmit(data: any) {
-    return !singleData ? create(data) : update(singleData.id, data)
+    !singleData ? create(data) : update(singleData.id, data)
   }
 
   function create(data: any) {
@@ -707,7 +712,7 @@ function AddEditQuestionAnswer({ isOpen, onClose }: IAddEditForm) {
     console.log('update product: ', id, data)
   }
   // edit/create fct - form - schema - title
-  const title = !singleData ? 'Add Questions & Answer' : 'Edit Questions & Answer'
+  const title = mode === 'add' ? 'Add Questions & Answer' : 'Edit Questions & Answer'
 
   const inputColor = useColorModeValue('gray_9', 'gray_3')
   const Form = (
@@ -744,7 +749,7 @@ function AddEditQuestionAnswer({ isOpen, onClose }: IAddEditForm) {
           justifyContent="flex-end"
           _hover={{ bg: 'accent_2' }}
         >
-          {!singleData ? 'Create' : 'Edit'}
+          {mode === 'add' ? 'Create' : 'Edit'}
         </Button>
         <Button
           type="reset"
@@ -755,7 +760,7 @@ function AddEditQuestionAnswer({ isOpen, onClose }: IAddEditForm) {
           display={'flex'}
           justifyContent="flex-end"
           _hover={{ bg: 'gray_4' }}
-          onClick={() => (!singleData ? {} : reset(formOptions.defaultValues))}
+          onClick={() => (mode === 'add' ? {} : reset(formOptions.defaultValues))}
         >
           Reset
         </Button>

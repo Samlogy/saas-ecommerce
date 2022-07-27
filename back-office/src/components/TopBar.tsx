@@ -62,13 +62,9 @@ export default function TopBar({ isFixedNav }: ITopBar) {
 
           <DarkModeToggle />
 
-          <CustomMenuList>
-            <NotificationButton />
-          </CustomMenuList>
+          <NotificationButton />
 
-          <CustomMenuList>
-            <MessageButton />
-          </CustomMenuList>
+          <MessageButton />
 
           <CustomMenuList icon={<Avatar name="admin" src={''} size="sm" />}>
             <LogoutButton />

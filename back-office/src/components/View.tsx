@@ -4,11 +4,11 @@ import { Box } from '@chakra-ui/react'
 interface IView {
   children: React.ReactNode
   cond: any
-  rest?: any
+  [restProps: string]: any
 }
 
-const View = ({ children, cond, ...rest }: IView) => {
-  if (cond) return <Box {...rest}>{children}</Box>
+const View = ({ children, cond, ...restProps }: IView) => {
+  if (cond) return <Box {...restProps}>{children}</Box>
   else return null
 }
 

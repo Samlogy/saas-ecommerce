@@ -1,11 +1,4 @@
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Checkbox,
   Flex,
   Select,
   Slider,
@@ -20,7 +13,7 @@ import React, { useState } from 'react'
 import { IProduct } from '../lib/interfaces'
 import { generateQuery } from '../lib/utils/functions'
 import { useFilterStore } from '../store'
-import { InputField, MultiSelect } from './'
+import { CustomAccordion, InputField, MultiSelect } from './'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
 const data = {
@@ -44,11 +37,6 @@ interface ISingleFilter {
   setFilters: React.Dispatch<React.SetStateAction<IFilters>>
   filters: any
   data: string[] | number[]
-}
-
-interface IAccordionCustom {
-  title: string
-  body: React.ReactNode
 }
 
 export default function ProductsFilter({
@@ -90,29 +78,34 @@ export default function ProductsFilter({
         borderRadius="10px"
       />
 
-      <AccordionCustom
+      <CustomAccordion
         title="Discount"
         body={<DiscountSlider filters={filters} setFilters={setFilters} data={data.discounts} />}
+        w="17rem"
       />
 
-      <AccordionCustom
+      <CustomAccordion
         title="Rate"
         body={<RateSlider filters={filters} setFilters={setFilters} data={data.rates} />}
+        w="17rem"
       />
 
-      <AccordionCustom
+      <CustomAccordion
         title="Price"
         body={<PriceSlider filters={filters} setFilters={setFilters} data={data.prices} />}
+        w="17rem"
       />
 
-      <AccordionCustom
+      <CustomAccordion
         title="Categories"
         body={<CategoriesFilter filters={filters} setFilters={setFilters} data={data.categories} />}
+        w="17rem"
       />
 
-      <AccordionCustom
+      <CustomAccordion
         title="Condition"
         body={<ConditionFilter filters={filters} setFilters={setFilters} data={data.conditions} />}
+        w="17rem"
       />
     </Flex>
   )
@@ -262,28 +255,5 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
         borderRadius="10px"
       />
     </Flex>
-  )
-}
-
-function AccordionCustom({ title, body }: IAccordionCustom) {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_3')
-  const itemColor = useColorModeValue('gray_2', 'gray_8')
-  return (
-    <Accordion defaultIndex={[0]} allowMultiple w="17rem" mb=".5rem">
-      <AccordionItem>
-        <AccordionButton
-          bg={itemBgColor}
-          color={itemColor}
-          _expanded={{ bg: 'accent_2', color: 'white' }}
-          borderRadius="10px"
-        >
-          <Box flex="1" textAlign="left">
-            {title}
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-        <AccordionPanel pb={4}>{body}</AccordionPanel>
-      </AccordionItem>
-    </Accordion>
   )
 }

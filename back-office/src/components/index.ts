@@ -44,8 +44,6 @@ export { default as CustomChart } from './CustomChart'
 // other
 export { default as CustomTable } from './CustomTable'
 export { default as PreviewImages } from './PreviewImages'
-export { default as Dropdown } from './Dropdown'
 export { default as CustomDrawer } from './CustomDrawer'
 export { default as CustomModal } from './CustomModal'
-export { default as CustomMenu } from './CustomMenu'
 export { default as DisplayRowData } from './DisplayRowData'

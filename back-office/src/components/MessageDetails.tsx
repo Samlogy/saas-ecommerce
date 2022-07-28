@@ -6,5 +6,7 @@ export default function MessageDetails() {
   const message = useMessageStore((state: any) => state.message)
   const isVisible = useMessageStore((state: any) => state.isVisible)
 
-  return <Details title="Message" data={message} isOpen={isVisible} setOpen={setVisibile} />
+  return (
+    <Details title="Message" data={message} isOpen={isVisible} onClose={() => setVisibile(false)} />
+  )
 }

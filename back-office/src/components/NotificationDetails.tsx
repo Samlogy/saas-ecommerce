@@ -7,6 +7,11 @@ export default function MessageDetails() {
   const isVisible = useNotificationStore((state: any) => state.isVisible)
 
   return (
-    <Details title="Notification" data={notification} isOpen={isVisible} setOpen={setVisibile} />
+    <Details
+      title="Notification"
+      data={notification}
+      isOpen={isVisible}
+      onClose={() => setVisibile(false)}
+    />
   )
 }

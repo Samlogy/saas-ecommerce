@@ -14,7 +14,6 @@ import { BiMenu } from 'react-icons/bi'
 
 import {
   DarkModeToggle,
-  Dropdown,
   LanguageSwitcher,
   LogoutButton,
   MessageButton,

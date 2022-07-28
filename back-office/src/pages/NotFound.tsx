@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Layout } from 'components'
 // import { useLocale } from "../lib/hooks";
 
-function NotFound() {
+export default function NotFound() {
   // const { t } = useLocale();
   // textAlign="center" py={10} px={6} h="100vh" display="flex" justifyContent="center"
 
@@ -41,5 +41,3 @@ function NotFound() {
     </Layout>
   )
 }
-
-export default NotFound

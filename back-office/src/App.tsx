@@ -1,7 +1,5 @@
 import Routing from './Routing'
 
-function App() {
+export default function App() {
   return <Routing />
 }
-
-export default App

@@ -3,8 +3,13 @@ import {
   Button,
   Flex,
   Heading,
+  IconButton,
   Image,
   Link as ChakraLink,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Text,
   useColorModeValue
 } from '@chakra-ui/react'
@@ -12,17 +17,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai'
+import { FaEllipsisV } from 'react-icons/fa'
 import { FiEdit, FiTrash } from 'react-icons/fi'
 
-import {
-  CustomAccordion,
-  CustomMenu,
-  CustomModal,
-  InputField,
-  Layout,
-  TextField,
-  View
-} from 'components'
+import { CustomAccordion, CustomModal, InputField, Layout, TextField, View } from 'components'
 import {
   aboutFormSchema,
   dealFormSchema,
@@ -36,18 +34,21 @@ import img from '../assets/images/home.png'
 const homeData = {
   services: [
     {
+      id: 1,
       name: 'provide some sort of IT service',
       description:
         'tempore numquam perferendis consectetur eum praesentium fuga maiores nostrum doloribus accusamus sit at voluptates aliquam ad? Distinctio?',
       image: img
     },
     {
+      id: 2,
       name: 'provide some sort of IT service',
       description:
         'tempore numquam perferendis consectetur eum praesentium fuga maiores nostrum doloribus accusamus sit at voluptates aliquam ad? Distinctio?',
       image: img
     },
     {
+      id: 3,
       name: 'provide some sort of IT service',
       description:
         'tempore numquam perferendis consectetur eum praesentium fuga maiores nostrum doloribus accusamus sit at voluptates aliquam ad? Distinctio?',
@@ -56,18 +57,21 @@ const homeData = {
   ],
   questionsAnswers: [
     {
+      id: 1,
       question:
         'tempore numquam perferendis consectetur eum praesentium fuga maiores nostrum doloribus accusamus sit at voluptates aliquam ad? Distinctio?',
       answer:
         'tempore numquam perferendis consectetur eum praesentium fuga maiores nostrum doloribus accusamus sit at voluptates aliquam ad? Distinctio?'
     },
     {
+      id: 2,
       question:
         'tempore numquam perferendis consectetur eum praesentium fuga maiores nostrum doloribus accusamus sit at voluptates aliquam ad? Distinctio?',
       answer:
         'tempore numquam perferendis consectetur eum praesentium fuga maiores nostrum doloribus accusamus sit at voluptates aliquam ad? Distinctio?'
     },
     {
+      id: 3,
       question:
         'tempore numquam perferendis consectetur eum praesentium fuga maiores nostrum doloribus accusamus sit at voluptates aliquam ad? Distinctio?',
       answer:
@@ -87,7 +91,7 @@ const homeData = {
   }
 }
 
-// add: components --> details - delete - edit/add - disable (same as product logic)
+// add: components --> delete - edit/add - disable (same as product logic)
 export default function Home() {
   const actions = useHomeStore((state: any) => state.actions)
   const setAction = useHomeStore((state: any) => state.setAction)
@@ -352,29 +356,11 @@ function QuestionsAnswersListing({ data }: { data: any }) {
   const textColor = useColorModeValue('gray_2', 'gray_7')
   const titleColor = useColorModeValue('black', 'white')
 
-  const menuData = [
-    {
-      color: 'warning',
-      onclick: () => {
-        setAction({ edit: true })
-        setSingleData(data[0])
-      },
-      label: 'Edit',
-      icon: <FiEdit color="warning" size="18" />
-    },
-    {
-      color: 'gray_4',
-      onclick: () => setAction({ disable: true }),
-      label: 'Disable',
-      icon: <AiOutlineClose color="disable" size="18" />
-    },
-    {
-      color: 'error',
-      onclick: () => setAction({ delete: true }),
-      label: 'Delete',
-      icon: <FiTrash color="error" size="18" />
-    }
-  ]
+  function onAdd() {
+    setSingleData({})
+    setAction({ ...actions, add: true, type: 'service' })
+  }
+
   return (
     <Box id="qa">
       <Button
@@ -383,7 +369,7 @@ function QuestionsAnswersListing({ data }: { data: any }) {
         leftIcon={<AiOutlinePlus size={28} />}
         ml="auto"
         display={'flex'}
-        onClick={() => setAction({ ...actions, add: true, type: 'qa' })}
+        onClick={() => onAdd()}
       >
         Q&A
       </Button>
@@ -407,7 +393,7 @@ function QuestionsAnswersListing({ data }: { data: any }) {
               </Text>
             </Box>
           </Flex>
-          <CustomMenu data={menuData} />
+          <ActionsMenu type="qa" data={el} setAction={setAction} />
         </Flex>
       ))}
     </Box>
@@ -422,29 +408,10 @@ function Services({ data }: { data: any }) {
   const textColor = useColorModeValue('gray_2', 'gray_7')
   const titleColor = useColorModeValue('black', 'white')
 
-  const menuData = [
-    {
-      color: 'warning',
-      onclick: () => {
-        setAction({ edit: true })
-        setSingleData(data)
-      },
-      label: 'Edit',
-      icon: <FiEdit color="warning" size="18" />
-    },
-    {
-      color: 'gray_4',
-      onclick: () => setAction({ disable: true }),
-      label: 'Disable',
-      icon: <AiOutlineClose color="disable" size="18" />
-    },
-    {
-      color: 'error',
-      onclick: () => setAction({ delete: true }),
-      label: 'Delete',
-      icon: <FiTrash color="error" size="18" />
-    }
-  ]
+  function onAdd() {
+    setSingleData({})
+    setAction({ ...actions, add: true, type: 'service' })
+  }
 
   return (
     <Box id="services">
@@ -454,7 +421,7 @@ function Services({ data }: { data: any }) {
         leftIcon={<AiOutlinePlus size={28} />}
         ml="auto"
         display={'flex'}
-        onClick={() => setAction({ ...actions, add: true, type: 'service' })}
+        onClick={() => onAdd()}
       >
         Service
       </Button>
@@ -479,7 +446,7 @@ function Services({ data }: { data: any }) {
               </Text>
             </Box>
           </Flex>
-          <CustomMenu data={menuData} />
+          <ActionsMenu type="service" data={el} setAction={setAction} />
         </Flex>
       ))}
     </Box>
@@ -768,4 +735,56 @@ function AddEditQuestionAnswer({ mode, isOpen, onClose }: IAddEditForm) {
     </form>
   )
   return <CustomModal title={title} isOpen={isOpen} onClose={onClose} body={Form} />
+}
+
+interface IActionMenu {
+  type: string
+  data: any
+  setAction: any
+}
+
+function ActionsMenu({ type, data, setAction }: IActionMenu) {
+  const setSingleData = useHomeStore((state: any) => state.setSingleData)
+
+  const onEdit = (data: any) => {
+    setAction({ edit: true, type: type })
+    setSingleData(data)
+  }
+  const onDelete = (id: number) => {
+    setAction({ delete: true })
+    setSingleData(id)
+  }
+  const onDisable = (id: number) => {
+    setAction({ disable: true })
+    setSingleData(id)
+  }
+
+  return (
+    <Menu>
+      <MenuButton as={IconButton} icon={<FaEllipsisV />}></MenuButton>
+      <MenuList>
+        <MenuItem
+          color={'warning'}
+          icon={<FiEdit color="warning" size="18" />}
+          onClick={() => onEdit(data)}
+        >
+          Edit
+        </MenuItem>
+        <MenuItem
+          color={'error'}
+          icon={<FiTrash color="error" size="18" />}
+          onClick={() => onDelete(data?.id)}
+        >
+          Delete
+        </MenuItem>
+        <MenuItem
+          color={'gray_4'}
+          icon={<AiOutlineClose color="disable" size="18" />}
+          onClick={() => onDisable(data?.id)}
+        >
+          Disable
+        </MenuItem>
+      </MenuList>
+    </Menu>
+  )
 }

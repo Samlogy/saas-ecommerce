@@ -7,14 +7,15 @@ import {
   ModalHeader,
   ModalOverlay
 } from '@chakra-ui/react'
+import { ReactNode } from 'react'
 
 interface ICustomModal {
   isOpen: boolean
   onClose: any
   title?: string
   size?: any
-  body?: React.ReactNode
-  footer?: React.ReactNode
+  body?: ReactNode
+  footer?: ReactNode
 }
 
 export default function CustomModal({

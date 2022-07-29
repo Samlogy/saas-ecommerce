@@ -16,7 +16,7 @@ export default function Layout({ children, isHeaderVisible, ...restProps }: ILay
       <Container
         maxW="80em"
         bg={bgColor}
-        minHeight="calc(100vh - 100px)"
+        minHeight="calc(100vh - 61px)"
         p="1.5rem 1.5rem 2rem 1.5rem"
         borderRadius="5px"
       >

@@ -17,9 +17,11 @@ export default function CustomTable({ headers, data, isFooter = false }: ICustom
       <TableContainer>
         <Table variant="striped" colorScheme="green">
           <Thead>
-            {headers.map((el, idx) => (
-              <Th key={idx}> {el} </Th>
-            ))}
+            <Tr>
+              {headers.map((el, idx) => (
+                <Th key={idx}> {el} </Th>
+              ))}
+            </Tr>
           </Thead>
           <Tbody>
             {data.map((el: any, idx: number) => (
@@ -54,9 +56,11 @@ export default function CustomTable({ headers, data, isFooter = false }: ICustom
           </Tbody>
           {isFooter && (
             <Tfoot>
-              {headers.map((el, idx) => (
-                <Th key={idx}> {el} </Th>
-              ))}
+              <Tr>
+                {headers.map((el, idx) => (
+                  <Th key={idx}> {el} </Th>
+                ))}
+              </Tr>
             </Tfoot>
           )}
         </Table>

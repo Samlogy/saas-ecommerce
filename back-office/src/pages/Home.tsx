@@ -20,7 +20,15 @@ import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai'
 import { FaEllipsisV } from 'react-icons/fa'
 import { FiEdit, FiTrash } from 'react-icons/fi'
 
-import { CustomAccordion, CustomModal, InputField, Layout, TextField, View } from 'components'
+import {
+  CustomAccordion,
+  CustomModal,
+  InputField,
+  Layout,
+  TextField,
+  View,
+  EditImage
+} from 'components'
 import {
   aboutFormSchema,
   dealFormSchema,
@@ -101,6 +109,8 @@ export default function Home() {
       <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full" mb="2rem">
         Home
       </Heading>
+
+      <EditImage data={''} isMultiple={true} isPreview={true} />
 
       <View cond={actions.add && actions.type === 'qa'}>
         <AddEditQuestionAnswer

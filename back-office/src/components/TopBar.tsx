@@ -1,13 +1,13 @@
 import {
   Avatar,
-  Box,
-  IconButton,
-  Flex,
-  Text,
   Button,
+  Flex,
+  IconButton,
   Menu,
   MenuButton,
-  MenuList
+  MenuList,
+  Text,
+  useColorModeValue
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { BiMenu } from 'react-icons/bi'
@@ -34,22 +34,25 @@ export default function TopBar({ isFixedNav }: ITopBar) {
   const logo = ''
   const avatar = ''
 
+  const bgColor = useColorModeValue('white', 'gray_2')
+
   return (
     <>
-      <Box
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
+      <Flex
+        flexDir="row"
+        justify="space-between"
+        align="center"
         p=".5rem"
         boxShadow="md"
-        width="100%"
+        w="100%"
         pos={isFixedNav ? 'fixed' : 'inherit'}
-        zIndex="999"
+        zIndex={999}
+        bg={bgColor}
       >
         <IconButton
           aria-label="side-bar-button"
           icon={<BiMenu size="24" onClick={() => setIsVisible(true)} />}
+          bg={useColorModeValue('gray_7', 'gray_3')}
         />
 
         <Text fontSize="lg" fontWeight="500" display={['none', '', 'flex', '']}>
@@ -58,18 +61,14 @@ export default function TopBar({ isFixedNav }: ITopBar) {
 
         <Flex alignItems={['flex-end', 'center']}>
           <LanguageSwitcher />
-
           <DarkModeToggle />
-
           <NotificationButton />
-
           <MessageButton />
-
           <CustomMenuList icon={<Avatar name="admin" src={''} size="sm" />}>
             <LogoutButton />
           </CustomMenuList>
         </Flex>
-      </Box>
+      </Flex>
 
       <SideBar isOpen={isVisible} onClose={() => setIsVisible(false)} />
       <NotificationDetails />
@@ -84,7 +83,9 @@ function CustomMenuList({ children, icon }: { children: React.ReactNode; icon?: 
       <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
         {icon && icon}
       </MenuButton>
-      <MenuList>{children}</MenuList>
+      <MenuList display="flex" justifyContent="center">
+        {children}
+      </MenuList>
     </Menu>
   )
 }

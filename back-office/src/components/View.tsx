@@ -7,9 +7,7 @@ interface IView {
   [restProps: string]: any
 }
 
-const View = ({ children, cond, ...restProps }: IView) => {
+export default function Viex({ children, cond, ...restProps }: IView) {
   if (cond) return <Box {...restProps}>{children}</Box>
   else return null
 }
-
-export default View

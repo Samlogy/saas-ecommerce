@@ -8,7 +8,7 @@ interface IProductDetails {
 }
 export default function ProductDetails({ isOpen, onClose }: IProductDetails) {
   const product = useProductStore((state: any) => state.product)
-  console.log(product)
+
   const body = (
     <Flex flexDir="column">
       <Flex justifyContent={'space-between'} alignItems="center" mb=".5rem">

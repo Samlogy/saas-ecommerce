@@ -13,10 +13,10 @@ type INotification = {
 
 const testMsg = {
   id: 1,
-  title: 'message title',
-  text: 'message text ...',
-  createdAt: 'new Date()',
-  editedAt: 'new Date()'
+  title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
+  text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem repudiandae omnis molestiae non sequi laborum vel excepturi explicabo, ipsum sunt doloribus laudantium eum aperiam molestias modi veniam unde, laboriosam ex!',
+  createdAt: new Date().toUTCString(),
+  editedAt: new Date().toUTCString()
 }
 
 let notificationStore = (set: SetState<INotification>) => ({

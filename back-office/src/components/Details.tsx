@@ -1,6 +1,7 @@
-import { Button, Flex, Image, Text } from '@chakra-ui/react'
+import { Button, Flex, Image, Text, useColorModeValue } from '@chakra-ui/react'
 
 import { CustomModal } from './'
+import img from '../assets/images/home.png'
 
 interface IDetails {
   title: string
@@ -10,20 +11,14 @@ interface IDetails {
 }
 
 export default function Details({ title, data, isOpen, onClose }: IDetails) {
+  const textColor = useColorModeValue('gray_2', 'gray_6')
   const Body = (
     <Flex flexDir="column">
-      <Image
-        src={data?.img}
-        alt="message-image"
-        borderRadius={'5px'}
-        w="5rem"
-        h="5rem"
-        mb=".5rem"
-      />
+      <Image src={img} alt="message-image" borderRadius={'5px'} w="5rem" h="5rem" mb=".5rem" />
       <Text mb=".5rem" fontSize="1.3rem">
         {data?.title}{' '}
       </Text>
-      <Text mb=".5rem" color="gray_2">
+      <Text mb=".5rem" color={textColor}>
         {data?.text}{' '}
       </Text>
       <Text fontSize=".8rem" fontStyle="italic" textAlign={'right'} color="gray_4">

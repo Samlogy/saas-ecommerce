@@ -8,12 +8,12 @@ import { useMessageStore } from 'store'
 
 export default function MessageButton() {
   const messages = useMessageStore((state: any) => state.messages)
-  const setVisibile = useMessageStore((state: any) => state.setVisibile)
+  const setVisible = useMessageStore((state: any) => state.setVisible)
   const setMessage = useMessageStore((state: any) => state.setMessage)
 
   const handleClick = (data: IMessage) => {
     setMessage(data)
-    setVisibile(true)
+    setVisible(true)
   }
   const messageIcon = messages.length > 0 ? <MdEmail size={20} /> : <MdOutlineEmail size={20} />
   return (

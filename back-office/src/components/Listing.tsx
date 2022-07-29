@@ -8,6 +8,7 @@ interface IListing {
 }
 export default function Listing({ title, data }: IListing) {
   const bgColor = useColorModeValue('white', 'gray_2')
+  const textColor = useColorModeValue('gray_2', 'gray_6')
   return (
     <Layout isHeaderVisible>
       <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full" mb="2rem">
@@ -29,7 +30,7 @@ export default function Listing({ title, data }: IListing) {
               <Text mb=".5rem" fontSize="1.3rem">
                 {item.title}{' '}
               </Text>
-              <Text mb=".5rem" color="gray_2">
+              <Text mb=".5rem" color={textColor}>
                 {item.text}{' '}
               </Text>
               <Text fontSize=".8rem" fontStyle="italic" textAlign={'right'} color="gray_4">

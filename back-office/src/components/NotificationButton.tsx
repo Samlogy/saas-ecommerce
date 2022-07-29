@@ -1,5 +1,4 @@
 import { Box, IconButton, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react'
-import React from 'react'
 import { MdNotificationsActive, MdNotificationsNone } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 
@@ -34,8 +33,10 @@ export default function NotificationButton() {
               justifyContent="space-between"
               onClick={() => handleClick(item)}
             >
-              <Text isTruncated> {item.title} </Text>
-              <Text isTruncated> {item.text} </Text>
+              <Text textAlign="left"> {item.title} </Text>
+              <Text textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap" textAlign="left">
+                {item.text}
+              </Text>
             </MenuItem>
           ))
         ) : (

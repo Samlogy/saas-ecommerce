@@ -12,15 +12,19 @@ export default function ProductDetails({ isOpen, onClose }: IProductDetails) {
   const body = (
     <Flex flexDir="column">
       <Flex justifyContent={'space-between'} alignItems="center" mb=".5rem">
-        <Image
-          src={product?.images[0]}
-          fallbackSrc="https://via.placeholder.com/100"
-          alt="product iamge"
-          borderRadius={'5px'}
-          w="5rem"
-          h="5rem"
-          mb=".5rem"
-        />
+        <Flex justify="flex-start" align="center">
+          {product?.images.map((img: string, idx: number) => (
+            <Image
+              key={idx}
+              boxSize="70px"
+              objectFit="cover"
+              src={img}
+              alt={`image-${idx}`}
+              m="0 .25rem .5rem 0"
+              borderRadius="5px"
+            />
+          ))}
+        </Flex>
       </Flex>
       <DisplayRowData label="Name" data={product.name} />
       <DisplayRowData label="Quantity" data={product.quantity} />

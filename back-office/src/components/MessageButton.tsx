@@ -8,14 +8,12 @@ import { useMessageStore } from 'store'
 
 export default function MessageButton() {
   const messages = useMessageStore((state: any) => state.messages)
-  const setVisibile = useMessageStore((state: any) => state.handleMessageVisibility)
+  const setVisibile = useMessageStore((state: any) => state.setVisibile)
   const setMessage = useMessageStore((state: any) => state.setMessage)
 
-  const msgs = messages.length
-
-  const handleClickMessage = (data: IMessage) => {
-    setVisibile(true)
+  const handleClick = (data: IMessage) => {
     setMessage(data)
+    setVisibile(true)
   }
   const messageIcon = messages.length > 0 ? <MdEmail size={20} /> : <MdOutlineEmail size={20} />
   return (
@@ -28,7 +26,7 @@ export default function MessageButton() {
               key={item.id}
               flexDir={'column'}
               justifyContent="space-between"
-              onClick={() => handleClickMessage(item)}
+              onClick={() => handleClick(item)}
             >
               <Text isTruncated> {item.title} </Text>
               <Text isTruncated> {item.text} </Text>

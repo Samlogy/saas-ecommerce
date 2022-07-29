@@ -36,7 +36,7 @@ export default function Details({ title, data, isOpen, onClose }: IDetails) {
       Close
     </Button>
   )
-  console.log(isOpen)
+
   return (
     <CustomModal
       isOpen={isOpen}

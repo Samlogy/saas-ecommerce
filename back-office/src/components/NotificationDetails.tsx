@@ -1,8 +1,8 @@
 import { Details } from 'components'
 import { useNotificationStore } from 'store'
 
-export default function MessageDetails() {
-  const setVisibile = useNotificationStore((state: any) => state.setVisibile)
+export default function NotificationDetails() {
+  const setVisible = useNotificationStore((state: any) => state.setVisible)
   const notification = useNotificationStore((state: any) => state.notification)
   const isVisible = useNotificationStore((state: any) => state.isVisible)
 
@@ -11,7 +11,7 @@ export default function MessageDetails() {
       title="Notification"
       data={notification}
       isOpen={isVisible}
-      onClose={() => setVisibile(false)}
+      onClose={() => setVisible(false)}
     />
   )
 }

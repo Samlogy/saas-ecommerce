@@ -11,9 +11,9 @@ export default function NotificationButton() {
   const setVisible = useNotificationStore((state: any) => state.setVisible)
   const setNotification = useNotificationStore((state: any) => state.setNotification)
 
-  const handleClickNotification = (data: any) => {
-    setVisible(true)
+  const handleClick = (data: any) => {
     setNotification(data)
+    setVisible(true)
   }
 
   const messageIcon =
@@ -32,7 +32,7 @@ export default function NotificationButton() {
               key={item.id}
               flexDir={'column'}
               justifyContent="space-between"
-              onClick={() => handleClickNotification(item)}
+              onClick={() => handleClick(item)}
             >
               <Text isTruncated> {item.title} </Text>
               <Text isTruncated> {item.text} </Text>

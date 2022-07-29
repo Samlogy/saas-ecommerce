@@ -5,7 +5,8 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerOverlay
+  DrawerOverlay,
+  useColorModeValue
 } from '@chakra-ui/react'
 import React from 'react'
 
@@ -25,10 +26,11 @@ export default function CustomDrawer({
   body,
   footer
 }: ICustomDrawer) {
+  const itemBgColor = useColorModeValue('white', 'gray_3')
   return (
     <Drawer isOpen={isOpen} placement={placement} onClose={onClose}>
       <DrawerOverlay />
-      <DrawerContent>
+      <DrawerContent bg={itemBgColor}>
         <DrawerCloseButton />
         <DrawerHeader> {title && title} </DrawerHeader>
 

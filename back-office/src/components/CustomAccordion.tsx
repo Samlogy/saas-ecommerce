@@ -16,7 +16,7 @@ interface ICustomAccordion {
 }
 
 export default function CustomAccordion({ title, body, ...restProps }: ICustomAccordion) {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+  const itemBgColor = useColorModeValue('gray_9', 'gray_2')
   const itemColor = useColorModeValue('gray_2', 'gray_8')
   //
   //defaultIndex={[0]}

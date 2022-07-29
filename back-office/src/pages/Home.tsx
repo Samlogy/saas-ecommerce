@@ -189,7 +189,7 @@ function About({ data }: { data: any }) {
     console.log('update: ', id, about)
   }
 
-  const inputColor = useColorModeValue('gray_9', 'gray_3')
+  const inputColor = useColorModeValue('white', 'gray_3')
 
   const [avatar, setAvatar] = useState<any>({
     isLoading: false,
@@ -276,7 +276,7 @@ function Deal({ data }: { data: any }) {
     console.log('update: ', id, deal)
   }
 
-  const inputColor = useColorModeValue('gray_9', 'gray_3')
+  const inputColor = useColorModeValue('white', 'gray_3')
 
   const [avatar, setAvatar] = useState<any>({
     isLoading: false,

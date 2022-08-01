@@ -1,8 +1,8 @@
-import { Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Heading, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 
 import { CustomChart, Layout, TotalRevenue, View, Widget } from 'components'
-import { useChart, useTable } from 'lib/hooks'
+import { useChart } from 'lib/hooks'
 import { isEmpty, loadFilters } from 'lib/utils/functions'
 
 const widgetsData = [
@@ -29,37 +29,15 @@ const totalRevenueData = {
   percent: 50,
   price: 5000
 }
-const data: any = [
-  {
-    id: 12,
-    name: 'mobile dev app',
-    price: 500,
-    quantity: 15,
-    date: '2022-05-18',
-    nature: 'service',
-    paymentMethod: 'paysera',
-    description: 'description'
-  }
-]
 
 export default function Analytics() {
-  const bgColor = useColorModeValue('white', 'gray_2')
-
-  // load chart data
   const pieOptions = useChart('pie')
   const stackedOptions = useChart('stacked')
-
-  // load table data
-  const { isLoading, error, data: d } = useTable('income')
-
-  // sort state --> table
-  const [filters, setFilters] = useState(loadFilters())
 
   // show chart if visible or not
   const [show, setShow] = useState({
     line: isEmpty(stackedOptions.options) && isEmpty(stackedOptions.series),
-    pie: isEmpty(pieOptions.options) && isEmpty(pieOptions.series),
-    table: isEmpty(data)
+    pie: isEmpty(pieOptions.options) && isEmpty(pieOptions.series)
   })
 
   return (
@@ -116,12 +94,6 @@ export default function Analytics() {
           <View cond={!show.pie}>
             <Text color="gray_4" fontStyle="italic" textAlign="center" m="2rem auto">
               Error occured while loading Incomes chart (pie bars)
-            </Text>
-          </View>
-
-          <View cond={!show.line}>
-            <Text color="gray_4" fontStyle="italic" textAlign="center" m="2rem auto">
-              Error occured while loading Incomes chart (stacked bars)
             </Text>
           </View>
         </Flex>

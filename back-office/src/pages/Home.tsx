@@ -27,7 +27,8 @@ import {
   Layout,
   TextField,
   View,
-  EditImage
+  EditImage,
+  MiniMap
 } from 'components'
 import {
   aboutFormSchema,
@@ -98,6 +99,24 @@ const homeData = {
     image: img
   }
 }
+const miniMapData = [
+  {
+    link: '#services',
+    label: 'Services'
+  },
+  {
+    link: '#qa',
+    label: 'QuestionsAnswers'
+  },
+  {
+    link: '#deal',
+    label: 'Deal'
+  },
+  {
+    link: '#about',
+    label: 'About'
+  }
+]
 
 // add: components --> delete - edit/add - disable (same as product logic)
 export default function Home() {
@@ -169,7 +188,7 @@ export default function Home() {
           <CustomAccordion title="deal" body={<Deal data={homeData.deal} />} />
         </Flex>
 
-        <MiniMap />
+        <MiniMap data={miniMapData} />
       </Flex>
     </Layout>
   )
@@ -463,55 +482,6 @@ function Services({ data }: { data: any }) {
   )
 }
 
-function MiniMap() {
-  const data = [
-    {
-      link: '#services',
-      label: 'Services'
-    },
-    {
-      link: '#qa',
-      label: 'QuestionsAnswers'
-    },
-    {
-      link: '#deal',
-      label: 'Deal'
-    },
-    {
-      link: '#about',
-      label: 'About'
-    }
-  ]
-  const bgColor = useColorModeValue('gray_9', 'gray_2')
-  const textColor = useColorModeValue('gray_3', 'gray_9')
-  return (
-    <Flex
-      flexDir={'column'}
-      w="12rem"
-      h="fit-content"
-      border="1px solid"
-      borderColor={bgColor}
-      bg={bgColor}
-      color={textColor}
-      p=".5rem"
-      borderRadius={'10px'}
-      flexBasis={['20%', '', '', '10%']}
-      display={['none', '', 'flex']}
-    >
-      {data.map((el, idx) => (
-        <ChakraLink
-          key={idx}
-          href={el.link}
-          _hover={{ color: 'accent_3', textDecor: 'underline' }}
-          mb=".25rem"
-        >
-          {el.label}
-        </ChakraLink>
-      ))}
-    </Flex>
-  )
-}
-
 interface IActionBox {
   isOpen: boolean
   onClose: () => void
@@ -677,7 +647,7 @@ function AddEditQuestionAnswer({ mode, isOpen, onClose }: IAddEditForm) {
   } = useForm(formOptions)
 
   function onSubmit(data: any) {
-    !singleData ? create(data) : update(singleData.id, data)
+    mode === 'add' ? create(data) : update(singleData.id, data)
   }
 
   function create(data: any) {

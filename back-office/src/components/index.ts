@@ -37,6 +37,7 @@ export { default as MessageDetails } from './MessageDetails'
 export { default as Widget } from './Widget'
 export { default as TotalRevenue } from './TotalRevenue'
 export { default as CustomChart } from './CustomChart'
+export { default as MiniMap } from './MiniMap'
 
 // other
 export { default as CustomTable } from './CustomTable'

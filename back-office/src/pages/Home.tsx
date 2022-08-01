@@ -129,8 +129,6 @@ export default function Home() {
         Home
       </Heading>
 
-      <EditImage data={''} isMultiple={true} isPreview={true} />
-
       <View cond={actions.add && actions.type === 'qa'}>
         <AddEditQuestionAnswer
           mode="add"
@@ -223,15 +221,10 @@ function About({ data }: { data: any }) {
   const [avatar, setAvatar] = useState<any>({
     isLoading: false,
     error: '',
-    img: ''
+    previews: data?.images || [],
+    images: data?.images || []
   })
 
-  // image
-  const handleImage = (e: any) => {
-    const imgBase = e.target.files[0]
-    const imgPreview = URL.createObjectURL(imgBase)
-    setAvatar({ ...avatar, img: imgPreview })
-  }
   return (
     <Flex id="#about" flexDir={'column'} mx="auto" w={['full', '30rem']}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -253,17 +246,7 @@ function About({ data }: { data: any }) {
           bg={inputColor}
           w={['full', '30rem']}
         />
-        <InputField
-          type="file"
-          accept="image/*"
-          name="images"
-          label="image"
-          placeholder="image"
-          onChange={handleImage}
-          w={['full', '30rem']}
-          px="0"
-          border="none"
-        />
+        <EditImage avatar={avatar} setAvatar={setAvatar} isMultiple={true} isPreview={true} />
         <Button
           type="submit"
           isLoading={isSubmitting}
@@ -288,7 +271,6 @@ function Deal({ data }: { data: any }) {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors, isSubmitting }
   } = useForm(formOptions)
 
@@ -310,15 +292,10 @@ function Deal({ data }: { data: any }) {
   const [avatar, setAvatar] = useState<any>({
     isLoading: false,
     error: '',
-    img: data?.image || ''
+    previews: data?.images || [],
+    images: data?.images || []
   })
 
-  // image
-  const handleImage = (e: any) => {
-    const imgBase = e.target.files[0]
-    const imgPreview = URL.createObjectURL(imgBase)
-    setAvatar({ ...avatar, img: imgPreview })
-  }
   return (
     <Flex id="deal" flexDir={'column'} mx="auto" w={['full', '30rem']}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -350,17 +327,7 @@ function Deal({ data }: { data: any }) {
           bg={inputColor}
           w={['full', '30rem']}
         />
-        <InputField
-          type="file"
-          accept="image/*"
-          name="image"
-          label="image"
-          placeholder="image"
-          onChange={handleImage}
-          w={['full', '30rem']}
-          px="0"
-          border="none"
-        />
+        <EditImage avatar={avatar} setAvatar={setAvatar} isMultiple={true} isPreview={true} />
         <Button
           isLoading={isSubmitting}
           type="submit"

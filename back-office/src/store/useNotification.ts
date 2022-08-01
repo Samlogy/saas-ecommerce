@@ -1,6 +1,8 @@
 import create, { SetState } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
+import img from '../assets/images/home.png'
+
 // Auth Store
 type INotification = {
   notifications: any
@@ -14,6 +16,7 @@ type INotification = {
 const testMsg = {
   id: 1,
   title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
+  img: img,
   text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem repudiandae omnis molestiae non sequi laborum vel excepturi explicabo, ipsum sunt doloribus laudantium eum aperiam molestias modi veniam unde, laboriosam ex!',
   createdAt: new Date().toUTCString(),
   editedAt: new Date().toUTCString()

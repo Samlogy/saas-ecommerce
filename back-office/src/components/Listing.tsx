@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text, Image, useColorModeValue } from '@chakra-ui/react'
 
 import { Layout, View } from 'components'
 
@@ -27,6 +27,14 @@ export default function Listing({ title, data }: IListing) {
               w={['17rem', '20rem', '30rem', '35rem']}
               bg={bgColor}
             >
+              <Image
+                src={item?.img}
+                alt="message-image"
+                borderRadius={'5px'}
+                w="5rem"
+                h="5rem"
+                mb=".5rem"
+              />
               <Text mb=".5rem" fontSize="1.3rem">
                 {item.title}{' '}
               </Text>

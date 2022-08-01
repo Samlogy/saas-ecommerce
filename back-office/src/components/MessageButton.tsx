@@ -21,15 +21,32 @@ export default function MessageButton() {
       <MenuButton as={IconButton} icon={messageIcon} bg="transparent"></MenuButton>
       <MenuList>
         {messages.length > 0 ? (
-          messages?.map((item: IMessage) => (
+          messages?.map((item: any) => (
             <MenuItem
               key={item.id}
               flexDir={'column'}
               justifyContent="space-between"
               onClick={() => handleClick(item)}
             >
-              <Text isTruncated> {item.title} </Text>
-              <Text isTruncated> {item.text} </Text>
+              <Text
+                textOverflow="ellipsis"
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textAlign="left"
+                fontWeight="600"
+                w="full"
+              >
+                {item.title}{' '}
+              </Text>
+              <Text
+                textOverflow="ellipsis"
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textAlign="left"
+                w="full"
+              >
+                {item.text}
+              </Text>
             </MenuItem>
           ))
         ) : (

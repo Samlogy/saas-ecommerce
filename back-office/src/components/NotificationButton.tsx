@@ -3,7 +3,7 @@ import { MdNotificationsActive, MdNotificationsNone } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 
 import { View } from 'components'
-import { useNotificationStore } from '../store'
+import { useNotificationStore } from 'store'
 
 export default function NotificationButton() {
   const notifications = useNotificationStore((state: any) => state.notifications)
@@ -24,7 +24,7 @@ export default function NotificationButton() {
   return (
     <Menu>
       <MenuButton as={IconButton} icon={messageIcon} bg="transparent"></MenuButton>
-      <MenuList>
+      <MenuList w="5rem">
         {notifications.length > 0 ? (
           notifications?.map((item: any) => (
             <MenuItem
@@ -33,8 +33,23 @@ export default function NotificationButton() {
               justifyContent="space-between"
               onClick={() => handleClick(item)}
             >
-              <Text textAlign="left"> {item.title} </Text>
-              <Text textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap" textAlign="left">
+              <Text
+                textOverflow="ellipsis"
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textAlign="left"
+                fontWeight="600"
+                w="full"
+              >
+                {item.title}{' '}
+              </Text>
+              <Text
+                textOverflow="ellipsis"
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textAlign="left"
+                w="full"
+              >
                 {item.text}
               </Text>
             </MenuItem>

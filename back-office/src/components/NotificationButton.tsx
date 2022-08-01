@@ -24,7 +24,7 @@ export default function NotificationButton() {
   return (
     <Menu>
       <MenuButton as={IconButton} icon={messageIcon} bg="transparent"></MenuButton>
-      <MenuList w="5rem">
+      <MenuList w={['5rem', '', '25rem']}>
         {notifications.length > 0 ? (
           notifications?.map((item: any) => (
             <MenuItem

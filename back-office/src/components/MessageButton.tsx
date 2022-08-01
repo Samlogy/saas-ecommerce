@@ -19,7 +19,7 @@ export default function MessageButton() {
   return (
     <Menu>
       <MenuButton as={IconButton} icon={messageIcon} bg="transparent"></MenuButton>
-      <MenuList>
+      <MenuList w={['5rem', '', '25rem']}>
         {messages.length > 0 ? (
           messages?.map((item: any) => (
             <MenuItem

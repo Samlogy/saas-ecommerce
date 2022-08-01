@@ -4,7 +4,8 @@ import { InputField } from 'components'
 interface IEditImage {
   isMultiple?: boolean
   isPreview?: boolean
-  data: any
+  avatar: IAvatar
+  setAvatar: any
 }
 interface IAvatar {
   isLoading: boolean
@@ -12,13 +13,12 @@ interface IAvatar {
   previews: string[]
   images: any
 }
-export default function EditImage({ isMultiple = false, isPreview = false, data }: IEditImage) {
-  const [avatar, setAvatar] = useState<IAvatar>({
-    isLoading: false,
-    error: '',
-    previews: data?.images || [],
-    images: data?.images || []
-  })
+export default function EditImage({
+  isMultiple = false,
+  isPreview = false,
+  avatar,
+  setAvatar
+}: IEditImage) {
   console.log(avatar)
   // image
   const handleImage = (e: any) => {

@@ -68,18 +68,25 @@ export default function Analytics() {
         <Flex flexWrap="wrap" justify={['center', '', 'space-between']}>
           <View cond={show.line}>
             <CustomChart
-              type={'line'}
+              chartType="line"
+              filterType="line"
               options={stackedOptions.options}
               series={stackedOptions.series}
             />
           </View>
           <View cond={show.pie}>
-            <CustomChart type={'pie'} options={pieOptions.options} series={pieOptions.series} />
+            <CustomChart
+              chartType="pie"
+              filterType="pie"
+              options={pieOptions.options}
+              series={pieOptions.series}
+            />
           </View>
 
           <View cond={show.line}>
             <CustomChart
-              type={'bar'}
+              chartType="bar"
+              filterType="line"
               options={stackedOptions.options}
               series={stackedOptions.series}
             />

@@ -1,18 +1,20 @@
 import { Box, Flex, useColorModeValue } from '@chakra-ui/react'
-import { isEmpty, loadFilters, ObjLoop } from 'lib/utils/functions'
+import { loadFilters } from 'lib/utils/functions'
 import { useState } from 'react'
 import Chart from 'react-apexcharts'
 
 interface ICustomChart {
-  type: any
+  chartType: any
+  filterType: string
   options: any
   series: any
 }
 
-export default function CustomChart({ type, options, series }: ICustomChart) {
+export default function CustomChart({ chartType, filterType, options, series }: ICustomChart) {
   const bgColor = useColorModeValue('white', 'gray_2')
 
-  const [filters, setFilters] = useState(loadFilters())
+  const data = loadFilters()
+  const [filters, setFilters] = useState(data)
 
   return (
     <Flex
@@ -26,15 +28,20 @@ export default function CustomChart({ type, options, series }: ICustomChart) {
       w={'25rem'}
       bg={bgColor}
     >
-      {/* <Filter type={type === 'bar' ? 'stacked' : type} filters={filters} setFilters={setFilters} /> */}
-
-      <Box mb="1rem" ml="auto" color={'gray.400'}>
-        Filters:
-        <Box as="span" fontStyle="oblique" textTransform="capitalize" ml=".25rem">
-          {filters && isEmpty(filters) ? ObjLoop(filters) : '----'}
-        </Box>
+      <Box
+        fontStyle="oblique"
+        textTransform="capitalize"
+        ml=".25rem"
+        textAlign="left"
+        mb="1rem"
+        color={'gray_4'}
+      >
+        Filters:{' '}
+        {Object.values(data[filterType]).length > 0
+          ? Object.values(data[filterType]).map(el => el)
+          : '----'}
       </Box>
-      <Chart type={type} options={options} series={series} height={400} />
+      <Chart type={chartType} options={options} series={series} height={400} />
     </Flex>
   )
 }

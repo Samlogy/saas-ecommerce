@@ -37,6 +37,7 @@ import {
   serviceFormSchema
 } from 'lib/validation'
 import { useHomeStore } from 'store'
+import { isEmpty } from 'lib/utils/functions'
 import img from '../assets/images/home.png'
 
 // load about data from db
@@ -90,13 +91,14 @@ const homeData = {
   about: {
     title: 'about ...',
     description: 'lorem stuff and something ....',
-    image: img
+    dueDate: '2022-07-12T22:18',
+    image: [img]
   },
   deal: {
     title: 'about ...',
     description: 'lorem stuff and something ....',
     dueDate: '2022-07-12T22:18',
-    image: img
+    image: [img]
   }
 }
 const miniMapData = [
@@ -118,7 +120,6 @@ const miniMapData = [
   }
 ]
 
-// add: components --> delete - edit/add - disable (same as product logic)
 export default function Home() {
   const actions = useHomeStore((state: any) => state.actions)
   const setAction = useHomeStore((state: any) => state.setAction)
@@ -207,9 +208,10 @@ export default function Home() {
 }
 
 function About({ data }: { data: any }) {
+  const isEditing = !isEmpty(data)
   const formOptions = {
     resolver: yupResolver(aboutFormSchema),
-    defaultValues: data ? data : {}
+    defaultValues: isEditing ? data : {}
   }
   const {
     register,
@@ -219,7 +221,7 @@ function About({ data }: { data: any }) {
 
   function onSubmit(about: any) {
     console.log(about)
-    return !data ? create(data) : update(data.id, about)
+    isEditing ? create(data) : update(data.id, about)
   }
 
   function create(about: any) {
@@ -232,10 +234,14 @@ function About({ data }: { data: any }) {
 
   const inputColor = useColorModeValue('white', 'gray_3')
 
+  function convertImgToPreview(data: any) {
+    return data.map((el: any) => URL.createObjectURL(el))
+  }
+
   const [avatar, setAvatar] = useState<IAvatar>({
     isLoading: false,
     error: '',
-    previews: data?.images || [],
+    previews: data.images ? convertImgToPreview(data?.images) : [],
     images: data?.images || []
   })
 
@@ -280,7 +286,7 @@ function About({ data }: { data: any }) {
           ml="auto"
           _hover={{ bg: 'accent_2' }}
         >
-          {data ? 'Edit' : 'Create'}
+          {isEditing ? 'Edit' : 'Add'}
         </Button>
       </form>
     </Flex>
@@ -288,6 +294,7 @@ function About({ data }: { data: any }) {
 }
 
 function Deal({ data }: { data: any }) {
+  const isEditing = !isEmpty(data)
   const formOptions = {
     resolver: yupResolver(dealFormSchema),
     defaultValues: data ? data : {}
@@ -300,7 +307,7 @@ function Deal({ data }: { data: any }) {
 
   function onSubmit(deal: any) {
     console.log(deal)
-    !data ? create(data) : update(data.id, deal)
+    isEditing ? update(data.id, deal) : create(data)
   }
 
   function create(deal: any) {
@@ -371,7 +378,7 @@ function Deal({ data }: { data: any }) {
           ml="auto"
           _hover={{ bg: 'accent_2' }}
         >
-          {!data ? 'Create' : 'Edit'}
+          {isEditing ? 'Edit' : 'Add'}
         </Button>
       </form>
     </Flex>

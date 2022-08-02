@@ -30,10 +30,10 @@ export const ObjLoop: any = (obj: any): string => {
 }
 
 export const isEmpty = (data: any): boolean => {
-  if (Array.isArray(data) && data.length === 0) return false
-  if (typeof data === 'object' && Object.entries(data).length === 0) return false
-  if (!data) return false
-  return true
+  if (Array.isArray(data) && data.length === 0) return true
+  if (Object.entries(data).length === 0) return true
+  if (!data) return true
+  return false
 }
 
 export function loadFilters() {

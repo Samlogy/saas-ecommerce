@@ -14,7 +14,7 @@ export default function Listing({ title, data }: IListing) {
       <Heading
         fontSize="1.5rem"
         textTransform={'uppercase'}
-        w={['100%', '90%', '80%', '70%']}
+        w={['100%', '90%', '80%']}
         m="0 auto 1.5rem auto"
       >
         {title}
@@ -28,7 +28,7 @@ export default function Listing({ title, data }: IListing) {
               boxShadow="md"
               borderRadius={'10px'}
               p=".75rem 1rem"
-              w={['100%', '90%', '80%', '70%']}
+              w={['100%', '90%', '80%']}
               m="0 auto 1.5rem auto"
               bg={bgColor}
             >

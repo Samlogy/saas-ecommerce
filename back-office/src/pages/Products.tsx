@@ -141,7 +141,8 @@ export default function Products() {
           <Box mb=".75rem">
             <IconButton
               aria-label="trigger-filter"
-              icon={<BsFilterLeft size={18} />}
+              bg={itemBgColor}
+              icon={<BsFilterLeft size={22} />}
               ref={btnRef}
               onClick={() => setIsVisible(true)}
             />

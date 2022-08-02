@@ -76,6 +76,7 @@ export default function ProductsFilter({
         bg={itemBgColor}
         w="calc(15rem + 2rem)"
         borderRadius="10px"
+        mb="1rem"
       />
 
       <CustomAccordion
@@ -150,7 +151,7 @@ function RateSlider({ filters, setFilters, data }: ISingleFilter) {
     </>
   )
 }
-function DiscountSlider({ filters, setFilters, data }: ISingleFilter) {
+function DiscountSlider({ filters, setFilters }: ISingleFilter) {
   const [showTooltip, setShowTooltip] = useState(false)
 
   function round(value: number, type: string): number {
@@ -198,9 +199,8 @@ function CategoriesFilter({ filters, setFilters, data }: ISingleFilter) {
   return (
     <>
       <MultiSelect
-        label="Categories"
+        name="Categories"
         options={data}
-        name="categories"
         selectedOptions={filters.categories}
         setSelectedOptions={(value: any) => setFilters({ ...filters, categories: value })}
       />
@@ -208,7 +208,7 @@ function CategoriesFilter({ filters, setFilters, data }: ISingleFilter) {
   )
 }
 function ConditionFilter({ filters, setFilters, data }: ISingleFilter) {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+  const itemBgColor = useColorModeValue('gray_8', 'gray_3')
   return (
     <>
       <Select
@@ -229,7 +229,7 @@ function ConditionFilter({ filters, setFilters, data }: ISingleFilter) {
   )
 }
 function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+  const itemBgColor = useColorModeValue('gray_8', 'gray_3')
   return (
     <Flex flexDir={'column'} align="center" justify={'center'}>
       from:

@@ -61,11 +61,13 @@ export default function NotificationButton() {
         )}
 
         <View cond={notifications.length > 0}>
-          <MenuItem justifyContent={'center'}>
-            <Box color="accent_4">
-              <Link to="/notifications"> View All </Link>
-            </Box>
-          </MenuItem>
+          <Link to="/notifications">
+            <MenuItem justifyContent={'center'}>
+              <Box color="accent_4" textAlign="center" w="full">
+                View All
+              </Box>
+            </MenuItem>
+          </Link>
         </View>
       </MenuList>
     </Menu>

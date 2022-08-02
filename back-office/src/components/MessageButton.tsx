@@ -56,11 +56,13 @@ export default function MessageButton() {
         )}
 
         <View cond={messages.length > 0}>
-          <MenuItem justifyContent={'center'}>
-            <Box color="accent_4">
-              <Link to="/messages"> View All </Link>
-            </Box>
-          </MenuItem>
+          <Link to="/messages">
+            <MenuItem justifyContent={'center'}>
+              <Box color="accent_4" textAlign="center" w="full">
+                View All
+              </Box>
+            </MenuItem>
+          </Link>
         </View>
       </MenuList>
     </Menu>

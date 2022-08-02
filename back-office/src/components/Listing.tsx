@@ -7,11 +7,16 @@ interface IListing {
   data: any
 }
 export default function Listing({ title, data }: IListing) {
-  const bgColor = useColorModeValue('white', 'gray_2')
-  const textColor = useColorModeValue('gray_2', 'gray_6')
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
+  const textColor = useColorModeValue('gray_3', 'gray_7')
   return (
     <Layout isHeaderVisible>
-      <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full" mb="2rem">
+      <Heading
+        fontSize="1.5rem"
+        textTransform={'uppercase'}
+        w={['100%', '90%', '80%', '70%']}
+        m="0 auto 1.5rem auto"
+      >
         {title}
       </Heading>
 
@@ -21,10 +26,10 @@ export default function Listing({ title, data }: IListing) {
             <Box
               key={item.id}
               boxShadow="md"
-              mb="1.5rem"
               borderRadius={'10px'}
               p=".75rem 1rem"
-              w={['17rem', '20rem', '30rem', '35rem']}
+              w={['100%', '90%', '80%', '70%']}
+              m="0 auto 1.5rem auto"
               bg={bgColor}
             >
               <Image

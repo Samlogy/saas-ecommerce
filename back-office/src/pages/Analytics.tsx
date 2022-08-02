@@ -3,7 +3,6 @@ import { useState } from 'react'
 
 import { CustomChart, Layout, TotalRevenue, View, Widget } from 'components'
 import { useChart } from 'lib/hooks'
-import { isEmpty, loadFilters } from 'lib/utils/functions'
 
 const widgetsData = [
   {
@@ -36,8 +35,8 @@ export default function Analytics() {
 
   // show chart if visible or not
   const [show, setShow] = useState({
-    line: isEmpty(stackedOptions.options) && isEmpty(stackedOptions.series),
-    pie: isEmpty(pieOptions.options) && isEmpty(pieOptions.series)
+    line: stackedOptions.options ? stackedOptions.options : {},
+    pie: pieOptions.options ? pieOptions.options : {}
   })
 
   return (

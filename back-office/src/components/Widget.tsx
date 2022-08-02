@@ -11,7 +11,8 @@ interface IWidget {
 }
 
 export default function Widget({ data }: IWidget) {
-  const bgColor = useColorModeValue('white', 'gray_2')
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
+  const textColor = useColorModeValue('gray_3', 'gray_7')
   return (
     <Flex
       key={data.name}
@@ -28,7 +29,7 @@ export default function Widget({ data }: IWidget) {
     >
       <Flex flexDir="column">
         <Text> {data.name} </Text>
-        <Text color={'gray_5'} fontSize=".85rem">
+        <Text color={textColor} fontSize=".85rem">
           {data.description}{' '}
         </Text>
         <Text fontSize="1.5rem" fontWeight="600">
@@ -37,7 +38,7 @@ export default function Widget({ data }: IWidget) {
       </Flex>
 
       <CircularProgress value={data?.percent} color="accent_5" size="5rem" thickness="10px">
-        <CircularProgressLabel color={'gray_5'} fontSize=".9rem">
+        <CircularProgressLabel color={textColor} fontSize=".9rem">
           {data?.percent}%{' '}
         </CircularProgressLabel>
       </CircularProgress>

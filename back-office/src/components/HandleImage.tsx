@@ -1,10 +1,60 @@
-import { Flex, Image } from '@chakra-ui/react'
+import React from 'react'
+import { Flex, Image, FormControl, FormLabel } from '@chakra-ui/react'
 import { InputField } from 'components'
+
+interface IHandleImage {
+  isMultiple?: boolean
+  isPreview?: boolean
+  avatar?: any
+  setAvatar?: any
+  label?: string
+  isEdit?: boolean
+}
+
+export default function HandleImage(props: IHandleImage) {
+  const { isMultiple, isPreview, avatar, setAvatar, label = '', isEdit } = props
+  if (isEdit) {
+    return (
+      <EditImage
+        label={label}
+        avatar={avatar}
+        setAvatar={setAvatar}
+        isMultiple={isMultiple}
+        isPreview={isPreview}
+      />
+    )
+  }
+  return <DisplayImage data={avatar?.previews} />
+}
+
+interface IDisplayImage {
+  data: any
+}
+function DisplayImage({ data }: IDisplayImage) {
+  return (
+    <Flex justify="flex-start" align="center">
+      {data &&
+        data.map((img: string, idx: number) => (
+          <Image
+            key={idx}
+            boxSize="70px"
+            objectFit="cover"
+            src={img}
+            fallbackSrc="https://via.placeholder.com/100"
+            alt="Image"
+            m="0 .25rem .5rem 0"
+            borderRadius="5px"
+          />
+        ))}
+    </Flex>
+  )
+}
 
 interface IEditImage {
   isMultiple?: boolean
   isPreview?: boolean
   avatar: IAvatar
+  label?: string
   setAvatar: any
 }
 interface IAvatar {
@@ -13,9 +63,10 @@ interface IAvatar {
   previews: string[]
   images: any
 }
-export default function EditImage({
+function EditImage({
   isMultiple = false,
   isPreview = false,
+  label = '',
   avatar,
   setAvatar
 }: IEditImage) {
@@ -49,35 +100,12 @@ export default function EditImage({
       multiple={isMultiple}
       accept="image/*"
       name="image"
-      label="image"
+      label={label}
       placeholder="image"
       onChange={handleImage}
-      w={['full', '30rem']}
+      w="full"
       px="0"
       border="none"
     />
-  )
-}
-
-interface IDisplayImage {
-  data: any
-}
-function DisplayImage({ data }: IDisplayImage) {
-  return (
-    <Flex justify="flex-start" align="center">
-      {data &&
-        data.map((img: string, idx: number) => (
-          <Image
-            key={idx}
-            boxSize="70px"
-            objectFit="cover"
-            src={img}
-            fallbackSrc="https://via.placeholder.com/100"
-            alt="Image"
-            m="0 .25rem .5rem 0"
-            borderRadius="5px"
-          />
-        ))}
-    </Flex>
   )
 }

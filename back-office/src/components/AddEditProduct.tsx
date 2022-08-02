@@ -1,21 +1,19 @@
-import { Box, Button, Flex, Image, useColorModeValue } from '@chakra-ui/react'
+import { Button, Flex, useColorModeValue } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { CustomModal, ErrorMessage, InputField, MultiSelect, TextField } from 'components'
+import { CustomModal, EditImage, InputField, MultiSelect, TextField } from 'components'
 import { useProductStore } from 'store'
 import { addProductSchema } from '../lib/validation'
+import HandleImage from './HandleImage'
 
 interface IAddEditProduct {
   isOpen: boolean
   onClose: () => void
   mode: string
 }
-interface IEditImage {
-  setAvatar: any
-  avatar: IAvatar
-}
+
 interface IAvatar {
   isLoading: boolean
   error: string
@@ -65,8 +63,17 @@ export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduc
 
   const Form = (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <EditImages setAvatar={setAvatar} avatar={avatar} />
-
+      <Flex flexDir="column-reverse">
+        <HandleImage
+          isEdit
+          avatar={avatar}
+          setAvatar={setAvatar}
+          isMultiple={true}
+          isPreview={true}
+          label="Images"
+        />
+        <HandleImage avatar={avatar} setAvatar={setAvatar} isMultiple={true} isPreview={true} />
+      </Flex>
       <InputField
         errors={errors}
         register={register}
@@ -166,49 +173,5 @@ export default function AddEditProduct({ isOpen, onClose, mode }: IAddEditProduc
       onClose={onClose}
       body={Form}
     />
-  )
-}
-
-const EditImages = ({ avatar, setAvatar }: IEditImage) => {
-  const handleImage = (e: any) => {
-    let baseImages = e.target.files
-    baseImages = [...baseImages]
-    const imgPreview = baseImages.map((el: any) => URL.createObjectURL(el))
-    setAvatar({ ...avatar, previews: imgPreview, images: baseImages })
-  }
-  return (
-    <>
-      <Box pos="relative" w="fit-content">
-        <Flex justify="flex-start" align="center">
-          {avatar?.previews &&
-            avatar?.previews.map((img: string, idx: number) => (
-              <Image
-                key={idx}
-                boxSize="70px"
-                objectFit="cover"
-                src={img}
-                fallbackSrc="https://via.placeholder.com/100"
-                alt="Image"
-                m="0 .25rem .5rem 0"
-                borderRadius="5px"
-              />
-            ))}
-        </Flex>
-
-        <InputField
-          type="file"
-          multiple
-          accept="image/*"
-          name="images"
-          label="images"
-          placeholder="images"
-          onChange={handleImage}
-          w="full"
-          px="0"
-          border="none"
-        />
-      </Box>
-      <Flex mb=".5rem"> {avatar.error && <ErrorMessage error={avatar.error} />} </Flex>
-    </>
   )
 }

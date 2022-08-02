@@ -39,6 +39,8 @@ export { default as TotalRevenue } from './TotalRevenue'
 export { default as CustomChart } from './CustomChart'
 export { default as MiniMap } from './MiniMap'
 
+// Home
+
 // other
 export { default as CustomTable } from './CustomTable'
 export { default as CustomDrawer } from './CustomDrawer'
@@ -46,3 +48,4 @@ export { default as CustomModal } from './CustomModal'
 export { default as DisplayRowData } from './DisplayRowData'
 export { default as CustomAccordion } from './CustomAccordion'
 export { default as EditImage } from './EditImage'
+export { default as HandleImage } from './HandleImage'

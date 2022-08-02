@@ -5,7 +5,6 @@ import {
   Heading,
   IconButton,
   Image,
-  Link as ChakraLink,
   Menu,
   MenuButton,
   MenuItem,
@@ -20,6 +19,7 @@ import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai'
 import { FaEllipsisV } from 'react-icons/fa'
 import { FiEdit, FiTrash } from 'react-icons/fi'
 
+import { IAvatar } from 'lib/interfaces'
 import {
   CustomAccordion,
   CustomModal,
@@ -27,8 +27,8 @@ import {
   Layout,
   TextField,
   View,
-  EditImage,
-  MiniMap
+  MiniMap,
+  HandleImage
 } from 'components'
 import {
   aboutFormSchema,
@@ -159,19 +159,33 @@ export default function Home() {
         />
       </View>
 
-      <View cond={actions.delete}>
+      <View cond={actions.delete && actions.type === 'service'}>
         <ActionBox
           mode="delete"
           isOpen={actions.delete}
-          onClose={() => setAction({ ...actions, delete: false })}
+          onClose={() => setAction({ ...actions, delete: false, type: '' })}
+        />
+      </View>
+      <View cond={actions.delete && actions.type === 'qa'}>
+        <ActionBox
+          mode="delete"
+          isOpen={actions.delete}
+          onClose={() => setAction({ ...actions, delete: false, type: '' })}
         />
       </View>
 
-      <View cond={actions.disable}>
+      <View cond={actions.disable && actions.type === 'qa'}>
         <ActionBox
           mode="disable"
           isOpen={actions.disable}
-          onClose={() => setAction({ ...actions, disable: false })}
+          onClose={() => setAction({ ...actions, disable: false, type: '' })}
+        />
+      </View>
+      <View cond={actions.disable && actions.type === 'service'}>
+        <ActionBox
+          mode="disable"
+          isOpen={actions.disable}
+          onClose={() => setAction({ ...actions, disable: false, type: '' })}
         />
       </View>
 
@@ -218,7 +232,7 @@ function About({ data }: { data: any }) {
 
   const inputColor = useColorModeValue('white', 'gray_3')
 
-  const [avatar, setAvatar] = useState<any>({
+  const [avatar, setAvatar] = useState<IAvatar>({
     isLoading: false,
     error: '',
     previews: data?.images || [],
@@ -246,7 +260,17 @@ function About({ data }: { data: any }) {
           bg={inputColor}
           w={['full', '30rem']}
         />
-        <EditImage avatar={avatar} setAvatar={setAvatar} isMultiple={true} isPreview={true} />
+        <Flex flexDir="column-reverse">
+          <HandleImage
+            isEdit
+            avatar={avatar}
+            setAvatar={setAvatar}
+            isMultiple={true}
+            isPreview={true}
+            label="Images"
+          />
+          <HandleImage avatar={avatar} setAvatar={setAvatar} isMultiple={true} isPreview={true} />
+        </Flex>
         <Button
           type="submit"
           isLoading={isSubmitting}
@@ -289,7 +313,7 @@ function Deal({ data }: { data: any }) {
 
   const inputColor = useColorModeValue('white', 'gray_3')
 
-  const [avatar, setAvatar] = useState<any>({
+  const [avatar, setAvatar] = useState<IAvatar>({
     isLoading: false,
     error: '',
     previews: data?.images || [],
@@ -327,7 +351,17 @@ function Deal({ data }: { data: any }) {
           bg={inputColor}
           w={['full', '30rem']}
         />
-        <EditImage avatar={avatar} setAvatar={setAvatar} isMultiple={true} isPreview={true} />
+        <Flex flexDir="column-reverse">
+          <HandleImage
+            isEdit
+            avatar={avatar}
+            setAvatar={setAvatar}
+            isMultiple={true}
+            isPreview={true}
+            label="Images"
+          />
+          <HandleImage avatar={avatar} setAvatar={setAvatar} isMultiple={true} isPreview={true} />
+        </Flex>
         <Button
           isLoading={isSubmitting}
           type="submit"
@@ -457,8 +491,12 @@ interface IActionBox {
 function ActionBox({ isOpen, onClose, mode }: IActionBox) {
   const singleData = useHomeStore((state: any) => state.singleData)
   const setAction = useHomeStore((state: any) => state.setAction)
+  const actions = useHomeStore((state: any) => state.actions)
 
-  const body = mode === 'delete' ? 'Delete Product ?' : 'Disable Product ?'
+  const body =
+    mode === 'delete'
+      ? `Delete ${actions.type === 'qa' ? 'Q&A' : actions.type} ?`
+      : `Disable ${actions.type === 'qa' ? 'Q&A' : actions.type} ?`
   const footer = (
     <>
       <Button
@@ -521,31 +559,26 @@ function AddEditService({ mode, isOpen, onClose }: IAddEditForm) {
   const title = mode === 'add' ? 'Add Service' : 'Edit Service'
 
   const inputColor = useColorModeValue('gray_9', 'gray_3')
-  const [avatar, setAvatar] = useState<any>({
+  const [avatar, setAvatar] = useState<IAvatar>({
     isLoading: false,
     error: '',
-    img: ''
+    images: [],
+    previews: []
   })
 
-  // image
-  const handleImage = (e: any) => {
-    const imgBase = e.target.files[0]
-    const imgPreview = URL.createObjectURL(imgBase)
-    setAvatar({ ...avatar, img: imgPreview })
-  }
   const Form = (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <InputField
-        type="file"
-        accept="image/*"
-        name="images"
-        label="image"
-        placeholder="image"
-        onChange={handleImage}
-        w={['full', '30rem']}
-        px="0"
-        border="none"
-      />
+      <Flex flexDir="column-reverse">
+        <HandleImage
+          isEdit
+          avatar={avatar}
+          setAvatar={setAvatar}
+          isMultiple={true}
+          isPreview={true}
+          label="Images"
+        />
+        <HandleImage avatar={avatar} setAvatar={setAvatar} isMultiple={true} isPreview={true} />
+      </Flex>
       <InputField
         errors={errors}
         register={register}
@@ -698,11 +731,11 @@ function ActionsMenu({ type, data, setAction }: IActionMenu) {
     setSingleData(data)
   }
   const onDelete = (id: number) => {
-    setAction({ delete: true })
+    setAction({ delete: true, type: type })
     setSingleData(id)
   }
   const onDisable = (id: number) => {
-    setAction({ disable: true })
+    setAction({ disable: true, type: type })
     setSingleData(id)
   }
 

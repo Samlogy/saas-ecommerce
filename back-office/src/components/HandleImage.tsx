@@ -1,5 +1,4 @@
-import React from 'react'
-import { Flex, Image, FormControl, FormLabel } from '@chakra-ui/react'
+import { Flex, Image } from '@chakra-ui/react'
 import { InputField } from 'components'
 
 interface IHandleImage {
@@ -10,7 +9,22 @@ interface IHandleImage {
   label?: string
   isEdit?: boolean
 }
-
+interface IDisplayImage {
+  data: any
+}
+interface IEditImage {
+  isMultiple?: boolean
+  isPreview?: boolean
+  avatar: IAvatar
+  label?: string
+  setAvatar: any
+}
+interface IAvatar {
+  isLoading: boolean
+  error: string
+  previews: string[]
+  images: any
+}
 export default function HandleImage(props: IHandleImage) {
   const { isMultiple, isPreview, avatar, setAvatar, label = '', isEdit } = props
   if (isEdit) {
@@ -27,9 +41,6 @@ export default function HandleImage(props: IHandleImage) {
   return <DisplayImage data={avatar?.previews} />
 }
 
-interface IDisplayImage {
-  data: any
-}
 function DisplayImage({ data }: IDisplayImage) {
   return (
     <Flex justify="flex-start" align="center">
@@ -50,19 +61,6 @@ function DisplayImage({ data }: IDisplayImage) {
   )
 }
 
-interface IEditImage {
-  isMultiple?: boolean
-  isPreview?: boolean
-  avatar: IAvatar
-  label?: string
-  setAvatar: any
-}
-interface IAvatar {
-  isLoading: boolean
-  error: string
-  previews: string[]
-  images: any
-}
 function EditImage({
   isMultiple = false,
   isPreview = false,

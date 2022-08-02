@@ -75,3 +75,10 @@ export interface IDeal {
   createdAt: Date
   editedAt: Date | null
 }
+
+export interface IAvatar {
+  isLoading: boolean
+  error: string
+  previews: string[]
+  images: string[]
+}

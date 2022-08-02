@@ -3,22 +3,15 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { CustomModal, EditImage, InputField, MultiSelect, TextField } from 'components'
+import { CustomModal, InputField, MultiSelect, TextField, HandleImage } from 'components'
+import { addProductSchema } from 'lib/validation'
 import { useProductStore } from 'store'
-import { addProductSchema } from '../lib/validation'
-import HandleImage from './HandleImage'
+import { IAvatar } from 'lib/interfaces'
 
 interface IAddEditProduct {
   isOpen: boolean
   onClose: () => void
   mode: string
-}
-
-interface IAvatar {
-  isLoading: boolean
-  error: string
-  previews: string[]
-  images: string[]
 }
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']

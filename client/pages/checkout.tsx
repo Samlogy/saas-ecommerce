@@ -61,6 +61,13 @@ export default function Checkout() {
         <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'} mr="auto" w="full">
           Checkout
         </Heading>
+        <StepForm
+          steps={steps}
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          trigger={trigger}
+          isSubmitting={isSubmitting}
+        />
       </Flex>
     </Layout>
   )

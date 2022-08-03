@@ -44,3 +44,13 @@ export const profileSchema = yup.object().shape({
 export const commentSchema = yup.object().shape({
   comment: yup.string().required('Enter your comment please')
 })
+
+export const checkoutchema = yup.object().shape({
+  fullName: yup.string().required('Full Name required'),
+  address: yup.string().required('Address required'),
+  city: yup.string().required('City required'),
+  postaleCode: yup.string().required('Postale Code required'),
+  country: yup.string().required('Country required'),
+  paymentMethod: yup.string().required('Payment Method required')
+  // payment form
+})

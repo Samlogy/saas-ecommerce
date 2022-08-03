@@ -68,7 +68,7 @@ export default function NavBar() {
 
   const quantityTotal = useShoppingCartStore((state: any) => state.quantityTotal)
 
-  const bgColor = useColorModeValue('white', 'gray_3')
+  const bgColor = useColorModeValue('white', 'gray_2')
 
   return (
     <Box bg={bgColor} px={4} pos="fixed" w="full" boxShadow={'md'} zIndex="100">

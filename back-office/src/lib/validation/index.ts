@@ -30,14 +30,12 @@ export const dealFormSchema = yup.object().shape({
     .date()
     .nullable()
     .transform((curr, orig) => (orig === '' ? null : curr))
-    .required('Due Date is required'),
-  image: yup.string().required('image required')
+    .required('Due Date is required')
 })
 
 export const aboutFormSchema = yup.object().shape({
   title: yup.string().required('tile required'),
-  description: yup.string().required('Description required'),
-  image: yup.string().required('image required')
+  description: yup.string().required('Description required')
 })
 
 export const serviceFormSchema = yup.object().shape({

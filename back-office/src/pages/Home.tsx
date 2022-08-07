@@ -28,7 +28,8 @@ import {
   TextField,
   View,
   MiniMap,
-  HandleImage
+  HandleImage,
+  FeedBack
 } from 'components'
 import {
   aboutFormSchema,
@@ -94,12 +95,7 @@ const homeData = {
     dueDate: '2022-07-12T22:18',
     image: [img]
   },
-  deal: {
-    title: 'about ...',
-    description: 'lorem stuff and something ....',
-    dueDate: '2022-07-12T22:18',
-    image: [img]
-  }
+  deal: {}
 }
 const miniMapData = [
   {
@@ -123,7 +119,6 @@ const miniMapData = [
 export default function Home() {
   const actions = useHomeStore((state: any) => state.actions)
   const setAction = useHomeStore((state: any) => state.setAction)
-
   return (
     <Layout isHeaderVisible>
       <Heading fontSize="1.5rem" textTransform={'uppercase'} mr="auto" w="full" mb="2rem">
@@ -221,32 +216,32 @@ function About({ data }: { data: any }) {
 
   function onSubmit(about: any) {
     console.log(about)
-    isEditing ? create(data) : update(data.id, about)
+    isEditing ? create(about) : update(data.id, about)
   }
 
   function create(about: any) {
     console.log('create: ', about)
+    setOpen(true)
   }
 
   function update(id: number, about: any) {
     console.log('update: ', id, about)
+    setOpen(true)
   }
 
   const inputColor = useColorModeValue('white', 'gray_3')
 
-  function convertImgToPreview(data: any) {
-    return data.map((el: any) => URL.createObjectURL(el))
-  }
-
   const [avatar, setAvatar] = useState<IAvatar>({
     isLoading: false,
     error: '',
-    previews: data.images ? convertImgToPreview(data?.images) : [],
+    previews: data.images ? data?.images : [],
     images: data?.images || []
   })
+  const [isOpen, setOpen] = useState(true)
 
   return (
     <Flex id="#about" flexDir={'column'} mx="auto" w={['full', '30rem']}>
+      <FeedBack isOpen={isOpen} status="success" onClose={() => setOpen(false)} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputField
           errors={errors}
@@ -307,15 +302,17 @@ function Deal({ data }: { data: any }) {
 
   function onSubmit(deal: any) {
     console.log(deal)
-    isEditing ? update(data.id, deal) : create(data)
+    isEditing ? update(data.id, deal) : create(deal)
   }
 
   function create(deal: any) {
     console.log('create: ', deal)
+    setOpen(true)
   }
 
   function update(id: number, deal: any) {
     console.log('update: ', id, deal)
+    setOpen(true)
   }
 
   const inputColor = useColorModeValue('white', 'gray_3')
@@ -326,9 +323,12 @@ function Deal({ data }: { data: any }) {
     previews: data?.images || [],
     images: data?.images || []
   })
+  const [isOpen, setOpen] = useState(true)
 
   return (
     <Flex id="deal" flexDir={'column'} mx="auto" w={['full', '30rem']}>
+      <FeedBack isOpen={isOpen} status="success" onClose={() => setOpen(false)} />
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputField
           errors={errors}
@@ -363,11 +363,10 @@ function Deal({ data }: { data: any }) {
             isEdit
             avatar={avatar}
             setAvatar={setAvatar}
-            isMultiple={true}
             isPreview={true}
             label="Images"
           />
-          <HandleImage avatar={avatar} setAvatar={setAvatar} isMultiple={true} isPreview={true} />
+          <HandleImage avatar={avatar} setAvatar={setAvatar} isPreview={true} />
         </Flex>
         <Button
           isLoading={isSubmitting}

@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-import { Flex, useToast } from '@chakra-ui/react'
-import { CustomModal } from './'
-import { AiFillCheckCircle, AiFillWarning, AiFillInfoCircle } from 'react-icons/ai'
+import { Flex } from '@chakra-ui/react'
+import { AiFillCheckCircle, AiFillInfoCircle, AiFillWarning } from 'react-icons/ai'
 import { MdError } from 'react-icons/md'
+import { CustomModal } from './'
 
 interface IFeedBack {
   status: any

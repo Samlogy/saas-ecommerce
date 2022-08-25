@@ -202,7 +202,9 @@ export default function Products() {
         </View>
 
         <View cond={products?.length === 0}>
-          <Text> There is no product with thoes filters </Text>
+          <Text p="2rem 1rem" borderRadius="5px" bg={itemBgColor}>
+            There is no product with thoes filters{' '}
+          </Text>
         </View>
       </Flex>
 

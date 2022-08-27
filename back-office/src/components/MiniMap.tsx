@@ -11,23 +11,17 @@ import {
 } from '@chakra-ui/react'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { View } from 'components'
-
-import img from '../assets/images/home.png'
+import { useWindowDimensions } from 'lib/hooks'
 
 export default function MiniMap({ data }: { data: any }) {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   const textColor = useColorModeValue('gray_3', 'gray_9')
 
-  const isVisible =
-    useBreakpointValue({
-      base: true,
-      md: false
-    }) || true
+  const { width } = useWindowDimensions()
 
-  console.log(isVisible)
   return (
     <>
-      <View cond={isVisible}>
+      <View cond={width < 780}>
         <Menu>
           <MenuButton
             as={Button}
@@ -35,6 +29,9 @@ export default function MiniMap({ data }: { data: any }) {
             bg={bgColor}
             color={textColor}
             _hover={{ bg: bgColor }}
+            pos="fixed"
+            bottom="7%"
+            right="2%"
           >
             Menu
           </MenuButton>
@@ -52,8 +49,7 @@ export default function MiniMap({ data }: { data: any }) {
           </MenuList>
         </Menu>
       </View>
-
-      <View cond={isVisible}>
+      <View cond={width >= 780}>
         <Flex
           flexDir={'column'}
           w="12rem"

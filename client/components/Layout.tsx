@@ -35,6 +35,7 @@ export default function Layout({
           maxW="80em"
           bg={bgColor}
           minHeight="calc(100vh - 100px)"
+          h="100%"
           p="6rem 1.5rem 2rem 1.5rem"
           borderRadius=".25rem"
         >

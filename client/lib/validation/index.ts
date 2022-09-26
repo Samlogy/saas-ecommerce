@@ -55,13 +55,8 @@ export const checkoutchema = yup.object().shape({
   isAddressShipping: yup.string().required('Country required'),
   shippingAddress: yup.string(),
   // shipping method
-  shoppingMethod: yup.string(),
+  shippingMethod: yup.string(),
   discountCode: yup.string()
   // payment method
   // stripejs form
 })
-
-// fullName, email, phone, address, zipCode, isAddressShipping, shipping address (Billing Address)
-// radio buttons (options), discount code --> (form apply) (Payment Method)
-// stripe.js form (Payment)
-// feed back --> redirect after 5s to /products

@@ -13,6 +13,7 @@ export { default as AddComment } from './AddComment'
 export { default as Comment } from './Comment'
 
 // custom fields
+export { default as CheckboxField } from './CheckboxField'
 export { default as InputField } from './InputField'
 export { default as TextField } from './TextField'
 export { default as SelectField } from './SelectField'

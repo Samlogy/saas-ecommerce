@@ -59,7 +59,7 @@ export default function StepForm({
                 {content}
               </Step>
             ))}
-            <Button type="submit" mx="auto" size="sm" ref={btnRef} display="none"></Button>
+            <Button type="submit" ref={btnRef} display="none"></Button>
           </Steps>
         </form>
 

@@ -35,7 +35,7 @@ export default function InputField({
   const width = restProps.w ? restProps.w : '20rem'
   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   return (
-    <FormControl id={name} mb=".5rem" w={width}>
+    <FormControl id={name} mb="1em" w={width}>
       {label && <FormLabel> {label} </FormLabel>}
       <InputGroup>
         {iconLeft && <InputLeftElement children={iconLeft} />}
@@ -48,6 +48,7 @@ export default function InputField({
             focusBorderColor={errors[name] && register ? 'error' : 'accent_5'}
             borderRadius="10px"
             bg={itemBgColor}
+            autoComplete="on"
             {...register(name)}
             {...restProps}
           />
@@ -59,6 +60,7 @@ export default function InputField({
             _placeholder={{ color: 'gray_4' }}
             focusBorderColor="accent_5"
             borderRadius="10px"
+            autoComplete="on"
             bg={itemBgColor}
             {...restProps}
           />

@@ -1,15 +1,21 @@
-import { Box, Flex, Heading, Button, Radio, RadioGroup, useColorModeValue } from '@chakra-ui/react'
+import { Checkbox, Flex, Heading, Radio, RadioGroup } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { BsDiscord } from 'react-icons/bs'
 
-import { InputField, Layout, StepForm, TextField, CustomTable } from '../components'
+import { FeedBack, InputField, Layout, StepForm, TextField } from '../components'
 import { checkoutchema } from '../lib/validation'
-import heroImage from '../public/images/home.png'
-import productImage from '../public/images/product.png'
 
 export default function Checkout() {
+  const [feedBack, setFeedBack] = useState({
+    isOpen: false,
+    type: ''
+  })
+
+  const router = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -22,36 +28,53 @@ export default function Checkout() {
   const onSubmit = async (data: any) => {
     console.log(data)
     console.log('submitted !!!')
+    // call payment api
+    const response = true
+    if (response) {
+      setFeedBack({
+        type: 'success',
+        isOpen: true
+      })
+      return
+    }
+    setFeedBack({
+      type: 'error',
+      isOpen: true
+    })
   }
-  //fullName address city postalCode country
-  // payment Method
-  // payment form fields
+
+  useEffect(() => {
+    if (feedBack.type === 'success') {
+      setTimeout(() => {
+        router.push('/products')
+      }, 5000) // redirect to /products after 5s
+    }
+  }, [feedBack?.type])
+
+  // fullName, email, phone, address, zipCode, isAddressShipping, shipping address (Billing Address)
+  // radio buttons (options), discount code --> (form apply) (Shipping Method)
+  // stripe.js / paypal form (Payment)
+  // feed back --> redirect after 5s to /products
+
+  const shippingMethods = ['standard', 'express'] // get it from api (to get more customized fields)
 
   const steps = [
     {
       label: 'Shipping Address',
       icon: BsDiscord,
-      // description: 'description1 ',
-      content: <ShippingAddressForm errors={errors} register={register} />
+      content: <BillingAddress errors={errors} register={register} />
     },
     {
-      label: 'Payment Method',
+      label: 'Shipping Method',
       icon: BsDiscord,
-      // description: 'description1 ',
-      content: <PaymentMethod errors={errors} register={register} />
+      content: (
+        <ShippingMethod errors={errors} register={register} shippingMethods={shippingMethods} />
+      )
     },
     {
-      label: 'Payment Form',
+      label: 'Payment',
       icon: BsDiscord,
-      // description: 'description1 ',
-      content: <PaymentForm errors={errors} register={register} />
-    },
-
-    {
-      label: 'Place Order',
-      icon: BsDiscord,
-      //description: 'description 3',
-      content: <PlaceOrder />
+      content: <Payment errors={errors} register={register} />
     }
   ]
 
@@ -61,101 +84,44 @@ export default function Checkout() {
         <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'} mr="auto" w="full">
           Checkout
         </Heading>
-        <StepForm
-          steps={steps}
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          trigger={trigger}
-          isSubmitting={isSubmitting}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <StepForm
+            steps={steps}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+            trigger={trigger}
+            isSubmitting={isSubmitting}
+          />
+        </form>
+
+        <FeedBack
+          isOpen={feedBack?.isOpen}
+          onClose={() =>
+            setFeedBack(prev => {
+              return {
+                ...prev,
+                isOpen: false
+              }
+            })
+          }
+          type={feedBack?.type}
         />
       </Flex>
     </Layout>
   )
 }
 
-function PlaceOrder() {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
-  function onPlaceOrder() {
-    console.log('order placed !')
-  }
-  const headers = ['', 'image', 'quantity', 'price', 'discount']
-  const data = [
-    {
-      id: 1,
-      name: 'Automatic Watch',
-      images: [heroImage.src, productImage.src, heroImage.src, productImage.src],
-      quantity: 1,
-      price: 350,
-      discount: 0.5,
-      description:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
-      delivery: '2-3 business days',
-      reviews: 34,
-      rate: 4
-    }
-  ]
-  const placeOrderData = {
-    shippingAddress:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut perferendis sint cumque commodi culpa dolorum ipsum sequi possimus voluptates',
-    paymentMethod: 'paypal'
-  }
-  return (
-    <Flex flexDir="column" align="center">
-      <Heading fontSize="1.5rem" mb="2rem">
-        Place Order
-      </Heading>
-      <Flex>
-        <Flex flexDir="column">
-          <Flex flexDir="column" justify="space-between" mb="1.5rem">
-            <Box fontWeight="600" fontSize="1.1rem">
-              Shipping Address
-            </Box>
-            <Box> {placeOrderData.shippingAddress} </Box>
-          </Flex>
-          <Flex flexDir="column" justify="space-between" mb="1.5rem">
-            <Box fontWeight="600" fontSize="1.1rem">
-              Payment Method
-            </Box>
-            <Box> {placeOrderData.paymentMethod} </Box>
-          </Flex>
-          <Flex flexDir="column" justify="space-between" mb="1.5rem">
-            <Box fontWeight="600" fontSize="1.1rem">
-              Products Details
-            </Box>
-            <CustomTable headers={headers} data={data} />
-          </Flex>
-        </Flex>
+function BillingAddress({ errors, register }: { errors: any; register: any }) {
+  const [isShipAddress, setIsShipAddress] = useState<any>('false')
 
-        <Flex flexDir="column" p="1rem" bg={itemBgColor} borderRadius="10px" w="14rem">
-          <Heading fontSize="1.1rem" mb="2rem">
-            Order Summary
-          </Heading>
-          <Flex justify="space-between">
-            <Box as="span">Items:</Box>
-            <Box as="span">0$</Box>
-          </Flex>
-          <Flex justify="space-between">
-            <Box as="span">Tax:</Box>
-            <Box as="span">0$</Box>
-          </Flex>
-          <Flex justify="space-between">
-            <Box as="span">Shipping:</Box>
-            <Box as="span">0$</Box>
-          </Flex>
-          <Flex justify="space-between">
-            <Box as="span">Total:</Box>
-            <Box as="span">0$</Box>
-          </Flex>
-          <Button colorScheme="green" variant="solid" mt=".5rem" onClick={() => onPlaceOrder()}>
-            Place Order
-          </Button>
-        </Flex>
-      </Flex>
-    </Flex>
-  )
-}
-function ShippingAddressForm({ errors, register }: { errors: any; register: any }) {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+  const handleCheckbox = (e: any) => {
+    const value = e.target.value
+    if (value === 'yes') {
+      setIsShipAddress('no')
+      return
+    }
+    setIsShipAddress('yes')
+  }
   return (
     <Flex flexDir="column" align="center" m="3rem 0 1rem 0">
       <InputField
@@ -164,8 +130,7 @@ function ShippingAddressForm({ errors, register }: { errors: any; register: any 
         label="Full Name"
         name="fullName"
         placeholder="Full Name"
-        bg={itemBgColor}
-        borderRadius="10px"
+        autocomplete="on"
       />
       <TextField
         register={register}
@@ -173,63 +138,98 @@ function ShippingAddressForm({ errors, register }: { errors: any; register: any 
         name="address"
         label="Address"
         placeholder="Address"
-        bg={itemBgColor}
-        borderRadius="10px"
       />
       <InputField
         register={register}
         errors={errors}
-        name="city"
-        placeholder="City"
-        label="City"
-        bg={itemBgColor}
-        borderRadius="10px"
-      />
-      <InputField
-        type="number"
-        register={register}
-        errors={errors}
-        name="postaleCode"
-        placeholder="Postale Code"
-        label="Postale Code"
-        bg={itemBgColor}
-        borderRadius="10px"
+        name="email"
+        placeholder="Email"
+        label="Email"
       />
       <InputField
         register={register}
         errors={errors}
-        name="country"
-        placeholder="Country"
-        label="Country"
-        bg={itemBgColor}
-        borderRadius="10px"
+        name="phone"
+        placeholder="phone"
+        label="phone"
+      />
+      <InputField
+        register={register}
+        errors={errors}
+        name="zipCode"
+        placeholder="Zip Code"
+        label="Zip Code"
+      />
+      <Checkbox
+        defaultChecked={false}
+        defaultValue={['yes']}
+        colorScheme={'green'}
+        onChange={handleCheckbox}
+        value={isShipAddress}
+        w="20em"
+        mb="1em"
+        isInvalid={errors['zipCode'] && register ? true : false}
+        {...register(name)}
+        name="zipCode"
+      >
+        Ship to the same address
+      </Checkbox>
+      <InputField
+        register={register}
+        errors={errors}
+        name="shippingAddress"
+        placeholder="Shipping Address"
+        label="Shipping Address"
       />
     </Flex>
   )
 }
-
-function PaymentMethod({ errors, register }: { errors: any; register: any }) {
+function ShippingMethod({
+  errors,
+  register,
+  shippingMethods
+}: {
+  errors: any
+  register: any
+  shippingMethods: any
+}) {
   const [value, setValue] = useState('')
+
   return (
     <Flex flexDir="column" align="center" m="3rem 0 1rem 0">
-      <Heading fontSize="1.3rem" mb="1rem">
-        What's your payment mean ?
-      </Heading>
       <RadioGroup
         onChange={setValue}
         value={value}
-        {...register('paymentMethod')}
+        {...register('shoppingMethod')}
         colorScheme="green"
       >
         <Flex flexDir="column">
-          <Radio value="creditCard">Credit Card</Radio>
-          <Radio value="paypal">PayPal</Radio>
+          {shippingMethods?.map((el: any, idx: number) => (
+            <Radio
+              value={el}
+              key={idx}
+              isInvalid={errors['shippingMethod'] && register ? true : false}
+              name="shoppingMethod"
+            >
+              {el}
+            </Radio>
+          ))}
+          <InputField
+            register={register}
+            errors={errors}
+            label="Discount Code"
+            name="discountCode"
+            placeholder="Discount Code"
+          />
         </Flex>
       </RadioGroup>
     </Flex>
   )
 }
-
-function PaymentForm({ errors, register }: { errors: any; register: any }) {
-  return <Flex flexDir="column" align="center" m="3rem 0 1rem 0"></Flex>
+function Payment({ errors, register }: { errors: any; register: any }) {
+  return (
+    <Flex flexDir="column" align="center" m="3rem 0 1rem 0">
+      Stripe Form Logic
+    </Flex>
+  )
 }

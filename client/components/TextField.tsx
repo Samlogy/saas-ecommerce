@@ -23,7 +23,7 @@ export default function TextField({
   const width = restProps.w ? restProps.w : '20rem'
   const height = restProps.h ? restProps.h : '7rem'
   return (
-    <FormControl id={name} mb=".5rem" w={width}>
+    <FormControl id={name} mb="1em" w={width}>
       {label && <FormLabel> {label} </FormLabel>}
       {register ? (
         <Textarea

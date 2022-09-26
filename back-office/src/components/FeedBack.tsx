@@ -1,36 +1,50 @@
-import { Flex } from '@chakra-ui/react'
-import { AiFillCheckCircle, AiFillInfoCircle, AiFillWarning } from 'react-icons/ai'
-import { MdError } from 'react-icons/md'
+import { Flex, useColorModeValue } from '@chakra-ui/react'
+import { MdCheckCircle, MdError, MdInfo, MdWarning } from 'react-icons/md'
+
 import { CustomModal } from './'
 
 interface IFeedBack {
-  status: any
   isOpen: boolean
-  title?: string
-  onClose: (isOpen: boolean) => void
+  onClose: any
+  type: string
 }
-export default function FeedBack({ status, isOpen, title, onClose }: IFeedBack) {
+
+export default function FeedBack({ isOpen, onClose, type }: IFeedBack) {
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
+
+  const status = {
+    success: <MdCheckCircle size={120} color="green" />,
+    error: <MdError size={120} color="red" />,
+    warning: <MdWarning size={120} color="orange" />,
+    info: <MdInfo size={120} color="blue" />
+  }
+
   const Body = (
-    <Flex justify="center">
-      {status === 'success' ? (
-        <AiFillCheckCircle size={100} color="green" />
-      ) : status === 'error' ? (
-        <MdError size={100} color="red" />
-      ) : status === 'warning' ? (
-        <AiFillWarning size={100} color="yellow" />
-      ) : status === 'info' ? (
-        <AiFillInfoCircle size={100} color="blue" />
-      ) : (
-        ''
-      )}
+    <Flex justify="center" align="center" py="2em" bg={bgColor}>
+      {type && status[type]}
     </Flex>
   )
 
-  return <CustomModal title={title} isOpen={isOpen} onClose={onClose} body={Body} />
+  return <CustomModal isOpen={isOpen} onClose={onClose} body={Body} isClose={false} size="sm" />
 }
 
 /*
-<Button colorScheme="blue" onClick={() => setOpen(true)}>
-        Button
-      </Button>
-      <FeedBack status="warning" type="toast" isOpen={isOpen} onClose={() => setOpen(false)} />*/
+ const [feedBack, setFeedBack] = useState({
+   isOpen: false,
+   type: ''
+ })
+
+
+ <FeedBack
+          isOpen={feedBack?.isOpen}
+          onClose={() =>
+            setFeedBack(prevState => {
+              return {
+                ...prevState,
+                isOpen: false
+              }
+            })
+          }
+          type={feedBack?.type}
+        />
+ */

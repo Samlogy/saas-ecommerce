@@ -1,5 +1,5 @@
 import React from 'react'
-import { Textarea, FormControl, FormLabel } from '@chakra-ui/react'
+import { Textarea, FormControl, FormLabel, useColorModeValue } from '@chakra-ui/react'
 import { ErrorMessage } from '../components'
 
 interface ITextField {
@@ -19,6 +19,7 @@ export default function TextField({
   placeholder,
   ...restProps
 }: ITextField) {
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   const width = restProps.w ? restProps.w : '20rem'
   const height = restProps.h ? restProps.h : '7rem'
   return (
@@ -30,7 +31,8 @@ export default function TextField({
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors[name] ? true : false}
           focusBorderColor={errors[name] ? 'error' : 'accent_5'}
-          borderRadius="5px"
+          borderRadius="10px"
+          bg={itemBgColor}
           h={height}
           {...register(name)}
           {...restProps}
@@ -41,8 +43,9 @@ export default function TextField({
           placeholder={placeholder}
           _placeholder={{ color: 'gray_4' }}
           focusBorderColor={'accent_5'}
-          borderRadius="5px"
+          borderRadius="10px"
           h={height}
+          bg={itemBgColor}
           {...restProps}
         />
       )}

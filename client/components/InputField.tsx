@@ -5,7 +5,8 @@ import {
   FormLabel,
   InputGroup,
   InputLeftElement,
-  InputRightElement
+  InputRightElement,
+  useColorModeValue
 } from '@chakra-ui/react'
 import { ErrorMessage } from '../components'
 
@@ -32,6 +33,7 @@ export default function InputField({
   ...restProps
 }: IInputField) {
   const width = restProps.w ? restProps.w : '20rem'
+  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   return (
     <FormControl id={name} mb=".5rem" w={width}>
       {label && <FormLabel> {label} </FormLabel>}
@@ -44,7 +46,8 @@ export default function InputField({
             _placeholder={{ color: 'gray_4' }}
             isInvalid={errors[name] && register ? true : false}
             focusBorderColor={errors[name] && register ? 'error' : 'accent_5'}
-            borderRadius="5px"
+            borderRadius="10px"
+            bg={itemBgColor}
             {...register(name)}
             {...restProps}
           />
@@ -55,7 +58,8 @@ export default function InputField({
             placeholder={placeholder}
             _placeholder={{ color: 'gray_4' }}
             focusBorderColor="accent_5"
-            borderRadius="5px"
+            borderRadius="10px"
+            bg={itemBgColor}
             {...restProps}
           />
         )}

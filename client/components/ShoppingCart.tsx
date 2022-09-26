@@ -69,6 +69,7 @@ export default function ShoppingCart() {
     <CustomDrawer
       title="Shopping Cart"
       isOpen={isOpen}
+      size="sm"
       onClose={() => setOpen(isOpen)}
       body={Body}
       footer={Footer}

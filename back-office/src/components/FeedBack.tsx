@@ -12,7 +12,7 @@ interface IFeedBack {
 export default function FeedBack({ isOpen, onClose, type }: IFeedBack) {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
 
-  const status = {
+  const status: any = {
     success: <MdCheckCircle size={120} color="green" />,
     error: <MdError size={120} color="red" />,
     warning: <MdWarning size={120} color="orange" />,

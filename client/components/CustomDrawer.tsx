@@ -32,10 +32,9 @@ export default function CustomDrawer({
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
-        <DrawerHeader> {title && title} </DrawerHeader>
-
-        <DrawerBody>{body && body}</DrawerBody>
-        <DrawerFooter>{footer && footer}</DrawerFooter>
+        {title && <DrawerHeader>{title}</DrawerHeader>}
+        {body && <DrawerBody>{body}</DrawerBody>}
+        {footer && <DrawerFooter justifyContent="center">{footer}</DrawerFooter>}
       </DrawerContent>
     </Drawer>
   )

@@ -40,8 +40,7 @@ export const aboutFormSchema = yup.object().shape({
 
 export const serviceFormSchema = yup.object().shape({
   name: yup.string().required('tile required'),
-  description: yup.string().required('Description required'),
-  image: yup.string().required('image required')
+  description: yup.string().required('Description required')
 })
 
 export const questionAnswerFormSchema = yup.object().shape({

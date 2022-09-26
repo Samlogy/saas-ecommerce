@@ -46,11 +46,22 @@ export const commentSchema = yup.object().shape({
 })
 
 export const checkoutchema = yup.object().shape({
+  // billing address
   fullName: yup.string().required('Full Name required'),
+  email: yup.string().email('Enter a valid Email Address').required('Email Address required'),
+  phone: yup.string().required('Phone required'),
   address: yup.string().required('Address required'),
-  city: yup.string().required('City required'),
-  postaleCode: yup.string().required('Postale Code required'),
-  country: yup.string().required('Country required'),
-  paymentMethod: yup.string().required('Payment Method required')
-  // payment form
+  zipCode: yup.string().required('Zip Code required'),
+  isAddressShipping: yup.string().required('Country required'),
+  shippingAddress: yup.string(),
+  // shipping method
+  shoppingMethod: yup.string(),
+  discountCode: yup.string()
+  // payment method
+  // stripejs form
 })
+
+// fullName, email, phone, address, zipCode, isAddressShipping, shipping address (Billing Address)
+// radio buttons (options), discount code --> (form apply) (Payment Method)
+// stripe.js form (Payment)
+// feed back --> redirect after 5s to /products

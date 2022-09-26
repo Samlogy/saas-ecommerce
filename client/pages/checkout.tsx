@@ -1,11 +1,11 @@
-import { Checkbox, Flex, Heading, Radio, RadioGroup } from '@chakra-ui/react'
+import { Box, Checkbox, Flex, FormLabel, Heading, Radio, RadioGroup } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { BsDiscord } from 'react-icons/bs'
 
-import { FeedBack, InputField, Layout, StepForm, TextField } from '../components'
+import { ErrorMessage, FeedBack, InputField, Layout, StepForm, TextField } from '../components'
 import { checkoutchema } from '../lib/validation'
 
 export default function Checkout() {
@@ -20,6 +20,7 @@ export default function Checkout() {
     register,
     handleSubmit,
     trigger,
+
     formState: { errors, isSubmitting }
   } = useForm({
     resolver: yupResolver(checkoutchema)
@@ -27,7 +28,6 @@ export default function Checkout() {
 
   const onSubmit = async (data: any) => {
     console.log(data)
-    console.log('submitted !!!')
     // call payment api
     const response = true
     if (response) {
@@ -43,15 +43,19 @@ export default function Checkout() {
     })
   }
 
+  /*
   useEffect(() => {
+    // redirect to /products after 5s
     if (feedBack.type === 'success') {
       setTimeout(() => {
         router.push('/products')
-      }, 5000) // redirect to /products after 5s
+      }, 5000)
     }
   }, [feedBack?.type])
+  */
 
   // fullName, email, phone, address, zipCode, isAddressShipping, shipping address (Billing Address)
+  // --> if logged (push stored data into the form)
   // radio buttons (options), discount code --> (form apply) (Shipping Method)
   // stripe.js / paypal form (Payment)
   // feed back --> redirect after 5s to /products
@@ -84,15 +88,14 @@ export default function Checkout() {
         <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'} mr="auto" w="full">
           Checkout
         </Heading>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <StepForm
-            steps={steps}
-            handleSubmit={handleSubmit}
-            onSubmit={onSubmit}
-            trigger={trigger}
-            isSubmitting={isSubmitting}
-          />
-        </form>
+
+        <StepForm
+          steps={steps}
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          trigger={trigger}
+          isSubmitting={isSubmitting}
+        />
 
         <FeedBack
           isOpen={feedBack?.isOpen}
@@ -112,16 +115,6 @@ export default function Checkout() {
 }
 
 function BillingAddress({ errors, register }: { errors: any; register: any }) {
-  const [isShipAddress, setIsShipAddress] = useState<any>('false')
-
-  const handleCheckbox = (e: any) => {
-    const value = e.target.value
-    if (value === 'yes') {
-      setIsShipAddress('no')
-      return
-    }
-    setIsShipAddress('yes')
-  }
   return (
     <Flex flexDir="column" align="center" m="3rem 0 1rem 0">
       <InputField
@@ -161,16 +154,16 @@ function BillingAddress({ errors, register }: { errors: any; register: any }) {
         label="Zip Code"
       />
       <Checkbox
-        defaultChecked={false}
-        defaultValue={['yes']}
+        //defaultChecked={false}
+        //defaultValue={['yes']}
+        // onChange={handleCheckbox}
+        //value={isShipAddress}
         colorScheme={'green'}
-        onChange={handleCheckbox}
-        value={isShipAddress}
         w="20em"
         mb="1em"
-        isInvalid={errors['zipCode'] && register ? true : false}
-        {...register(name)}
-        name="zipCode"
+        isInvalid={errors['isShipAddress'] && register ? true : false}
+        {...register('isShipAddress')}
+        name="isShipAddress"
       >
         Ship to the same address
       </Checkbox>
@@ -180,6 +173,7 @@ function BillingAddress({ errors, register }: { errors: any; register: any }) {
         name="shippingAddress"
         placeholder="Shipping Address"
         label="Shipping Address"
+        //  isDisabled={isShipAddress ? true : false}
       />
     </Flex>
   )
@@ -193,36 +187,45 @@ function ShippingMethod({
   register: any
   shippingMethods: any
 }) {
-  const [value, setValue] = useState('')
-
+  // receive totalPrice as default (then when valid discountCode is entred re-compute the newPrice)
+  const newPrice = 1000
   return (
     <Flex flexDir="column" align="center" m="3rem 0 1rem 0">
       <RadioGroup
-        onChange={setValue}
-        value={value}
-        {...register('shoppingMethod')}
+        //  onChange={setValue}
+        // value={value}
         colorScheme="green"
+        mb="1em"
+        as={Flex}
+        flexDir="column"
+        w="20em"
       >
-        <Flex flexDir="column">
-          {shippingMethods?.map((el: any, idx: number) => (
-            <Radio
-              value={el}
-              key={idx}
-              isInvalid={errors['shippingMethod'] && register ? true : false}
-              name="shoppingMethod"
-            >
-              {el}
-            </Radio>
-          ))}
-          <InputField
-            register={register}
-            errors={errors}
-            label="Discount Code"
-            name="discountCode"
-            placeholder="Discount Code"
-          />
-        </Flex>
+        <FormLabel> Select Shipping Method </FormLabel>
+        {shippingMethods?.map((el: any, idx: number) => (
+          <Radio
+            value={el}
+            key={idx}
+            isInvalid={errors['shippingMethod'] && register ? true : false}
+            {...register('shippingMethod')}
+            name="shippingMethod"
+            textTransform="capitalize"
+          >
+            {el}
+          </Radio>
+        ))}
+        {register && <ErrorMessage error={errors['shippingMethod']?.message} />}
       </RadioGroup>
+      <InputField
+        register={register}
+        errors={errors}
+        label="Discount Code"
+        name="discountCode"
+        placeholder="Discount Code"
+      />
+      <Box w="20em">
+        <Box as="span"> New Price: </Box>
+        <Box as="span"> {newPrice} </Box>
+      </Box>
     </Flex>
   )
 }

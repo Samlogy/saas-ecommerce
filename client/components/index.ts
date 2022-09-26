@@ -20,6 +20,7 @@ export { default as SelectField } from './SelectField'
 export { default as MultiSelect } from './MultiSelect'
 export { default as ErrorMessage } from './ErrorMessage'
 export { default as SelectLanguage } from './SelectLanguage'
+export { default as RadioField } from './RadioField'
 
 // global components
 export { default as NavBar } from './NavBar'

@@ -52,7 +52,7 @@ export const checkoutchema = yup.object().shape({
   phone: yup.string().required('Phone required'),
   address: yup.string().required('Address required'),
   zipCode: yup.string().required('Zip Code required'),
-  isAddressShipping: yup.string().required('Country required'),
+  isAddressShipping: yup.string(), // boolean
   shippingAddress: yup.string(),
   // shipping method
   shippingMethod: yup.string(),

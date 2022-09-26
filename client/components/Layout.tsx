@@ -17,7 +17,6 @@ export default function Layout({
   ...restProps
 }: ILayout) {
   const bgColor = useColorModeValue('white', 'gray_3')
-
   return (
     <>
       <Head>
@@ -28,13 +27,12 @@ export default function Layout({
         <title> Ecommerce Web App </title>
       </Head>
 
-      <Flex flexDir="column" {...restProps} bg={bgColor}>
+      <Flex flexDir="column" {...restProps} bg={bgColor} minH="100vh">
         {isHeaderVisible && <NavBar />}
 
         <Container
           maxW="80em"
-          bg={bgColor}
-          minHeight="calc(100vh - 100px)"
+          minH="calc(100% - 100px)"
           h="100%"
           p="6rem 1.5rem 2rem 1.5rem"
           borderRadius=".25rem"

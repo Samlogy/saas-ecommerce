@@ -52,7 +52,6 @@ export default function contact() {
 
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   const textColor = useColorModeValue('balck', 'white')
-  const inputColor = useColorModeValue('white', 'gray_3')
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -132,7 +131,6 @@ export default function contact() {
                 errors={errors}
                 label="Your Name (Optional)"
                 iconLeft={<BsPerson color="gray_1" />}
-                bg={inputColor}
               />
 
               <InputField
@@ -141,7 +139,6 @@ export default function contact() {
                 errors={errors}
                 label="Email"
                 iconLeft={<MdOutlineEmail color="gray_1" />}
-                bg={inputColor}
               />
 
               <TextField
@@ -150,7 +147,6 @@ export default function contact() {
                 errors={errors}
                 label="Message"
                 iconLeft={<MdOutlineEmail color="gray_1" />}
-                bg={inputColor}
               />
 
               <FormControl id="name" float="right" mb=".5rem">

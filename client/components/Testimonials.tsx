@@ -16,8 +16,7 @@ export default function Testimonials({ data }: { data: any }) {
   )
 }
 
-const SlickArrowLeft = props => {
-  const { onClick } = props
+const SlickArrowLeft = ({ onClick }: { onClick: any }) => {
   return (
     <IconButton
       aria-label="previous-slide"
@@ -33,8 +32,7 @@ const SlickArrowLeft = props => {
   )
 }
 
-const SlickArrowRight = props => {
-  const { onClick } = props
+const SlickArrowRight = ({ onClick }: { onClick: any }) => {
   return (
     <IconButton
       aria-label="next-slide"
@@ -57,7 +55,7 @@ function Carousel({ data }) {
     infinite: false,
     speed: 500,
     slidesToScroll: 1,
-    slidesToShow: 4,
+    slidesToShow: 3,
     initialSlide: 0,
     nextArrow: <SlickArrowRight />,
     prevArrow: <SlickArrowLeft />,
@@ -70,7 +68,7 @@ function Carousel({ data }) {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 3,
           slidesToScroll: 1,
           dots: true
         }
@@ -78,14 +76,14 @@ function Carousel({ data }) {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2,
           slidesToScroll: 1
         }
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 1,
           slidesToScroll: 1
         }
       }

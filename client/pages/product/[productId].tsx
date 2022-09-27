@@ -134,7 +134,12 @@ export default function Product({ product, comments, relatedProducts }: IProduct
             </VStack>
           </Stack>
 
-          <Flex flexDir="row-reverse" justifyContent={['space-around', '', '', '']} align="center">
+          <Flex
+            flexDir="row-reverse"
+            flexWrap="wrap"
+            justify={['space-around', '', '', '']}
+            align="center"
+          >
             <Button
               leftIcon={isFavourite}
               bg={useColorModeValue('white', 'gray_3')}
@@ -145,6 +150,7 @@ export default function Product({ product, comments, relatedProducts }: IProduct
               transition={'.35s all'}
               _hover={{ bg: 'accent_3', color: 'white' }}
               mt=".75rem"
+              mb={{ base: '1em', md: '0' }}
               w="10rem"
               onClick={handleFavourite}
             >
@@ -248,7 +254,7 @@ const RelatedProducts = ({ data }: { data: IProduct[] }) => {
   // load related products (apollo --> API) GET_RELATED_PRODUCTS
   return (
     <Flex flexDir={'column'} px="1.5rem" mt="5rem" mb="4rem">
-      <Flex justifyContent={'space-between'} alignItems="center" mb="1.5rem">
+      <Flex justify={'space-between'} alignItems="center" mb="1.5rem">
         <Heading fontSize="1.2rem" textTransform={'uppercase'} fontWeight={'700'}>
           Related Products
         </Heading>
@@ -256,7 +262,7 @@ const RelatedProducts = ({ data }: { data: IProduct[] }) => {
       </Flex>
 
       <View cond={data?.length > 0}>
-        <Flex flexWrap="wrap" justifyContent={['center', '', 'space-between']}>
+        <Flex flexWrap="wrap" justify={['center', '', 'space-between']}>
           {data?.map((product, idx) => (
             <ProductCard key={idx} data={product} />
           ))}

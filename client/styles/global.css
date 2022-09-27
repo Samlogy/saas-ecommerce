@@ -38,3 +38,44 @@ select.select-language:hover.dark {
   background: hsl(152, 4%, 29%);
   border-radius: 0.5rem;
 }
+
+
+/*=============== Card Element ===============*/
+:root {
+  --gray-border: rgba(0, 0, 0, 0.15);
+  --gray-light: rgba(0, 0, 0, 0.4);
+}
+
+
+/* Inputs */
+.sr-input,
+.sr-select,
+input[type="text"] {
+  border: 1px solid var(--gray-border);
+  border-radius: 1em; 
+  padding: .7em;
+  height: 44px;
+  width: 100%;
+  transition: box-shadow 0.2s ease;
+  background: white;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  color: #32325d;
+}
+
+.sr-input:focus,
+.StripeElement--focus,
+input[type="text"]:focus,
+button:focus,
+.focused {
+ border: 2px solid green;
+}
+
+.sr-input::placeholder,
+input[type="text"]::placeholder {
+  color: var(--gray-light);
+}
+
+
+

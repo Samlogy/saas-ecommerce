@@ -48,6 +48,9 @@ export { default as About } from './About'
 export { default as Hero } from './Hero'
 export { default as AppStore } from './AppStore'
 
+// checkout
+export { default as CheckoutForm } from './CheckoutForm'
+
 // other
 export { default as CookieBox } from './CookieBox'
 export { default as Countdown } from './Countdown'

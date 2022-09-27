@@ -103,6 +103,11 @@ export default function Checkout() {
       label: 'Review Order',
       icon: MdOutlineLocalShipping,
       content: <ReviewOrder />
+    },
+    {
+      label: 'Payment',
+      icon: MdOutlinePayment,
+      content: <Payment setFeedBack={setFeedBack} />
     }
   ]
 
@@ -250,6 +255,14 @@ function ShippingMethod({
         <Box as="span"> New Price: </Box>
         <Box as="span"> {newPrice} </Box>
       </Box>
+    </Flex>
+  )
+}
+function Payment({ setFeedBack }: { setFeedBack: any }) {
+  const price = '25£' // get price to pay
+  return (
+    <Flex flexDir="column" align="center" justify="center" m="3rem 0 1rem 0">
+      <CheckoutForm price={price} setFeedBack={setFeedBack} />
     </Flex>
   )
 }

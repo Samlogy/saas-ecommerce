@@ -32,8 +32,9 @@ const ELEMENTS_OPTIONS = {
 interface ICheckoutForm {
   price: string
   billingDetails?: any
+  setFeedBack: any
 }
-export default function CheckoutForm({ price, billingDetails }: ICheckoutForm) {
+export default function CheckoutForm({ price, billingDetails, setFeedBack }: ICheckoutForm) {
   const stripe = useStripe()
   const elements = useElements()
 
@@ -88,6 +89,7 @@ export default function CheckoutForm({ price, billingDetails }: ICheckoutForm) {
           error: payload?.error
         }
       })
+      setFeedBack({ isOpen: true, type: 'error' })
     } else {
       setCard(prev => {
         return {
@@ -95,6 +97,7 @@ export default function CheckoutForm({ price, billingDetails }: ICheckoutForm) {
           paymentMethod: payload?.paymentMethod
         }
       })
+      setFeedBack({ isOpen: true, type: 'success' })
     }
   }
 

@@ -7,13 +7,21 @@ import { useForm } from 'react-hook-form'
 import { RiBillLine } from 'react-icons/ri'
 import { MdOutlinePayment, MdOutlineLocalShipping } from 'react-icons/md'
 
-import { ErrorMessage, FeedBack, InputField, Layout, StepForm, TextField } from '../components'
+import {
+  ErrorMessage,
+  FeedBack,
+  InputField,
+  Layout,
+  StepForm,
+  TextField,
+  CheckoutForm
+} from '../components'
 import { checkoutchema } from '../lib/validation'
 
 export default function Checkout() {
   const [feedBack, setFeedBack] = useState({
     isOpen: false,
-    type: ''
+    type: null
   })
 
   const router = useRouter()
@@ -23,9 +31,7 @@ export default function Checkout() {
     handleSubmit,
     trigger,
     formState: { errors, isSubmitting }
-  } = useForm({
-    resolver: yupResolver(checkoutchema)
-  })
+  } = useForm()
 
   const onSubmit = async (data: any) => {
     console.log(data)
@@ -79,7 +85,7 @@ export default function Checkout() {
     {
       label: 'Payment',
       icon: MdOutlinePayment,
-      content: <Payment errors={errors} register={register} />
+      content: <Payment setFeedBack={setFeedBack} />
     }
   ]
 
@@ -230,10 +236,11 @@ function ShippingMethod({
     </Flex>
   )
 }
-function Payment({ errors, register }: { errors: any; register: any }) {
+function Payment({ setFeedBack }: { setFeedBack: any }) {
+  const price = '25£' // get price to pay
   return (
-    <Flex flexDir="column" align="center" m="3rem 0 1rem 0">
-      Stripe Form Logic
+    <Flex flexDir="column" align="center" justify="center" m="3rem 0 1rem 0">
+      <CheckoutForm price={price} setFeedBack={setFeedBack} />
     </Flex>
   )
 }

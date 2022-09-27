@@ -1,5 +1,11 @@
 import * as yup from 'yup'
 
+const requiredField = requiredText => ({
+  is: false,
+  then: yup.string().required(requiredText),
+  otherwise: yup.string()
+})
+
 export const contactSchema = yup.object().shape({
   name: yup.string(),
   email: yup.string().email('Enter a valid Email Address').required('Email Address required'),
@@ -52,11 +58,12 @@ export const checkoutchema = yup.object().shape({
   phone: yup.string().required('Phone required'),
   address: yup.string().required('Address required'),
   zipCode: yup.string().required('Zip Code required'),
-  isAddressShipping: yup.string(), // boolean
-  shippingAddress: yup.string(),
+  isAddressShipping: yup.boolean(), // boolean
+  shippingAddress: yup
+    .string()
+    .when('isAddressShipping', requiredField('Shipping Address is required')),
   // shipping method
   shippingMethod: yup.string(),
   discountCode: yup.string()
   // payment method
-  // stripejs form
 })

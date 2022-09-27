@@ -4,16 +4,15 @@ import { FiMoon, FiSun } from 'react-icons/fi'
 export default function DarkModeToggle() {
   const { colorMode: mode, toggleColorMode } = useColorMode()
 
-  const bgColor = useColorModeValue('transparent', 'gray_3')
-  const bgHoverColor = useColorModeValue('gray_8', 'gray_2')
-
+  const bgColor = useColorModeValue('white', 'gray_2')
+  const bgHoverColor = useColorModeValue('gray_8', 'gray_3')
   return (
     <IconButton
       aria-label="dark mode"
       bg={bgColor}
       _hover={{ bg: bgHoverColor }}
+      _focus={{ outline: 'none', border: 'none' }}
       onClick={() => toggleColorMode()}
-      color={useColorModeValue('black', 'white')}
       icon={mode === 'light' ? <FiMoon /> : <FiSun />}
     />
   )

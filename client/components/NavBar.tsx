@@ -9,59 +9,66 @@ import {
   MenuButton,
   MenuList,
   Stack,
-  useColorModeValue,
-  useDisclosure
+  useColorModeValue
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
 import { DarkModeToggle, Logout, SelectLanguage, ShoppingCartIcon, View } from '../components'
 import { Logo } from '../public/icons'
+
 import { useAuthStore, useShoppingCartStore } from '../store'
 
 const Links = [
   {
-    link: '/',
-    name: 'Home'
+    link: '/#home',
+    label: 'Home'
   },
   {
-    link: '/products',
-    name: 'Products'
+    link: '/#about',
+    label: 'About'
   },
   {
-    link: '/contact',
-    name: 'Contact Us'
+    link: '/#services',
+    label: 'Services'
+  },
+  {
+    link: '/#projects',
+    label: 'Projects'
+  },
+  {
+    link: '/blog',
+    label: 'Blog'
   }
 ]
+interface INavLink {
+  children: ReactNode
+  link: string
+  [restProps: string]: any
+}
 
-const NavLink = ({ children, link }: { children: ReactNode; link: string }) => {
-  const { pathname } = useRouter()
-  const isActive = pathname === `${link}`
-
-  const textColor = useColorModeValue('black', '#edf2f7')
+function NavLink({ children, link, ...restProps }: INavLink) {
+  const linkColor = useColorModeValue('gray_2', 'gray_7')
 
   return (
-    <Link href={`${link}`}>
+    <Link href={`${link}`} passHref>
       <Box
-        px={2}
-        py={1}
+        p=".5em"
         rounded={'md'}
-        color={isActive ? 'accent_3' : textColor}
-        _hover={{
-          textDecoration: 'none',
-          cursor: 'pointer',
-          bg: useColorModeValue('gray.200', '#2D3748')
-        }}
+        color={linkColor}
+        w="auto"
+        textTransform="capitalize"
+        _hover={{ textDecor: 'none', cursor: 'pointer' }}
+        {...restProps}
       >
-        {children}
+        <a className="link-effect center after">{children}</a>
       </Box>
     </Link>
   )
 }
 
 export default function NavBar() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [isOpen, setOpen] = useState(false)
 
   const login = useAuthStore((state: any) => state.login)
   const user = useAuthStore((state: any) => state.user)
@@ -70,35 +77,33 @@ export default function NavBar() {
 
   const bgColor = useColorModeValue('white', 'gray_2')
 
+  const menuIcon = (
+    <Flex justify="center" align="center">
+      {isOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
+    </Flex>
+  )
+
   return (
-    <Box bg={bgColor} px={4} pos="fixed" w="full" boxShadow={'md'} zIndex="100">
-      <Flex h={16} align={'center'} justify={'space-between'}>
+    <Box bg={bgColor} px="2rem" pos="fixed" w="full" boxShadow={'md'} zIndex={200}>
+      <Flex h="9vh" align="center" justify="space-between">
         <IconButton
           size={'md'}
-          icon={
-            isOpen ? (
-              <Flex justify={'center'} align="center">
-                <AiOutlineClose />
-              </Flex>
-            ) : (
-              <Flex justify={'center'} align="center">
-                <AiOutlineMenu />
-              </Flex>
-            )
-          }
+          icon={menuIcon}
           aria-label={'toggle-menu'}
           display={{ md: 'none' }}
-          onClick={isOpen ? onClose : onOpen}
+          onClick={isOpen ? () => setOpen(false) : () => setOpen(true)}
+          _focus={{ outline: 'none' }}
         />
 
+        <Link href="/" passHref>
+          <Logo />
+        </Link>
+
         <HStack spacing={8} align={'center'}>
-          <Box>
-            <Logo />
-          </Box>
           <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-            {Links.map((link: any) => (
-              <NavLink key={link.link} link={link.link}>
-                {link.name}
+            {Links.map((el: any, idx: number) => (
+              <NavLink key={idx} link={el?.link}>
+                {el?.label}
               </NavLink>
             ))}
           </HStack>
@@ -112,16 +117,14 @@ export default function NavBar() {
         </Flex>
       </Flex>
 
-      <View cond={isOpen}>
-        <Box pb={4} display={{ md: 'none' }}>
-          <Stack as={'nav'} spacing={4}>
-            {Links.map((link: any) => (
-              <NavLink key={link.link} link={link.link}>
-                {link.name}{' '}
-              </NavLink>
-            ))}
-          </Stack>
-        </Box>
+      <View cond={isOpen} pb={4} display={{ md: 'none' }}>
+        <Stack as={'nav'} spacing={4} align="center">
+          {Links.map((el: any, idx: number) => (
+            <NavLink key={idx} link={el?.link}>
+              {el?.label}
+            </NavLink>
+          ))}
+        </Stack>
       </View>
     </Box>
   )

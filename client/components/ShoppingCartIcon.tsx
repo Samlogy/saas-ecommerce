@@ -6,12 +6,12 @@ export default function ShoppingCartIcon({ value }: { value: number }) {
   const setOpen = useShoppingCartStore(state => state.setOpen)
   const isOpen = useShoppingCartStore(state => state.isOpen)
 
-  const bgColor = useColorModeValue('transparent', 'gray_3')
-  const bgHoverColor = useColorModeValue('gray_8', 'gray_2')
+  const bgColor = useColorModeValue('white', 'gray_2')
+  const bgHoverColor = useColorModeValue('gray_8', 'gray_3')
 
   return (
     <Box pos="relative" onClick={() => setOpen(isOpen)}>
-      {value > 0 && 
+      {value > 0 && (
         <Box
           as="span"
           fontSize="xs"
@@ -32,11 +32,13 @@ export default function ShoppingCartIcon({ value }: { value: number }) {
           bottom={'65%'}
         >
           {value >= 100 ? '99+' : value}
-        </Box>}
+        </Box>
+      )}
       <IconButton
         aria-label="Shopping Cart"
         bg={bgColor}
         _hover={{ bg: bgHoverColor }}
+        _focus={{ outline: 'none', border: 'none' }}
         icon={<AiOutlineShoppingCart size={24} />}
         mr=".2rem"
       />

@@ -55,7 +55,13 @@ export default function ShoppingCart() {
         Shipping and taxes calculated at checkout.
       </Text>
       <Link href="/checkout" passHref>
-        <Button w="full" bg={'accent_3'} _hover={{ bg: 'accent_2' }} color={'white'}>
+        <Button
+          w="full"
+          bg={'accent_3'}
+          _hover={{ bg: 'accent_2' }}
+          color={'white'}
+          onClick={() => setOpen(isOpen)}
+        >
           Checkout
         </Button>
       </Link>

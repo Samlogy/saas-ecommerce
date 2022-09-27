@@ -4,25 +4,6 @@ body {
 }
 
 
-/*=============== Language Switcher ===============*/
-select.select-language {
-  background-color: transparent;
-  border-radius: 5px;
-  text-transform: uppercase;
-  padding: .5rem .25rem;
-  transition: all .25s;
-}
-select.select-language:hover {
-  cursor: pointer;
-  background-color: #edf2f7;
-}
-/* select language dark mode */
-select.select-language:hover.dark {
-  cursor: pointer;
-  background-color: #2d3748;
-  color: white;
-}
-
 /*=============== STAR ===============*/
 .star:hover {
   cursor: pointer;
@@ -49,7 +30,6 @@ select.select-language:hover.dark {
 
 /* Inputs */
 .sr-input,
-.sr-select,
 input[type="text"] {
   border: 1px solid var(--gray-border);
   border-radius: 1em; 

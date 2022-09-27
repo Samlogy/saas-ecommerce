@@ -9,6 +9,7 @@ import {
   MenuButton,
   MenuList,
   Stack,
+  useBreakpointValue,
   useColorModeValue
 } from '@chakra-ui/react'
 import Link from 'next/link'
@@ -21,24 +22,16 @@ import { useAuthStore, useShoppingCartStore } from '../store'
 
 const Links = [
   {
-    link: '/#home',
+    link: '/',
     label: 'Home'
   },
   {
-    link: '/#about',
-    label: 'About'
+    link: '/products',
+    label: 'Products'
   },
   {
-    link: '/#services',
-    label: 'Services'
-  },
-  {
-    link: '/#projects',
-    label: 'Projects'
-  },
-  {
-    link: '/blog',
-    label: 'Blog'
+    link: '/contact',
+    label: 'Contact'
   }
 ]
 interface INavLink {
@@ -71,11 +64,13 @@ export default function NavBar() {
   const [isOpen, setOpen] = useState(false)
 
   const login = useAuthStore((state: any) => state.login)
-  const user = useAuthStore((state: any) => state.user)
+  const user = false //useAuthStore((state: any) => state.user)
 
   const quantityTotal = useShoppingCartStore((state: any) => state.quantityTotal)
 
   const bgColor = useColorModeValue('white', 'gray_2')
+
+  const isVisible = useBreakpointValue({ base: false, md: true })
 
   const menuIcon = (
     <Flex justify="center" align="center">
@@ -109,12 +104,14 @@ export default function NavBar() {
           </HStack>
         </HStack>
 
-        <Flex align={'center'}>
-          <SelectLanguage />
-          <DarkModeToggle />
-          <ShoppingCartIcon value={quantityTotal} />
-          {user ? <NavMenuConnected avatar={user?.avatar} /> : <NavMenuUnConnected />}
-        </Flex>
+        {isVisible && (
+          <Flex align={'center'}>
+            <SelectLanguage />
+            <DarkModeToggle />
+            <ShoppingCartIcon value={quantityTotal} />
+            {user ? <NavMenuConnected avatar={user?.avatar} /> : <NavMenuUnConnected />}
+          </Flex>
+        )}
       </Flex>
 
       <View cond={isOpen} pb={4} display={{ md: 'none' }}>
@@ -125,19 +122,28 @@ export default function NavBar() {
             </NavLink>
           ))}
         </Stack>
+        {!isVisible && (
+          <Flex flexDir="column" align={'center'}>
+            {user ? <NavMenuConnected avatar={user?.avatar} /> : <NavMenuUnConnected />}
+          </Flex>
+        )}
       </View>
     </Box>
   )
 }
 
 const NavMenuConnected = ({ avatar }: { avatar: string }) => {
-  const textHoverColor = useColorModeValue('#edf2f7', 'white')
-  const bgColor = useColorModeValue('#edf2f7', '#2D3748')
-  const bgHoverColor = useColorModeValue('#2D3748', '#718096')
-
+  const bgColor = useColorModeValue('gray_9', 'gray_3')
   return (
     <Menu>
-      <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
+      <MenuButton
+        as={Button}
+        rounded={'full'}
+        variant={'link'}
+        cursor={'pointer'}
+        minW={0}
+        _focus={{ border: 'none', outline: 'none' }}
+      >
         <Avatar size={'sm'} src={avatar} />
       </MenuButton>
       <MenuList bg={bgColor}>
@@ -151,15 +157,14 @@ const NavMenuConnected = ({ avatar }: { avatar: string }) => {
 }
 
 const NavMenuUnConnected = () => {
-  const textColor = useColorModeValue('black', '#edf2f7')
-
   return (
-    <Flex>
-      {/* <Box as="span" color={textColor} _hover={{ textDecor: 'underline' }}> <a href="/register"> Sign Up </a> </Box>
-      <Box w=".5rem"> </Box> */}
-      <Box as="span" color={textColor} _hover={{ textDecor: 'underline' }}>
-        <a href="/api/auth/login"> Sign In </a>
-      </Box>
+    <Flex flexDir={['column', 'column', 'row']}>
+      <Button colorScheme="green" px=".5em" mt={['1em', '', '0']}>
+        Sign In
+      </Button>
+      <Button colorScheme="green" variant="outline" ml=".2em" px=".5em" mt={['1em', '', '0']}>
+        Sign Up
+      </Button>
     </Flex>
   )
 }

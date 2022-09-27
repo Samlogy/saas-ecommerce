@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Checkbox,
   Divider,
   Flex,
@@ -14,12 +13,11 @@ import {
   SimpleGrid,
   Text,
   useBreakpointValue,
-  useColorMode,
   useColorModeValue,
   VStack
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { MdOutlineLocalShipping, MdOutlinePayment } from 'react-icons/md'
@@ -34,6 +32,7 @@ import {
   StepForm,
   TextField
 } from '../components'
+import { useShoppingCartStore } from '../store'
 
 export default function Checkout() {
   const [feedBack, setFeedBack] = useState({
@@ -283,10 +282,8 @@ function ReviewOrder() {
 }
 
 const Cart = () => {
-  const { toggleColorMode } = useColorMode()
-
-  const bgColor = useColorModeValue('gray.50', 'whiteAlpha.50')
-  const secondaryTextColor = useColorModeValue('gray.600', 'gray.400')
+  const bgColor = useColorModeValue('gray_8', 'gray_2')
+  const secondaryTextColor = useColorModeValue('gray_3', 'gray_6')
 
   // computing all these fct get data from store (product store)
 
@@ -310,13 +307,6 @@ const Cart = () => {
     <VStack w={['100%', '50%', '30em']} align="flex-start" h="full" p={10} spacing={6} bg={bgColor}>
       <VStack alignItems="flex-start" spacing={3}>
         <Heading size="xl">Your cart</Heading>
-
-        <Text>
-          If the price is too hard on your eyes,{' '}
-          <Button onClick={toggleColorMode} variant="link" colorScheme="black">
-            try changing the theme.
-          </Button>
-        </Text>
       </VStack>
 
       <Flex flexDir="column" alignItems="stretch" w="full">
@@ -380,8 +370,11 @@ const Cart = () => {
 const Details = () => {
   const colSpan = useBreakpointValue({ base: 2, md: 1 })
 
-  const bgColor = useColorModeValue('gray.50', 'whiteAlpha.50')
-  const secondaryTextColor = useColorModeValue('gray.600', 'gray.400')
+  const bgColor = useColorModeValue('gray_8', 'gray_2')
+  const secondaryTextColor = useColorModeValue('gray_3', 'gray_6')
+
+  // get all data (labels, values) --> react hook form (getValues(...labels))
+  //  const values:string = getValues(...labels)
 
   const labels = [
     'full name',

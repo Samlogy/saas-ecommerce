@@ -1,9 +1,11 @@
 import { Box, Checkbox, Flex, FormLabel, Heading, Radio, RadioGroup } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { BsDiscord } from 'react-icons/bs'
+
+import { RiBillLine } from 'react-icons/ri'
+import { MdOutlinePayment, MdOutlineLocalShipping } from 'react-icons/md'
 
 import { ErrorMessage, FeedBack, InputField, Layout, StepForm, TextField } from '../components'
 import { checkoutchema } from '../lib/validation'
@@ -20,7 +22,6 @@ export default function Checkout() {
     register,
     handleSubmit,
     trigger,
-
     formState: { errors, isSubmitting }
   } = useForm({
     resolver: yupResolver(checkoutchema)
@@ -64,20 +65,20 @@ export default function Checkout() {
 
   const steps = [
     {
-      label: 'Shipping Address',
-      icon: BsDiscord,
+      label: 'Billing Address',
+      icon: RiBillLine,
       content: <BillingAddress errors={errors} register={register} />
     },
     {
       label: 'Shipping Method',
-      icon: BsDiscord,
+      icon: MdOutlineLocalShipping,
       content: (
         <ShippingMethod errors={errors} register={register} shippingMethods={shippingMethods} />
       )
     },
     {
       label: 'Payment',
-      icon: BsDiscord,
+      icon: MdOutlinePayment,
       content: <Payment errors={errors} register={register} />
     }
   ]

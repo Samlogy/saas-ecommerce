@@ -49,7 +49,7 @@ export { default as Hero } from './Hero'
 export { default as AppStore } from './AppStore'
 
 // checkout
-export { default as CheckoutForm } from './CheckoutForm'
+export { default as StripeForm } from './StripeForm'
 
 // other
 export { default as CookieBox } from './CookieBox'
@@ -63,3 +63,4 @@ export { default as CustomModal } from './CustomModal'
 export { default as CustomAccordion } from './CustomAccordion'
 export { default as FeedBack } from './FeedBack'
 export { default as CustomTable } from './CustomTable'
+export { default as ErrorBoundary } from './ErrorBoundary'

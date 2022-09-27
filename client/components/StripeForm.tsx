@@ -1,40 +1,14 @@
-import { Box, Button, FormControl, FormLabel } from '@chakra-ui/react'
-import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js'
+import { Button, FormControl, FormLabel } from '@chakra-ui/react'
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { useState } from 'react'
-import stripePromise from '../lib/stripe'
 import ErrorMessage from './ErrorMessage'
 
-const CARD_OPTIONS = {
-  style: {
-    base: {
-      color: '#32325d',
-      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-      fontSmoothing: 'antialiased',
-      fontSize: '16px',
-      '::placeholder': {
-        color: '#aab7c4'
-      }
-    },
-    invalid: {
-      color: '#fa755a',
-      iconColor: '#fa755a'
-    }
-  }
-}
-const ELEMENTS_OPTIONS = {
-  fonts: [
-    {
-      cssSrc: 'https://fonts.googleapis.com/css?family=Roboto'
-    }
-  ]
-}
-
-interface ICheckoutForm {
+interface IStripeForm {
   price: string
   billingDetails?: any
   setFeedBack: any
 }
-export default function CheckoutForm({ price, billingDetails, setFeedBack }: ICheckoutForm) {
+export default function StripeForm({ price, billingDetails, setFeedBack }: IStripeForm) {
   const stripe = useStripe()
   const elements = useElements()
 
@@ -123,21 +97,19 @@ export default function CheckoutForm({ price, billingDetails, setFeedBack }: ICh
   }
 
   return (
-    <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
-      <form onSubmit={onSubmit}>
-        <FormControl id="cardInfo" mb="1em" w="20em">
-          <FormLabel htmlFor="cardInfo">Card</FormLabel>
-          <CardElement className="sr-input sr-card-element" onChange={onHandleCard} />
-          <ErrorMessage error={card?.error.mesage} />
-        </FormControl>
+    <form onSubmit={onSubmit}>
+      <FormControl id="cardInfo" mb="1em" w="20em">
+        <FormLabel htmlFor="cardInfo">Card</FormLabel>
+        <CardElement className="sr-input sr-card-element" onChange={onHandleCard} />
+        <ErrorMessage error={card?.error?.mesage} />
+      </FormControl>
 
-        <Button type="submit" disabled={card?.isLoading || !stripe}>
-          {card?.isLoading ? 'Loading...' : `Pay ${price}`}
-        </Button>
-        <Button type="reset" onClick={onReset}>
-          Reset
-        </Button>
-      </form>
-    </Elements>
+      <Button type="submit" disabled={card?.isLoading || !stripe}>
+        {card?.isLoading ? 'Loading...' : `Pay ${price}`}
+      </Button>
+      <Button type="reset" onClick={onReset}>
+        Reset
+      </Button>
+    </form>
   )
 }

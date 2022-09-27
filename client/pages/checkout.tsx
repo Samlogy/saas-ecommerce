@@ -20,19 +20,29 @@ import { useRouter } from 'next/router'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { Elements } from '@stripe/react-stripe-js'
 import { MdOutlineLocalShipping, MdOutlinePayment } from 'react-icons/md'
 import { RiBillLine } from 'react-icons/ri'
 
 import {
-  CheckoutForm,
   ErrorMessage,
   FeedBack,
   InputField,
   Layout,
   StepForm,
+  StripeForm,
   TextField
 } from '../components'
+import stripePromise from '../lib/stripe'
 import { useShoppingCartStore } from '../store'
+
+const ELEMENTS_OPTIONS = {
+  fonts: [
+    {
+      cssSrc: 'https://fonts.googleapis.com/css?family=Roboto'
+    }
+  ]
+}
 
 export default function Checkout() {
   const [feedBack, setFeedBack] = useState({
@@ -260,9 +270,11 @@ function ShippingMethod({
 function Payment({ setFeedBack }: { setFeedBack: any }) {
   const price = '25£' // get price to pay
   return (
-    <Flex flexDir="column" align="center" justify="center" m="3rem 0 1rem 0">
-      <CheckoutForm price={price} setFeedBack={setFeedBack} />
-    </Flex>
+    <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
+      <Flex flexDir="column" align="center" justify="center" m="3rem 0 1rem 0">
+        <StripeForm price={price} setFeedBack={setFeedBack} />
+      </Flex>
+    </Elements>
   )
 }
 

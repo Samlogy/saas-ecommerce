@@ -1,4 +1,5 @@
-import { Button, Divider, Flex, Text } from '@chakra-ui/react'
+import { Box, Button, Divider, Flex, Text } from '@chakra-ui/react'
+import Link from 'next/link'
 import { CartItem, CustomDrawer, View } from '../components'
 import { formatCurrency } from '../lib/utils/fonctions'
 import { useShoppingCartStore } from '../store'
@@ -51,16 +52,23 @@ export default function ShoppingCart() {
     <Flex flexDir="column" align="center">
       <Divider my="1rem" />
       <Text mb="1rem" fontSize=".9rem" color="gray.500">
-        Shipping and taxes calculated at checkout.{' '}
+        Shipping and taxes calculated at checkout.
       </Text>
-      <Button w="full" bg={'accent_3'} _hover={{ bg: 'accent_2' }} color={'white'}>
-        Checkout{' '}
-      </Button>
-      <Text display="flex" mt="1rem">
+      <Link href="/checkout" passHref>
+        <Button w="full" bg={'accent_3'} _hover={{ bg: 'accent_2' }} color={'white'}>
+          Checkout
+        </Button>
+      </Link>
+      <Box as="span" my=".5em">
         or
-        <Text textColor="accent_3" ml="1rem" fontSize=".9rem" _hover={{ cursor: 'pointer' }}>
-          Continue Shopping →{' '}
-        </Text>
+      </Box>
+      <Text
+        textColor="accent_3"
+        fontSize=".9rem"
+        _hover={{ cursor: 'pointer' }}
+        onClick={() => setOpen(isOpen)}
+      >
+        Continue Shopping →
       </Text>
     </Flex>
   )

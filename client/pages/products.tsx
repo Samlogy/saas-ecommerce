@@ -7,7 +7,7 @@ import {
   useBreakpointValue,
   useColorModeValue
 } from '@chakra-ui/react'
-import { useRef, useState, useMemo } from 'react'
+import { useRef, useState, useMemo, useCallback } from 'react'
 import { BsFilterLeft } from 'react-icons/bs'
 
 import {
@@ -81,7 +81,7 @@ export default function Products({ products }: { products: IProduct[] }) {
 
     return list
   }
-  const filterData = getFilters(filters)
+  const filterData = useCallback(getFilters(filters), [filters])
 
   return (
     <Layout isHeaderVisible isFooterVisible>

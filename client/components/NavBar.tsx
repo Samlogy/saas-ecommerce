@@ -159,10 +159,10 @@ const NavMenuConnected = ({ avatar }: { avatar: string }) => {
 const NavMenuUnConnected = () => {
   return (
     <Flex flexDir={['column', 'column', 'row']}>
-      <Button colorScheme="green" px=".5em" mt={['1em', '', '0']}>
+      <Button colorScheme="green" mt={['1em', '', '0']}>
         Sign In
       </Button>
-      <Button colorScheme="green" variant="outline" ml=".2em" px=".5em" mt={['1em', '', '0']}>
+      <Button colorScheme="green" variant="outline" ml=".2em" mt={['1em', '', '0']}>
         Sign Up
       </Button>
     </Flex>

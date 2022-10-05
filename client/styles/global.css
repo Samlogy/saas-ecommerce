@@ -29,8 +29,7 @@ body {
 
 
 /* Inputs */
-.sr-input,
-input[type="text"] {
+.sr-input {
   border: 1px solid var(--gray-border);
   border-radius: 1em; 
   padding: .7em;
@@ -46,14 +45,12 @@ input[type="text"] {
 
 .sr-input:focus,
 .StripeElement--focus,
-input[type="text"]:focus,
-button:focus,
+
 .focused {
  border: 2px solid green;
 }
 
-.sr-input::placeholder,
-input[type="text"]::placeholder {
+.sr-input::placeholder {
   color: var(--gray-light);
 }
 

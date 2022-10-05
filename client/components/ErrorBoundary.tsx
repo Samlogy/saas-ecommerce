@@ -1,42 +1,12 @@
-import { Button } from '@chakra-ui/react'
-import React, { Component, ErrorInfo, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
-interface Props {
-  children?: ReactNode
-}
-
-interface State {
-  hasError: boolean
-}
-
-class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false
-  }
-
-  public static getDerivedStateFromError(_: Error): State {
-    // Update state so the next render will show the fallback UI.
-    return { hasError: true }
-  }
-
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo)
-  }
-
-  public render() {
-    if (this.state.hasError) {
-      return (
-        <div>
-          <h2>Oops, there is an error!</h2>
-          <Button type="button" onClick={() => this.setState({ hasError: false })}>
-            Try again?
-          </Button>
-        </div>
-      )
+export default function ErrorBoundary({ children }: { children: ReactNode }) {
+  try {
+    return <> {children} </>
+  } catch (err: any) {
+    if (process.env.NEXT_ENV === 'development') {
+      return <code> {JSON.stringify(err, null, 5)} </code>
     }
-
-    return this.props.children
+    return null
   }
 }
-
-export default ErrorBoundary

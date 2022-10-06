@@ -16,7 +16,7 @@ import {
   Tooltip,
   useColorModeValue
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { IProduct } from '../lib/interfaces'
 import { generateQuery, loadFavouriteProducts } from '../lib/utils/fonctions'
 import { useFilterStore } from '../store'
@@ -65,7 +65,7 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
     if (e.target == null) return
 
     setFilters({ ...filters, [e.target.name]: e.target.value })
-    const query = generateQuery(filters)
+    const query = useCallback(generateQuery(filters), [filters])
     // call api --> filter
     console.log(query)
   }
@@ -77,7 +77,7 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
       flexDir={'column'}
       justifyContent={'flex-start'}
       alignItems={'center'}
-      borderRadius="10px"
+      borderRadius="5px"
       p="1.5rem .5rem"
     >
       <InputField
@@ -88,7 +88,7 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
         placeholder="Search..."
         bg={itemBgColor}
         w="calc(15rem + 2rem)"
-        borderRadius="10px"
+        borderRadius="5px"
       />
 
       <AccordionCustom
@@ -289,7 +289,7 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
         placeholder="Search..."
         bg={itemBgColor}
         w="7rem"
-        borderRadius="10px"
+        borderRadius="5px"
       />
       to:
       <InputField
@@ -300,7 +300,7 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
         placeholder="Search..."
         bg={itemBgColor}
         w="7rem"
-        borderRadius="10px"
+        borderRadius="5px"
       />
     </Flex>
   )
@@ -315,8 +315,9 @@ function AccordionCustom({ title, body }: IAccordionCustom) {
         <AccordionButton
           bg={itemBgColor}
           color={itemColor}
+          _focus={{ outline: 'none' }}
           _expanded={{ bg: 'accent_2', color: 'white' }}
-          borderRadius="10px"
+          borderRadius="5px"
         >
           <Box flex="1" textAlign="left">
             {title}

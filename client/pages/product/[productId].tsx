@@ -177,14 +177,7 @@ export default function Product({ product, comments, relatedProducts }: IProduct
             </View>
 
             <View cond={quantity > 0}>
-              <Flex
-                alignItems={'center'}
-                justify="center"
-                p=".5rem"
-                borderRadius={'.5rem'}
-                border="1px solid"
-                borderColor={useColorModeValue('gray_3', 'gray_5')}
-              >
+              <Flex alignItems={'center'} justify="center">
                 <IconButton
                   aria-label="decrease-quantity"
                   onClick={() => decreaseQuantity(product?.id)}

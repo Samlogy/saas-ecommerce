@@ -80,7 +80,7 @@ export default function NavBar() {
 
   return (
     <Box bg={bgColor} px="2rem" pos="fixed" w="full" boxShadow={'md'} zIndex={200}>
-      <Flex h="9vh" align="center" justify="space-between">
+      <Flex h="10vh" align="center" justify="space-between">
         <IconButton
           size={'md'}
           icon={menuIcon}
@@ -122,8 +122,12 @@ export default function NavBar() {
             </NavLink>
           ))}
         </Stack>
+
         {!isVisible && (
           <Flex flexDir="column" align={'center'}>
+            <SelectLanguage />
+            <DarkModeToggle />
+            <ShoppingCartIcon value={quantityTotal} />
             {user ? <NavMenuConnected avatar={user?.avatar} /> : <NavMenuUnConnected />}
           </Flex>
         )}

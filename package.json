@@ -1,0 +1,14 @@
+{
+  "name": "saas-ecommerce-scripts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Samlogy/nextjs-ecommerce.git",
+  "author": "samy senani <aceportgasd235@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "client": "cd client && yarn dev",
+    "server": "cd api && yarn dev",
+    "admin": "cd admin && yarn dev",
+    "all": "cd client && yarn dev && cd ../api && yarn dev && cd ../admin && yarn dev"
+  }
+}

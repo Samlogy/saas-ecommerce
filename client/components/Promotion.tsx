@@ -5,11 +5,11 @@ export default function Promotion({ data }: { data: any }) {
   return (
     <Flex
       flexDir={['column', 'column', 'row']}
-      justifyContent={['center', '', 'space-evenly', '']}
+      justify={['center', '', 'space-evenly', '']}
       mt="1.5rem"
       p="2.5rem 1.5rem"
     >
-      <Flex flexDir={'column'} justifyContent="center" alignItems="flex-start">
+      <Flex flexDir={'column'} justify="center" alignItems={['center', '', 'flex-start']}>
         <Heading
           fontSize="24px"
           mb="1rem"

@@ -6,6 +6,7 @@ import { FavouriteButton, Rating, View } from '../components'
 import { formatCurrency } from '../lib/utils/fonctions'
 import { useShoppingCartStore } from '../store'
 import { IProduct } from '../lib/interfaces'
+import { motion } from 'framer-motion'
 
 interface IProductCart {
   data: IProduct
@@ -34,9 +35,21 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
   const isNew = true
 
   return (
-    <Link href={`http://localhost:3000/product/${data?.id}`}>
-      <Flex m=".5rem" w="18rem" alignItems="center" justifyContent="center" cursor={'pointer'}>
-        <Box bg={bgColor} w="full" rounded="lg" shadow="lg" position="relative">
+    <Link href={`http://localhost:3000/product/${data?.id}`} passHref>
+      <Flex
+        m=".5rem"
+        w="18rem"
+        align="center"
+        justify="center"
+        cursor={'pointer'}
+        // anim
+        as={motion.div}
+        layout
+        initial={{ scale: 1 }}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <Box bg={bgColor} w="full" rounded="lg" shadow="lg" pos="relative">
           <FavouriteButton data={data} />
 
           <Image
@@ -56,13 +69,13 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
               )}
             </Box>
 
-            <Flex justifyContent="space-between" alignContent="center">
+            <Flex justify="space-between" alignContent="center">
               <Box fontSize="1.2rem" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
                 {data.name}
               </Box>
             </Flex>
 
-            <Flex flexDir={'column'} justifyContent="space-between" alignContent="center">
+            <Flex flexDir={'column'} justify="space-between" alignContent="center">
               <Flex>
                 <Rating initRate={data.rate} readOnly={readOnly} />
                 <Reviews data={data?.reviews} />
@@ -86,15 +99,9 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
                 Add to Cart
               </Button>
             </View>
+
             <View cond={quantity > 0}>
-              <Flex
-                alignItems={'center'}
-                justify="center"
-                p=".25rem"
-                borderRadius={'.5rem'}
-                border="1px solid"
-                borderColor={useColorModeValue('gray_3', 'gray_5')}
-              >
+              <Flex align={'center'} justify="center">
                 <IconButton
                   aria-label="decrease-quantity"
                   onClick={e => handleQuantity(e, 'dec')}

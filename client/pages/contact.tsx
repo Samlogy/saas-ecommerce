@@ -130,6 +130,7 @@ export default function contact() {
                 register={register}
                 errors={errors}
                 label="Your Name (Optional)"
+                placeholder="Full Name"
                 iconLeft={<BsPerson color="gray_1" />}
               />
 
@@ -138,6 +139,7 @@ export default function contact() {
                 register={register}
                 errors={errors}
                 label="Email"
+                placeholder="Email"
                 iconLeft={<MdOutlineEmail color="gray_1" />}
               />
 
@@ -146,6 +148,7 @@ export default function contact() {
                 register={register}
                 errors={errors}
                 label="Message"
+                placeholder="Message"
                 iconLeft={<MdOutlineEmail color="gray_1" />}
               />
 

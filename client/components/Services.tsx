@@ -1,4 +1,5 @@
 import { Flex, Image, Text, useColorModeValue } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
 import { SectionWrapper } from '../components'
 
 export default function Services({ data }: { data: any }) {
@@ -19,6 +20,11 @@ export default function Services({ data }: { data: any }) {
               p="2rem 1.5rem"
               m={'.5rem'}
               bg={bgColor}
+              // anim
+              as={motion.div}
+              layout
+              initial={{ scale: 1 }}
+              whileHover={{ scale: 1.02 }}
             >
               <Text fontWeight={'600'} fontSize="1.3rem" textAlign="center" mb=".75rem">
                 {service.title}{' '}

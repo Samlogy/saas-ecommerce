@@ -1,218 +1,189 @@
-import {
-  Box,
-  Button,
-  chakra,
-  Container,
-  Flex,
-  Heading,
-  Image,
-  Input,
-  Stack,
-  Text,
-  useColorModeValue,
-  VisuallyHidden
-} from '@chakra-ui/react'
+import { Box, Button, Flex, Link as ChakraLink, Text, useColorModeValue } from '@chakra-ui/react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
+import { MdEmail, MdLocationOn, MdOutlineEmail, MdPhone } from 'react-icons/md'
+import dynamic from 'next/dynamic'
+import { useState } from 'react'
 import Link from 'next/link'
-import React, { ReactNode } from 'react'
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
-import { Logo } from '../public/icons'
-import card1 from '../public/images/card1.png'
-import card2 from '../public/images/card2.png'
-import card3 from '../public/images/card3.png'
-import card4 from '../public/images/card4.png'
+
+//import { supabase } from '../lib/supabaseClient'
+import { subscribeSchema } from '../lib/validation'
+
+const DynamiFeedBack = dynamic(() => import('./FeedBack'))
+//const DynamicCustomButton = dynamic(() => import('./CustomButton'))
+const DynamicInputField = dynamic(() => import('./InputField'))
+
+const services = ['web development', 'mobile developement', 'website SEO', 'Hosting']
+const sitemap = ['home', 'about', 'projects', 'services', 'contact']
+const contacts = [
+  {
+    data: '+213-540498180',
+    icon: <MdPhone size="20px" />
+  },
+  {
+    data: 'senanisammy@gmail.com',
+    icon: <MdEmail size="20px" />
+  },
+  {
+    data: 'Algeria, Tizi-Ouzou',
+    icon: <MdLocationOn size="20px" />
+  }
+]
 
 export default function Footer() {
-  const textColor = useColorModeValue('black', 'gray.100')
-  const bgColor = useColorModeValue('gray.100', 'gray.700')
-  const borderColor = useColorModeValue('gray.300', 'gray.600')
+  const bgColor = useColorModeValue('white', 'gray_2')
+  const logoColor = useColorModeValue('accent_4', 'accent_7')
+  const accentHoverColor = useColorModeValue('accent_2', 'accent_7')
+  const inputColor = useColorModeValue('gray_8', 'gray_3')
+
+  const [feedBack, setFeedBack] = useState({
+    isOpen: false,
+    type: ''
+  })
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(subscribeSchema)
+  })
+
+  const onSubscribe = async data => {
+    try {
+      /*
+      const { error } = await supabase.from('subscriber').insert({ email: data?.emailSub }).single()
+      if (!error) {
+        onHandleFeedBack(true, 'success')
+        return
+      }
+     */
+      onHandleFeedBack(true, 'error')
+    } catch (err: any) {
+      onHandleFeedBack(true, 'error')
+    }
+  }
+
+  const onHandleFeedBack = (isOpen: boolean, type?: string) => {
+    setFeedBack(prevState => {
+      return {
+        ...prevState,
+        isOpen,
+        type
+      }
+    })
+  }
 
   return (
-    <Box bg={bgColor} color={textColor}>
-      <Flex
-        justify={['flex-start', '', 'space-between', '']}
-        align={'center'}
-        flexWrap="wrap"
-        p=".5rem 1rem"
-      >
-        <Flex flexDir={'column'}>
-          <Box mb="1rem">
-            <Logo />
-          </Box>
-          <Subscribe />
+    <Flex
+      justify="space-between"
+      align="center"
+      flexWrap="wrap"
+      p="2em 1.5em"
+      bg={bgColor}
+      boxShadow="dark-lg"
+    >
+      <DynamiFeedBack
+        isOpen={feedBack?.isOpen}
+        onClose={() => onHandleFeedBack(false, '')}
+        type={feedBack?.type}
+      />
+      <Flex flexDir="column" w="20rem" mb="1em">
+        <Box mb="1em" fontWeight="600" fontSize="1.2em" fontStyle="italic" color={logoColor}>
+          E-commerce
+        </Box>
+        <Text mb="1em" fontWeight="600" fontSize="1.1em">
+          Subscribe to our newsletter to stay updated
+        </Text>
+        <form onSubmit={handleSubmit(onSubscribe)}>
+          <Flex flexWrap="wrap">
+            <DynamicInputField
+              name="emailSub"
+              register={register}
+              errors={errors}
+              autoComplete="on"
+              placeholder="Email"
+              iconLeft={<MdOutlineEmail color="gray_1" />}
+              bg={inputColor}
+              w="15rem"
+            />
+
+            <Button type="submit" variant="solid" colorScheme="green" ml=".25em" w="5.5em">
+              Subscribe
+            </Button>
+          </Flex>
+        </form>
+      </Flex>
+
+      <Flex flexDir="column" justify="space-between" mb="1em" w="8rem" h="10em">
+        <Text mb="1em" fontWeight="600" fontSize="1.1em">
+          Site map
+        </Text>
+        <Flex flexDir="column">
+          {sitemap.map((el: any, idx: number) => (
+            <Link key={idx} href={`#${el}`} passHref>
+              <a
+                style={{
+                  width: '4.5em',
+                  textTransform: 'capitalize',
+                  marginBottom: '.25em',
+                  fontSize: '.95rem'
+                }}
+              >
+                {el}
+              </a>
+            </Link>
+          ))}
+        </Flex>
+      </Flex>
+
+      <Flex flexDir="column" justify="space-between" mb="1em" w="auto" h="10em">
+        <Text mb="1em" fontWeight="600" fontSize="1.1em">
+          Our Services
+        </Text>
+        <Flex flexDir="column">
+          {services.map((el: any, idx: number) => (
+            <Text
+              key={idx}
+              textTransform="capitalize"
+              mb=".25em"
+              fontSize=".95rem"
+              _hover={{ color: accentHoverColor, cursor: 'pointer' }}
+            >
+              {el}
+            </Text>
+          ))}
+        </Flex>
+      </Flex>
+
+      <Flex flexDir="column" justify="space-between" mb="1em" w="auto" h="11em" mt="1rem">
+        <Text mb="1em" fontWeight="600" fontSize="1.1em">
+          Get in Touch
+        </Text>
+        <Flex flexDir="column">
+          {contacts.map((el, idx) => (
+            <Flex key={idx} mb=".25em">
+              <Box as="span" color={logoColor}>
+                {el.icon}
+              </Box>
+              <Box
+                as="span"
+                ml=".5em"
+                fontSize=".95rem"
+                _hover={{ color: accentHoverColor, cursor: 'pointer' }}
+              >
+                {el.data}
+              </Box>
+            </Flex>
+          ))}
         </Flex>
 
-        <SocialMedia />
-        <Links />
-        <PaymentAccpect />
-      </Flex>
-
-      <Box border="1px solid" borderColor={borderColor}>
-        <Container
-          as={Stack}
-          maxW={'6xl'}
-          py={4}
-          direction={{ base: 'column', md: 'row' }}
-          spacing={4}
-          justify={{ base: 'center', md: 'space-between' }}
-          align={{ base: 'center', md: 'center' }}
-        >
-          <Text fontSize=".8rem"> © 2022 Ecommerce. All rights reserved </Text>
-          <Flex>
-            <Box color="accent_2" fontSize=".8rem">
-              <Link href="/conditions"> Conditions and terms </Link>{' '}
-            </Box>
-            <Text mx=".5rem" fontSize=".8rem">
-              |{' '}
-            </Text>
-            <Box color="accent_2" fontSize=".8rem">
-              <Link href="/privacy"> Privacy </Link>{' '}
-            </Box>
-          </Flex>
-        </Container>
-      </Box>
-    </Box>
-  )
-}
-
-const Subscribe = () => {
-  const inputColor = useColorModeValue('gray.200', 'gray.600')
-  const [email, setEmail] = React.useState('')
-  const onSubscribe = () => {
-    console.log('subscribed !!')
-  }
-  return (
-    <Flex flexDir={'column'} w="15rem" m=".5rem">
-      <Heading size="12rem" mb="1rem" color="accent_2">
-        {' '}
-        Subscribe to our newsletter to stay update{' '}
-      </Heading>
-      <Flex
-        justifyContent={'space-between'}
-        bg={inputColor}
-        p=".5rem"
-        borderRadius={'10px'}
-        w="15rem"
-      >
-        <Input
-          type="text"
-          value={email}
-          size="md"
-          bg="transparent"
-          border="none"
-          p="0"
-          _focus={{ border: 'none' }}
-          onChange={(e: any) => setEmail(e.target.value)}
-          placeholder="Enter your email"
-        />
-        <Button
-          type="submit"
-          bg="accent_4"
-          fontSize={'.9rem'}
-          color="white"
-          borderRadius={'10px'}
-          _hover={{ bg: 'accent_3' }}
-          onClick={() => onSubscribe()}
-        >
-          Subscribe
-        </Button>
-      </Flex>
-    </Flex>
-  )
-}
-const PaymentAccpect = () => {
-  return (
-    <Flex flexDir={'column'} m=".5rem" w="7rem">
-      <Heading size="1rem" mb="1rem" color="accent_2">
-        We accept all credit cards{' '}
-      </Heading>
-      <Flex flexDir={'column'} justifyContent={'space-between'} alignItems="center">
-        <Image src={card1.src} boxSize="30px" borderRadius={'5px'} mb=".5rem" />
-        <Image src={card2.src} boxSize="30px" borderRadius={'5px'} mb=".5rem" />
-        <Image src={card3.src} boxSize="30px" borderRadius={'5px'} mb=".5rem" />
-        <Image src={card4.src} boxSize="30px" borderRadius={'5px'} mb=".5rem" />
-      </Flex>
-    </Flex>
-  )
-}
-const SocialMedia = () => {
-  return (
-    <Flex flexDir={'column'} m=".5rem" w="6.5rem">
-      <Heading size="12rem" mb="1rem" color="accent_2">
-        {' '}
-        Follow us on{' '}
-      </Heading>
-      <Flex flexDir={'column'} my=".5rem" justifyContent={'center'} alignItems="center">
-        <SocialButton label={'Twitter'} href={'#'}>
-          <FaTwitter />
-        </SocialButton>
-
-        <SocialButton label={'YouTube'} href={'#'}>
-          <FaYoutube />
-        </SocialButton>
-
-        <SocialButton label={'Instagram'} href={'#'}>
-          <FaInstagram />
-        </SocialButton>
-      </Flex>
-    </Flex>
-  )
-}
-const Links = () => {
-  return (
-    <Flex flexDir={'column'} mb="1rem" m=".5rem" w="6.5rem">
-      <Heading size="12rem" mb="1rem" color="accent_2">
-        Site Map{' '}
-      </Heading>
-      <Flex flexDir={'column'} my=".5rem">
-        <Link href={'/'}>
-          <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'accent_3' }}>
-            Home{' '}
-          </Box>
-        </Link>
-        <Link href={'/products'}>
-          <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'accent_3' }}>
-            Products{' '}
-          </Box>
-        </Link>
-        <Link href={'/contact'}>
-          <Box mb="1rem" _hover={{ cursor: 'pointer', color: 'accent_3' }}>
-            Contact{' '}
-          </Box>
+        <Link href="/contact" passHref>
+          <Button variant="outline" colorScheme="green" mt="1em">
+            contact us
+          </Button>
         </Link>
       </Flex>
     </Flex>
-  )
-}
-
-const SocialButton = ({
-  children,
-  label,
-  href
-}: {
-  children: ReactNode
-  label: string
-  href: string
-}) => {
-  return (
-    <chakra.button
-      bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
-      rounded={'full'}
-      w={8}
-      h={8}
-      mb="1rem"
-      cursor={'pointer'}
-      as={'a'}
-      href={href}
-      display={'inline-flex'}
-      alignItems={'center'}
-      justifyContent={'center'}
-      transition={'background 0.3s ease'}
-      _hover={{
-        bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200')
-      }}
-    >
-      <VisuallyHidden>{label}</VisuallyHidden>
-      {children}
-    </chakra.button>
   )
 }

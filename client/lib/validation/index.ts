@@ -67,3 +67,7 @@ export const checkoutchema = yup.object().shape({
   discountCode: yup.string()
   // payment method
 })
+
+export const subscribeSchema = yup.object().shape({
+  emailSub: yup.string().email('Enter a valid Email Address').required('Email Address required')
+})

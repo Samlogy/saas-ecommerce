@@ -1,4 +1,3 @@
-import { Select, useColorModeValue } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useLocale } from '../lib/hooks'
 
@@ -8,31 +7,29 @@ export default function SelectLanguage() {
   const router = useRouter()
   const { locale } = useLocale()
 
-  const bgColor = useColorModeValue('white', 'gray_2')
-  const bgHoverColor = useColorModeValue('gray_8', 'gray_3')
-
   const changeLanguage = (e: any) => {
+    e.preventDefault()
     const locale = e.target.value
     router.push(router.pathname, router.asPath, { locale })
   }
 
   return (
-    <Select
+    <select
       onChange={changeLanguage}
       defaultValue={locale}
-      bg={bgColor}
-      _hover={{ bg: bgHoverColor }}
-      _focus={{ border: 'none', outline: 'none' }}
-      textTransform="uppercase"
-      w="2.5em"
-      px="0!important"
-      icon=""
+      style={{
+        backgroundColor: 'transparent',
+        textTransform: 'uppercase',
+        width: '3em',
+        padding: '.2em',
+        borderRadius: '5px'
+      }}
     >
       {languages.map((lang: string, idx: number) => (
         <option key={idx} value={lang}>
           {lang}
         </option>
       ))}
-    </Select>
+    </select>
   )
 }

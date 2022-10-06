@@ -51,9 +51,9 @@ export default function Pagination({
         <Flex>
           <Button
             onClick={currentPage === paginate.lastPage ? () => onPrevious() : () => onNext()}
-            bg={bgColor}
-            color={textColor}
+            colorScheme="gray"
             m="1.5rem auto"
+            _focus={{ outline: 'none' }}
           >
             {currentPage === paginate.lastPage ? 'Load Less' : 'Load More'}
           </Button>
@@ -71,8 +71,8 @@ export default function Pagination({
             icon={<RiArrowLeftSLine size={22} color="gray" />}
             onClick={onPrevious}
             disabled={currentPage === paginate.firstPage}
-            bg={bgColor}
-            color={textColor}
+            colorScheme="gray"
+            _focus={{ outline: 'none' }}
           />
           {paginate.range.map(pageNumber => {
             if (pageNumber === DOTS) {
@@ -81,8 +81,9 @@ export default function Pagination({
 
             return (
               <Button
-                bg={currentPage === pageNumber ? 'gray_7' : 'gray_2'}
-                color={currentPage === pageNumber ? 'accent_3' : 'accent_4'}
+                colorScheme="gray"
+                color={currentPage === pageNumber ? 'accent_4' : ''}
+                _focus={{ outline: 'none' }}
                 onClick={() => onPageChange(pageNumber)}
               >
                 {pageNumber}
@@ -94,8 +95,8 @@ export default function Pagination({
             icon={<RiArrowRightSLine size={22} color="gray" />}
             onClick={onNext}
             disabled={paginate.lastPage === currentPage}
-            bg={bgColor}
-            color={textColor}
+            colorScheme="gray"
+            _focus={{ outline: 'none' }}
           />
         </Flex>
       </View>

@@ -19,7 +19,7 @@ export default function TextField({
   placeholder,
   ...restProps
 }: ITextField) {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+  const itemBgColor = useColorModeValue('white', 'gray_2')
   const width = restProps.w ? restProps.w : '20rem'
   const height = restProps.h ? restProps.h : '7rem'
   return (
@@ -31,7 +31,7 @@ export default function TextField({
           _placeholder={{ color: 'gray_4' }}
           isInvalid={errors[name] ? true : false}
           focusBorderColor={errors[name] ? 'error' : 'accent_5'}
-          borderRadius="10px"
+          borderRadius="5px"
           bg={itemBgColor}
           h={height}
           {...register(name)}
@@ -43,7 +43,7 @@ export default function TextField({
           placeholder={placeholder}
           _placeholder={{ color: 'gray_4' }}
           focusBorderColor={'accent_5'}
-          borderRadius="10px"
+          borderRadius="5px"
           h={height}
           bg={itemBgColor}
           {...restProps}

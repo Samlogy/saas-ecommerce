@@ -1,5 +1,5 @@
 import React from 'react'
-import { Select, FormControl, FormLabel } from '@chakra-ui/react'
+import { Select, FormControl, FormLabel, useColorModeValue } from '@chakra-ui/react'
 import { ErrorMessage } from '../components'
 
 interface ISelectField {
@@ -23,9 +23,10 @@ export default function SelectField({
   children,
   ...restProps
 }: ISelectField) {
+  const itemBgColor = useColorModeValue('white', 'gray_2')
   const width = restProps.w ? restProps.w : '20rem'
   return (
-    <FormControl id={name} mb=".5rem" w={width}>
+    <FormControl id={name} mb="1em" w={width}>
       {label && <FormLabel> {label} </FormLabel>}
       {register ? (
         <Select
@@ -35,6 +36,7 @@ export default function SelectField({
           focusBorderColor={errors[name] && register ? 'error' : 'accent_5'}
           borderRadius="5px"
           icon={icon && icon}
+          bg={itemBgColor}
           {...register(name)}
           {...restProps}
         >
@@ -48,6 +50,7 @@ export default function SelectField({
           focusBorderColor={'accent_5'}
           borderRadius="5px"
           icon={icon && icon}
+          bg={itemBgColor}
           {...restProps}
         >
           {children}

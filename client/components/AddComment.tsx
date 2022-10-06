@@ -30,15 +30,14 @@ export default function AddComment() {
     setIsOpen(false)
   }
 
-  const inputColor = useColorModeValue('gray_9', 'gray_3')
   const Form = (
     <form onSubmit={handleSubmit(onAdd)}>
       <TextField
         name="comment"
         register={register}
         errors={errors}
+        bg={useColorModeValue('white', 'gray_3')}
         label="Your Comment"
-        bg={inputColor}
         placeholder="Your Comment ..."
         _placeholder={{ color: 'gray.500' }}
         w="100%"
@@ -66,7 +65,7 @@ export default function AddComment() {
       />
       <Button
         bg={'accent_3'}
-        _hover={{ bg: 'accent_2' }}
+        _hover={{ bg: 'accent_4' }}
         color={'white'}
         w="10rem"
         display={'flex'}

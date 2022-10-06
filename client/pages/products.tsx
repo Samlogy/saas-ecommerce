@@ -40,7 +40,7 @@ export default function Products({ products }: { products: IProduct[] }) {
   const filters = useFilterStore((state: any) => state.filters)
   const setFilters = useFilterStore((state: any) => state.setFilters)
 
-  const isMobile = useBreakpointValue({ base: true, md: false })
+  const isMobile = useBreakpointValue({ base: true, md: true, lg: false })
 
   const [isVisible, setIsVisible] = useState(false)
   const btnRef = useRef()
@@ -99,7 +99,7 @@ export default function Products({ products }: { products: IProduct[] }) {
           >
             Filter By
           </Text>
-          <View cond={!isMobile}>
+          <View cond={!isMobile} w="90%">
             <Filter setProducts={setProducts} />
           </View>
 
@@ -165,7 +165,7 @@ export default function Products({ products }: { products: IProduct[] }) {
           totalCount={allProducts.length}
           pageSize={PageSize}
           onPageChange={page => setCurrentPage(page)}
-          isMobile={isMobile ? true : false}
+          isMobile={isMobile}
         />
       </View>
     </Layout>

@@ -60,11 +60,7 @@ function Carousel({ data }) {
     lazyLoad: true,
     nextArrow: <SlickArrowRight />,
     prevArrow: <SlickArrowLeft />,
-    appendDots: dots => (
-      <Box>
-        <ul style={{ margin: '0px' }}>{dots}</ul>
-      </Box>
-    ),
+
     responsive: [
       {
         breakpoint: 1024,
@@ -78,7 +74,7 @@ function Carousel({ data }) {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          dots: false
+          arrows: false
         }
       }
     ]
@@ -93,13 +89,12 @@ function Carousel({ data }) {
               flexDir={'column'}
               justifyContent="space-between"
               alignItems={'center'}
-              boxShadow={'md'}
               w="15rem"
               maxH="24rem"
               borderRadius={'10px'}
               p="1.5rem"
               m={'1rem .5rem'}
-              bg={bgColor}
+              //  bg={bgColor}
             >
               <Box mr="auto">
                 <IconReview color="#38a169" />

@@ -8,14 +8,10 @@ import {
   Promotion,
   QuestionsAnswers,
   Services,
-  Testimonials,
-  FeedBack
+  Testimonials
 } from '../components'
 import heroImage from '../public/images/home.png'
 import productImage from '../public/images/product.png'
-
-import { useState } from 'react'
-import { Button, useToast } from '@chakra-ui/react'
 
 const questionsanswersdata = [
   {
@@ -172,8 +168,6 @@ const promotionData = {
 }
 
 export default function Home() {
-  const [isOpen, setOpen] = useState(true)
-  const toast = useToast()
   return (
     <Layout isHeaderVisible isFooterVisible>
       <BackTop />

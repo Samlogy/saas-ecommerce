@@ -16,12 +16,12 @@ export default function Testimonials({ data }: { data: any }) {
   )
 }
 
-const SlickArrowLeft = ({ onClick }: { onClick: any }) => {
+const SlickArrowLeft = props => {
   return (
     <IconButton
       aria-label="previous-slide"
       icon={<RiArrowLeftSLine size={24} />}
-      onClick={onClick}
+      onClick={props?.props}
       pos="absolute"
       left="0"
       top="11rem"
@@ -32,12 +32,12 @@ const SlickArrowLeft = ({ onClick }: { onClick: any }) => {
   )
 }
 
-const SlickArrowRight = ({ onClick }: { onClick: any }) => {
+const SlickArrowRight = props => {
   return (
     <IconButton
       aria-label="next-slide"
       icon={<RiArrowRightSLine size={24} />}
-      onClick={onClick}
+      onClick={props?.onClick}
       pos="absolute"
       right="0"
       top="11rem"
@@ -57,40 +57,34 @@ function Carousel({ data }) {
     slidesToScroll: 1,
     slidesToShow: 3,
     initialSlide: 0,
+    lazyLoad: true,
     nextArrow: <SlickArrowRight />,
     prevArrow: <SlickArrowLeft />,
     appendDots: dots => (
       <Box>
-        <ul style={{ margin: '0px' }}> {dots} </ul>
+        <ul style={{ margin: '0px' }}>{dots}</ul>
       </Box>
     ),
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
           slidesToShow: 2,
           slidesToScroll: 1
         }
       },
       {
-        breakpoint: 480,
+        breakpoint: 600,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
+          slidesToScroll: 1,
+          dots: false
         }
       }
     ]
   }
   return (
-    <>
+    <Box w="90%" mx="auto">
       <Slider {...settings}>
         {data.length > 0 &&
           data.map((el: any, idx: number) => (
@@ -134,6 +128,6 @@ function Carousel({ data }) {
             </Flex>
           ))}
       </Slider>
-    </>
+    </Box>
   )
 }

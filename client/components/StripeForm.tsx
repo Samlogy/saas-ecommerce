@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel } from '@chakra-ui/react'
+import { Button, Flex, FormControl, FormLabel } from '@chakra-ui/react'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { useState } from 'react'
 import ErrorMessage from './ErrorMessage'
@@ -104,17 +104,19 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
         <ErrorMessage error={card?.error?.mesage} />
       </FormControl>
 
-      <Button
-        type="submit"
-        variant="solid"
-        colorScheme="green"
-        disabled={card?.isLoading || !stripe}
-      >
-        {card?.isLoading ? 'Loading...' : `Pay ${price}`}
-      </Button>
-      <Button type="reset" variant="ghost" colorScheme="green" onClick={onReset}>
-        Reset
-      </Button>
+      <Flex justify="flex-end">
+        <Button type="reset" variant="ghost" colorScheme="green" onClick={onReset}>
+          Reset
+        </Button>
+        <Button
+          type="submit"
+          variant="solid"
+          colorScheme="green"
+          disabled={card?.isLoading || !stripe}
+        >
+          {card?.isLoading ? 'Loading...' : `Pay ${price}`}
+        </Button>
+      </Flex>
     </form>
   )
 }

@@ -1,24 +1,22 @@
-import { Button, Flex } from '@chakra-ui/react'
+import { Button, Flex, useColorModeValue } from '@chakra-ui/react'
 
 interface IMultiStepForm {
-  stepTitles: any
-  stepForm: any
+  steps: any
   isValid: boolean
   handleSubmit: any
   setStep: any
-  step: number
-  watch: any
+  currentStep: number
   nbrSteps: number
+  [restProps: string]: any
 }
 export default function MultiStepForm({
-  stepTitles,
-  stepForm,
+  steps,
   isValid,
   handleSubmit,
   setStep,
-  step,
-  watch,
-  nbrSteps = 3
+  currentStep,
+  nbrSteps = 3,
+  ...restProps
 }: IMultiStepForm) {
   const NBR_STEPS = nbrSteps
 
@@ -28,59 +26,56 @@ export default function MultiStepForm({
     console.log(data)
   }
   const onNextStep = async () => {
-    if (step < NBR_STEPS) {
+    if (currentStep < NBR_STEPS) {
       setStep(prev => prev + 1)
       return
     } else if (cantNext) return
   }
   const onPreviousStep = () => {
-    if (step === 1) {
+    if (currentStep === 1) {
       return
     } else {
       setStep(prev => prev - 1)
     }
   }
 
-  const cantPrevious = step === 1
-  const cantNext = step === NBR_STEPS || !isValid
+  const cantPrevious = currentStep === 1
+  const cantNext = currentStep === NBR_STEPS || !isValid
+
+  const { watch } = restProps
 
   return (
-    <>
+    <Flex flexDir="column" w={'90%'} mx="auto">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Flex
-          flexDir="column"
-          justify="center"
-          align="center"
-          w="50%"
-          m="auto"
-          p="2em"
-          border="1px solid"
-          borderColor="gray.500"
-          borderRadius="10px"
-        >
+        <>
           <Flex justify="space-between" align="center" mb="1em" w="100%">
-            <Button onClick={onPreviousStep} disabled={cantPrevious}>
+            <Button
+              variant="outline"
+              colorScheme="green"
+              onClick={onPreviousStep}
+              disabled={cantPrevious}
+            >
               Prev
             </Button>
             <Flex flexDir="column" justify="center" align="center" textTransform="capitalize">
-              {`${step} / ${NBR_STEPS}`}
-              {stepTitles[step].title}
+              {`${currentStep} / ${NBR_STEPS}`}
+              {steps[currentStep].label}
             </Flex>
-            <Button onClick={onNextStep} disabled={cantNext}>
+            <Button variant="outline" colorScheme="green" onClick={onNextStep} disabled={false}>
               Next
             </Button>
           </Flex>
 
-          {stepForm[step]}
+          {steps[currentStep].content}
 
           {cantNext && isValid && (
             <Button type="submit" ml="auto" disabled={!cantNext} onClick={() => onSubmit}>
               Submit
             </Button>
           )}
-        </Flex>
+        </>
       </form>
       <code> {JSON.stringify(watch(), null, 2)} </code>
-    </>
+    </Flex>
   )
 }

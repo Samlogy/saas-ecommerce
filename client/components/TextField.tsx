@@ -20,10 +20,8 @@ export default function TextField({
   ...restProps
 }: ITextField) {
   const itemBgColor = useColorModeValue('white', 'gray_3')
-  const width = restProps.w ? restProps.w : '20rem'
-  const height = restProps.h ? restProps.h : '7rem'
   return (
-    <FormControl id={name} mb="1em" w={width}>
+    <FormControl id={name} mb="1em" w={restProps.w || ['90%', '20rem']}>
       {label && <FormLabel> {label} </FormLabel>}
       {register ? (
         <Textarea
@@ -33,7 +31,7 @@ export default function TextField({
           focusBorderColor={errors[name] ? 'error' : 'accent_5'}
           borderRadius="5px"
           bg={itemBgColor}
-          h={height}
+          h={restProps.h || '7em'}
           {...register(name)}
           {...restProps}
         />
@@ -44,7 +42,7 @@ export default function TextField({
           _placeholder={{ color: 'gray_4' }}
           focusBorderColor={'accent_5'}
           borderRadius="5px"
-          h={height}
+          h={restProps.h || '7em'}
           bg={itemBgColor}
           {...restProps}
         />

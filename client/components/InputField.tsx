@@ -32,10 +32,9 @@ export default function InputField({
   iconRight,
   ...restProps
 }: IInputField) {
-  const width = restProps.w ? restProps.w : '20rem'
   const itemBgColor = useColorModeValue('white', 'gray_3')
   return (
-    <FormControl id={name} mb="1em" w={width}>
+    <FormControl id={name} mb="1em" w={restProps.w || ['90%', '20rem']}>
       {label && <FormLabel> {label} </FormLabel>}
       <InputGroup>
         {iconLeft && <InputLeftElement children={iconLeft} />}

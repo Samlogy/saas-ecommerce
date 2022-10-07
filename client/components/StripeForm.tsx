@@ -104,10 +104,15 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
         <ErrorMessage error={card?.error?.mesage} />
       </FormControl>
 
-      <Button type="submit" disabled={card?.isLoading || !stripe}>
+      <Button
+        type="submit"
+        variant="solid"
+        colorScheme="green"
+        disabled={card?.isLoading || !stripe}
+      >
         {card?.isLoading ? 'Loading...' : `Pay ${price}`}
       </Button>
-      <Button type="reset" onClick={onReset}>
+      <Button type="reset" variant="ghost" colorScheme="green" onClick={onReset}>
         Reset
       </Button>
     </form>

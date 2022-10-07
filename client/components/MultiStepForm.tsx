@@ -1,4 +1,4 @@
-import { Button, Flex, useColorModeValue } from '@chakra-ui/react'
+import { Box, Button, Flex, useColorModeValue } from '@chakra-ui/react'
 
 interface IMultiStepForm {
   steps: any
@@ -48,7 +48,7 @@ export default function MultiStepForm({
     <Flex flexDir="column" w={'90%'} mx="auto">
       <form onSubmit={handleSubmit(onSubmit)}>
         <>
-          <Flex justify="space-between" align="center" mb="1em" w="100%">
+          <Flex justify="space-around" align="center" mb="1em" w="100%">
             <Button
               variant="outline"
               colorScheme="green"
@@ -57,11 +57,25 @@ export default function MultiStepForm({
             >
               Prev
             </Button>
-            <Flex flexDir="column" justify="center" align="center" textTransform="capitalize">
-              {`${currentStep} / ${NBR_STEPS}`}
-              {steps[currentStep].label}
+            <Flex justify="center" align="center" textTransform="capitalize">
+              <Box
+                as={Flex}
+                justify="center"
+                align="center"
+                borderRadius="50%"
+                bg="gray_8"
+                color="gray_2"
+                w="3.5em"
+                h="3.5em"
+                p=".1em"
+              >
+                {`${currentStep} / ${NBR_STEPS}`}
+              </Box>
+              <Box as="span" ml=".5em">
+                {steps[currentStep].label}
+              </Box>
             </Flex>
-            <Button variant="outline" colorScheme="green" onClick={onNextStep} disabled={false}>
+            <Button variant="outline" colorScheme="green" onClick={onNextStep} disabled={cantNext}>
               Next
             </Button>
           </Flex>

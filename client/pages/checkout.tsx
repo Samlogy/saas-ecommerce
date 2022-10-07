@@ -164,13 +164,13 @@ export default function Checkout() {
 
 function BillingAddress({ errors, register }: { errors: any; register: any }) {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
+  const inputBgColor = useColorModeValue('white', 'gray_3')
   return (
     <Flex
       m="3rem 0 1rem 0"
       flexDir="column"
       align="center"
       justify="center"
-      w="50%"
       m="auto"
       p="2em"
       borderRadius="10px"
@@ -220,8 +220,11 @@ function BillingAddress({ errors, register }: { errors: any; register: any }) {
         // onChange={handleCheckbox}
         //value={isShipAddress}
         colorScheme={'green'}
+        bg={inputBgColor}
         w="20em"
         mb="1em"
+        p=".5em"
+        borderRadius="5px"
         isInvalid={errors['isShipAddress'] && register ? true : false}
         {...register('isShipAddress')}
         name="isShipAddress"
@@ -249,6 +252,7 @@ function ShippingMethod({
   shippingMethods: any
 }) {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
+  const inputBgColor = useColorModeValue('white', 'gray_3')
   // receive totalPrice as default (then when valid discountCode is entred re-compute the newPrice)
   const newPrice = 1000
   return (
@@ -257,7 +261,6 @@ function ShippingMethod({
       flexDir="column"
       align="center"
       justify="center"
-      w="50%"
       m="auto"
       p="2em"
       borderRadius="10px"
@@ -283,6 +286,7 @@ function ShippingMethod({
             {...register('shippingMethod')}
             name="shippingMethod"
             textTransform="capitalize"
+            bg={inputBgColor}
           >
             {el}
           </Radio>
@@ -313,7 +317,6 @@ function Payment({ setFeedBack }: { setFeedBack: any }) {
         flexDir="column"
         align="center"
         justify="center"
-        w="50%"
         m="auto"
         p="2em"
         borderRadius="10px"
@@ -343,7 +346,7 @@ function ReviewOrder() {
 }
 
 const Cart = () => {
-  const bgColor = useColorModeValue('gray_8', 'gray_2')
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   const secondaryTextColor = useColorModeValue('gray_3', 'gray_6')
 
   // computing all these fct get data from store (product store)
@@ -366,13 +369,13 @@ const Cart = () => {
   }, [])
   return (
     <VStack
-      w={['100%', '50%', '30em']}
+      w={['100%', '80%', '30em']}
       align="flex-start"
       h="full"
       p={10}
       spacing={6}
       bg={bgColor}
-      mx=".25em"
+      m=".5em"
       borderRadius="10px"
     >
       <VStack alignItems="flex-start" spacing={3}>
@@ -440,7 +443,7 @@ const Cart = () => {
 const Details = () => {
   const colSpan = useBreakpointValue({ base: 2, md: 1 })
 
-  const bgColor = useColorModeValue('gray_8', 'gray_2')
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   const secondaryTextColor = useColorModeValue('gray_3', 'gray_6')
 
   // get all data (labels, values) --> react hook form (getValues(...labels))
@@ -466,13 +469,13 @@ const Details = () => {
   ]
   return (
     <VStack
-      w={['100%', '50%', '30em']}
+      w={['100%', '80%', '30em']}
       align="flex-start"
       h="full"
       p={10}
       spacing={10}
       bg={bgColor}
-      mx=".25em"
+      mx=".5em"
       borderRadius="10px"
     >
       <VStack spacing={2} alignItems="flex-start">

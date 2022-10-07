@@ -19,7 +19,7 @@ export default function TextField({
   placeholder,
   ...restProps
 }: ITextField) {
-  const itemBgColor = useColorModeValue('white', 'gray_2')
+  const itemBgColor = useColorModeValue('white', 'gray_3')
   const width = restProps.w ? restProps.w : '20rem'
   const height = restProps.h ? restProps.h : '7rem'
   return (

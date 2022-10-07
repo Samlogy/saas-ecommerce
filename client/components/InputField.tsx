@@ -33,7 +33,7 @@ export default function InputField({
   ...restProps
 }: IInputField) {
   const width = restProps.w ? restProps.w : '20rem'
-  const itemBgColor = useColorModeValue('white', 'gray_2')
+  const itemBgColor = useColorModeValue('white', 'gray_3')
   return (
     <FormControl id={name} mb="1em" w={width}>
       {label && <FormLabel> {label} </FormLabel>}

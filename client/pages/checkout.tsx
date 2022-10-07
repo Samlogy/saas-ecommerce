@@ -171,11 +171,11 @@ function BillingAddress({ errors, register }: { errors: any; register: any }) {
       flexDir="column"
       align="center"
       justify="center"
-      m="auto"
-      p="2em"
       borderRadius="10px"
       boxShadow="md"
       p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
+      w={['100%', '30rem']}
+      mx="auto"
       bg={bgColor}
     >
       <InputField
@@ -261,11 +261,11 @@ function ShippingMethod({
       flexDir="column"
       align="center"
       justify="center"
-      m="auto"
-      p="2em"
       borderRadius="10px"
       boxShadow="md"
       p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
+      w={['100%', '30rem']}
+      mx="auto"
       bg={bgColor}
     >
       <RadioGroup
@@ -276,6 +276,9 @@ function ShippingMethod({
         as={Flex}
         flexDir="column"
         w="20em"
+        bg={inputBgColor}
+        borderRadius="10px"
+        p=".5em"
       >
         <FormLabel> Select Shipping Method </FormLabel>
         {shippingMethods?.map((el: any, idx: number) => (
@@ -317,11 +320,11 @@ function Payment({ setFeedBack }: { setFeedBack: any }) {
         flexDir="column"
         align="center"
         justify="center"
-        m="auto"
-        p="2em"
         borderRadius="10px"
         boxShadow="md"
         p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
+        w={['100%', '30rem']}
+        mx="auto"
         bg={bgColor}
       >
         <StripeForm price={price} setFeedBack={setFeedBack} />

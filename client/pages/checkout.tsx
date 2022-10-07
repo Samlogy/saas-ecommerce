@@ -19,7 +19,7 @@ import {
 import { useRouter } from 'next/router'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
-
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Elements } from '@stripe/react-stripe-js'
 import { MdOutlineLocalShipping, MdOutlinePayment } from 'react-icons/md'
 import { RiBillLine } from 'react-icons/ri'
@@ -29,12 +29,13 @@ import {
   FeedBack,
   InputField,
   Layout,
-  StepForm,
+  MultiStepForm,
   StripeForm,
   TextField
 } from '../components'
 import stripePromise from '../lib/stripe'
 import { useShoppingCartStore } from '../store'
+import { checkoutSchema } from '../lib/validation'
 
 const ELEMENTS_OPTIONS = {
   fonts: [
@@ -44,20 +45,26 @@ const ELEMENTS_OPTIONS = {
   ]
 }
 
+const NBR_STEPS = 4
+
 export default function Checkout() {
   const [feedBack, setFeedBack] = useState({
     isOpen: false,
     type: null
   })
-
-  const router = useRouter()
+  const [step, setStep] = useState<number>(1)
 
   const {
     register,
+    watch,
     handleSubmit,
-    trigger,
-    formState: { errors, isSubmitting }
-  } = useForm()
+    formState: { errors, isValid }
+  } = useForm({
+    resolver: yupResolver(checkoutSchema[step]),
+    mode: 'all'
+  })
+
+  const router = useRouter()
 
   const onSubmit = async (data: any) => {
     console.log(data)
@@ -76,6 +83,7 @@ export default function Checkout() {
     })
   }
 
+  //console.log(checkoutSchema[step])
   /*
   useEffect(() => {
     // redirect to /products after 5s
@@ -95,30 +103,30 @@ export default function Checkout() {
 
   const shippingMethods = ['standard', 'express'] // get it from api (to get more customized fields)
 
-  const steps = [
-    {
+  const steps = {
+    1: {
       label: 'Billing Address',
       icon: RiBillLine,
       content: <BillingAddress errors={errors} register={register} />
     },
-    {
+    2: {
       label: 'Shipping Method',
       icon: MdOutlineLocalShipping,
       content: (
         <ShippingMethod errors={errors} register={register} shippingMethods={shippingMethods} />
       )
     },
-    {
+    3: {
       label: 'Review Order',
       icon: MdOutlineLocalShipping,
       content: <ReviewOrder />
     },
-    {
+    4: {
       label: 'Payment',
       icon: MdOutlinePayment,
       content: <Payment setFeedBack={setFeedBack} />
     }
-  ]
+  }
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -127,12 +135,14 @@ export default function Checkout() {
           Checkout
         </Heading>
 
-        <StepForm
+        <MultiStepForm
           steps={steps}
+          nbrSteps={NBR_STEPS}
+          watch={watch}
           handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          trigger={trigger}
-          isSubmitting={isSubmitting}
+          isValid={isValid}
+          setStep={setStep}
+          currentStep={step}
         />
 
         <FeedBack
@@ -153,8 +163,21 @@ export default function Checkout() {
 }
 
 function BillingAddress({ errors, register }: { errors: any; register: any }) {
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
-    <Flex flexDir="column" align="center" m="3rem 0 1rem 0">
+    <Flex
+      m="3rem 0 1rem 0"
+      flexDir="column"
+      align="center"
+      justify="center"
+      w="50%"
+      m="auto"
+      p="2em"
+      borderRadius="10px"
+      boxShadow="md"
+      p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
+      bg={bgColor}
+    >
       <InputField
         register={register}
         errors={errors}
@@ -225,10 +248,23 @@ function ShippingMethod({
   register: any
   shippingMethods: any
 }) {
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   // receive totalPrice as default (then when valid discountCode is entred re-compute the newPrice)
   const newPrice = 1000
   return (
-    <Flex flexDir="column" align="center" m="3rem 0 1rem 0">
+    <Flex
+      m="3rem 0 1rem 0"
+      flexDir="column"
+      align="center"
+      justify="center"
+      w="50%"
+      m="auto"
+      p="2em"
+      borderRadius="10px"
+      boxShadow="md"
+      p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
+      bg={bgColor}
+    >
       <RadioGroup
         //  onChange={setValue}
         // value={value}
@@ -268,10 +304,23 @@ function ShippingMethod({
   )
 }
 function Payment({ setFeedBack }: { setFeedBack: any }) {
+  const bgColor = useColorModeValue('gray_9', 'gray_2')
   const price = '25£' // get price to pay
   return (
     <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
-      <Flex flexDir="column" align="center" justify="center" m="3rem 0 1rem 0">
+      <Flex
+        m="3rem 0 1rem 0"
+        flexDir="column"
+        align="center"
+        justify="center"
+        w="50%"
+        m="auto"
+        p="2em"
+        borderRadius="10px"
+        boxShadow="md"
+        p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
+        bg={bgColor}
+      >
         <StripeForm price={price} setFeedBack={setFeedBack} />
       </Flex>
     </Elements>
@@ -316,7 +365,16 @@ const Cart = () => {
     return computeSubTotal + computeShippingFee + computeTaxes
   }, [])
   return (
-    <VStack w={['100%', '50%', '30em']} align="flex-start" h="full" p={10} spacing={6} bg={bgColor}>
+    <VStack
+      w={['100%', '50%', '30em']}
+      align="flex-start"
+      h="full"
+      p={10}
+      spacing={6}
+      bg={bgColor}
+      mx=".25em"
+      borderRadius="10px"
+    >
       <VStack alignItems="flex-start" spacing={3}>
         <Heading size="xl">Your cart</Heading>
       </VStack>
@@ -414,6 +472,8 @@ const Details = () => {
       p={10}
       spacing={10}
       bg={bgColor}
+      mx=".25em"
+      borderRadius="10px"
     >
       <VStack spacing={2} alignItems="flex-start">
         <Heading size="xl">Your details</Heading>

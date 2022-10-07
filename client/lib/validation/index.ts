@@ -51,22 +51,27 @@ export const commentSchema = yup.object().shape({
   comment: yup.string().required('Enter your comment please')
 })
 
-export const checkoutchema = yup.object().shape({
-  // billing address
-  fullName: yup.string().required('Full Name required'),
-  email: yup.string().email('Enter a valid Email Address').required('Email Address required'),
-  phone: yup.string().required('Phone required'),
-  address: yup.string().required('Address required'),
-  zipCode: yup.string().required('Zip Code required'),
-  isAddressShipping: yup.boolean(), // boolean
-  shippingAddress: yup
-    .string()
-    .when('isAddressShipping', requiredField('Shipping Address is required')),
-  // shipping method
-  shippingMethod: yup.string(),
-  discountCode: yup.string()
-  // payment method
-})
+export const checkoutSchema: any = {
+  1: yup.object().shape({
+    // billing address
+    fullName: yup.string().required('Full Name required'),
+    email: yup.string().email('Enter a valid Email Address').required('Email Address required'),
+    phone: yup.string().required('Phone required'),
+    address: yup.string().required('Address required'),
+    zipCode: yup.string().required('Zip Code required'),
+    isAddressShipping: yup.boolean(), // boolean
+    shippingAddress: yup
+      .string()
+      .when('isAddressShipping', requiredField('Shipping Address is required'))
+  }),
+  2: yup.object().shape({
+    // shipping method
+    shippingMethod: yup.string(),
+    discountCode: yup.string()
+  }),
+  3: {},
+  4: {}
+}
 
 export const subscribeSchema = yup.object().shape({
   emailSub: yup.string().email('Enter a valid Email Address').required('Email Address required')

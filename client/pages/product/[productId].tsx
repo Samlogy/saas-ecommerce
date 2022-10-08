@@ -13,13 +13,19 @@ import {
   VStack
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { AiFillHeart, AiOutlineHeart, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { MdLocalShipping } from 'react-icons/md'
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
-import Slider from 'react-slick'
 
-import { Layout, ListingComments, ProductCard, Rating, View } from '../../components'
+import {
+  CarouselTemplate,
+  Layout,
+  ListingComments,
+  ProductCard,
+  Rating,
+  View
+} from '../../components'
 import { IComment, IProduct } from '../../lib/interfaces'
 import { useAuthStore, useShoppingCartStore } from '../../store'
 //import { GET_PRODUCT_DETAILS, GET_RELATED_PRODUCTS } from '../../lib/services'
@@ -32,10 +38,6 @@ import {
 
 import heroImage from '../../public/images/home.png'
 import productImage from '../../public/images/product.png'
-
-// Import css files
-import 'slick-carousel/slick/slick-theme.css'
-import 'slick-carousel/slick/slick.css'
 
 interface IProductPage {
   product: IProduct
@@ -58,7 +60,7 @@ export default function Product({ product, comments, relatedProducts }: IProduct
 
   const quantity = products.find((item: any) => item.id === product?.id)?.quantity || 0
 
-  const [image, setImage] = useState<string>(product.images[0])
+  const [image, setImage] = useState<string>(product?.images[0])
 
   const handleFavourite = e => {
     e.preventDefault()
@@ -66,7 +68,11 @@ export default function Product({ product, comments, relatedProducts }: IProduct
     onAddFavouriteProduct(product)
   }
 
-  const isFavourite = isProductFavourite(product) ? <AiFillHeart /> : <AiOutlineHeart />
+  const isFavourite = useMemo(() => isProductFavourite(product), [product]) ? (
+    <AiFillHeart />
+  ) : (
+    <AiOutlineHeart />
+  )
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -76,11 +82,11 @@ export default function Product({ product, comments, relatedProducts }: IProduct
         py={{ base: 18, md: 24 }}
         px="1.5rem"
       >
-        <View cond={product.images.length === 0}>
+        <View cond={product?.images.length === 0}>
           <Text> No Images </Text>
         </View>
 
-        <View cond={product.images.length > 1}>
+        <View cond={product?.images.length > 1}>
           <Image
             rounded={'md'}
             alt={'product image'}
@@ -102,19 +108,19 @@ export default function Product({ product, comments, relatedProducts }: IProduct
               fontWeight={600}
               fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}
             >
-              {product.name}
+              {product?.name}
             </Heading>
             <Text
               color={useColorModeValue('gray.900', 'gray.400')}
               fontWeight={300}
               fontSize={'2xl'}
             >
-              {formatCurrency(product.price)}
+              {formatCurrency(product?.price)}
             </Text>
           </Box>
 
           <Flex>
-            <Rating initRate={product.rate} readOnly={!isLogged} />
+            <Rating initRate={product?.rate} readOnly={!isLogged} />
             <Reviews data={product?.reviews} />
           </Flex>
 
@@ -129,7 +135,7 @@ export default function Product({ product, comments, relatedProducts }: IProduct
                 fontSize={'1rem'}
                 fontWeight={'300'}
               >
-                {product.description}
+                {product?.description}
               </Text>
             </VStack>
           </Stack>
@@ -246,7 +252,7 @@ const DeliveryDetails = ({ data }: any) => {
 const RelatedProducts = ({ data }: { data: IProduct[] }) => {
   // load related products (apollo --> API) GET_RELATED_PRODUCTS
   return (
-    <Flex flexDir={'column'} px="1.5rem" mt="5rem" mb="4rem">
+    <Flex flexDir={'column'} px={['', '', '1.5rem']} mt="5rem" mb="4rem">
       <Flex justify={'space-between'} alignItems="center" mb="1.5rem">
         <Heading fontSize="1.2rem" textTransform={'uppercase'} fontWeight={'700'}>
           Related Products
@@ -255,7 +261,7 @@ const RelatedProducts = ({ data }: { data: IProduct[] }) => {
       </Flex>
 
       <View cond={data?.length > 0}>
-        <Flex flexWrap="wrap" justify={['center', '', 'space-between']}>
+        <Flex flexWrap="wrap" justify={['center', '', 'space-around']}>
           {data?.map((product, idx) => (
             <ProductCard key={idx} data={product} />
           ))}
@@ -317,7 +323,7 @@ const SlickArrowRight = props => {
     />
   )
 }
-
+// settings - children
 function Carousel({ data, setImage }: ICarousel) {
   const settings = {
     dots: true,
@@ -360,8 +366,8 @@ function Carousel({ data, setImage }: ICarousel) {
   }
   return (
     <Flex flexDir="column">
-      <Slider {...settings}>
-        {data.map((img, idx) => (
+      <CarouselTemplate settings={settings}>
+        {data.map((img: any, idx: number) => (
           <Box key={idx} borderRadius=".5rem" h="10rem">
             <Image
               src={img}
@@ -374,7 +380,7 @@ function Carousel({ data, setImage }: ICarousel) {
             />
           </Box>
         ))}
-      </Slider>
+      </CarouselTemplate>
     </Flex>
   )
 }

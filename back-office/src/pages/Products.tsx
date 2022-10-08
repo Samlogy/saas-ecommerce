@@ -8,7 +8,7 @@ import {
   Box,
   useColorModeValue
 } from '@chakra-ui/react'
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { BsFilterLeft } from 'react-icons/bs'
 
@@ -110,7 +110,7 @@ export default function Products() {
 
     return list
   }
-  const filterData = getFilters(filters)
+  const filterData = useCallback(() => getFilters(filters), [filters])
 
   return (
     <Layout isHeaderVisible>

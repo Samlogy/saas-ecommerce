@@ -65,7 +65,7 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
     if (e.target == null) return
 
     setFilters({ ...filters, [e.target.name]: e.target.value })
-    const query = useCallback(generateQuery(filters), [filters])
+    const query = useCallback(() => generateQuery(filters), [filters])
     // call api --> filter
     console.log(query)
   }
@@ -78,7 +78,7 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
       justifyContent={'flex-start'}
       alignItems={'center'}
       borderRadius="5px"
-      p="1.5rem .5rem"
+      p="1.5em .5em"
     >
       <InputField
         type="search"
@@ -87,7 +87,6 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
         value={filters.search}
         placeholder="Search..."
         bg={itemBgColor}
-        w="calc(15rem + 2rem)"
         borderRadius="5px"
       />
 
@@ -288,7 +287,7 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
         value={filters.price[0]}
         placeholder="Search..."
         bg={itemBgColor}
-        w="7rem"
+        w="7em"
         borderRadius="5px"
       />
       to:
@@ -299,7 +298,7 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
         value={filters.price[1]}
         placeholder="Search..."
         bg={itemBgColor}
-        w="7rem"
+        w="7em"
         borderRadius="5px"
       />
     </Flex>
@@ -310,7 +309,7 @@ function AccordionCustom({ title, body }: IAccordionCustom) {
   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   const itemColor = useColorModeValue('gray_2', 'gray_8')
   return (
-    <Accordion defaultIndex={[0]} allowMultiple w="17rem" mb=".5rem">
+    <Accordion defaultIndex={[0]} allowMultiple w="20em" mb="1em">
       <AccordionItem>
         <AccordionButton
           bg={itemBgColor}

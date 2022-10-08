@@ -1,12 +1,11 @@
-import { extendTheme } from "@chakra-ui/react";
-
-import { colors, breakpoints, fonts } from "./utilities";
+import { extendTheme } from '@chakra-ui/react'
+import { breakpoints, colors, fonts } from './utilities'
 
 const theme = extendTheme({
   colors,
   breakpoints,
   fonts,
-  components: {},
-});
+  components: {}
+})
 
-export default theme;
+export default theme

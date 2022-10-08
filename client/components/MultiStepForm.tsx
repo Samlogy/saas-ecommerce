@@ -42,8 +42,6 @@ export default function MultiStepForm({
   const cantPrevious = currentStep === 1
   const cantNext = currentStep === NBR_STEPS || !isValid
 
-  const { watch } = restProps
-
   return (
     <Flex flexDir="column" w={'90%'} mx="auto">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -63,11 +61,13 @@ export default function MultiStepForm({
                 justify="center"
                 align="center"
                 borderRadius="50%"
-                bg="gray_8"
-                color="gray_2"
+                bg={useColorModeValue('accent_4', 'accent_6')}
+                color={useColorModeValue('gray_8', 'gray_3')}
                 w="3.5em"
                 h="3.5em"
                 p=".1em"
+                fontSize=".95em"
+                letterSpacing="-2px"
               >
                 {`${currentStep} / ${NBR_STEPS}`}
               </Box>
@@ -89,7 +89,7 @@ export default function MultiStepForm({
           )}
         </>
       </form>
-      <code> {JSON.stringify(watch(), null, 2)} </code>
+      <code> {JSON.stringify(restProps?.watch(), null, 2)} </code>
     </Flex>
   )
 }

@@ -105,6 +105,8 @@ export default function Products({ products }: { products: IProduct[] }) {
 
           <View cond={isMobile}>
             <IconButton
+              bg={itemBgColor}
+              _hover={{ bg: itemBgColor }}
               aria-label="trigger-filter"
               icon={<BsFilterLeft size={18} />}
               ref={btnRef}
@@ -113,6 +115,7 @@ export default function Products({ products }: { products: IProduct[] }) {
             <CustomDrawer
               title="Filter"
               isOpen={isVisible}
+              size="sm"
               onClose={() => setIsVisible(false)}
               body={<Filter setProducts={setProducts} />}
             />

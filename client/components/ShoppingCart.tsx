@@ -68,14 +68,16 @@ export default function ShoppingCart() {
       <Box as="span" my=".5em">
         or
       </Box>
-      <Text
-        textColor="accent_3"
-        fontSize=".9rem"
-        _hover={{ cursor: 'pointer' }}
-        onClick={() => setOpen(isOpen)}
-      >
-        Continue Shopping →
-      </Text>
+      <Link href="/products" passHref>
+        <Text
+          textColor="accent_3"
+          fontSize=".9rem"
+          _hover={{ cursor: 'pointer' }}
+          onClick={() => setOpen(isOpen)}
+        >
+          Continue Shopping →
+        </Text>
+      </Link>
     </Flex>
   )
 

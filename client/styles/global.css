@@ -28,30 +28,33 @@ body {
 }
 
 
-/* Inputs */
-.sr-input {
+/* Stripe fields */
+.input-stripe {
   border: 1px solid var(--gray-border);
-  border-radius: 1em; 
+  border-radius: 5px;
   padding: .7em;
   height: 44px;
   width: 100%;
   transition: box-shadow 0.2s ease;
   background: white;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  color: #32325d;
+  color: black;
 }
-
-.sr-input:focus,
-.StripeElement--focus,
-
-.focused {
- border: 2px solid green;
+.input-stripe.exp {
+  width: 6em
 }
-
-.sr-input::placeholder {
-  color: var(--gray-light);
+.input-stripe.cvc {
+  width: 3.5em
+}
+.input-stripe:focus, .StripeElement--focus {
+  border: 1px solid gray
+}
+.StripeElement--invalid {
+  border: 1px solid red;
+  color: red
+}
+.StripeElement--complete {
+  border: 1px solid green;
+  color: green
 }
 
 

@@ -13,6 +13,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { ReactNode, useState } from 'react'
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
 import { DarkModeToggle, Logout, SelectLanguage, ShoppingCartIcon, View } from '../components'
@@ -42,19 +43,23 @@ interface INavLink {
 
 function NavLink({ children, link, ...restProps }: INavLink) {
   const linkColor = useColorModeValue('gray_2', 'gray_7')
+  const accentColor = useColorModeValue('accent_3', 'accent_5')
+
+  const { pathname } = useRouter()
+  const isActive = pathname === link ? true : false
 
   return (
     <Link href={`${link}`} passHref>
       <Box
         p=".5em"
         rounded={'md'}
-        color={linkColor}
+        color={isActive ? accentColor : linkColor}
         w="auto"
         textTransform="capitalize"
-        _hover={{ textDecor: 'none', cursor: 'pointer' }}
+        _hover={{ textDecor: 'none', cursor: 'pointer', color: accentColor }}
         {...restProps}
       >
-        <a className="link-effect center after">{children}</a>
+        {children}
       </Box>
     </Link>
   )

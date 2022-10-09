@@ -53,3 +53,10 @@ export function loadFavouriteProducts(): IProduct[] {
   console.log(products)
   return products
 }
+
+export const isEmpty = (data: any): boolean => {
+  if (Array.isArray(data) && data.length > 0) return false
+  if (data) return false
+  if (Object.entries(data).length > 0) return false
+  return true
+}

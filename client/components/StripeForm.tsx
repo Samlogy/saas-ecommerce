@@ -203,12 +203,14 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
         <option value={'fpxBank'}>fpxBank</option>
       </SelectField>
 
-      <Flex flexDir="column" mt="1em">
-        <Heading as="h4" textAlign="center" mb=".5em">
-          {PAYMENT_OPTIONS[paymentOption]?.title}
-        </Heading>
-        <form onSubmit={onSubmit}>{PAYMENT_OPTIONS[paymentOption]?.component}</form>
-      </Flex>
+      {paymentOption && (
+        <Flex flexDir="column" mt="1em">
+          <Heading as="h4" textAlign="center" mb=".5em">
+            {PAYMENT_OPTIONS[paymentOption]?.title}
+          </Heading>
+          <form onSubmit={onSubmit}>{PAYMENT_OPTIONS[paymentOption]?.component}</form>
+        </Flex>
+      )}
     </>
   )
 }

@@ -38,7 +38,16 @@ import { useShoppingCartStore } from '../store'
 import { checkoutSchema } from '../lib/validation'
 
 const NBR_STEPS = 4
-
+interface IBillingAddress {
+  errors: any
+  register: any
+}
+interface IShippingMethod extends IBillingAddress {
+  shippingMethods: any
+}
+interface IPayment {
+  setFeedBack: any
+}
 export default function Checkout() {
   const [feedBack, setFeedBack] = useState({
     isOpen: false,
@@ -56,31 +65,20 @@ export default function Checkout() {
     mode: 'all'
   })
 
-  const router = useRouter()
+  //const router = useRouter()
 
-  const onSubmit = async (data: any) => {
-    console.log(data)
-    // call payment api
-    const response = true
-    if (response) {
-      setFeedBack({
-        type: 'success',
-        isOpen: true
-      })
-      return
-    }
-    setFeedBack({
-      type: 'error',
-      isOpen: true
-    })
+  const onSubmit = async () => {
+    console.log('submitted !!')
+    // call our /api/payment POST {detail}
   }
 
   // redirect to /products after 5s
   useEffect(() => {
     if (feedBack.type === 'success') {
       setTimeout(() => {
-        router.push('/products')
-      }, 5000)
+        // router.push('/products')
+        onSubmit()
+      }, 1000)
     }
   }, [feedBack?.type])
 
@@ -126,6 +124,9 @@ export default function Checkout() {
           isValid={isValid}
           setStep={setStep}
           currentStep={step}
+          isSubmit={false}
+          triggerSubmit={feedBack?.type === 'success'}
+          submit={() => onSubmit()}
         />
 
         <FeedBack
@@ -145,7 +146,7 @@ export default function Checkout() {
   )
 }
 
-function BillingAddress({ errors, register }: { errors: any; register: any }) {
+function BillingAddress({ errors, register }: IBillingAddress) {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   const inputBgColor = useColorModeValue('white', 'gray_3')
   return (
@@ -225,15 +226,7 @@ function BillingAddress({ errors, register }: { errors: any; register: any }) {
     </Flex>
   )
 }
-function ShippingMethod({
-  errors,
-  register,
-  shippingMethods
-}: {
-  errors: any
-  register: any
-  shippingMethods: any
-}) {
+function ShippingMethod({ errors, register, shippingMethods }: IShippingMethod) {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   const inputBgColor = useColorModeValue('white', 'gray_3')
   // receive totalPrice as default (then when valid discountCode is entred re-compute the newPrice)
@@ -291,8 +284,21 @@ function ShippingMethod({
     </Flex>
   )
 }
-
-function Payment({ setFeedBack }: { setFeedBack: any }) {
+function ReviewOrder() {
+  return (
+    <Flex
+      justify={['center', '', 'space-between', 'space-around']}
+      align="start"
+      flexWrap="wrap"
+      py={[0, 10, 20]}
+      w={['100%']}
+    >
+      <Details />
+      <Cart />
+    </Flex>
+  )
+}
+function Payment({ setFeedBack }: IPayment) {
   const price = 35 // get price to pay
   return (
     <Elements stripe={stripePromise}>
@@ -314,22 +320,7 @@ function Payment({ setFeedBack }: { setFeedBack: any }) {
   )
 }
 
-function ReviewOrder() {
-  return (
-    <Flex
-      justify={['center', '', 'space-between', 'space-around']}
-      align="start"
-      flexWrap="wrap"
-      py={[0, 10, 20]}
-      w={['100%']}
-    >
-      <Details />
-      <Cart />
-    </Flex>
-  )
-}
-
-const Cart = () => {
+function Cart() {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   const secondaryTextColor = useColorModeValue('gray_3', 'gray_6')
 
@@ -424,7 +415,7 @@ const Cart = () => {
     </VStack>
   )
 }
-const Details = () => {
+function Details() {
   const colSpan = useBreakpointValue({ base: 2, md: 1 })
 
   const bgColor = useColorModeValue('gray_9', 'gray_2')

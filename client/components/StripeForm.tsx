@@ -4,6 +4,7 @@ import {
   CardElement,
   CardExpiryElement,
   CardNumberElement,
+  IbanElement,
   IdealBankElement,
   useElements,
   useStripe
@@ -43,7 +44,7 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
     })
   }
 
-  const onSubmitCard = async e => {
+  const onSubmit = async (e: any) => {
     e.preventDefault()
     if (!stripe || !elements) return
 
@@ -56,47 +57,27 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
       })
     }
 
-    const payload = await stripe.createPaymentMethod({
-      type: 'card',
-      card: elements.getElement(CardNumberElement),
-      billing_details: billingDetails
-    })
-
-    console.log(payload)
-
-    setCard(prev => {
-      return {
-        ...prev,
-        isLoading: false
-      }
-    })
-    if (payload.error) {
-      setCard(prev => {
-        return {
-          ...prev,
-          error: payload?.error
-        }
+    let payload = null
+    if (paymentOption === 'card') {
+      payload = await stripe.createPaymentMethod({
+        type: 'card',
+        card: elements.getElement(CardNumberElement),
+        billing_details: billingDetails
       })
-      setFeedBack({ isOpen: true, type: 'error' })
-    } else {
-      setCard(prev => {
-        return {
-          ...prev,
-          paymentMethod: payload?.paymentMethod
-        }
+    } else if (paymentOption === 'idealBank') {
+      payload = await stripe.createPaymentMethod({
+        type: 'ideal',
+        ideal: elements.getElement(IdealBankElement),
+        billing_details: billingDetails
       })
-      setFeedBack({ isOpen: true, type: 'success' })
+    } else if (paymentOption === 'iban') {
+      payload = await stripe.createPaymentMethod({
+        type: 'sepa_debit',
+        sepa_debit: elements.getElement(IbanElement),
+        billing_details: billingDetails
+      })
     }
-  }
-  const onSubmitIdealBank = async e => {
-    e.preventDefault()
-    if (!stripe || !elements) return
 
-    const payload = await stripe.createPaymentMethod({
-      type: 'ideal',
-      ideal: elements.getElement(IdealBankElement),
-      billing_details: billingDetails
-    })
     console.log(payload)
 
     setCard(prev => {
@@ -145,7 +126,7 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
     })
   }
 
-  const PAYMENT_OPTIONS = {
+  const PAYMENT_OPTIONS: any = {
     card: {
       title: 'Card Form',
       component: (
@@ -153,12 +134,12 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
           handleChange={onHandleChange}
           stripe={stripe}
           reset={onReset}
-          price="25"
+          price={price}
           card={card}
         />
       ),
       label: 'card',
-      submit: onSubmitCard
+      submit: onSubmit
     },
     idealBank: {
       title: 'Ideal Bank',
@@ -167,12 +148,26 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
           handleChange={onHandleChange}
           stripe={stripe}
           reset={onReset}
-          price="25"
+          price={price}
           card={card}
         />
       ),
       label: 'IdealBank',
-      submit: onSubmitIdealBank
+      submit: onSubmit
+    },
+    iban: {
+      title: 'Ideal Bank',
+      component: (
+        <IbanForm
+          handleChange={onHandleChange}
+          stripe={stripe}
+          reset={onReset}
+          price={price}
+          card={card}
+        />
+      ),
+      label: 'iban',
+      submit: onSubmit
     }
   }
 
@@ -244,8 +239,35 @@ function IdealBankForm({ handleChange, card, reset, stripe, price }: any) {
       <FormControl id="idealBank" mb="1em" w="20em">
         <FormLabel htmlFor="idealBank"> Ideal Bank</FormLabel>
 
-        <IdealBankElement id="IdealBankElement" onChange={handleChange} />
+        <IdealBankElement id="IdealBankElement" onChange={handleChange('Ideal Bank')} />
         <ErrorMessage error={card?.errors['idealBank']} />
+      </FormControl>
+
+      <Flex justify="flex-end">
+        <Button type="reset" variant="ghost" colorScheme="green" mr=".25em" onClick={reset}>
+          Reset
+        </Button>
+        <Button
+          type="submit"
+          variant="solid"
+          colorScheme="green"
+          disabled={card?.isLoading || !stripe || isEmpty(card?.errors)}
+        >
+          {card?.isLoading ? 'Loading...' : `Pay ${price}`}
+        </Button>
+      </Flex>
+    </>
+  )
+}
+
+function IbanForm({ handleChange, card, reset, stripe, price }: any) {
+  return (
+    <>
+      <FormControl id="iban" mb="1em" w="20em">
+        <FormLabel htmlFor="iban"> IBAN</FormLabel>
+
+        <IbanElement onChange={handleChange('IBAN')} />
+        <ErrorMessage error={card?.errors['iban']} />
       </FormControl>
 
       <Flex justify="flex-end">

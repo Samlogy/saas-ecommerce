@@ -43,19 +43,9 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
     })
   }
 
-  const onSubmit = async e => {
+  const onSubmitCard = async e => {
     e.preventDefault()
-    if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
-      return
-    }
-    /*
-    if (card?.errors) {
-      elements.getElement('card').focus()
-      return
-    }
-    */
+    if (!stripe || !elements) return
 
     if (card?.complete) {
       setCard(prev => {
@@ -72,6 +62,41 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
       billing_details: billingDetails
     })
 
+    console.log(payload)
+
+    setCard(prev => {
+      return {
+        ...prev,
+        isLoading: false
+      }
+    })
+    if (payload.error) {
+      setCard(prev => {
+        return {
+          ...prev,
+          error: payload?.error
+        }
+      })
+      setFeedBack({ isOpen: true, type: 'error' })
+    } else {
+      setCard(prev => {
+        return {
+          ...prev,
+          paymentMethod: payload?.paymentMethod
+        }
+      })
+      setFeedBack({ isOpen: true, type: 'success' })
+    }
+  }
+  const onSubmitIdealBank = async e => {
+    e.preventDefault()
+    if (!stripe || !elements) return
+
+    const payload = await stripe.createPaymentMethod({
+      type: 'ideal',
+      ideal: elements.getElement(IdealBankElement),
+      billing_details: billingDetails
+    })
     console.log(payload)
 
     setCard(prev => {
@@ -132,7 +157,8 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
           card={card}
         />
       ),
-      label: 'card'
+      label: 'card',
+      submit: onSubmitCard
     },
     idealBank: {
       title: 'Ideal Bank',
@@ -145,13 +171,19 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
           card={card}
         />
       ),
-      label: 'IdealBank'
+      label: 'IdealBank',
+      submit: onSubmitIdealBank
     }
   }
 
   return (
     <>
-      <SelectField name="paymentMean" onChange={e => setPaymentOption(e.target.value)}>
+      <SelectField
+        label="Select Payment mean"
+        name="paymentMean"
+        onChange={e => setPaymentOption(e.target.value)}
+        w="85%"
+      >
         <option value={'card'}>card</option>
         <option value={'idealBank'}>idealBank</option>
       </SelectField>
@@ -160,7 +192,7 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
         <Heading as="h4" textAlign="center" mb=".5em">
           {PAYMENT_OPTIONS[paymentOption]?.title}
         </Heading>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={PAYMENT_OPTIONS[paymentOption]?.submit}>
           <>{PAYMENT_OPTIONS[paymentOption]?.component}</>
         </form>
       </Flex>
@@ -187,6 +219,33 @@ function CardForm({ handleChange, card, reset, stripe, price }: any) {
         <FormLabel htmlFor="cardCvc"> CVC</FormLabel>
         <CardCvcElement id="cardCvc" onChange={handleChange('card Cvc')} />
         <ErrorMessage error={card?.errors['cardCvc']} />
+      </FormControl>
+
+      <Flex justify="flex-end">
+        <Button type="reset" variant="ghost" colorScheme="green" mr=".25em" onClick={reset}>
+          Reset
+        </Button>
+        <Button
+          type="submit"
+          variant="solid"
+          colorScheme="green"
+          disabled={card?.isLoading || !stripe || isEmpty(card?.errors)}
+        >
+          {card?.isLoading ? 'Loading...' : `Pay ${price}`}
+        </Button>
+      </Flex>
+    </>
+  )
+}
+
+function IdealBankForm({ handleChange, card, reset, stripe, price }: any) {
+  return (
+    <>
+      <FormControl id="idealBank" mb="1em" w="20em">
+        <FormLabel htmlFor="idealBank"> Ideal Bank</FormLabel>
+
+        <IdealBankElement id="IdealBankElement" onChange={handleChange} />
+        <ErrorMessage error={card?.errors['idealBank']} />
       </FormControl>
 
       <Flex justify="flex-end">

@@ -1,23 +1,30 @@
-import { Box, Button, Flex, FormControl, FormLabel, Heading } from '@chakra-ui/react'
+import { Button, Flex, FormControl, FormLabel, Heading, useColorModeValue } from '@chakra-ui/react'
 import {
   CardCvcElement,
-  CardElement,
   CardExpiryElement,
   CardNumberElement,
+  FpxBankElement,
   IbanElement,
   IdealBankElement,
   useElements,
   useStripe
 } from '@stripe/react-stripe-js'
 import { useState } from 'react'
-import ErrorMessage from './ErrorMessage'
 import { isEmpty } from '../lib/utils/fonctions'
+import ErrorMessage from './ErrorMessage'
 import SelectField from './SelectField'
 
 interface IStripeForm {
-  price: string
+  price: number
   billingDetails?: any
   setFeedBack: any
+}
+interface IForm {
+  handleChange: (e: any) => void
+  card: any
+  reset: () => void
+  stripe: any
+  price: number
 }
 
 export default function StripeForm({ price, billingDetails, setFeedBack }: IStripeForm) {
@@ -30,8 +37,7 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
     paymentMethod: null,
     errors: {}
   })
-
-  const [paymentOption, setPaymentOption] = useState('card')
+  const [paymentOption, setPaymentOption] = useState(null)
 
   const onReset = () => {
     setCard(prev => {
@@ -76,6 +82,12 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
         sepa_debit: elements.getElement(IbanElement),
         billing_details: billingDetails
       })
+    } else if (paymentOption === 'fpxBank') {
+      payload = await stripe.createPaymentMethod({
+        type: 'fpx',
+        fpx: elements.getElement(FpxBankElement),
+        billing_details: billingDetails
+      })
     }
 
     console.log(payload)
@@ -105,7 +117,7 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
     }
   }
 
-  const onHandleChange = label => elementData => {
+  const onHandleChange = (label: string) => (elementData: any) => {
     let errors = card?.errors || {}
 
     const { elementType, complete, error } = elementData
@@ -137,9 +149,7 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
           price={price}
           card={card}
         />
-      ),
-      label: 'card',
-      submit: onSubmit
+      )
     },
     idealBank: {
       title: 'Ideal Bank',
@@ -151,9 +161,7 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
           price={price}
           card={card}
         />
-      ),
-      label: 'IdealBank',
-      submit: onSubmit
+      )
     },
     iban: {
       title: 'Ideal Bank',
@@ -165,31 +173,41 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
           price={price}
           card={card}
         />
-      ),
-      label: 'iban',
-      submit: onSubmit
+      )
+    },
+    fpxBank: {
+      title: 'Fpx Bank',
+      component: (
+        <FpxBankForm
+          handleChange={onHandleChange}
+          stripe={stripe}
+          reset={onReset}
+          price={price}
+          card={card}
+        />
+      )
     }
   }
 
   return (
     <>
       <SelectField
-        label="Select Payment mean"
+        label="Select Payment Method"
+        placeholder="Select Payment Method"
         name="paymentMean"
         onChange={e => setPaymentOption(e.target.value)}
-        w="85%"
       >
         <option value={'card'}>card</option>
         <option value={'idealBank'}>idealBank</option>
+        <option value={'iban'}>iban</option>
+        <option value={'fpxBank'}>fpxBank</option>
       </SelectField>
 
       <Flex flexDir="column" mt="1em">
         <Heading as="h4" textAlign="center" mb=".5em">
           {PAYMENT_OPTIONS[paymentOption]?.title}
         </Heading>
-        <form onSubmit={PAYMENT_OPTIONS[paymentOption]?.submit}>
-          <>{PAYMENT_OPTIONS[paymentOption]?.component}</>
-        </form>
+        <form onSubmit={onSubmit}>{PAYMENT_OPTIONS[paymentOption]?.component}</form>
       </Flex>
     </>
   )
@@ -233,7 +251,7 @@ function CardForm({ handleChange, card, reset, stripe, price }: any) {
   )
 }
 
-function IdealBankForm({ handleChange, card, reset, stripe, price }: any) {
+function IdealBankForm({ handleChange, card, reset, stripe, price }: IForm) {
   return (
     <>
       <FormControl id="idealBank" mb="1em" w="20em">
@@ -260,7 +278,7 @@ function IdealBankForm({ handleChange, card, reset, stripe, price }: any) {
   )
 }
 
-function IbanForm({ handleChange, card, reset, stripe, price }: any) {
+function IbanForm({ handleChange, card, reset, stripe, price }: IForm) {
   return (
     <>
       <FormControl id="iban" mb="1em" w="20em">
@@ -268,6 +286,32 @@ function IbanForm({ handleChange, card, reset, stripe, price }: any) {
 
         <IbanElement onChange={handleChange('IBAN')} />
         <ErrorMessage error={card?.errors['iban']} />
+      </FormControl>
+
+      <Flex justify="flex-end">
+        <Button type="reset" variant="ghost" colorScheme="green" mr=".25em" onClick={reset}>
+          Reset
+        </Button>
+        <Button
+          type="submit"
+          variant="solid"
+          colorScheme="green"
+          disabled={card?.isLoading || !stripe || isEmpty(card?.errors)}
+        >
+          {card?.isLoading ? 'Loading...' : `Pay ${price}`}
+        </Button>
+      </Flex>
+    </>
+  )
+}
+
+function FpxBankForm({ handleChange, card, reset, stripe, price }: IForm) {
+  return (
+    <>
+      <FormControl id="iban" mb="1em" w="20em">
+        <FormLabel htmlFor="fpxBank"> FPX Bank</FormLabel>
+        <FpxBankElement onChange={handleChange('FPX Bank')} />
+        <ErrorMessage error={card?.errors['fpxBank']} />
       </FormControl>
 
       <Flex justify="flex-end">

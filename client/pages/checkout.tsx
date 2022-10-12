@@ -75,8 +75,8 @@ export default function Checkout() {
     })
   }
 
+  // redirect to /products after 5s
   useEffect(() => {
-    // redirect to /products after 5s
     if (feedBack.type === 'success') {
       setTimeout(() => {
         router.push('/products')
@@ -252,8 +252,6 @@ function ShippingMethod({
       bg={bgColor}
     >
       <RadioGroup
-        //  onChange={setValue}
-        // value={value}
         colorScheme="green"
         mb="1em"
         as={Flex}

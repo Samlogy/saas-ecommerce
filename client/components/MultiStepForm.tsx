@@ -1,4 +1,5 @@
 import { Box, Button, Flex, useColorModeValue } from '@chakra-ui/react'
+import { useEffect, useRef } from 'react'
 
 interface IMultiStepForm {
   steps: any
@@ -8,6 +9,10 @@ interface IMultiStepForm {
   currentStep: number
   nbrSteps: number
   [restProps: string]: any
+  isSubmit?: boolean
+
+  triggerSubmit?: any
+  submit: any
 }
 export default function MultiStepForm({
   steps,
@@ -15,15 +20,19 @@ export default function MultiStepForm({
   handleSubmit,
   setStep,
   currentStep,
-  nbrSteps = 3,
+  nbrSteps,
+  isSubmit = true,
+
+  triggerSubmit,
+  submit,
   ...restProps
 }: IMultiStepForm) {
   const NBR_STEPS = nbrSteps
 
   const onSubmit = (data: any) => {
     if (!cantNext) return
-    console.log('form submitted !')
     console.log(data)
+    submit()
   }
   const onNextStep = async () => {
     if (currentStep < NBR_STEPS) {
@@ -39,8 +48,15 @@ export default function MultiStepForm({
     }
   }
 
+  const refSubmit = useRef<any>(null)
+
   const cantPrevious = currentStep === 1
   const cantNext = currentStep === NBR_STEPS || !isValid
+
+  useEffect(() => {
+    console.log('triggerSubmit: ', triggerSubmit)
+    triggerSubmit && refSubmit?.current?.click()
+  }, [triggerSubmit])
 
   return (
     <Flex flexDir="column" w={'90%'} mx="auto">
@@ -82,14 +98,20 @@ export default function MultiStepForm({
 
           {steps[currentStep].content}
 
-          {cantNext && isValid && (
-            <Button type="submit" ml="auto" disabled={!cantNext} onClick={() => onSubmit}>
+          {
+            <Button
+              type="submit"
+              ml="auto"
+              disabled={!cantNext}
+              ref={refSubmit}
+              opacity={cantNext && isSubmit ? 1 : 0}
+            >
               Submit
             </Button>
-          )}
+          }
         </>
       </form>
-      <code> {JSON.stringify(restProps?.watch(), null, 2)} </code>
+      <code> {restProps?.watch && JSON.stringify(restProps?.watch(), null, 2)} </code>
     </Flex>
   )
 }

@@ -34,7 +34,7 @@ export default function InputField({
 }: IInputField) {
   const itemBgColor = useColorModeValue('white', 'gray_3')
   return (
-    <FormControl id={name} mb="1em" w={restProps.w || ['90%', '20rem']}>
+    <FormControl id={name} mb="1em" w={restProps.w || ['90%', '20em']}>
       {label && <FormLabel> {label} </FormLabel>}
       <InputGroup>
         {iconLeft && <InputLeftElement children={iconLeft} />}

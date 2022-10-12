@@ -25,7 +25,7 @@ export default function SelectField({
 }: ISelectField) {
   const itemBgColor = useColorModeValue('white', 'gray_2')
   return (
-    <FormControl id={name} mb="1em" w={restProps.w || '20vw'}>
+    <FormControl id={name} mb="1em" w={restProps.w || '20em'}>
       {label && <FormLabel> {label} </FormLabel>}
       {register ? (
         <Select

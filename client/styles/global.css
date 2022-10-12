@@ -24,36 +24,46 @@ body {
 /*=============== Card Element ===============*/
 :root {
   --gray-border: rgba(0, 0, 0, 0.15);
-  --gray-light: rgba(0, 0, 0, 0.4);
+
+  --gray_2: '#2D3748';
+  --gray_3: '#4A5568';
+  --accent_3: '#2f855a';
+  --accent_6: '#68d391';
 }
 
 
 /* Stripe fields */
-.input-stripe {
-  border: 1px solid var(--gray-border);
+
+.StripeElement {
+  display: block;
+  margin: 10px 0 20px 0;
+  padding: 10px 14px;
+  border: 2px solid lightgray;
   border-radius: 5px;
-  padding: .7em;
-  height: 44px;
-  width: 100%;
-  transition: box-shadow 0.2s ease;
   background: white;
-  color: black;
 }
-.input-stripe.exp {
-  width: 6em
+
+.StripeElement--focus {
+  border: 2px solid green
 }
-.input-stripe.cvc {
-  width: 3.5em
+
+.StripeElement.IdealBankElement,
+.StripeElement.FpxBankElement,
+.StripeElement.PaymentRequestButton {
+  padding: 0;
 }
-.input-stripe:focus, .StripeElement--focus {
-  border: 1px solid gray
+
+.StripeElement.PaymentRequestButton {
+  height: 40px;
 }
+
 .StripeElement--invalid {
-  border: 1px solid red;
+  border: 2px solid red;
   color: red
 }
+
 .StripeElement--complete {
-  border: 1px solid green;
+  border: 2px solid green;
   color: green
 }
 
@@ -76,4 +86,25 @@ ul.slick-dots li button:before {
 
 .slick-dots li.slick-active button:before {
   color: #553c9a;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .input-stripe {
+    background: var(--gray_3);
+    color: #fff;
+  }
+
+  .input-stripe:focus,
+  .StripeElement--focus {
+    
+  }
+
+  .input-stripe.StripeElement--invalid {
+   
+  }
+
+  .input-stripe.StripeElement--complete {
+   
+  }
 }

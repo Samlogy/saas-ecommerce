@@ -17,7 +17,7 @@ import {
   VStack
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Elements } from '@stripe/react-stripe-js'
@@ -37,14 +37,6 @@ import stripePromise from '../lib/stripe'
 import { useShoppingCartStore } from '../store'
 import { checkoutSchema } from '../lib/validation'
 
-const ELEMENTS_OPTIONS = {
-  fonts: [
-    {
-      cssSrc: 'https://fonts.googleapis.com/css?family=Roboto'
-    }
-  ]
-}
-
 const NBR_STEPS = 4
 
 export default function Checkout() {
@@ -60,7 +52,7 @@ export default function Checkout() {
     handleSubmit,
     formState: { errors, isValid }
   } = useForm({
-    resolver: yupResolver(checkoutSchema[step]),
+    // resolver: yupResolver(checkoutSchema[step]),
     mode: 'all'
   })
 
@@ -83,8 +75,6 @@ export default function Checkout() {
     })
   }
 
-  //console.log(checkoutSchema[step])
-  /*
   useEffect(() => {
     // redirect to /products after 5s
     if (feedBack.type === 'success') {
@@ -93,13 +83,6 @@ export default function Checkout() {
       }, 5000)
     }
   }, [feedBack?.type])
-  */
-
-  // fullName, email, phone, address, zipCode, isAddressShipping, shipping address (Billing Address)
-  // --> if logged (push stored data into the form)
-  // radio buttons (options), discount code --> (form apply) (Shipping Method)
-  // stripe.js / paypal form (Payment)
-  // feed back --> redirect after 5s to /products
 
   const shippingMethods = ['standard', 'express'] // get it from api (to get more customized fields)
 
@@ -310,11 +293,11 @@ function ShippingMethod({
     </Flex>
   )
 }
+
 function Payment({ setFeedBack }: { setFeedBack: any }) {
-  const bgColor = useColorModeValue('gray_9', 'gray_2')
-  const price = '25£' // get price to pay
+  const price = 35 // get price to pay
   return (
-    <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
+    <Elements stripe={stripePromise}>
       <Flex
         m="3rem 0 1rem 0"
         flexDir="column"
@@ -325,7 +308,7 @@ function Payment({ setFeedBack }: { setFeedBack: any }) {
         p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
         w={['100%', '30rem']}
         mx="auto"
-        bg={bgColor}
+        bg={useColorModeValue('gray_9', 'gray_2')}
       >
         <StripeForm price={price} setFeedBack={setFeedBack} />
       </Flex>

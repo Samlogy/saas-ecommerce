@@ -1,22 +1,24 @@
-import { Button, Flex, FormControl, FormLabel } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormLabel, Heading } from '@chakra-ui/react'
 import {
-  CardElement,
-  useElements,
-  useStripe,
-  CardNumberElement,
   CardCvcElement,
+  CardElement,
   CardExpiryElement,
-  Elements,
-  ElementsConsumer
+  CardNumberElement,
+  IdealBankElement,
+  useElements,
+  useStripe
 } from '@stripe/react-stripe-js'
 import { useState } from 'react'
 import ErrorMessage from './ErrorMessage'
+import { isEmpty } from '../lib/utils/fonctions'
+import SelectField from './SelectField'
 
 interface IStripeForm {
   price: string
   billingDetails?: any
   setFeedBack: any
 }
+
 export default function StripeForm({ price, billingDetails, setFeedBack }: IStripeForm) {
   const stripe = useStripe()
   const elements = useElements()
@@ -25,14 +27,16 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
     complete: false,
     isLoading: false,
     paymentMethod: null,
-    errors: null
+    errors: {}
   })
+
+  const [paymentOption, setPaymentOption] = useState('card')
 
   const onReset = () => {
     setCard(prev => {
       return {
         ...prev,
-        errors: null,
+        errors: {},
         isLoading: false,
         paymentMethod: null
       }
@@ -41,17 +45,17 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
 
   const onSubmit = async e => {
     e.preventDefault()
-
     if (!stripe || !elements) {
       // Stripe.js has not loaded yet. Make sure to disable
       // form submission until Stripe.js has loaded.
       return
     }
-
+    /*
     if (card?.errors) {
       elements.getElement('card').focus()
       return
     }
+    */
 
     if (card?.complete) {
       setCard(prev => {
@@ -64,7 +68,7 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
 
     const payload = await stripe.createPaymentMethod({
       type: 'card',
-      card: elements.getElement(CardElement),
+      card: elements.getElement(CardNumberElement),
       billing_details: billingDetails
     })
 
@@ -95,16 +99,18 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
     }
   }
 
-  const handlePayment_InputChange = (name, label) => elementData => {
+  const onHandleChange = label => elementData => {
     let errors = card?.errors || {}
 
-    if (!elementData.complete && !elementData.error) {
-      errors[name] = `Your ${label} is incomplete or invalid.`
-    } else if (elementData.complete && !elementData.error) {
-      delete errors[name]
-    }
+    const { elementType, complete, error } = elementData
 
-    //console.log(elementData, name, label)
+    console.log(elementData)
+
+    if (!complete && !error) {
+      errors[elementType] = `${label} is incomplete or invalid.`
+    } else if (complete && !error) {
+      delete errors[elementType]
+    }
 
     setCard(prev => {
       return {
@@ -114,76 +120,88 @@ export default function StripeForm({ price, billingDetails, setFeedBack }: IStri
     })
   }
 
-  const StripeElementsStyles = {
-    iconStyle: 'solid',
-    style: {
-      base: {
-        iconColor: 'black',
-        color: 'black',
-        fontWeight: 300,
-        fontFamily: "'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif",
-        fontSize: '16px',
-        backgroundColor: 'white',
-        fontSmoothing: 'antialiased',
-        ':-webkit-autofill': {
-          color: '#fce883'
-        },
-        '::placeholder': {
-          color: 'lightgrey'
-        }
-      },
-      invalid: {
-        iconColor: 'red',
-        color: 'red'
-      }
+  const PAYMENT_OPTIONS = {
+    card: {
+      title: 'Card Form',
+      component: (
+        <CardForm
+          handleChange={onHandleChange}
+          stripe={stripe}
+          reset={onReset}
+          price="25"
+          card={card}
+        />
+      ),
+      label: 'card'
+    },
+    idealBank: {
+      title: 'Ideal Bank',
+      component: (
+        <IdealBankForm
+          handleChange={onHandleChange}
+          stripe={stripe}
+          reset={onReset}
+          price="25"
+          card={card}
+        />
+      ),
+      label: 'IdealBank'
     }
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <>
+      <SelectField name="paymentMean" onChange={e => setPaymentOption(e.target.value)}>
+        <option value={'card'}>card</option>
+        <option value={'idealBank'}>idealBank</option>
+      </SelectField>
+
+      <Flex flexDir="column" mt="1em">
+        <Heading as="h4" textAlign="center" mb=".5em">
+          {PAYMENT_OPTIONS[paymentOption]?.title}
+        </Heading>
+        <form onSubmit={onSubmit}>
+          <>{PAYMENT_OPTIONS[paymentOption]?.component}</>
+        </form>
+      </Flex>
+    </>
+  )
+}
+
+function CardForm({ handleChange, card, reset, stripe, price }: any) {
+  return (
+    <>
       <FormControl id="cardNumber" mb="1em" w="20em">
         <FormLabel htmlFor="cardNumber">Card Number</FormLabel>
-        <CardNumberElement
-          id="cardNumber"
-          onChange={handlePayment_InputChange('cardNumber', 'Card Number')}
-          options={StripeElementsStyles}
-        />
-        <ErrorMessage error={card?.errors?.mesage} />
+        <CardNumberElement id="cardNumber" onChange={handleChange('card Number')} />
+        {card?.errors['cardNumber'] && <ErrorMessage error={card?.errors['cardNumber']} />}
       </FormControl>
 
       <FormControl id="cardExpiration" mb="1em" w="20em">
-        <FormLabel htmlFor="cardExpiration">Card Expiration</FormLabel>
-        <CardExpiryElement
-          id="cardExpiry"
-          onChange={handlePayment_InputChange('cardExpiration', 'Card Expiration')}
-          options={StripeElementsStyles}
-        />
-        <ErrorMessage error={card?.errors?.mesage} />
+        <FormLabel htmlFor="cardExpiration"> Expiration</FormLabel>
+        <CardExpiryElement id="cardExpiry" onChange={handleChange('card Expiry')} />
+        <ErrorMessage error={card?.errors['cardExpiry']} />
       </FormControl>
 
-      <FormControl id="cardCVC" mb="1em" w="20em">
-        <FormLabel htmlFor="cardCVC">Card CVC</FormLabel>
-        <CardCvcElement
-          id="cardCvc"
-          onChange={handlePayment_InputChange('cardCVC', 'Card CVC')}
-          options={StripeElementsStyles}
-        />
-        <ErrorMessage error={card?.errors?.mesage} />
+      <FormControl id="cardCvc" mb="1em" w="20em">
+        <FormLabel htmlFor="cardCvc"> CVC</FormLabel>
+        <CardCvcElement id="cardCvc" onChange={handleChange('card Cvc')} />
+        <ErrorMessage error={card?.errors['cardCvc']} />
       </FormControl>
 
       <Flex justify="flex-end">
-        <Button type="reset" variant="ghost" colorScheme="green" onClick={onReset}>
+        <Button type="reset" variant="ghost" colorScheme="green" mr=".25em" onClick={reset}>
           Reset
         </Button>
         <Button
           type="submit"
           variant="solid"
           colorScheme="green"
-          disabled={card?.isLoading || !stripe}
+          disabled={card?.isLoading || !stripe || isEmpty(card?.errors)}
         >
           {card?.isLoading ? 'Loading...' : `Pay ${price}`}
         </Button>
       </Flex>
-    </form>
+    </>
   )
 }

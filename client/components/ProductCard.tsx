@@ -22,12 +22,12 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
 
   const bgColor = useColorModeValue('gray_9', 'gray_2')
 
-  const handleQuantity = (e, type: string) => {
+  function increase(e: any) {
     e.preventDefault()
-    if (type === 'inc') {
-      increaseQuantity({ id: data?.id, ...data })
-      return
-    }
+    increaseQuantity({ id: data?.id, ...data })
+  }
+  function decrease(e: any) {
+    e.preventDefault()
     decreaseQuantity(data?.id)
   }
 
@@ -54,7 +54,7 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
 
           <Image
             src={data?.images[0]}
-            alt={`Picture of ${data.name}`}
+            alt={`Picture of ${data?.name}`}
             roundedTop="lg"
             boxSize={'154px'}
             m="1.5rem auto 0 auto"
@@ -71,18 +71,18 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
 
             <Flex justify="space-between" alignContent="center">
               <Box fontSize="1.2rem" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
-                {data.name}
+                {data?.name}
               </Box>
             </Flex>
 
             <Flex flexDir={'column'} justify="space-between" alignContent="center">
               <Flex>
-                <Rating initRate={data.rate} readOnly={readOnly} />
+                <Rating initRate={data?.rate} readOnly={readOnly} />
                 <Reviews data={data?.reviews} />
               </Flex>
 
               <Box fontSize="2xl" color={useColorModeValue('gray_1', 'white')}>
-                {formatCurrency(data.price)}
+                {formatCurrency(data?.price)}
               </Box>
             </Flex>
 
@@ -94,7 +94,7 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
                 borderRadius="20px"
                 w="full"
                 mt=".75rem"
-                onClick={e => handleQuantity(e, 'inc')}
+                onClick={e => increase(e)}
               >
                 Add to Cart
               </Button>
@@ -104,7 +104,7 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
               <Flex align={'center'} justify="center">
                 <IconButton
                   aria-label="decrease-quantity"
-                  onClick={e => handleQuantity(e, 'dec')}
+                  onClick={e => decrease(e)}
                   icon={<AiOutlineMinus />}
                   w="2.5rem!important"
                   h="2.5rem!important"
@@ -115,7 +115,7 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
 
                 <IconButton
                   aria-label="increase-quantity"
-                  onClick={e => handleQuantity(e, 'inc')}
+                  onClick={e => increase(e)}
                   icon={<AiOutlinePlus />}
                   w="2.5rem!important"
                   h="2.5rem!important"

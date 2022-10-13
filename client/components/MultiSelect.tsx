@@ -28,7 +28,7 @@ export default function MultiSelect(props: IMultiSelect): JSX.Element {
   const { label, options, name, selectedOptions, setSelectedOptions, buttonProps } = props
   const [search, setSearch] = useState<any>({ input: '', result: [] })
 
-   const itemBgColor = useColorModeValue('gray_8', 'gray_2')
+  const itemBgColor = useColorModeValue('gray_8', 'gray_3')
   const textColor = useColorModeValue('gray_3', 'gray_8')
 
   //console.log(search)
@@ -56,13 +56,12 @@ export default function MultiSelect(props: IMultiSelect): JSX.Element {
             color={selectedOptions.length ? 'accent_5' : textColor}
             p="1rem"
             borderRadius="10px"
-            w="15rem"
+            w="100%"
             textAlign="left"
             _focus={{
               outline: 'none'
             }}
-            _hover={{ bg: 'transparent' }}
-            rightIcon={isOpen ? <RiArrowDownSLine size={20} /> : <RiArrowRightSLine size={20} />}
+            rightIcon={!isOpen ? <RiArrowDownSLine size={20} /> : <RiArrowRightSLine size={20} />}
             {...buttonProps}
           >
             {label} {selectedOptions.length > 0 && ` (${selectedOptions.length})`}

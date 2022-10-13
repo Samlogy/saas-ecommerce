@@ -7,7 +7,6 @@ import {
   Box,
   Checkbox,
   Flex,
-  Select,
   Slider,
   SliderFilledTrack,
   SliderMark,
@@ -20,7 +19,7 @@ import React, { useCallback, useState } from 'react'
 import { IProduct } from '../lib/interfaces'
 import { generateQuery, loadFavouriteProducts } from '../lib/utils/fonctions'
 import { useFilterStore } from '../store'
-import { InputField, MultiSelect, TemplateFilter } from './'
+import { InputField, MultiSelect, SelectField, TemplateFilter } from './'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
 const data = {
@@ -70,24 +69,14 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
     console.log(query)
   }
 
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
-
   return (
-    <Flex
-      flexDir={'column'}
-      justifyContent={'flex-start'}
-      alignItems={'center'}
-      borderRadius="5px"
-      p="1.5em .5em"
-    >
+    <Flex flexDir={'column'} justifyContent={'flex-start'} alignItems={'center'} p="1.5em .5em">
       <InputField
         type="search"
         name="search"
         onChange={onFilter}
         value={filters.search}
         placeholder="Search..."
-        bg={itemBgColor}
-        borderRadius="5px"
       />
 
       <AccordionCustom
@@ -255,28 +244,24 @@ function CategoriesFilter({ filters, setFilters, data }: ISingleFilter) {
   )
 }
 function ConditionFilter({ filters, setFilters, data }: ISingleFilter) {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   return (
     <>
-      <Select
+      <SelectField
         onChange={e => setFilters({ ...filters, condition: e.target.value })}
         name="condition"
         value={filters.condition}
-        bg={itemBgColor}
-        focusBorderColor="accent_6"
-        borderRadius={'10px'}
+        w="100%"
       >
-        {data?.map((el, idx) => (
+        {data?.map((el, idx: number) => (
           <option key={idx} value={el}>
             {el}
           </option>
         ))}
-      </Select>
+      </SelectField>
     </>
   )
 }
 function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   return (
     <Flex flexDir={'column'} align="center" justify={'center'}>
       from:
@@ -286,9 +271,7 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
         onChange={e => setFilters({ ...filters, price: [e.target.value, filters.price[1]] })}
         value={filters.price[0]}
         placeholder="Search..."
-        bg={itemBgColor}
         w="7em"
-        borderRadius="5px"
       />
       to:
       <InputField
@@ -297,26 +280,21 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
         onChange={e => setFilters({ ...filters, price: [filters.price[0], e.target.value] })}
         value={filters.price[1]}
         placeholder="Search..."
-        bg={itemBgColor}
         w="7em"
-        borderRadius="5px"
       />
     </Flex>
   )
 }
 
 function AccordionCustom({ title, body }: IAccordionCustom) {
-  const itemBgColor = useColorModeValue('gray_8', 'gray_2')
   const itemColor = useColorModeValue('gray_2', 'gray_8')
   return (
     <Accordion defaultIndex={[0]} allowMultiple w="20em" mb="1em">
       <AccordionItem>
         <AccordionButton
-          bg={itemBgColor}
           color={itemColor}
           _focus={{ outline: 'none' }}
           _expanded={{ bg: 'accent_2', color: 'white' }}
-          borderRadius="5px"
         >
           <Box flex="1" textAlign="left">
             {title}

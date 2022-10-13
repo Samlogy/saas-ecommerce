@@ -107,6 +107,7 @@ export default function Products({ products }: { products: IProduct[] }) {
             <IconButton
               bg={itemBgColor}
               _hover={{ bg: itemBgColor }}
+              _focus={{ outline: 'none' }}
               aria-label="trigger-filter"
               icon={<BsFilterLeft size={18} />}
               ref={btnRef}

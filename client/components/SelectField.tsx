@@ -23,7 +23,7 @@ export default function SelectField({
   children,
   ...restProps
 }: ISelectField) {
-  const itemBgColor = useColorModeValue('white', 'gray_2')
+  const itemBgColor = useColorModeValue('white', 'gray_3')
   return (
     <FormControl id={name} mb="1em" w={restProps.w || '20em'}>
       {label && <FormLabel> {label} </FormLabel>}

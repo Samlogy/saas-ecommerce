@@ -6,7 +6,7 @@ export default function Services({ data }: { data: any }) {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <SectionWrapper title="Some Services We Offer">
-      <Flex flexDir="row" flexWrap="wrap" justifyContent={['center', 'space-between']}>
+      <Flex flexDir="row" flexWrap="wrap" justifyContent="center">
         {data.length > 0 &&
           data.map((service: any, idx: number) => (
             <Flex
@@ -18,7 +18,7 @@ export default function Services({ data }: { data: any }) {
               w="15rem"
               borderRadius={'10px'}
               p="2rem 1.5rem"
-              m={'.5rem'}
+              m={'.5em 1em'}
               bg={bgColor}
               // anim
               as={motion.div}

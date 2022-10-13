@@ -37,7 +37,7 @@ export default function ProductCard({ data, readOnly = false }: IProductCart) {
   return (
     <Link href={`http://localhost:3000/product/${data?.id}`} passHref>
       <Flex
-        m=".5rem"
+        m={'.5em 1em'}
         w="18rem"
         align="center"
         justify="center"

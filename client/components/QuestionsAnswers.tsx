@@ -26,6 +26,7 @@ export default function QuestionsAnswers({ data }: { data: any }) {
               _expanded={{ bg: 'accent_2', color: 'white' }}
               borderRadius="10px"
               fontSize={'.9rem'}
+              _focus={{ outline: 'none' }}
             >
               <Box flex="1" textAlign="left" fontWeight="500" py=".5rem">
                 {item.question}

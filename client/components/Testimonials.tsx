@@ -86,13 +86,14 @@ const SlickArrowLeft = props => {
     <IconButton
       aria-label="previous-slide"
       icon={<RiArrowLeftSLine size={24} />}
-      onClick={props?.props}
+      onClick={props?.onClick}
       pos="absolute"
       left="0"
       top="11rem"
       zIndex="100"
       borderRadius="50%"
       bg={'transparent'}
+      _focus={{ outline: 'none' }}
     />
   )
 }
@@ -109,6 +110,7 @@ const SlickArrowRight = props => {
       zIndex="100"
       borderRadius="50%"
       bg={'transparent'}
+      _focus={{ outline: 'none' }}
     />
   )
 }

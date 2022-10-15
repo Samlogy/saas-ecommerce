@@ -28,7 +28,7 @@ export default function FavouriteButton({ data }: { data: any }) {
       icon={isFavourite}
       boxShadow="md"
       onClick={handleFavourite}
-      position="absolute"
+      pos="absolute"
       top="4"
       right="4"
     />

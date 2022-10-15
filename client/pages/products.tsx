@@ -81,7 +81,8 @@ export default function Products({ products }: { products: IProduct[] }) {
 
     return list
   }
-  const filterData = useCallback(getFilters(filters), [filters])
+  const filterData = getFilters(filters) //useCallback(getFilters(filters), [filters])
+  console.log('filter data: ', filterData)
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -237,7 +238,7 @@ export const getServerSideProps = async () => {
 
 function DisplayFilters({ data, isMobile }: { data: any; isMobile: boolean }) {
   return (
-    <Flex flexDir="row" flexWrap="wrap" justify="flex-start" mb="1rem" ml={isMobile ? '1rem' : '0'}>
+    <Flex flexDir="row" flexWrap="wrap" justify="flex-start" mb="1em" ml={isMobile ? '1em' : '0'}>
       {data.map((el, idx) => (
         <Box
           key={idx}
@@ -245,10 +246,10 @@ function DisplayFilters({ data, isMobile }: { data: any; isMobile: boolean }) {
           bg="accent_3"
           color="white"
           borderRadius="10px"
-          p=".2rem"
+          p=".2em"
           fontSize=".9rem"
-          mb=".5rem"
-          mr=".25rem"
+          mb=".5em"
+          mr=".25em"
         >
           {el}
         </Box>

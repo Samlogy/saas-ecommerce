@@ -158,6 +158,8 @@ export default function EditProfile({ profile }) {
                 isLoading={isSubmitting}
                 bg="accent_4"
                 color="white"
+                w="20em"
+                mx="auto"
                 _hover={{ bg: 'accent_3' }}
               >
                 Edit Profile
@@ -293,14 +295,14 @@ const CustomerForm = ({ register, errors }: IForm) => {
         ))}
       </SelectField>
       <TextField
-        name="address_1"
+        name="shippingAddress"
         register={register}
         errors={errors}
         label="Address 1"
         placeholder="Address 1"
       />
       <TextField
-        name="address_2"
+        name="shippingAddress_2"
         register={register}
         errors={errors}
         label="Address 2"

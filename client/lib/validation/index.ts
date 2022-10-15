@@ -29,8 +29,8 @@ export const profileSchema = yup.object().shape({
   stateCustomer: yup.string().required('State / Province required'),
   zipCodeCustomer: yup.string().required('Zip code / Postal required'),
   // Vendor
-  companyName: yup.string().required('Company Name required'),
   companyLogo: yup.string().required('Company Logo required'),
+  companyName: yup.string().required('Company Name required'),
   companyAddress: yup.string().required('Shipping Address 2 required'),
   companyCity: yup.string().required('City required'),
   companyCountry: yup.string().required('Country required'),

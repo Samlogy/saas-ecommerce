@@ -14,38 +14,28 @@ export const contactSchema = yup.object().shape({
 })
 
 export const profileSchema = yup.object().shape({
+  // Default
   avatar: yup.string().required('Avatar required'),
   fullName: yup.string().required('Full Name required'),
   email: yup.string().email('Enter a valid Email Address').required('Email required'),
-  mobile: yup.string(),
-  // customer
-  address_1: yup.string(),
-  address_2: yup.string(),
-  country_code: yup
-    .number()
-    .positive('Country Code must be a positive number')
-    .typeError('Country Code must be a number')
-    .nullable(),
-  postale_code: yup
-    .number()
-    .positive('Postale Code must be a positive number')
-    .typeError('Postale Code must be a number')
-    .nullable(),
-  // vendor
-  company_name: yup.string(),
-  company_description: yup.string(),
-  company_address: yup.string(),
-  company_code: yup.string(),
-  company_country_code: yup
-    .number()
-    .positive('Company Country Code must be a positive number')
-    .typeError('Company Country Code must be a number')
-    .nullable(),
-  company_postale_code: yup
-    .number()
-    .positive('Company Postale Code must be a positive number')
-    .typeError('Company Postale Code must be a number')
-    .nullable()
+  phone: yup.string(),
+  address: yup.string().required('Address required'),
+  // Customer
+  shippingMethod: yup.string().required('Shipping Method required'),
+  shippingAddress: yup.string().required('Shipping Address required'),
+  shippingAddress2: yup.string().required('Shipping Address 2 required'),
+  cityCustomer: yup.string().required('City required'),
+  countryCustomer: yup.string().required('Country required'),
+  stateCustomer: yup.string().required('State / Province required'),
+  zipCodeCustomer: yup.string().required('Zip code / Postal required'),
+  // Vendor
+  companyName: yup.string().required('Company Name required'),
+  companyLogo: yup.string().required('Company Logo required'),
+  companyAddress: yup.string().required('Shipping Address 2 required'),
+  companyCity: yup.string().required('City required'),
+  companyCountry: yup.string().required('Country required'),
+  companyState: yup.string().required('State / Province required'),
+  companyZipCode: yup.string().required('Zip code / Postal required')
 })
 
 export const commentSchema = yup.object().shape({

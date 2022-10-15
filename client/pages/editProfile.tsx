@@ -11,7 +11,6 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { getVariableValues } from 'graphql'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -33,7 +32,7 @@ interface IDefaultForm {
 export default function EditProfile({ profile }) {
   const router = useRouter()
   //const [avatar, setAvatar] = useState<any>({ img: '', error: '' })
-  const [questions, setQuestions] = useState({ shipping: '', vendor: '' })
+  const [questions, setQuestions] = useState({ shipping: 'no', vendor: 'no' })
 
   const formOptions = {
     resolver: yupResolver(profileSchema),
@@ -95,19 +94,25 @@ export default function EditProfile({ profile }) {
               </Heading>
 
               <RadioGroup
-                onChange={val => setQuestions({ ...questions, shipping: val })}
-                value={questions.shipping}
+                onChange={val =>
+                  setQuestions(prev => {
+                    return {
+                      ...prev,
+                      shipping: val
+                    }
+                  })
+                }
+                value={questions?.shipping}
                 my="1rem"
                 colorScheme="green"
-                defaultValue={'no'}
               >
                 <Stack direction="row" spacing={4}>
-                  <Radio value={'yes'}>Yes</Radio>
-                  <Radio value={'no'}>No</Radio>
+                  <Radio value="yes">Yes</Radio>
+                  <Radio value="no">No</Radio>
                 </Stack>
               </RadioGroup>
 
-              <View cond={questions.shipping === 'yes'} display="flex" flexDir={'column'}>
+              <View cond={questions?.shipping === 'yes'} display="flex" flexDir={'column'}>
                 <CustomerForm register={register} errors={errors} />
               </View>
 
@@ -119,20 +124,31 @@ export default function EditProfile({ profile }) {
               </Heading>
 
               <RadioGroup
-                onChange={val => setQuestions({ ...questions, vendor: val })}
-                value={questions.vendor}
+                onChange={val =>
+                  setQuestions(prev => {
+                    return {
+                      ...prev,
+                      vendor: val
+                    }
+                  })
+                }
+                value={questions?.vendor}
                 my="1rem"
                 colorScheme="green"
-                defaultValue={'no'}
               >
                 <Stack direction="row" spacing={4}>
-                  <Radio value={'yes'}>Yes</Radio>
-                  <Radio value={'no'}>No</Radio>
+                  <Radio value="yes">Yes</Radio>
+                  <Radio value="no">No</Radio>
                 </Stack>
               </RadioGroup>
 
-              <View cond={questions.vendor === 'yes'} display="flex" flexDir={'column'}>
-                <VendorForm register={register} errors={errors} />
+              <View cond={questions?.vendor === 'yes'} display="flex" flexDir={'column'}>
+                <VendorForm
+                  register={register}
+                  errors={errors}
+                  setValue={setValue}
+                  getValues={getValues}
+                />
               </View>
 
               <Stack>
@@ -168,56 +184,86 @@ export async function getStaticProps() {
   }
 }
 
-const VendorForm = ({ register, errors }: IForm) => {
-  // const borderColor = useColorModeValue('gray_6', 'gray_4')
-  const inputColor = useColorModeValue('white', 'gray_3')
+const VendorForm = ({ register, errors, setValue, getValues }: IDefaultForm) => {
+  const companyLogoRef = useRef<any>()
+
+  const handleImage = (e: any) => {
+    const imgBase = e.target.files[0]
+    const imgPreview = URL.createObjectURL(imgBase)
+    setValue('companyLogo', imgPreview)
+  }
   return (
     <>
-      <Heading as="h2" fontSize="1.25rem" my="1.5rem" display={'flex'} alignItems="center">
+      <Heading
+        as="h2"
+        fontSize="1.25rem"
+        my="1.5rem"
+        display={'flex'}
+        flexDir="column"
+        alignItems="center"
+      >
         My Company Informations
         <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
           (Optional)
         </Box>
       </Heading>
 
-      <InputField name="company_name" register={register} errors={errors} label="Company Name" />
+      <Flex flexDir="column" justify="center" alignItems="center" mb="1rem">
+        <Input
+          type={'file'}
+          accept="image/*"
+          w="20em"
+          display="none"
+          ref={companyLogoRef}
+          onChange={handleImage}
+        />
+        <Avatar
+          name="company-logo"
+          size="2xl"
+          src={getValues('companyLogo') ? getValues('companyLogo') : avatarImage.src}
+          onClick={() => companyLogoRef.current.click()}
+          cursor={'pointer'}
+          mb="1rem"
+          boxShadow="md"
+        />
+        <ErrorMessage error={!getValues('companyLogo') && errors.companyLogo?.message} />
+      </Flex>
 
       <TextField
-        name="company_description"
+        name="companyAddress"
         register={register}
         errors={errors}
-        label="Company Description"
+        label="Address"
+        placeholder="Address"
       />
 
       <InputField
-        type="number"
-        name="company_code"
+        name="companyCity"
         register={register}
         errors={errors}
-        label="Company's Code"
+        label="City"
+        placeholder="City"
       />
-
-      <TextField
-        name="company_address"
-        register={register}
-        errors={errors}
-        label="Company Address"
-      />
-
       <InputField
-        type="number"
-        name="company_country_code"
+        name="companyCountry"
         register={register}
         errors={errors}
-        label="Company Country Code"
+        label="Country"
+        placeholder="Country"
       />
-
       <InputField
-        type="number"
-        name="company_postale_code"
+        name="companyState"
         register={register}
         errors={errors}
-        label="Company Postal Code"
+        label="State"
+        placeholder="State"
+      />
+      <InputField
+        name="companyZipCode"
+        register={register}
+        errors={errors}
+        label="Zip Code / Postal"
+        placeholder="State"
       />
     </>
   )
@@ -283,7 +329,7 @@ const CustomerForm = ({ register, errors }: IForm) => {
         placeholder="State"
       />
       <InputField
-        name="Zip Code / Postal"
+        name="zipCodeCustomer"
         register={register}
         errors={errors}
         label="Zip Code / Postal"
@@ -292,11 +338,7 @@ const CustomerForm = ({ register, errors }: IForm) => {
     </>
   )
 }
-
 const DefaultForm = ({ register, errors, setValue, getValues }: IDefaultForm) => {
-  // const borderColor = useColorModeValue('gray_6', 'gray_4')
-  const inputColor = useColorModeValue('white', 'gray_3')
-
   const avatarRef = useRef<any>()
 
   const handleImage = (e: any) => {

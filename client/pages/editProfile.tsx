@@ -62,30 +62,28 @@ export default function EditProfile({ profile }) {
           </Heading>
         </Stack>
 
-        <Flex align={'center'} justify={'center'} w="400px">
-          <Stack
-            spacing={4}
-            //w={'full'}
-            //  maxW={'md'}
-            bg={useColorModeValue('gray_9', 'gray_2')}
-            rounded={'xl'}
-            boxShadow={'lg'}
-            p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
-            w={['100%', '35em']}
-            m="3rem 0 1rem 0"
-          >
-            <form onSubmit={handleSubmit(onEdit)}>
-              <Heading as="h2" fontSize="1.5rem" mb="1.5rem">
-                My Personal Information
-              </Heading>
+        <Stack
+          spacing={4}
+          bg={useColorModeValue('gray_9', 'gray_2')}
+          rounded={'xl'}
+          boxShadow={'lg'}
+          p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
+          w={['100%', '30em']}
+          m="3rem 0 1rem 0"
+        >
+          <form onSubmit={handleSubmit(onEdit)}>
+            <Heading as="h2" fontSize="1.5rem" mb="1.5rem">
+              My Personal Information
+            </Heading>
 
-              <DefaultForm
-                register={register}
-                errors={errors}
-                setValue={setValue}
-                getValues={getValues}
-              />
+            <DefaultForm
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              getValues={getValues}
+            />
 
+            <Box ml="3em">
               <Heading as="h2" fontSize="1rem" my="1.5rem" display={'flex'} alignItems="center">
                 Do you want to buy produts ?
                 <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
@@ -103,7 +101,7 @@ export default function EditProfile({ profile }) {
                   })
                 }
                 value={questions?.shipping}
-                my="1rem"
+                my="1em"
                 colorScheme="green"
               >
                 <Stack direction="row" spacing={4}>
@@ -111,11 +109,13 @@ export default function EditProfile({ profile }) {
                   <Radio value="no">No</Radio>
                 </Stack>
               </RadioGroup>
+            </Box>
 
-              <View cond={questions?.shipping === 'yes'} display="flex" flexDir={'column'}>
-                <CustomerForm register={register} errors={errors} />
-              </View>
+            <View cond={questions?.shipping === 'yes'} display="flex" flexDir={'column'}>
+              <CustomerForm register={register} errors={errors} />
+            </View>
 
+            <Box ml="3em">
               <Heading as="h2" fontSize="1rem" my="1.5rem" display={'flex'} alignItems="center">
                 Are a Vendor ?
                 <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
@@ -133,7 +133,7 @@ export default function EditProfile({ profile }) {
                   })
                 }
                 value={questions?.vendor}
-                my="1rem"
+                my="1em"
                 colorScheme="green"
               >
                 <Stack direction="row" spacing={4}>
@@ -141,30 +141,30 @@ export default function EditProfile({ profile }) {
                   <Radio value="no">No</Radio>
                 </Stack>
               </RadioGroup>
+            </Box>
 
-              <View cond={questions?.vendor === 'yes'} display="flex" flexDir={'column'}>
-                <VendorForm
-                  register={register}
-                  errors={errors}
-                  setValue={setValue}
-                  getValues={getValues}
-                />
-              </View>
+            <View cond={questions?.vendor === 'yes'} display="flex" flexDir={'column'}>
+              <VendorForm
+                register={register}
+                errors={errors}
+                setValue={setValue}
+                getValues={getValues}
+              />
+            </View>
 
-              <Stack>
-                <Button
-                  type="submit"
-                  isLoading={isSubmitting}
-                  bg="accent_4"
-                  color="white"
-                  _hover={{ bg: 'accent_3' }}
-                >
-                  Edit Profile
-                </Button>
-              </Stack>
-            </form>
-          </Stack>
-        </Flex>
+            <Stack>
+              <Button
+                type="submit"
+                isLoading={isSubmitting}
+                bg="accent_4"
+                color="white"
+                _hover={{ bg: 'accent_3' }}
+              >
+                Edit Profile
+              </Button>
+            </Stack>
+          </form>
+        </Stack>
       </Flex>
     </Layout>
   )
@@ -193,7 +193,7 @@ const VendorForm = ({ register, errors, setValue, getValues }: IDefaultForm) => 
     setValue('companyLogo', imgPreview)
   }
   return (
-    <>
+    <Flex flexDir="column" alignItems="center">
       <Heading
         as="h2"
         fontSize="1.25rem"
@@ -265,13 +265,13 @@ const VendorForm = ({ register, errors, setValue, getValues }: IDefaultForm) => 
         label="Zip Code / Postal"
         placeholder="State"
       />
-    </>
+    </Flex>
   )
 }
 const CustomerForm = ({ register, errors }: IForm) => {
   const shippingMethods = ['standard', 'express'] // get it from api (to get more customized fields)
   return (
-    <>
+    <Flex flexDir="column" alignItems="ceter">
       <Heading as="h2" fontSize="1.25rem" my="1.5rem" display={'flex'} alignItems="center">
         My Shipping Informations
         <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
@@ -335,7 +335,7 @@ const CustomerForm = ({ register, errors }: IForm) => {
         label="Zip Code / Postal"
         placeholder="State"
       />
-    </>
+    </Flex>
   )
 }
 const DefaultForm = ({ register, errors, setValue, getValues }: IDefaultForm) => {
@@ -348,7 +348,7 @@ const DefaultForm = ({ register, errors, setValue, getValues }: IDefaultForm) =>
   }
 
   return (
-    <>
+    <Flex flexDir="column" alignItems="center">
       <Flex flexDir="column" justify="center" alignItems="center" mb="1rem">
         <Input
           type={'file'}
@@ -397,6 +397,6 @@ const DefaultForm = ({ register, errors, setValue, getValues }: IDefaultForm) =>
         label="Address"
         placeholder="Address"
       />
-    </>
+    </Flex>
   )
 }

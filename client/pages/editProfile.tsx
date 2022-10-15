@@ -15,7 +15,7 @@ import { getVariableValues } from 'graphql'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ErrorMessage, FormTemplate, InputField, Layout, TextField, View } from '../components'
+import { ErrorMessage, InputField, Layout, TextField, View, SelectField } from '../components'
 import { profileSchema } from '../lib/validation'
 import avatarImage from '../public/images/avatar.png'
 
@@ -63,78 +63,92 @@ export default function EditProfile({ profile }) {
           </Heading>
         </Stack>
 
-        <FormTemplate>
-          <form onSubmit={handleSubmit(onEdit)}>
-            <Heading as="h2" fontSize="1.5rem" mb="1.5rem">
-              My Personal Information
-            </Heading>
+        <Flex align={'center'} justify={'center'} w="400px">
+          <Stack
+            spacing={4}
+            //w={'full'}
+            //  maxW={'md'}
+            bg={useColorModeValue('gray_9', 'gray_2')}
+            rounded={'xl'}
+            boxShadow={'lg'}
+            p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
+            w={['100%', '35em']}
+            m="3rem 0 1rem 0"
+          >
+            <form onSubmit={handleSubmit(onEdit)}>
+              <Heading as="h2" fontSize="1.5rem" mb="1.5rem">
+                My Personal Information
+              </Heading>
 
-            <DefaultForm
-              register={register}
-              errors={errors}
-              setValue={setValue}
-              getValues={getValues}
-            />
+              <DefaultForm
+                register={register}
+                errors={errors}
+                setValue={setValue}
+                getValues={getValues}
+              />
 
-            <Heading as="h2" fontSize="1rem" my="1.5rem" display={'flex'} alignItems="center">
-              Do you want to buy produts ?
-              <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
-                (Optional)
-              </Box>
-            </Heading>
+              <Heading as="h2" fontSize="1rem" my="1.5rem" display={'flex'} alignItems="center">
+                Do you want to buy produts ?
+                <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
+                  (Optional)
+                </Box>
+              </Heading>
 
-            <RadioGroup
-              onChange={val => setQuestions({ ...questions, shipping: val })}
-              value={questions.shipping}
-              my="1rem"
-              colorScheme="green"
-            >
-              <Stack direction="row" spacing={4}>
-                <Radio value={'yes'}>Yes</Radio>
-                <Radio value={'no'}>No</Radio>
-              </Stack>
-            </RadioGroup>
-
-            <View cond={questions.shipping === 'yes'} display="flex" flexDir={'column'}>
-              <CustomerForm register={register} errors={errors} />
-            </View>
-
-            <Heading as="h2" fontSize="1rem" my="1.5rem" display={'flex'} alignItems="center">
-              Are a Vendor ?
-              <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
-                (Optional)
-              </Box>
-            </Heading>
-
-            <RadioGroup
-              onChange={val => setQuestions({ ...questions, vendor: val })}
-              value={questions.vendor}
-              my="1rem"
-              colorScheme="green"
-            >
-              <Stack direction="row" spacing={4}>
-                <Radio value={'yes'}>Yes</Radio>
-                <Radio value={'no'}>No</Radio>
-              </Stack>
-            </RadioGroup>
-
-            <View cond={questions.vendor === 'yes'} display="flex" flexDir={'column'}>
-              <VendorForm register={register} errors={errors} />
-            </View>
-
-            <Stack>
-              <Button
-                type="submit"
-                isLoading={isSubmitting}
-                bg="accent_4"
-                color="white"
-                _hover={{ bg: 'accent_3' }}
+              <RadioGroup
+                onChange={val => setQuestions({ ...questions, shipping: val })}
+                value={questions.shipping}
+                my="1rem"
+                colorScheme="green"
+                defaultValue={'no'}
               >
-                Edit Profile
-              </Button>
-            </Stack>
-          </form>
-        </FormTemplate>
+                <Stack direction="row" spacing={4}>
+                  <Radio value={'yes'}>Yes</Radio>
+                  <Radio value={'no'}>No</Radio>
+                </Stack>
+              </RadioGroup>
+
+              <View cond={questions.shipping === 'yes'} display="flex" flexDir={'column'}>
+                <CustomerForm register={register} errors={errors} />
+              </View>
+
+              <Heading as="h2" fontSize="1rem" my="1.5rem" display={'flex'} alignItems="center">
+                Are a Vendor ?
+                <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
+                  (Optional)
+                </Box>
+              </Heading>
+
+              <RadioGroup
+                onChange={val => setQuestions({ ...questions, vendor: val })}
+                value={questions.vendor}
+                my="1rem"
+                colorScheme="green"
+                defaultValue={'no'}
+              >
+                <Stack direction="row" spacing={4}>
+                  <Radio value={'yes'}>Yes</Radio>
+                  <Radio value={'no'}>No</Radio>
+                </Stack>
+              </RadioGroup>
+
+              <View cond={questions.vendor === 'yes'} display="flex" flexDir={'column'}>
+                <VendorForm register={register} errors={errors} />
+              </View>
+
+              <Stack>
+                <Button
+                  type="submit"
+                  isLoading={isSubmitting}
+                  bg="accent_4"
+                  color="white"
+                  _hover={{ bg: 'accent_3' }}
+                >
+                  Edit Profile
+                </Button>
+              </Stack>
+            </form>
+          </Stack>
+        </Flex>
       </Flex>
     </Layout>
   )
@@ -166,20 +180,13 @@ const VendorForm = ({ register, errors }: IForm) => {
         </Box>
       </Heading>
 
-      <InputField
-        name="company_name"
-        register={register}
-        errors={errors}
-        label="Company Name"
-        bg={inputColor}
-      />
+      <InputField name="company_name" register={register} errors={errors} label="Company Name" />
 
       <TextField
         name="company_description"
         register={register}
         errors={errors}
         label="Company Description"
-        bg={inputColor}
       />
 
       <InputField
@@ -188,7 +195,6 @@ const VendorForm = ({ register, errors }: IForm) => {
         register={register}
         errors={errors}
         label="Company's Code"
-        bg={inputColor}
       />
 
       <TextField
@@ -196,7 +202,6 @@ const VendorForm = ({ register, errors }: IForm) => {
         register={register}
         errors={errors}
         label="Company Address"
-        bg={inputColor}
       />
 
       <InputField
@@ -205,7 +210,6 @@ const VendorForm = ({ register, errors }: IForm) => {
         register={register}
         errors={errors}
         label="Company Country Code"
-        bg={inputColor}
       />
 
       <InputField
@@ -214,14 +218,12 @@ const VendorForm = ({ register, errors }: IForm) => {
         register={register}
         errors={errors}
         label="Company Postal Code"
-        bg={inputColor}
       />
     </>
   )
 }
 const CustomerForm = ({ register, errors }: IForm) => {
-  const inputColor = useColorModeValue('white', 'gray_3')
-  // const borderColor = useColorModeValue('gray_6', 'gray_4')
+  const shippingMethods = ['standard', 'express'] // get it from api (to get more customized fields)
   return (
     <>
       <Heading as="h2" fontSize="1.25rem" my="1.5rem" display={'flex'} alignItems="center">
@@ -231,38 +233,61 @@ const CustomerForm = ({ register, errors }: IForm) => {
         </Box>
       </Heading>
 
+      <SelectField
+        name="shippingMethod"
+        register={register}
+        errors={errors}
+        label="Shipping Method"
+        placeholder="Shipping Method"
+      >
+        {shippingMethods?.map((el: any, idx: number) => (
+          <option key={idx} value={el}>
+            {el}
+          </option>
+        ))}
+      </SelectField>
       <TextField
         name="address_1"
         register={register}
         errors={errors}
         label="Address 1"
-        bg={inputColor}
+        placeholder="Address 1"
       />
-
       <TextField
         name="address_2"
         register={register}
         errors={errors}
         label="Address 2"
-        bg={inputColor}
+        placeholder="Address 2"
       />
 
       <InputField
-        type="number"
-        name="country_code"
+        name="cityCustomer"
         register={register}
         errors={errors}
-        label="My Country"
-        bg={inputColor}
+        label="City"
+        placeholder="City"
       />
-
       <InputField
-        type="number"
-        name="postale_code"
+        name="countryCustomer"
         register={register}
         errors={errors}
-        label="My Postal Code"
-        bg={inputColor}
+        label="Country"
+        placeholder="Country"
+      />
+      <InputField
+        name="stateCustomer"
+        register={register}
+        errors={errors}
+        label="State"
+        placeholder="State"
+      />
+      <InputField
+        name="Zip Code / Postal"
+        register={register}
+        errors={errors}
+        label="Zip Code / Postal"
+        placeholder="State"
       />
     </>
   )
@@ -302,29 +327,33 @@ const DefaultForm = ({ register, errors, setValue, getValues }: IDefaultForm) =>
         />
         <ErrorMessage error={!getValues('avatar') && errors.avatar?.message} />
       </Flex>
-
       <InputField
         name="fullName"
         register={register}
         errors={errors}
         label="Full Name"
-        bg={inputColor}
+        placeholder="Full Name"
       />
-
       <InputField
         name="email"
         register={register}
         errors={errors}
         label="Email Address"
-        bg={inputColor}
+        placeholder="Email Address"
       />
-
       <InputField
         name="mobile"
         register={register}
         errors={errors}
         label="Mobile"
-        bg={inputColor}
+        placeholder="Mobile"
+      />
+      <InputField
+        name="address"
+        register={register}
+        errors={errors}
+        label="Address"
+        placeholder="Address"
       />
     </>
   )

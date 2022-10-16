@@ -1,5 +1,4 @@
 import * as yup from 'yup'
-import { z } from 'zod'
 
 const requiredField = (initState: boolean, requiredText: string) => ({
   is: initState,

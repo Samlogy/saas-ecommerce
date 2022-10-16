@@ -151,7 +151,7 @@ function BillingAddress({ errors, register }: IBillingAddress) {
   const inputBgColor = useColorModeValue('white', 'gray_3')
   return (
     <Flex
-      m="3rem 0 1rem 0"
+      m="3rem auto 1rem auto"
       flexDir="column"
       align="center"
       justify="center"
@@ -233,7 +233,6 @@ function ShippingMethod({ errors, register, shippingMethods }: IShippingMethod) 
   const newPrice = 1000
   return (
     <Flex
-      m="3rem 0 1rem 0"
       flexDir="column"
       align="center"
       justify="center"
@@ -241,7 +240,8 @@ function ShippingMethod({ errors, register, shippingMethods }: IShippingMethod) 
       boxShadow="md"
       p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
       w={['100%', '30rem']}
-      mx="auto"
+      m="3rem auto 1rem auto"
+      //mx="auto"
       bg={bgColor}
     >
       <RadioGroup
@@ -303,7 +303,7 @@ function Payment({ setFeedBack }: IPayment) {
   return (
     <Elements stripe={stripePromise}>
       <Flex
-        m="3rem 0 1rem 0"
+        m="3rem auto 1rem auto"
         flexDir="column"
         align="center"
         justify="center"

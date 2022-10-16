@@ -30,9 +30,7 @@ interface IDefaultForm {
 }
 
 export default function EditProfile({ profile }) {
-  const router = useRouter()
-  //const [avatar, setAvatar] = useState<any>({ img: '', error: '' })
-  const [questions, setQuestions] = useState({ shipping: 'no', vendor: 'no' })
+  const [questions, setQuestions] = useState({ customer: 'no', vendor: 'no' })
 
   const formOptions = {
     resolver: yupResolver(profileSchema),
@@ -52,6 +50,17 @@ export default function EditProfile({ profile }) {
     // function --> keep only plain fields
     // router.push('/profile')
   }
+
+  function onHandleCHange(name: string, val: string) {
+    setQuestions(prev => {
+      return {
+        ...prev,
+        [name === 'isCustomer' ? 'customer' : 'vendor']: val
+      }
+    })
+    setValue(name, val)
+  }
+  console.log(getValues())
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -84,23 +93,13 @@ export default function EditProfile({ profile }) {
             />
 
             <Box ml="3em">
-              <Heading as="h2" fontSize="1rem" my="1.5rem" display={'flex'} alignItems="center">
+              <Heading as="h2" fontSize="1rem" my="1.5rem">
                 Do you want to buy produts ?
-                <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
-                  (Optional)
-                </Box>
               </Heading>
 
               <RadioGroup
-                onChange={val =>
-                  setQuestions(prev => {
-                    return {
-                      ...prev,
-                      shipping: val
-                    }
-                  })
-                }
-                value={questions?.shipping}
+                onChange={value => onHandleCHange('isCustomer', value)}
+                value={questions?.customer}
                 my="1em"
                 colorScheme="green"
               >
@@ -111,27 +110,17 @@ export default function EditProfile({ profile }) {
               </RadioGroup>
             </Box>
 
-            <View cond={questions?.shipping === 'yes'} display="flex" flexDir={'column'}>
+            <View cond={questions?.customer === 'yes'}>
               <CustomerForm register={register} errors={errors} />
             </View>
 
             <Box ml="3em">
-              <Heading as="h2" fontSize="1rem" my="1.5rem" display={'flex'} alignItems="center">
+              <Heading as="h2" fontSize="1rem" my="1.5rem">
                 Are a Vendor ?
-                <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
-                  (Optional)
-                </Box>
               </Heading>
 
               <RadioGroup
-                onChange={val =>
-                  setQuestions(prev => {
-                    return {
-                      ...prev,
-                      vendor: val
-                    }
-                  })
-                }
+                onChange={value => onHandleCHange('isVendor', value)}
                 value={questions?.vendor}
                 my="1em"
                 colorScheme="green"
@@ -143,7 +132,7 @@ export default function EditProfile({ profile }) {
               </RadioGroup>
             </Box>
 
-            <View cond={questions?.vendor === 'yes'} display="flex" flexDir={'column'}>
+            <View cond={questions?.vendor === 'yes'}>
               <VendorForm
                 register={register}
                 errors={errors}
@@ -176,12 +165,7 @@ export async function getStaticProps() {
   // const data = (await getProducts()) || {};
   return {
     props: {
-      profile: {
-        company_country_code: null,
-        company_postale_code: null,
-        country_code: null,
-        postale_code: null
-      }
+      profile: {}
     }
   }
 }
@@ -196,18 +180,8 @@ const VendorForm = ({ register, errors, setValue, getValues }: IDefaultForm) => 
   }
   return (
     <Flex flexDir="column" alignItems="center">
-      <Heading
-        as="h2"
-        fontSize="1.25rem"
-        my="1.5rem"
-        display={'flex'}
-        flexDir="column"
-        alignItems="center"
-      >
+      <Heading as="h2" fontSize="1.25rem" my="1.5rem">
         My Company Informations
-        <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
-          (Optional)
-        </Box>
       </Heading>
 
       <Flex flexDir="column" justify="center" alignItems="center" mb="1rem">
@@ -273,12 +247,9 @@ const VendorForm = ({ register, errors, setValue, getValues }: IDefaultForm) => 
 const CustomerForm = ({ register, errors }: IForm) => {
   const shippingMethods = ['standard', 'express'] // get it from api (to get more customized fields)
   return (
-    <Flex flexDir="column" alignItems="ceter">
-      <Heading as="h2" fontSize="1.25rem" my="1.5rem" display={'flex'} alignItems="center">
+    <Flex flexDir="column" alignItems="center">
+      <Heading as="h2" fontSize="1.25rem" my="1.5rem">
         My Shipping Informations
-        <Box fontWeight={'400'} fontStyle="italic" fontSize={'.8rem'} ml=".25rem">
-          (Optional)
-        </Box>
       </Heading>
 
       <SelectField

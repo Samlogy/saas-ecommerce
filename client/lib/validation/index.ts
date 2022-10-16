@@ -1,8 +1,8 @@
 import * as yup from 'yup'
 import { z } from 'zod'
 
-const requiredField = requiredText => ({
-  is: false,
+const requiredField = (initState: boolean, requiredText: string) => ({
+  is: initState,
   then: yup.string().required(requiredText),
   otherwise: yup.string()
 })
@@ -20,22 +20,35 @@ export const profileSchema = yup.object().shape({
   email: yup.string().email('Enter a valid Email Address').required('Email required'),
   phone: yup.string(),
   address: yup.string().required('Address required'),
+  // radio fields
+  isCustomer: yup.boolean(),
+  isVendor: yup.boolean(),
   // Customer
-  shippingMethod: yup.string().required('Shipping Method required'),
-  shippingAddress: yup.string().required('Shipping Address required'),
-  shippingAddress2: yup.string().required('Shipping Address 2 required'),
-  cityCustomer: yup.string().required('City required'),
-  countryCustomer: yup.string().required('Country required'),
-  stateCustomer: yup.string().required('State / Province required'),
-  zipCodeCustomer: yup.string().required('Zip code / Postal required'),
+  shippingMethod: yup
+    .string()
+    .when('isCustomer', requiredField(true, 'Shipping Method is required')),
+  shippingAddress: yup
+    .string()
+    .when('isCustomer', requiredField(true, 'Shipping Address is required')),
+  shippingAddress_2: yup.string(),
+  cityCustomer: yup.string().when('isCustomer', requiredField(true, 'City is required')),
+  countryCustomer: yup.string().when('isCustomer', requiredField(true, 'Country is required')),
+  stateCustomer: yup
+    .string()
+    .when('isCustomer', requiredField(true, 'State / Province is required')),
+  zipCodeCustomer: yup
+    .string()
+    .when('isCustomer', requiredField(true, 'Zip code / Postal is required')),
   // Vendor
-  companyLogo: yup.string().required('Company Logo required'),
-  companyName: yup.string().required('Company Name required'),
-  companyAddress: yup.string().required('Shipping Address 2 required'),
-  companyCity: yup.string().required('City required'),
-  companyCountry: yup.string().required('Country required'),
-  companyState: yup.string().required('State / Province required'),
-  companyZipCode: yup.string().required('Zip code / Postal required')
+  companyLogo: yup.string().when('isVendor', requiredField(true, 'Company Logo is required')),
+  companyName: yup.string().when('isVendor', requiredField(true, ' Company Name is required')),
+  companyAddress: yup.string().when('isVendor', requiredField(true, 'Company Address is required')),
+  companyCity: yup.string().when('isVendor', requiredField(true, 'Company City is required')),
+  companyCountry: yup.string().when('isVendor', requiredField(true, 'Company Country is required')),
+  companyState: yup.string().when('isVendor', requiredField(true, 'Company State is required')),
+  companyZipCode: yup
+    .string()
+    .when('isVendor', requiredField(true, 'Company Zip code / Postal is required'))
 })
 
 export const commentSchema = yup.object().shape({
@@ -53,7 +66,7 @@ export const checkoutSchema: any = {
     isAddressShipping: yup.boolean(), // boolean
     shippingAddress: yup
       .string()
-      .when('isAddressShipping', requiredField('Shipping Address is required'))
+      .when('isAddressShipping', requiredField(false, 'Shipping Address is required'))
   }),
   2: yup.object().shape({
     // shipping method

@@ -46,7 +46,7 @@ export default function EditProfile({ profile }) {
   } = useForm(formOptions)
 
   const onEdit = async (profile: any) => {
-    console.log(profile)
+    console.log('profile: ', profile)
     // function --> keep only plain fields
     // router.push('/profile')
   }
@@ -58,9 +58,10 @@ export default function EditProfile({ profile }) {
         [name === 'isCustomer' ? 'customer' : 'vendor']: val
       }
     })
-    setValue(name, val)
+    setValue(name, true)
   }
-  console.log(getValues())
+
+  console.log(errors)
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -205,6 +206,13 @@ const VendorForm = ({ register, errors, setValue, getValues }: IDefaultForm) => 
         <ErrorMessage error={!getValues('companyLogo') && errors.companyLogo?.message} />
       </Flex>
 
+      <InputField
+        name="companyName"
+        register={register}
+        errors={errors}
+        label="Company Name"
+        placeholder="Company Name"
+      />
       <TextField
         name="companyAddress"
         register={register}
@@ -239,7 +247,7 @@ const VendorForm = ({ register, errors, setValue, getValues }: IDefaultForm) => 
         register={register}
         errors={errors}
         label="Zip Code / Postal"
-        placeholder="State"
+        placeholder="Zip Code / Postal"
       />
     </Flex>
   )
@@ -306,7 +314,7 @@ const CustomerForm = ({ register, errors }: IForm) => {
         register={register}
         errors={errors}
         label="Zip Code / Postal"
-        placeholder="State"
+        placeholder="Zip Code / Postal"
       />
     </Flex>
   )

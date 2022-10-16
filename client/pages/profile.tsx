@@ -1,25 +1,41 @@
 import { Box, Button, Flex, Heading, Image, useColorModeValue } from '@chakra-ui/react'
-import { ReactNode } from 'react'
 import Link from 'next/link'
+import { ReactNode } from 'react'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BsCalendarDate } from 'react-icons/bs'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { Layout, View } from '../components'
-import { useLocale } from '../lib/hooks'
 import profileImage from '../public/images/profile.jpg'
 
 export default function Profile(props: any) {
   const user = {} // super tokens
   const userExtends = props.userExtends // our db
-  const shipping = props.shipping // our db
+  const customer = props.customer // our db
   const vendor = props.vendor // our db
 
   const labelData = {
+    fullName: 'Full Name',
     email: 'Email Address',
+    address: 'Address',
+    phone: 'Phone',
     createdAt: 'Creation Date',
-    address: 'Localition'
+    // Customer
+    shippingMethod: 'shipping Method',
+    shippingAddress: 'shipping Address',
+    shippingAddress_2: 'shipping Address 2',
+    cityCustomer: 'Customer City',
+    countryCustomer: 'Customer Country',
+    stateCustomer: 'Customer State',
+    zipCodeCustomer: 'Customer Zip Code',
+    // Vendor
+    companyLogo: 'Company Logo',
+    companyName: 'Company Name',
+    companyAddress: 'Company Address',
+    companyCity: 'Company City',
+    companyCountry: 'Company Country',
+    companyState: 'Company State',
+    companyZipCode: 'Company Zip code / Postal'
   }
-  const { t } = useLocale()
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -31,22 +47,15 @@ export default function Profile(props: any) {
         <Flex flexDir={'column'} justifyContent="center" alignItems={'center'}>
           <DisplayUserData data={user} labelData={labelData} />
 
-          <Button
-            bg={'accent_3'}
-            color={'white'}
-            w="10rem"
-            mb="2rem"
-            mx="auto"
-            _hover={{ bg: 'accent_4' }}
-          >
+          <Button bg={'accent_3'} color={'white'} w="10em" mx="auto" _hover={{ bg: 'accent_4' }}>
             <Link href="/edit-profile"> Edit My Profile </Link>
           </Button>
 
-          <View cond={userExtends?.type === 'customer'}>
-            <DisplayShippingData data={shipping} labelData={labelData} />
+          <View cond={userExtends?.isCustomer}>
+            <DsplayCustomerData data={customer} labelData={labelData} />
           </View>
 
-          <View cond={userExtends?.type === 'vendor'}>
+          <View cond={userExtends?.isVendor}>
             <DisplayVendorData data={vendor} labelData={labelData} />
           </View>
         </Flex>
@@ -95,9 +104,9 @@ const DisplayUserData = ({ data, labelData }: IDisplayData) => {
     </TemplateDisplayData>
   )
 }
-const DisplayShippingData = ({ data, labelData }: IDisplayData) => {
+const DsplayCustomerData = ({ data, labelData }: IDisplayData) => {
   return (
-    <TemplateDisplayData title="My Shipping Informations">
+    <TemplateDisplayData title="My customer Informations">
       <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} label={labelData?.email} />
       <BoxData
         data={data?.address}
@@ -160,7 +169,7 @@ const TemplateDisplayData = ({ title, children }: ITemplateDisplayData) => {
       borderRadius={'10px'}
       alignItems="flex-start"
       justifyContent={'center'}
-      mb="2rem"
+      my="2rem"
       w={['20rem', '30rem', '', '40rem']}
       bg={bgColor}
     >
@@ -178,17 +187,18 @@ const TemplateDisplayData = ({ title, children }: ITemplateDisplayData) => {
 export async function getStaticProps() {
   // api call
   const userExtends = {
-    type: 'vendor',
+    isVendor: true,
+    isCustomer: true,
     avatar: profileImage.src,
     email: 'sam@gmail.com'
   }
-  const shipping = {}
+  const customer = {}
   const vendor = {}
 
   return {
     props: {
       userExtends,
-      shipping,
+      customer,
       vendor
     },
     revalidate: 10

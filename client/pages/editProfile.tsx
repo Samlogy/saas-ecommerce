@@ -11,7 +11,6 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage, InputField, Layout, TextField, View, SelectField } from '../components'
@@ -60,8 +59,6 @@ export default function EditProfile({ profile }) {
     })
     setValue(name, true)
   }
-
-  console.log(errors)
 
   return (
     <Layout isHeaderVisible isFooterVisible>

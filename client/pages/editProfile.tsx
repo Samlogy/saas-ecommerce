@@ -69,10 +69,10 @@ export default function EditProfile({ profile }) {
           boxShadow={'lg'}
           p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
           w={['100%', '30em']}
-          m="3rem 0 1rem 0"
+          m="0 0 1rem 0"
         >
           <form onSubmit={handleSubmit(onEdit)}>
-            <Heading as="h2" fontSize="1.5rem" mb="1.5rem">
+            <Heading as="h2" fontSize="1.5rem" mb="1.5rem" textAlign="center">
               My Personal Information
             </Heading>
 

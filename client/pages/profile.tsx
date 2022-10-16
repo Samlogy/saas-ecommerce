@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Image, useColorModeValue } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Text, Image, useColorModeValue } from '@chakra-ui/react'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import { AiOutlineMail } from 'react-icons/ai'
@@ -7,35 +7,37 @@ import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { Layout, View } from '../components'
 import profileImage from '../public/images/profile.jpg'
 
-export default function Profile(props: any) {
-  const user = {} // super tokens
-  const userExtends = props.userExtends // our db
-  const customer = props.customer // our db
-  const vendor = props.vendor // our db
-
-  const labelData = {
-    fullName: 'Full Name',
-    email: 'Email Address',
-    address: 'Address',
-    phone: 'Phone',
-    createdAt: 'Creation Date',
-    // Customer
-    shippingMethod: 'shipping Method',
-    shippingAddress: 'shipping Address',
-    shippingAddress_2: 'shipping Address 2',
-    cityCustomer: 'Customer City',
-    countryCustomer: 'Customer Country',
-    stateCustomer: 'Customer State',
-    zipCodeCustomer: 'Customer Zip Code',
-    // Vendor
-    companyLogo: 'Company Logo',
-    companyName: 'Company Name',
-    companyAddress: 'Company Address',
-    companyCity: 'Company City',
-    companyCountry: 'Company Country',
-    companyState: 'Company State',
-    companyZipCode: 'Company Zip code / Postal'
+export default function Profile(props) {
+  const labels = {
+    user: {
+      fullName: 'Full Name',
+      email: 'Email Address',
+      address: 'Address',
+      phone: 'Phone',
+      createdAt: 'Creation Date'
+    },
+    customer: {
+      shippingMethod: 'shipping Method',
+      shippingAddress: 'shipping Address',
+      shippingAddress_2: 'shipping Address 2',
+      cityCustomer: 'Customer City',
+      countryCustomer: 'Customer Country',
+      stateCustomer: 'Customer State',
+      zipCodeCustomer: 'Customer Zip Code'
+    },
+    vendor: {
+      companyLogo: 'Company Logo',
+      companyName: 'Company Name',
+      companyAddress: 'Company Address',
+      companyCity: 'Company City',
+      companyCountry: 'Company Country',
+      companyState: 'Company State',
+      companyZipCode: 'Company Zip code / Postal'
+    }
   }
+
+  const { user, customer, vendor } = props?.data
+  //  console.log(props)
 
   return (
     <Layout isHeaderVisible isFooterVisible>
@@ -45,18 +47,18 @@ export default function Profile(props: any) {
         </Heading>
 
         <Flex flexDir={'column'} justifyContent="center" alignItems={'center'}>
-          <DisplayUserData data={user} labelData={labelData} />
+          <DisplayUserData data={user} labels={labels?.user} />
 
           <Button bg={'accent_3'} color={'white'} w="10em" mx="auto" _hover={{ bg: 'accent_4' }}>
-            <Link href="/edit-profile"> Edit My Profile </Link>
+            <Link href="/editProfile"> Edit My Profile </Link>
           </Button>
 
-          <View cond={userExtends?.isCustomer}>
-            <DsplayCustomerData data={customer} labelData={labelData} />
+          <View cond={user?.isCustomer}>
+            <DsplayCustomerData data={customer} labels={labels?.customer} />
           </View>
 
-          <View cond={userExtends?.isVendor}>
-            <DisplayVendorData data={vendor} labelData={labelData} />
+          <View cond={user?.isVendor}>
+            <DisplayVendorData data={vendor} labels={labels?.vendor} />
           </View>
         </Flex>
       </View>
@@ -67,7 +69,7 @@ export default function Profile(props: any) {
 interface IBoxData {
   data: any
   label: string
-  icon: any
+  icon?: any
 }
 interface ITemplateDisplayData {
   title: string
@@ -75,10 +77,10 @@ interface ITemplateDisplayData {
 }
 interface IDisplayData {
   data: any
-  labelData: any
+  labels: any
 }
 
-const DisplayUserData = ({ data, labelData }: IDisplayData) => {
+const DisplayUserData = ({ data, labels }: IDisplayData) => {
   return (
     <TemplateDisplayData title="My Personal Informations">
       <Image
@@ -90,51 +92,42 @@ const DisplayUserData = ({ data, labelData }: IDisplayData) => {
         alt="avatar"
       />
 
-      <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} label={labelData?.email} />
-      <BoxData
-        data={data?.address}
-        icon={<HiOutlineLocationMarker size={24} />}
-        label={labelData?.address}
-      />
-      <BoxData
-        data={data?.createdAt}
-        icon={<BsCalendarDate size={24} />}
-        label={labelData?.createdAt}
-      />
+      <BoxData data={data?.email} label={labels?.email} />
+      <BoxData data={data?.address} label={labels?.address} />
+      <BoxData data={data?.createdAt} label={labels?.createdAt} />
     </TemplateDisplayData>
   )
 }
-const DsplayCustomerData = ({ data, labelData }: IDisplayData) => {
+const DsplayCustomerData = ({ data, labels }: IDisplayData) => {
   return (
     <TemplateDisplayData title="My customer Informations">
-      <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} label={labelData?.email} />
-      <BoxData
-        data={data?.address}
-        icon={<HiOutlineLocationMarker size={24} />}
-        label={labelData?.address}
-      />
-      <BoxData
-        data={data?.createdAt}
-        icon={<BsCalendarDate size={24} />}
-        label={labelData?.createdAt}
-      />
+      <BoxData data={data?.shippingMethod} label={labels?.shippingMethod} />
+      <BoxData data={data?.shippingAddress} label={labels?.shippingAddress} />
+      <BoxData data={data?.shippingAddress_2} label={labels?.shippingAddress_2} />
+      <BoxData data={data?.cityCustomer} label={labels?.cityCustomer} />
+      <BoxData data={data?.countryCustomer} label={labels?.countryCustomer} />
+      <BoxData data={data?.stateCustomer} label={labels?.stateCustomer} />
+      <BoxData data={data?.companyZipCode} label={labels?.companyZipCode} />
     </TemplateDisplayData>
   )
 }
-const DisplayVendorData = ({ data, labelData }: IDisplayData) => {
+const DisplayVendorData = ({ data, labels }: IDisplayData) => {
   return (
     <TemplateDisplayData title="My Vendor Informations">
-      <BoxData data={data?.email} icon={<AiOutlineMail size={24} />} label={labelData?.email} />
-      <BoxData
-        data={data?.address}
-        icon={<HiOutlineLocationMarker size={24} />}
-        label={labelData?.address}
+      <Image
+        src={data?.companyLogo}
+        boxSize="90px"
+        fallbackSrc="https://via.placeholder.com/100"
+        borderRadius={'10px'}
+        mb="1em"
+        alt="company-logo"
       />
-      <BoxData
-        data={data?.createdAt}
-        icon={<BsCalendarDate size={24} />}
-        label={labelData?.createdAt}
-      />
+      <BoxData data={data?.companyName} label={labels?.companyName} />
+      <BoxData data={data?.companyAddress} label={labels?.companyAddress} />
+      <BoxData data={data?.companyCity} label={labels?.companyCity} />
+      <BoxData data={data?.companyCountry} label={labels?.companyCountry} />
+      <BoxData data={data?.companyState} label={labels?.companyState} />
+      <BoxData data={data?.companyZipCode} label={labels?.companyZipCode} />
     </TemplateDisplayData>
   )
 }
@@ -142,16 +135,16 @@ const DisplayVendorData = ({ data, labelData }: IDisplayData) => {
 const BoxData = ({ data, label, icon }: IBoxData) => {
   return (
     <Flex alignItems={'center'} mb="1rem">
-      {icon}
-      <Box as="span" fontSize="1rem" fontWeight="500" ml=".5rem" w="10rem">
+      {icon && icon}
+      <Box as="span" fontSize="1rem" fontWeight="600" ml=".5em" w="10em">
         {label}
       </Box>
       {data ? (
-        <Box as="span" fontSize="1rem" fontWeight="400" ml=".5rem" color="gray_4">
+        <Text fontSize="1rem" fontWeight="400" ml=".5em" w="100%" color="gray_4">
           {data}
-        </Box>
+        </Text>
       ) : (
-        <Box as="span" fontSize="1rem" fontWeight="400" ml=".5rem" color="gray_4">
+        <Box as="span" fontSize="1rem" fontWeight="400" ml=".5em" color="gray_4">
           ---
         </Box>
       )}
@@ -186,20 +179,46 @@ const TemplateDisplayData = ({ title, children }: ITemplateDisplayData) => {
 
 export async function getStaticProps() {
   // api call
-  const userExtends = {
+  const user = {
     isVendor: true,
     isCustomer: true,
     avatar: profileImage.src,
-    email: 'sam@gmail.com'
+    fullName: 'sam',
+    email: 'sam@gmail.com',
+    mobile: '0540498180',
+    address: 'tizi-york',
+    createdAt: '',
+    editedAt: ''
   }
-  const customer = {}
-  const vendor = {}
+  const customer = {
+    shippingMethod: 'express',
+    shippingAddress:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci accusamus libero magni nam eveniet, exercitationem',
+    shippingAddress_2:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci accusamus libero magni nam eveniet, exercitationem',
+    cityCustomer: 'tizi-york',
+    countryCustomer: 'algeria',
+    stateCustomer: 'tizi-yotk',
+    zipCodeCustomer: '15007'
+  }
+  const vendor = {
+    companyName: 'sam solutions',
+    companyAddress:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci accusamus libero magni nam eveniet, exercitationem',
+    companyCity: 'tizi-york',
+    companyCountry: 'algeria',
+    companyState: 'tizi-york',
+    companyZipCode: '15007',
+    companyLogo: profileImage.src
+  }
 
   return {
     props: {
-      userExtends,
-      customer,
-      vendor
+      data: {
+        user,
+        customer,
+        vendor
+      }
     },
     revalidate: 10
   }

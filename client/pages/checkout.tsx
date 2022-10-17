@@ -42,9 +42,7 @@ interface IBillingAddress {
   errors: any
   register: any
 }
-interface IShippingMethod extends IBillingAddress {
-  shippingMethods: any
-}
+interface IShippingMethod extends IBillingAddress {}
 interface IPayment {
   setFeedBack: any
 }
@@ -61,7 +59,7 @@ export default function Checkout() {
     handleSubmit,
     formState: { errors, isValid }
   } = useForm({
-    // resolver: yupResolver(checkoutSchema[step]),
+    resolver: yupResolver(checkoutSchema[step]),
     mode: 'all'
   })
 
@@ -76,13 +74,11 @@ export default function Checkout() {
   useEffect(() => {
     if (feedBack.type === 'success') {
       setTimeout(() => {
-        // router.push('/products')
+        router.push('/products')
         onSubmit()
       }, 1000)
     }
   }, [feedBack?.type])
-
-  const shippingMethods = ['standard', 'express'] // get it from api (to get more customized fields)
 
   const steps = {
     1: {
@@ -93,9 +89,7 @@ export default function Checkout() {
     2: {
       label: 'Shipping Method',
       icon: MdOutlineLocalShipping,
-      content: (
-        <ShippingMethod errors={errors} register={register} shippingMethods={shippingMethods} />
-      )
+      content: <ShippingMethod errors={errors} register={register} />
     },
     3: {
       label: 'Review Order',
@@ -147,8 +141,6 @@ export default function Checkout() {
 }
 
 function BillingAddress({ errors, register }: IBillingAddress) {
-  const bgColor = useColorModeValue('gray_9', 'gray_2')
-  const inputBgColor = useColorModeValue('white', 'gray_3')
   return (
     <Flex
       m="3rem auto 1rem auto"
@@ -160,7 +152,7 @@ function BillingAddress({ errors, register }: IBillingAddress) {
       p={['1.5rem 1rem', '1.5rem 2rem', '', '']}
       w={['100%', '30rem']}
       mx="auto"
-      bg={bgColor}
+      bg={useColorModeValue('gray_9', 'gray_2')}
     >
       <InputField
         register={register}
@@ -168,7 +160,6 @@ function BillingAddress({ errors, register }: IBillingAddress) {
         label="Full Name"
         name="fullName"
         placeholder="Full Name"
-        autocomplete="on"
       />
       <TextField
         register={register}
@@ -188,8 +179,8 @@ function BillingAddress({ errors, register }: IBillingAddress) {
         register={register}
         errors={errors}
         name="phone"
-        placeholder="phone"
-        label="phone"
+        placeholder="Phone"
+        label="Phone"
       />
       <InputField
         register={register}
@@ -199,12 +190,8 @@ function BillingAddress({ errors, register }: IBillingAddress) {
         label="Zip Code"
       />
       <Checkbox
-        //defaultChecked={false}
-        //defaultValue={['yes']}
-        // onChange={handleCheckbox}
-        //value={isShipAddress}
         colorScheme={'green'}
-        bg={inputBgColor}
+        bg={useColorModeValue('white', 'gray_3')}
         w="20em"
         mb="1em"
         p=".5em"
@@ -221,16 +208,17 @@ function BillingAddress({ errors, register }: IBillingAddress) {
         name="shippingAddress"
         placeholder="Shipping Address"
         label="Shipping Address"
-        //  isDisabled={isShipAddress ? true : false}
       />
     </Flex>
   )
 }
-function ShippingMethod({ errors, register, shippingMethods }: IShippingMethod) {
+function ShippingMethod({ errors, register }: IShippingMethod) {
   const bgColor = useColorModeValue('gray_9', 'gray_2')
   const inputBgColor = useColorModeValue('white', 'gray_3')
   // receive totalPrice as default (then when valid discountCode is entred re-compute the newPrice)
   const newPrice = 1000
+
+  const shippingMethods = ['standard', 'express'] // get it from api (to get more customized fields)
   return (
     <Flex
       flexDir="column"

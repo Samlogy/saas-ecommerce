@@ -79,7 +79,7 @@ export default function CartItem({ data }: { data: IProduct }) {
           </Box>
           <Box>
             <Text fontSize=".9rem" textDecor={isDiscount ? 'line-through' : 'none'}>
-              ${formatCurrency(price)}
+              {formatCurrency(price)}
             </Text>
             {isDiscount && (
               <Text fontSize="1rem" fontWeight="600">

@@ -1,48 +1,45 @@
-import { Box, Button, Flex, Heading, Text, Image, useColorModeValue } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Image, Text, useColorModeValue } from '@chakra-ui/react'
 import Link from 'next/link'
 import { ReactNode } from 'react'
-import { AiOutlineMail } from 'react-icons/ai'
-import { BsCalendarDate } from 'react-icons/bs'
-import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { Layout, View } from '../components'
 import profileImage from '../public/images/profile.jpg'
 
-export default function Profile(props) {
+export default function Profile({ data }: any) {
   const labels = {
     user: {
       fullName: 'Full Name',
-      email: 'Email Address',
+      email: 'Email',
       address: 'Address',
       phone: 'Phone',
-      createdAt: 'Creation Date'
+      createdAt: 'Created on',
+      editedAt: 'Edited on'
     },
     customer: {
-      shippingMethod: 'shipping Method',
-      shippingAddress: 'shipping Address',
-      shippingAddress_2: 'shipping Address 2',
-      cityCustomer: 'Customer City',
-      countryCustomer: 'Customer Country',
-      stateCustomer: 'Customer State',
-      zipCodeCustomer: 'Customer Zip Code'
+      shippingMethod: 'Shipping Method',
+      shippingAddress: 'Shipping Address',
+      shippingAddress_2: 'Shipping Address 2',
+      cityCustomer: 'City',
+      countryCustomer: 'Country',
+      stateCustomer: 'State',
+      zipCodeCustomer: 'Zip code / Postal'
     },
     vendor: {
-      companyLogo: 'Company Logo',
-      companyName: 'Company Name',
-      companyAddress: 'Company Address',
-      companyCity: 'Company City',
-      companyCountry: 'Company Country',
-      companyState: 'Company State',
-      companyZipCode: 'Company Zip code / Postal'
+      companyLogo: 'Logo',
+      companyName: 'Name',
+      companyAddress: 'Address',
+      companyCity: 'City',
+      companyCountry: 'Country',
+      companyState: 'State',
+      companyZipCode: 'Zip code / Postal'
     }
   }
 
-  const { user, customer, vendor } = props?.data
-  //  console.log(props)
+  const { user, customer, vendor } = data
 
   return (
     <Layout isHeaderVisible isFooterVisible>
       <View cond={user}>
-        <Heading fontSize="1.5rem" mb="2rem" textTransform={'uppercase'}>
+        <Heading fontSize="1.5rem" mb="2em" textTransform={'uppercase'}>
           Profile
         </Heading>
 
@@ -69,7 +66,6 @@ export default function Profile(props) {
 interface IBoxData {
   data: any
   label: string
-  icon?: any
 }
 interface ITemplateDisplayData {
   title: string
@@ -84,17 +80,16 @@ const DisplayUserData = ({ data, labels }: IDisplayData) => {
   return (
     <TemplateDisplayData title="My Personal Informations">
       <Image
-        src={data?.avatar}
+        src={data?.avatar ? data?.avatar.src : profileImage}
         boxSize="90px"
-        fallbackSrc="https://via.placeholder.com/100"
         borderRadius={'10px'}
         mb="1rem"
         alt="avatar"
       />
-
       <BoxData data={data?.email} label={labels?.email} />
       <BoxData data={data?.address} label={labels?.address} />
       <BoxData data={data?.createdAt} label={labels?.createdAt} />
+      <BoxData data={data?.editedAt} label={labels?.editedAt} />
     </TemplateDisplayData>
   )
 }
@@ -104,10 +99,10 @@ const DsplayCustomerData = ({ data, labels }: IDisplayData) => {
       <BoxData data={data?.shippingMethod} label={labels?.shippingMethod} />
       <BoxData data={data?.shippingAddress} label={labels?.shippingAddress} />
       <BoxData data={data?.shippingAddress_2} label={labels?.shippingAddress_2} />
-      <BoxData data={data?.cityCustomer} label={labels?.cityCustomer} />
       <BoxData data={data?.countryCustomer} label={labels?.countryCustomer} />
+      <BoxData data={data?.cityCustomer} label={labels?.cityCustomer} />
       <BoxData data={data?.stateCustomer} label={labels?.stateCustomer} />
-      <BoxData data={data?.companyZipCode} label={labels?.companyZipCode} />
+      <BoxData data={data?.zipCodeCustomer} label={labels?.zipCodeCustomer} />
     </TemplateDisplayData>
   )
 }
@@ -115,45 +110,43 @@ const DisplayVendorData = ({ data, labels }: IDisplayData) => {
   return (
     <TemplateDisplayData title="My Vendor Informations">
       <Image
-        src={data?.companyLogo}
-        boxSize="90px"
-        fallbackSrc="https://via.placeholder.com/100"
+        src={data?.companyLogo ? data?.companyLogo.src : profileImage.src}
+        boxSize="100px"
         borderRadius={'10px'}
         mb="1em"
         alt="company-logo"
       />
       <BoxData data={data?.companyName} label={labels?.companyName} />
       <BoxData data={data?.companyAddress} label={labels?.companyAddress} />
-      <BoxData data={data?.companyCity} label={labels?.companyCity} />
       <BoxData data={data?.companyCountry} label={labels?.companyCountry} />
+      <BoxData data={data?.companyCity} label={labels?.companyCity} />
       <BoxData data={data?.companyState} label={labels?.companyState} />
       <BoxData data={data?.companyZipCode} label={labels?.companyZipCode} />
     </TemplateDisplayData>
   )
 }
 
-const BoxData = ({ data, label, icon }: IBoxData) => {
+const BoxData = ({ data, label }: IBoxData) => {
+  const textColor = useColorModeValue('gray_3', 'gray_5')
   return (
     <Flex alignItems={'center'} mb="1rem">
-      {icon && icon}
-      <Box as="span" fontSize="1rem" fontWeight="600" ml=".5em" w="10em">
+      <Box as="span" fontSize=".95rem" fontWeight="600" w="10em">
         {label}
       </Box>
       {data ? (
-        <Text fontSize="1rem" fontWeight="400" ml=".5em" w="100%" color="gray_4">
+        <Text fontSize="1rem" fontWeight="400" ml=".5em" w="100%" color={textColor}>
           {data}
         </Text>
       ) : (
-        <Box as="span" fontSize="1rem" fontWeight="400" ml=".5em" color="gray_4">
+        <Text fontSize="1rem" fontWeight="400" ml=".5em" color={textColor}>
           ---
-        </Box>
+        </Text>
       )}
     </Flex>
   )
 }
 
 const TemplateDisplayData = ({ title, children }: ITemplateDisplayData) => {
-  const bgColor = useColorModeValue('gray_9', 'gray_2')
   return (
     <Flex
       flexDir={'column'}
@@ -164,7 +157,7 @@ const TemplateDisplayData = ({ title, children }: ITemplateDisplayData) => {
       justifyContent={'center'}
       my="2rem"
       w={['20rem', '30rem', '', '40rem']}
-      bg={bgColor}
+      bg={useColorModeValue('gray_9', 'gray_2')}
     >
       <Heading fontSize="1.2rem" mb="1rem" textTransform={'uppercase'}>
         {title}
@@ -182,7 +175,7 @@ export async function getStaticProps() {
   const user = {
     isVendor: true,
     isCustomer: true,
-    avatar: profileImage.src,
+    avatar: profileImage,
     fullName: 'sam',
     email: 'sam@gmail.com',
     mobile: '0540498180',
@@ -209,7 +202,7 @@ export async function getStaticProps() {
     companyCountry: 'algeria',
     companyState: 'tizi-york',
     companyZipCode: '15007',
-    companyLogo: profileImage.src
+    companyLogo: profileImage
   }
 
   return {

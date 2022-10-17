@@ -30,13 +30,7 @@ export default function CartItem({ data }: { data: IProduct }) {
   return (
     <Box>
       <Flex justifyContent="space-between" mt="1rem">
-        <Image
-          boxSize="100px"
-          src={data?.images[0]}
-          borderRadius="5px"
-          borderColor="gray"
-          alt="Product"
-        />
+        <Image boxSize="100px" src={data?.images[0]} borderRadius="5px" alt={data?.name} />
 
         <Flex flexDir="column">
           <Text fontSize="1rem" fontWeight="600" textAlign={'center'} mb=".5rem">
@@ -47,7 +41,6 @@ export default function CartItem({ data }: { data: IProduct }) {
             justifyContent={'space-evenly'}
             p=".5rem"
             borderRadius={'.5rem'}
-            border="1px solid"
             borderColor={useColorModeValue('gray_3', 'gray_5')}
             alignItems="center"
             mb=".5rem"

@@ -73,8 +73,6 @@ export default function NavBar() {
 
   const quantityTotal = useShoppingCartStore((state: any) => state.quantityTotal)
 
-  const bgColor = useColorModeValue('white', 'gray_2')
-
   const isVisible = useBreakpointValue({ base: false, md: true })
 
   const menuIcon = (
@@ -84,7 +82,14 @@ export default function NavBar() {
   )
 
   return (
-    <Box bg={bgColor} px="2rem" pos="fixed" w="full" boxShadow={'md'} zIndex={200}>
+    <Box
+      bg={useColorModeValue('white', 'gray_2')}
+      px="2em"
+      pos="fixed"
+      w="full"
+      boxShadow={'md'}
+      zIndex={200}
+    >
       <Flex h="10vh" align="center" justify="space-between">
         <IconButton
           size={'md'}
@@ -129,7 +134,7 @@ export default function NavBar() {
         </Stack>
 
         {!isVisible && (
-          <Flex flexDir="column" align={'center'}>
+          <Flex flexDir="column" align={'center'} justify="center" mt="1em">
             <SelectLanguage />
             <DarkModeToggle />
             <ShoppingCartIcon value={quantityTotal} />

@@ -13,9 +13,9 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ErrorMessage, InputField, Layout, TextField, View, SelectField } from '../components'
+import { ErrorMessage, InputField, Layout, SelectField, TextField, View } from '../components'
 import { profileSchema } from '../lib/validation'
-import avatarImage from '../public/images/avatar.png'
+import { useAuthStore } from '../store'
 
 interface IForm {
   register: any
@@ -28,12 +28,17 @@ interface IDefaultForm {
   getValues: any
 }
 
-export default function EditProfile({ profile }) {
-  const [questions, setQuestions] = useState({ customer: 'no', vendor: 'no' })
+export default function EditProfile() {
+  const user = useAuthStore((state: any) => state.user)
+
+  const [questions, setQuestions] = useState({
+    customer: user?.isCustomer ? 'yes' : 'no',
+    vendor: user?.isVendor ? 'yes' : 'no'
+  })
 
   const formOptions = {
     resolver: yupResolver(profileSchema),
-    defaultValues: profile
+    defaultValues: user
   }
 
   const {
@@ -159,15 +164,6 @@ export default function EditProfile({ profile }) {
   )
 }
 
-export async function getStaticProps() {
-  // const data = (await getProducts()) || {};
-  return {
-    props: {
-      profile: {}
-    }
-  }
-}
-
 const VendorForm = ({ register, errors, setValue, getValues }: IDefaultForm) => {
   const companyLogoRef = useRef<any>()
 
@@ -194,7 +190,7 @@ const VendorForm = ({ register, errors, setValue, getValues }: IDefaultForm) => 
         <Avatar
           name="company-logo"
           size="2xl"
-          src={getValues('companyLogo') ? getValues('companyLogo') : avatarImage.src}
+          src={getValues('companyLogo') ? getValues('companyLogo') : '/images/avatar.png'}
           onClick={() => companyLogoRef.current.click()}
           cursor={'pointer'}
           mb="1rem"

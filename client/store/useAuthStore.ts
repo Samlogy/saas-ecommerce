@@ -22,13 +22,43 @@ interface IAuth {
   logout: () => void
 }
 
-const userTest = {
-  id: 1,
-  fullName: 'sam sam',
+const user = {
+  isVendor: true,
+  isCustomer: true,
+  avatar: '/images/profile.jpg',
+  fullName: 'sam',
   email: 'sam@gmail.com',
-  username: 'sam',
-  createdAt: '12-05-2012',
-  editedAt: '12-05-2012'
+  mobile: '0540498180',
+  address: 'tizi-york',
+  createdAt: '',
+  editedAt: ''
+}
+const customer = {
+  shippingMethod: 'express',
+  shippingAddress:
+    'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci accusamus libero magni nam eveniet, exercitationem',
+  shippingAddress_2:
+    'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci accusamus libero magni nam eveniet, exercitationem',
+  cityCustomer: 'tizi-york',
+  countryCustomer: 'algeria',
+  stateCustomer: 'tizi-yotk',
+  zipCodeCustomer: '15007'
+}
+const vendor = {
+  companyName: 'sam solutions',
+  companyAddress:
+    'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci accusamus libero magni nam eveniet, exercitationem',
+  companyCity: 'tizi-york',
+  companyCountry: 'algeria',
+  companyState: 'tizi-york',
+  companyZipCode: '15007',
+  companyLogo: '/images/profile.jpg'
+}
+
+const userTest = {
+  ...user,
+  ...customer,
+  ...vendor
 }
 
 let authStore = (set: SetState<IAuth>) => ({

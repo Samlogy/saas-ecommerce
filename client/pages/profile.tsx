@@ -3,8 +3,11 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { Layout, View } from '../components'
 import profileImage from '../public/images/profile.jpg'
+import { useAuthStore } from '../store'
 
-export default function Profile({ data }: any) {
+export default function Profile() {
+  const user = useAuthStore((state: any) => state.user)
+
   const labels = {
     user: {
       fullName: 'Full Name',
@@ -34,8 +37,6 @@ export default function Profile({ data }: any) {
     }
   }
 
-  const { user, customer, vendor } = data
-
   return (
     <Layout isHeaderVisible isFooterVisible>
       <View cond={user}>
@@ -51,11 +52,11 @@ export default function Profile({ data }: any) {
           </Button>
 
           <View cond={user?.isCustomer}>
-            <DsplayCustomerData data={customer} labels={labels?.customer} />
+            <DsplayCustomerData data={user} labels={labels?.customer} />
           </View>
 
           <View cond={user?.isVendor}>
-            <DisplayVendorData data={vendor} labels={labels?.vendor} />
+            <DisplayVendorData data={user} labels={labels?.vendor} />
           </View>
         </Flex>
       </View>
@@ -80,7 +81,7 @@ const DisplayUserData = ({ data, labels }: IDisplayData) => {
   return (
     <TemplateDisplayData title="My Personal Informations">
       <Image
-        src={data?.avatar ? data?.avatar.src : profileImage}
+        src={data?.avatar ? data?.avatar : profileImage}
         boxSize="90px"
         borderRadius={'10px'}
         mb="1rem"
@@ -110,7 +111,7 @@ const DisplayVendorData = ({ data, labels }: IDisplayData) => {
   return (
     <TemplateDisplayData title="My Vendor Informations">
       <Image
-        src={data?.companyLogo ? data?.companyLogo.src : profileImage.src}
+        src={data?.companyLogo ? data?.companyLogo : profileImage}
         boxSize="100px"
         borderRadius={'10px'}
         mb="1em"
@@ -168,51 +169,4 @@ const TemplateDisplayData = ({ title, children }: ITemplateDisplayData) => {
       </Flex>
     </Flex>
   )
-}
-
-export async function getStaticProps() {
-  // api call
-  const user = {
-    isVendor: true,
-    isCustomer: true,
-    avatar: profileImage,
-    fullName: 'sam',
-    email: 'sam@gmail.com',
-    mobile: '0540498180',
-    address: 'tizi-york',
-    createdAt: '',
-    editedAt: ''
-  }
-  const customer = {
-    shippingMethod: 'express',
-    shippingAddress:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci accusamus libero magni nam eveniet, exercitationem',
-    shippingAddress_2:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci accusamus libero magni nam eveniet, exercitationem',
-    cityCustomer: 'tizi-york',
-    countryCustomer: 'algeria',
-    stateCustomer: 'tizi-yotk',
-    zipCodeCustomer: '15007'
-  }
-  const vendor = {
-    companyName: 'sam solutions',
-    companyAddress:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci accusamus libero magni nam eveniet, exercitationem',
-    companyCity: 'tizi-york',
-    companyCountry: 'algeria',
-    companyState: 'tizi-york',
-    companyZipCode: '15007',
-    companyLogo: profileImage
-  }
-
-  return {
-    props: {
-      data: {
-        user,
-        customer,
-        vendor
-      }
-    },
-    revalidate: 10
-  }
 }

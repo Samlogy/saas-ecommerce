@@ -335,7 +335,7 @@ const DefaultForm = ({ register, errors, setValue, getValues }: IDefaultForm) =>
         <Avatar
           name="profile-picture"
           size="2xl"
-          src={getValues('avatar') ? getValues('avatar') : avatarImage.src}
+          src={getValues('avatar') ? getValues('avatar') : '/images/profile.jpg'}
           onClick={() => avatarRef.current.click()}
           cursor={'pointer'}
           mb="1rem"

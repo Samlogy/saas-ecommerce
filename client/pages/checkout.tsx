@@ -63,7 +63,7 @@ export default function Checkout() {
     mode: 'all'
   })
 
-  //const router = useRouter()
+  const router = useRouter()
 
   const onSubmit = async () => {
     console.log('submitted !!')

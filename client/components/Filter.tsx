@@ -22,9 +22,10 @@ import { useFilterStore } from '../store'
 import { InputField, MultiSelect, SelectField, TemplateFilter } from './'
 
 const CATEGORY_LIST = ['technology', 'food', 'tools', 'sport', 'teaching']
+const CONDITIONS_LIST = ['new', 'old']
 const data = {
   categories: CATEGORY_LIST,
-  conditions: CATEGORY_LIST,
+  conditions: CONDITIONS_LIST,
   prices: [700, 1500, 10000],
   discounts: [25, 50, 75],
   rates: [1, 2, 3, 4, 5]
@@ -60,13 +61,12 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
   const setFilters = useFilterStore((state: any) => state.setFilters)
 
   // load all lists once (catergories - condition -) save them inside localstorage
-  const onFilter = (e: any) => {
-    if (e.target == null) return
-
-    setFilters({ ...filters, [e.target.name]: e.target.value })
-    const query = useCallback(() => generateQuery(filters), [filters])
+  const onFilter = (value: any) => {
+    setFilters(value)
+    console.log('values: ', value)
+    const query = generateQuery(value) //useCallback(generateQuery(filters), [filters])
     // call api --> filter
-    console.log(query)
+    // console.log(query)
   }
 
   return (
@@ -74,48 +74,40 @@ export default function Filter({ setProducts }: { setProducts: (products: IProdu
       <InputField
         type="search"
         name="search"
-        onChange={onFilter}
-        value={filters.search}
+        onChange={e => onFilter({ ...filters, search: e.target.value })}
+        value={filters?.search}
         placeholder="Search..."
       />
-
       <AccordionCustom
         title="Favourite Products"
-        body={
-          <FavouriteFilter filters={filters} setFilters={setFilters} setProducts={setProducts} />
-        }
+        body={<FavouriteFilter filters={filters} onFilter={onFilter} setProducts={setProducts} />}
       />
-
       <AccordionCustom
         title="Discount"
-        body={<DiscountSlider filters={filters} setFilters={setFilters} data={data.discounts} />}
+        body={<DiscountSlider filters={filters} onFilter={onFilter} data={data?.discounts} />}
       />
-
       <AccordionCustom
         title="Rate"
-        body={<RateSlider filters={filters} setFilters={setFilters} data={data.rates} />}
+        body={<RateSlider filters={filters} onFilter={onFilter} data={data?.rates} />}
       />
-
       <AccordionCustom
         title="Price"
-        body={<PriceSlider filters={filters} setFilters={setFilters} data={data.prices} />}
+        body={<PriceSlider filters={filters} onFilter={onFilter} data={data?.prices} />}
       />
-
       <AccordionCustom
         title="Categories"
-        body={<CategoriesFilter filters={filters} setFilters={setFilters} data={data.categories} />}
+        body={<CategoriesFilter filters={filters} onFilter={onFilter} data={data?.categories} />}
       />
-
       <AccordionCustom
         title="Condition"
-        body={<ConditionFilter filters={filters} setFilters={setFilters} data={data.conditions} />}
+        body={<ConditionFilter filters={filters} onFilter={onFilter} data={data?.conditions} />}
       />
     </Flex>
   )
 }
 
-function FavouriteFilter({ filters, setFilters, setProducts }: IFavouriteFilter) {
-  const [showFavouriteProducts, setShowFavouriteProducts] = useState(filters.isFavourite)
+function FavouriteFilter({ filters, onFilter, setProducts }: any) {
+  const [showFavouriteProducts, setShowFavouriteProducts] = useState(filters?.isFavourite)
 
   const textColor = useColorModeValue('gray_3', 'gray_8')
 
@@ -123,14 +115,17 @@ function FavouriteFilter({ filters, setFilters, setProducts }: IFavouriteFilter)
     const value = e.target.value
     if (value === 'yes') {
       setShowFavouriteProducts('no')
-      setFilters({ ...filters, isFavourite: 'no' })
+      //   setFilters({ ...filters, isFavourite: 'no' })
+      onFilter({ ...filters, isFavourite: 'no' })
       return
     }
     setShowFavouriteProducts('yes')
-    setFilters({ ...filters, isFavourite: 'yes' })
+    // setFilters({ ...filters, isFavourite: 'yes' })
+    onFilter({ ...filters, isFavourite: 'yes' })
     setProducts(loadFavouriteProducts())
   }
-  const isFavourite = filters.isFavourite === 'yes' ? true : false
+
+  const isFavourite = filters?.isFavourite === 'yes' ? true : false
 
   return (
     <>
@@ -147,19 +142,19 @@ function FavouriteFilter({ filters, setFilters, setProducts }: IFavouriteFilter)
     </>
   )
 }
-function RateSlider({ filters, setFilters, data }: ISingleFilter) {
+function RateSlider({ filters, onFilter, data }: any) {
   const [showTooltip, setShowTooltip] = useState(false)
 
   return (
     <TemplateFilter>
       <Slider
         id="slider-rate"
-        defaultValue={filters.rate}
+        defaultValue={filters?.rate}
         min={0}
         max={5}
         colorScheme="green"
         name="rate"
-        onChange={value => setFilters({ ...filters, rate: value })}
+        onChange={value => onFilter({ ...filters, rate: value })}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
@@ -178,7 +173,7 @@ function RateSlider({ filters, setFilters, data }: ISingleFilter) {
           color="white"
           placement="top"
           isOpen={showTooltip}
-          label={`${filters.rate}`}
+          label={`${filters?.rate}`}
         >
           <SliderThumb />
         </Tooltip>
@@ -186,7 +181,7 @@ function RateSlider({ filters, setFilters, data }: ISingleFilter) {
     </TemplateFilter>
   )
 }
-function DiscountSlider({ filters, setFilters, data }: ISingleFilter) {
+function DiscountSlider({ filters, onFilter, data }: any) {
   const [showTooltip, setShowTooltip] = useState(false)
 
   function round(value: number, type: string): number {
@@ -198,12 +193,12 @@ function DiscountSlider({ filters, setFilters, data }: ISingleFilter) {
     <TemplateFilter>
       <Slider
         id="slider-discount"
-        defaultValue={round(filters.discount, 'up')}
+        defaultValue={round(filters?.discount, 'up')}
         min={0}
         max={100}
         colorScheme="green"
         name="discount"
-        onChange={value => setFilters({ ...filters, discount: round(value, 'down') })}
+        onChange={value => onFilter({ ...filters, discount: round(value, 'down') })}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
@@ -222,7 +217,7 @@ function DiscountSlider({ filters, setFilters, data }: ISingleFilter) {
           color="white"
           placement="top"
           isOpen={showTooltip}
-          label={`${round(filters.discount, 'up')}%`}
+          label={`${round(filters?.discount, 'up')}%`}
         >
           <SliderThumb />
         </Tooltip>
@@ -230,46 +225,45 @@ function DiscountSlider({ filters, setFilters, data }: ISingleFilter) {
     </TemplateFilter>
   )
 }
-function CategoriesFilter({ filters, setFilters, data }: ISingleFilter) {
+function CategoriesFilter({ filters, onFilter, data }: any) {
   return (
     <>
       <MultiSelect
         label="Categories"
         options={data}
         name="categories"
-        selectedOptions={filters.categories}
-        setSelectedOptions={value => setFilters({ ...filters, categories: value })}
+        selectedOptions={filters?.categories}
+        // setSelectedOptions={value => setFilters({ ...filters, categories: value })}
+        setSelectedOptions={value => onFilter({ ...filters, categories: value })}
       />
     </>
   )
 }
-function ConditionFilter({ filters, setFilters, data }: ISingleFilter) {
+function ConditionFilter({ filters, onFilter, data }: any) {
   return (
-    <>
-      <SelectField
-        onChange={e => setFilters({ ...filters, condition: e.target.value })}
-        name="condition"
-        value={filters.condition}
-        w="100%"
-      >
-        {data?.map((el, idx: number) => (
-          <option key={idx} value={el}>
-            {el}
-          </option>
-        ))}
-      </SelectField>
-    </>
+    <SelectField
+      onChange={e => onFilter({ ...filters, condition: e.target.value })}
+      name="condition"
+      value={filters?.condition}
+      w="100%"
+    >
+      {data?.map((el, idx: number) => (
+        <option key={idx} value={el}>
+          {el}
+        </option>
+      ))}
+    </SelectField>
   )
 }
-function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
+function PriceSlider({ filters, onFilter, data }: any) {
   return (
     <Flex flexDir={'column'} align="center" justify={'center'}>
       from:
       <InputField
         type="number"
         name="price_min"
-        onChange={e => setFilters({ ...filters, price: [e.target.value, filters.price[1]] })}
-        value={filters.price[0]}
+        onChange={e => onFilter({ ...filters, price: [e.target.value, filters?.price[1]] })}
+        value={filters?.price[0]}
         placeholder="Search..."
         w="7em"
       />
@@ -277,8 +271,8 @@ function PriceSlider({ filters, setFilters, data }: ISingleFilter) {
       <InputField
         type="number"
         name="price_max"
-        onChange={e => setFilters({ ...filters, price: [filters.price[0], e.target.value] })}
-        value={filters.price[1]}
+        onChange={e => onFilter({ ...filters, price: [filters?.price[0], e.target.value] })}
+        value={filters?.price[1]}
         placeholder="Search..."
         w="7em"
       />

@@ -74,13 +74,14 @@ export default function Pagination({
             colorScheme="gray"
             _focus={{ outline: 'none' }}
           />
-          {paginate.range.map(pageNumber => {
+          {paginate.range.map((pageNumber: number | string, idx: number) => {
             if (pageNumber === DOTS) {
               return <Box as="span">&#8230;</Box>
             }
 
             return (
               <Button
+                key={idx}
                 colorScheme="gray"
                 color={currentPage === pageNumber ? 'accent_4' : ''}
                 _focus={{ outline: 'none' }}

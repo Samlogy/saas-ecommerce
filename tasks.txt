@@ -1,0 +1,34 @@
+Feed Backs:
+    CLIENT:
+        filter(
+            improve fct 
+            improve performences            
+        )   
+        ove yup --> zod (schemas)
+        details(
+            favourite product system ?
+            display product page details
+        )    
+        shopping cart(
+            discount 
+            compute price
+            compute total price
+        )
+        auth 
+
+    ADMIN:
+        add supabase --> auth - 
+        add trcp (api)
+
+
+
+Tasks:
+    filter(
+        improve fct 
+        improve performences            
+    )   
+    create my carousel --> replace slick carousel ?
+    details(
+        favourite product system ?
+        display product page details
+    )  

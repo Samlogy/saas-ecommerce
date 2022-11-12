@@ -110,7 +110,7 @@ export default function Products() {
 
     return list
   }
-  const filterData = useCallback(() => getFilters(filters), [filters])
+  const filterData = getFilters(filters) // useCallback(() => getFilters(filters), [filters])
 
   return (
     <Layout isHeaderVisible>

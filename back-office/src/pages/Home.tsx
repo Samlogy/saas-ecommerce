@@ -237,7 +237,7 @@ function About({ data }: { data: any }) {
     previews: data.images ? data?.images : [],
     images: data?.images || []
   })
-  const [isOpen, setOpen] = useState(true)
+  const [isOpen, setOpen] = useState(false)
 
   return (
     <Flex id="#about" flexDir={'column'} mx="auto" w={['full', '30rem']}>
@@ -323,7 +323,7 @@ function Deal({ data }: { data: any }) {
     previews: data?.images || [],
     images: data?.images || []
   })
-  const [isOpen, setOpen] = useState(true)
+  const [isOpen, setOpen] = useState(false)
 
   return (
     <Flex id="deal" flexDir={'column'} mx="auto" w={['full', '30rem']}>
@@ -520,12 +520,12 @@ function ActionBox({ isOpen, onClose, mode }: IActionBox) {
   )
 
   const onDelete = (id: number) => {
-    console.log('delete product: ', id)
+    console.log('delete: ', id)
     setAction({ delete: false })
   }
 
   const onDisable = (id: number) => {
-    console.log('disable product: ', id)
+    console.log('disable: ', id)
     setAction({ disable: false })
   }
   return <CustomModal onClose={onClose} isOpen={isOpen} body={body} footer={footer} />
@@ -550,16 +550,21 @@ function AddEditService({ mode, isOpen, onClose }: IAddEditForm) {
   } = useForm(formOptions)
 
   function onSubmit(data: any) {
+    console.log(data)
     mode === 'add' ? create(data) : update(singleData.id, data)
   }
 
   function create(data: any) {
-    console.log('create product: ', data)
+    console.log('create: ', data)
     // api call
+    setVisible(true)
+    // onClose() // close modal pop up
   }
 
   function update(id: number, data: any) {
-    console.log('update product: ', id, data)
+    console.log('update: ', id, data)
+    onClose() // close modal pop up
+    setVisible(true)
   }
   // edit/create fct - form - schema - title
   const title = mode === 'add' ? 'Add Service' : 'Edit Service'
@@ -571,6 +576,7 @@ function AddEditService({ mode, isOpen, onClose }: IAddEditForm) {
     images: [],
     previews: []
   })
+  const [isVisible, setVisible] = useState(false)
 
   const Form = (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -635,7 +641,12 @@ function AddEditService({ mode, isOpen, onClose }: IAddEditForm) {
       </Flex>
     </form>
   )
-  return <CustomModal title={title} isOpen={isOpen} onClose={onClose} body={Form} />
+  return (
+    <>
+      <FeedBack isOpen={isVisible} status="success" onClose={() => setVisible(false)} />
+      <CustomModal title={title} isOpen={isOpen} onClose={onClose} body={Form} />
+    </>
+  )
 }
 
 function AddEditQuestionAnswer({ mode, isOpen, onClose }: IAddEditForm) {
@@ -657,12 +668,12 @@ function AddEditQuestionAnswer({ mode, isOpen, onClose }: IAddEditForm) {
   }
 
   function create(data: any) {
-    console.log('create product: ', data)
+    console.log('create: ', data)
     // api call
   }
 
   function update(id: number, data: any) {
-    console.log('update product: ', id, data)
+    console.log('update: ', id, data)
   }
   // edit/create fct - form - schema - title
   const title = mode === 'add' ? 'Add Questions & Answer' : 'Edit Questions & Answer'

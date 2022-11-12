@@ -1,15 +1,13 @@
-import { Box } from '@chakra-ui/react'
 import React from 'react'
+import { Box } from '@chakra-ui/react'
 
 interface IView {
-  children: any
-  cond: any
+  children: React.ReactNode
+  cond: boolean
   [restProps: string]: any
 }
 
-const View = ({ children, cond, ...restProps }: IView) => {
+export default function Viex({ children, cond, ...restProps }: IView) {
   if (cond) return <Box {...restProps}>{children}</Box>
   else return null
 }
-
-export default View

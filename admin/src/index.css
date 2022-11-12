@@ -1,13 +1,98 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,500;0,600;0,700;0,800;0,900;1,200;1,400;1,500;1,700;1,900&display=swap');
+
+
+/* pre-loader page */
+.loader-bg {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999999999;
+}
+.loader-bg h3 {
+  position: fixed;
+  color: #ff5e31;
+  font-size: 24px;
+}
+.loader {
+  width: 8em;
+  height: 8em;
+  font-size: 22px;
+  box-sizing: border-box;
+  border-top: 0.3em solid #505050;
+  border-radius: 50%;
+  position: relative;
+  animation: rotating 2s ease-in-out infinite;
+  --direction: 1;
+}
+.loader span {
+  position: absolute;
+  color: #ff5e31;
+  width: inherit;
+  height: inherit;
+  text-align: center;
+  line-height: 10em;
+  font-family: sans-serif;
+  animation: rotating 2s linear infinite;
+}
+.loader::before,
+.loader::after {
+  content: '';
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  box-sizing: border-box;
+  top: -0.2em;
+}
+.loader::before {
+  border-top: 0.3em solid dodgerblue;
+  transform: rotate(120deg);
+}
+.loader::after {
+  border-top: 0.3em solid #ff5e31;
+  transform: rotate(240deg);
+}
+@keyframes rotating {
+  50% {
+    transform: rotate(calc(180deg));
+  }
+  100% {
+    transform: rotate(calc(360deg));
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/*=============== Language Switcher ===============*/
+select.select-language {
+  background-color: transparent;
+  border-radius: 5px;
+  text-transform: uppercase;
+  padding: .5rem .25rem;
+  transition: all .25s;
+}
+
+select.select-language:hover {
+  cursor: pointer;
+  background-color: #edf2f7;
+}
+
+/* select language dark mode */
+select.select-language:hover.dark {
+  cursor: pointer;
+  background-color: #2d3748;
+  color: white;
+}
+
+/*=============== SCROLL BAR ===============*/
+::-webkit-scrollbar {
+  width: 0.6rem;
+  background: hsl(152, 4%, 53%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(152, 4%, 29%);
+  border-radius: 0.5rem;
 }
